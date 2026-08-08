@@ -31,6 +31,9 @@ BATCH = 20
 THUMB_SIZE = 640
 SENTENCES = 10
 
+# Files in the content directory that are not fact packs.
+NON_FACT_FILES = {"videos.json", "channels.json"}
+
 PACK_NAMES = {
     "geography": "Geography",
     "history": "History",
@@ -160,9 +163,9 @@ def main():
     total = images = extracts = 0
     missing_images = []
 
-    # videos.json lives alongside the fact files but is a different schema, handled by
-    # tools/enrich_videos.py.
-    for src in sorted(f for f in CONTENT_DIR.glob("*.json") if f.name != "videos.json"):
+    # The content directory also holds the Watch tab's files, which are a different schema
+    # entirely and belong to tools/enrich_videos.py.
+    for src in sorted(f for f in CONTENT_DIR.glob("*.json") if f.name not in NON_FACT_FILES):
         data = json.loads(src.read_text())
         category = data["category"]
         facts = data["facts"]
