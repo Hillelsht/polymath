@@ -14,7 +14,8 @@
    "wikiTitle": "Gold",
    "difficulty": 1,
    "imageUrl": "https://upload.wikimedia.org/wikipedia/commons/thumb/d/d7/Gold-crystals.jpg/960px-Gold-crystals.jpg?utm_source=en.wikipedia.org&utm_campaign=api&utm_content=thumbnail",
-   "pageUrl": "https://en.wikipedia.org/wiki/Gold"
+   "pageUrl": "https://en.wikipedia.org/wiki/Gold",
+   "details": "Gold is a chemical element; its chemical symbol is Au (from Latin aurum) and atomic number 79. In its pure form, it is a bright-metallic-yellow, dense, soft, malleable, and ductile metal. Chemically, gold is a transition metal, a group 11 element, and one of the noble metals. It is one of the least reactive chemical elements, being the second lowest in the reactivity series, with only platinum ranked as less reactive. Gold is solid under standard conditions.\nGold often occurs as the free element (native state), as nuggets or grains, in rocks, veins, and alluvial deposits. It occurs in a solid solution series with the native element silver (as in electrum), naturally alloyed with other metals such as copper, platinum, and palladium, as well as mineral inclusions such as within pyrite. Less commonly, it occurs in minerals as gold compounds, often with tellurium (gold tellurides).\nGold is resistant to most acids, though it does dissolve in aqua regia (a mixture of nitric acid and hydrochloric acid), forming a soluble tetrachloroaurate anion. Gold is insoluble in nitric acid alone, which dissolves silver and base metals, a property long used to refine gold and confirm the presence of gold in metallic substances, giving rise to the term \"acid test\"."
   },
   {
    "id": "sci-002",
@@ -39,7 +40,8 @@
    "wikiTitle": "Iron",
    "difficulty": 1,
    "imageUrl": "https://upload.wikimedia.org/wikipedia/commons/thumb/a/ad/Iron_electrolytic_and_1cm3_cube.jpg/960px-Iron_electrolytic_and_1cm3_cube.jpg?utm_source=en.wikipedia.org&utm_campaign=api&utm_content=thumbnail",
-   "pageUrl": "https://en.wikipedia.org/wiki/Iron"
+   "pageUrl": "https://en.wikipedia.org/wiki/Iron",
+   "details": "Iron is a chemical element; it has symbol Fe (from Latin  ferrum 'iron') and atomic number 26. It is a metal that belongs to the first transition series and group 8 of the periodic table. It is, by mass, the most common element on Earth, forming much of Earth's outer and inner core. It is the fourth most abundant element in the Earth's crust. In its metallic state it was mainly deposited by meteorites.\nExtracting usable metal from iron ores requires kilns or furnaces capable of reaching 1,500 °C (2,730 °F), about 500 °C (900 °F) higher than that required to smelt copper. Humans started to master that process in Eurasia during the 2nd millennium BC and the use of iron tools and weapons began to displace copper alloys – in some regions, only around 1200 BC. That event is considered the transition from the Bronze Age to the Iron Age. In the modern world, iron alloys, such as steel, stainless steel, cast iron and special steels, are by far the most common industrial metals, due to their mechanical properties and low cost. The iron and steel industry is thus very important economically, and iron is the cheapest metal, with a price of a few dollars per kilogram or pound.\nPristine and smooth pure iron surfaces are a mirror-like silvery-gray."
   },
   {
    "id": "sci-004",
@@ -65,7 +67,8 @@
    "wikiTitle": "Sodium",
    "difficulty": 2,
    "imageUrl": "https://upload.wikimedia.org/wikipedia/commons/thumb/2/27/Na_%28Sodium%29.jpg/960px-Na_%28Sodium%29.jpg?utm_source=en.wikipedia.org&utm_campaign=api&utm_content=thumbnail",
-   "pageUrl": "https://en.wikipedia.org/wiki/Sodium"
+   "pageUrl": "https://en.wikipedia.org/wiki/Sodium",
+   "details": "Sodium is a chemical element; it has symbol Na (from Neo-Latin natrium) and atomic number 11. It is a soft, silvery-white, highly reactive metal. Sodium is an alkali metal, being in group 1 of the periodic table. Its only stable isotope is 23Na. The free metal does not occur in nature and must be prepared from compounds. Sodium is the sixth–most abundant element in the Earth's crust and exists in numerous minerals such as feldspars, sodalite, and halite (NaCl). Many salts of sodium are highly water-soluble: sodium ions have been leached by the action of water from the Earth's minerals over eons, and thus sodium and chlorine are the most common dissolved elements by weight in the oceans.\nSodium was first isolated by Humphry Davy in 1807 by the electrolysis of sodium hydroxide. Among many other useful sodium compounds, sodium hydroxide (lye) is used in soap manufacture, and sodium chloride (edible salt) is a de-icing agent and a nutrient for animals including humans.\nSodium is an essential element for all animals and some plants."
   },
   {
    "id": "sci-006",
@@ -77,7 +80,8 @@
    "wikiTitle": "Potassium",
    "difficulty": 2,
    "imageUrl": "https://upload.wikimedia.org/wikipedia/commons/a/a4/Potassium-2.jpg?utm_source=en.wikipedia.org&utm_campaign=api&utm_content=thumbnail_unscaled",
-   "pageUrl": "https://en.wikipedia.org/wiki/Potassium"
+   "pageUrl": "https://en.wikipedia.org/wiki/Potassium",
+   "details": "Potassium is a chemical element; it has symbol K (from Neo-Latin kalium) and atomic number 19. It is a silvery white metal that is soft enough to easily cut with a knife. Potassium metal reacts rapidly with atmospheric oxygen to form flaky white potassium peroxide in only seconds of exposure. It was first isolated from potash, the ashes of plants, from which its name derives. In the periodic table, potassium is one of the alkali metals, all of which have a single valence electron in the outer electron shell, which is easily removed to create an ion with a positive charge (which combines with anions to form salts). In nature, potassium occurs only in ionic salts. Elemental potassium reacts vigorously with water, generating sufficient heat to ignite hydrogen emitted in the reaction, and burning with a lilac-colored flame. It is found dissolved in seawater (which is 0.04% potassium by weight), and occurs in many minerals such as orthoclase, a common constituent of granites and other igneous rocks.\nPotassium is chemically very similar to sodium, the previous element in group 1 of the periodic table. They have a similar first ionization energy, which allows for each atom to give up its sole outer electron."
   },
   {
    "id": "sci-007",
@@ -89,7 +93,8 @@
    "wikiTitle": "Mercury (element)",
    "difficulty": 2,
    "imageUrl": "https://upload.wikimedia.org/wikipedia/commons/thumb/9/99/Pouring_liquid_mercury_bionerd.jpg/960px-Pouring_liquid_mercury_bionerd.jpg?utm_source=en.wikipedia.org&utm_campaign=api&utm_content=thumbnail",
-   "pageUrl": "https://en.wikipedia.org/wiki/Mercury_(element)"
+   "pageUrl": "https://en.wikipedia.org/wiki/Mercury_(element)",
+   "details": "Mercury is a chemical element; it has symbol Hg and atomic number 80. It is commonly known as quicksilver. A heavy, silvery d-block element, mercury is the only metallic element that is known to be liquid at standard temperature and pressure. As well as having the lowest freezing point, mercury has the lowest boiling point and subsequently the narrowest liquid state range of any metal at standard conditions.\nMercury occurs in deposits throughout the world mostly as cinnabar (mercuric sulfide). The red pigment vermilion is obtained by grinding natural cinnabar or synthetic mercuric sulfide. Exposure to mercury and mercury-containing organic compounds is toxic to the nervous system, immune system and kidneys of humans and other animals; mercury poisoning can result from exposure to water-soluble forms of mercury (such as mercuric chloride or methylmercury) either directly or through mechanisms of biomagnification.\nMercury is used in thermometers, barometers, manometers, sphygmomanometers, float valves, mercury switches, mercury relays, fluorescent lamps and other devices, but concerns about the element's toxicity have led to a reduction in the amount of mercury used in these instruments, or manufacturers not using it altogether. It remains in use in scientific research applications and in amalgam for dental restoration in some locales. It is also still used in fluorescent lighting, although the quantity of mercury used is now smaller."
   },
   {
    "id": "sci-008",
@@ -101,7 +106,8 @@
    "wikiTitle": "Tungsten",
    "difficulty": 2,
    "imageUrl": "https://upload.wikimedia.org/wikipedia/commons/thumb/1/1a/Wolfram_evaporated_crystals_and_1cm3_cube.jpg/960px-Wolfram_evaporated_crystals_and_1cm3_cube.jpg?utm_source=en.wikipedia.org&utm_campaign=api&utm_content=thumbnail",
-   "pageUrl": "https://en.wikipedia.org/wiki/Tungsten"
+   "pageUrl": "https://en.wikipedia.org/wiki/Tungsten",
+   "details": "Tungsten (also called wolfram) is a chemical element; it has symbol W (from German: Wolfram) and atomic number 74. It is a metal found naturally on Earth almost exclusively in compounds with other elements. It was identified as a distinct element in 1781 and first isolated as a metal in 1783. Its important ores include scheelite and wolframite, the latter lending the element its alternative name.\nThe free element is remarkable for its robustness, especially the fact that it has the highest melting point of all known elements, at 3,422 °C (6,192 °F; 3,695 K). It also has the highest boiling point, at 5,930 °C (10,706 °F; 6,203 K). Its density is 19.254 g/cm3, comparable with that of uranium and gold, and much higher (about 1.7 times) than that of lead. Polycrystalline tungsten is an intrinsically brittle and hard material (under standard conditions, when uncombined), making it difficult to work into metal. However, pure single-crystalline tungsten is more ductile and can be cut with a hard-steel hacksaw.\nTungsten occurs in many alloys, which have numerous applications, including incandescent light bulb filaments, X-ray tubes, electrodes in gas tungsten arc welding, superalloys, and radiation shielding."
   },
   {
    "id": "sci-009",
@@ -113,7 +119,8 @@
    "wikiTitle": "Hydrogen",
    "difficulty": 1,
    "imageUrl": "https://upload.wikimedia.org/wikipedia/commons/thumb/8/83/Hydrogen_discharge_tube.jpg/960px-Hydrogen_discharge_tube.jpg?utm_source=en.wikipedia.org&utm_campaign=api&utm_content=thumbnail",
-   "pageUrl": "https://en.wikipedia.org/wiki/Hydrogen"
+   "pageUrl": "https://en.wikipedia.org/wiki/Hydrogen",
+   "details": "Hydrogen is a chemical element; it has the symbol H and atomic number 1. It is the lightest and most abundant chemical element in the universe, constituting about 75% of all normal matter. Under standard conditions, hydrogen is a gas of diatomic molecules with the formula H2, called dihydrogen, or sometimes hydrogen gas, molecular hydrogen, or simply hydrogen. Dihydrogen is colorless, odorless, non-toxic, and highly combustible. Stars, including the Sun, mainly consist of hydrogen in a plasma state, while on Earth, hydrogen is found as the gas H2 (dihydrogen) and in molecules, such as in water and organic compounds. The most common isotope of hydrogen, 1H, consists of one proton, one electron, and no neutrons.\nHydrogen gas was first produced artificially in the 17th century by the reaction of acids with metals. Henry Cavendish, in 1766–1781, identified hydrogen gas as a distinct substance and discovered its property of producing water when burned: this is the origin of hydrogen's name, which means 'water-former' (from Ancient Greek: ὕδωρ, romanized: húdōr, lit. 'water', and γεννάω, gennáō, 'I bring forth'). Understanding the colors of light absorbed and emitted by hydrogen was a crucial part of the development of quantum mechanics.\nHydrogen, typically nonmetallic except under extreme pressure, readily forms covalent bonds with most nonmetals, contributing to the formation of compounds like water and various organic substances."
   },
   {
    "id": "sci-010",
@@ -126,7 +133,8 @@
    "wikiTitle": "Oxygen",
    "difficulty": 2,
    "imageUrl": "https://upload.wikimedia.org/wikipedia/commons/thumb/a/a0/Liquid_oxygen_in_a_beaker_%28cropped_and_retouched%29.jpg/960px-Liquid_oxygen_in_a_beaker_%28cropped_and_retouched%29.jpg?utm_source=en.wikipedia.org&utm_campaign=api&utm_content=thumbnail",
-   "pageUrl": "https://en.wikipedia.org/wiki/Oxygen"
+   "pageUrl": "https://en.wikipedia.org/wiki/Oxygen",
+   "details": "Oxygen is a chemical element; it has the symbol O and its atomic number is 8. It is a member of the chalcogen group in the periodic table. It is highly reactive, a nonmetal, and a potent oxidizing agent that readily forms oxides with most elements as well as with other compounds. Oxygen is the most abundant element in Earth's crust, making up almost half of the Earth's crust in the form of various oxides such as water, carbon dioxide, iron oxides, and silicates. It is also the third-most abundant element in the universe after hydrogen and helium.\nAt standard temperature and pressure, two oxygen atoms will bind covalently to form dioxygen, a colorless and odorless diatomic gas with the chemical formula O2. Dioxygen gas currently constitutes approximately 20.95% molar fraction of the Earth's atmosphere, though this has changed considerably over long periods of time in Earth's history. The much rarer allotrope of oxygen, ozone (O3), strongly absorbs the UVB and UVC wavelengths and forms a protective ozone layer at the lower stratosphere, which shields the biosphere from ionizing ultraviolet radiation. However, ozone present at the surface is a corrosive byproduct of smog and thus an air pollutant.\nAll eukaryotic organisms, including plants, animals, fungi, algae, and most protists, need oxygen for cellular respiration, a process that extracts chemical energy by the reaction of oxygen with organic molecules derived from food and releases carbon dioxide as a waste product."
   },
   {
    "id": "sci-011",
@@ -139,7 +147,8 @@
    "wikiTitle": "Nitrogen",
    "difficulty": 1,
    "imageUrl": "https://upload.wikimedia.org/wikipedia/commons/thumb/f/f5/Fluessiger_Stickstoff.jpg/960px-Fluessiger_Stickstoff.jpg?utm_source=en.wikipedia.org&utm_campaign=api&utm_content=thumbnail",
-   "pageUrl": "https://en.wikipedia.org/wiki/Nitrogen"
+   "pageUrl": "https://en.wikipedia.org/wiki/Nitrogen",
+   "details": "Nitrogen is a chemical element; it has symbol N and atomic number 7. Nitrogen is a nonmetal and the lightest member of group 15 of the periodic table, often called the pnictogens. It is a common element in the universe, estimated at seventh in total abundance in the Milky Way and the Solar System. At standard temperature and pressure, two atoms of the element bond to form N2, a colourless and odourless diatomic gas. N2 forms about 78% of Earth's atmosphere, making it the most abundant chemical species in air. Because of the volatility of nitrogen compounds, nitrogen is relatively rare in the solid parts of the Earth.\nIt was first discovered and isolated by Scottish physician Daniel Rutherford in 1772 and independently by Carl Wilhelm Scheele and Henry Cavendish at about the same time. The name nitrogène was suggested by French chemist Jean-Antoine-Claude Chaptal in 1790 when it was found that nitrogen was present in nitric acid and nitrates. Antoine Lavoisier suggested instead the name azote, from the Ancient Greek: ἀζωτικός \"no life\", as it is an asphyxiant gas; this name is used in a number of languages, and appears in the English names of some nitrogen compounds such as hydrazine, azides and azo compounds.\nElemental nitrogen is usually produced from air by pressure swing adsorption technology."
   },
   {
    "id": "sci-012",
@@ -152,7 +161,8 @@
    "wikiTitle": "Helium",
    "difficulty": 2,
    "imageUrl": "https://upload.wikimedia.org/wikipedia/commons/thumb/8/82/Helium_discharge_tube.jpg/960px-Helium_discharge_tube.jpg?utm_source=en.wikipedia.org&utm_campaign=api&utm_content=thumbnail",
-   "pageUrl": "https://en.wikipedia.org/wiki/Helium"
+   "pageUrl": "https://en.wikipedia.org/wiki/Helium",
+   "details": "Helium (from Ancient Greek: ἥλιος, romanized: helios, lit. 'sun') is a chemical element; it has symbol He and atomic number 2. It is a colorless, odorless, non-toxic, inert, monatomic gas and the first in the noble gas group in the periodic table. Its boiling point is the lowest among all the elements, and it does not have a melting point at standard pressures. It is the second-lightest and second-most abundant element in the observable universe, after hydrogen. It is present at about 24% of the total elemental mass, which is more than 12 times the mass of all the heavier elements combined. Its abundance is similar to this in both the Sun and Jupiter, because of the very high nuclear binding energy (per nucleon) of helium-4 with respect to the next three elements after helium. This helium-4 binding energy also accounts for why it is a product of both nuclear fusion and radioactive decay. The most common isotope of helium in the universe is helium-4, the vast majority of which was formed during the Big Bang. Large amounts of new helium are created by nuclear fusion of hydrogen in stars.\nHelium was first detected as an unknown, yellow spectral line signature in sunlight during a solar eclipse in 1868 by Georges Rayet, Captain C. T. Haig, Norman R. Pogson, and Lieutenant John Herschel, and was subsequently confirmed by French astronomer Jules Janssen."
   },
   {
    "id": "sci-013",
@@ -164,7 +174,8 @@
    "wikiTitle": "Carbon",
    "difficulty": 1,
    "imageUrl": "https://upload.wikimedia.org/wikipedia/commons/thumb/f/f0/Graphite-and-diamond-with-scale.jpg/960px-Graphite-and-diamond-with-scale.jpg?utm_source=en.wikipedia.org&utm_campaign=api&utm_content=thumbnail",
-   "pageUrl": "https://en.wikipedia.org/wiki/Carbon"
+   "pageUrl": "https://en.wikipedia.org/wiki/Carbon",
+   "details": "Carbon (from Latin  carbo 'coal') is a chemical element;  it has symbol C and atomic number 6. It is nonmetallic and tetravalent—meaning that its atoms are able to form up to four covalent bonds due to its valence shell exhibiting 4 electrons. It belongs to group 14 of the periodic table. Carbon makes up about 0.025 percent of Earth's crust. Three isotopes occur naturally, 12C and 13C being stable, while 14C is a radionuclide, decaying with a half-life of 5,700 years. Carbon is one of the few elements known since antiquity.\nCarbon is the 15th most abundant element in the Earth's crust, and the fourth most abundant element in the universe by mass after hydrogen, helium, and oxygen. Carbon's abundance, its unique diversity of organic compounds, and its unusual ability to form polymers at the temperatures commonly encountered on Earth, enables it to serve as the common element of all known life. It is the second most abundant element in the human body by mass (about 18.5%) after oxygen.\nThe atoms of carbon can bond together in diverse ways, resulting in various allotropes of carbon."
   },
   {
    "id": "sci-014",
@@ -176,7 +187,8 @@
    "wikiTitle": "Jupiter",
    "difficulty": 1,
    "imageUrl": "https://upload.wikimedia.org/wikipedia/commons/thumb/e/e2/Jupiter_OPAL_2024.png/960px-Jupiter_OPAL_2024.png?utm_source=en.wikipedia.org&utm_campaign=api&utm_content=thumbnail",
-   "pageUrl": "https://en.wikipedia.org/wiki/Jupiter"
+   "pageUrl": "https://en.wikipedia.org/wiki/Jupiter",
+   "details": "Jupiter is the fifth planet from the Sun, and the largest in the Solar System. It is a gas giant with a mass nearly 2.5 times that of all the other planets in the Solar System combined and slightly less than one-thousandth the mass of the Sun. The diameter of Jupiter is 11 times that of Earth and a tenth that of the Sun. It orbits the Sun at a distance of 5.20 AU (778.5 Gm), with an orbital period of 11.86 years. Jupiter is the third-brightest natural object in the Earth's night sky, after the Moon and Venus, and has been observed since prehistoric times. Its name derives from that of Jupiter, the chief deity of ancient Roman religion.\nJupiter was the first of the Sun's planets to form, and its inward migration during the primordial phase of the Solar System affected much of the formation history of the other planets. Jupiter's atmosphere consists of 76% hydrogen and 24% helium by mass, with a denser interior. It contains traces of the elements carbon, oxygen, sulfur, neon, and compounds such as ammonia, water vapour, phosphine, hydrogen sulfide, and hydrocarbons. Jupiter's helium abundance is 80% of the Sun's, similar to Saturn's composition."
   },
   {
    "id": "sci-015",
@@ -189,7 +201,8 @@
    "wikiTitle": "Venus",
    "difficulty": 2,
    "imageUrl": "https://upload.wikimedia.org/wikipedia/commons/thumb/b/b2/Venus_2_Approach_Image.jpg/960px-Venus_2_Approach_Image.jpg?utm_source=en.wikipedia.org&utm_campaign=api&utm_content=thumbnail",
-   "pageUrl": "https://en.wikipedia.org/wiki/Venus"
+   "pageUrl": "https://en.wikipedia.org/wiki/Venus",
+   "details": "Venus is the second planet from the Sun. Similar in size and mass to Earth, Venus has no liquid water, and its atmosphere is far thicker and denser than that of any other rocky body in the Solar System. The atmosphere is composed mostly of carbon dioxide and has a thick cloud layer of sulfuric acid that spans the whole planet. At the mean surface level, the atmosphere reaches a temperature of 737 K (464 °C; 867 °F), making it the hottest planet in the solar system and also a pressure 92 times greater than Earth's at sea level, turning the lowest layer of the atmosphere into a supercritical fluid. From Earth, Venus is visible as a star-like point of light, appearing brighter than any other natural point of light in the sky, as either the brightest \"morning star\" or \"evening star\".\nVenus orbits closer to the Sun than the Earth does. The orbits of Venus and Earth make the two planets approach each other in synodic periods of 1.6 years. In the course of this, Venus comes closer to Earth than any other planet. In interplanetary spaceflight from Earth, Venus is frequently used as a waypoint for gravity assists, offering a faster and more economical route. Venus has no moons and a very slow retrograde rotation about its axis, a result of competing forces of solar tidal locking and differential heating of Venus's massive atmosphere."
   },
   {
    "id": "sci-016",
@@ -201,7 +214,8 @@
    "wikiTitle": "Mars",
    "difficulty": 1,
    "imageUrl": "https://upload.wikimedia.org/wikipedia/commons/thumb/0/0c/Mars_-_August_30_2021_-_Flickr_-_Kevin_M._Gill.png/960px-Mars_-_August_30_2021_-_Flickr_-_Kevin_M._Gill.png?utm_source=en.wikipedia.org&utm_campaign=api&utm_content=thumbnail",
-   "pageUrl": "https://en.wikipedia.org/wiki/Mars"
+   "pageUrl": "https://en.wikipedia.org/wiki/Mars",
+   "details": "Mars is the fourth planet from the Sun. It is also known as the \"Red Planet\", for its orange-red appearance. Mars is a desert-like rocky planet with a tenuous atmosphere that is primarily carbon dioxide (CO2). At the average surface level the atmospheric pressure is a few thousandths of Earth's, atmospheric temperature ranges from −153 to 20 °C (−243 to 68 °F), and cosmic radiation is high. Mars retains some water, in the ground as well as thinly in the atmosphere, forming cirrus clouds, fog, frost, larger polar regions of permafrost and ice caps (with seasonal CO2 snow), but no bodies of liquid surface water. Its surface gravity is roughly a third of Earth's or double that of the Moon. Its mean diameter, 6,779 km (4,212 mi), is about half the Earth's, or twice the Moon's, and its surface area is the size of all the dry land of Earth.\nFine dust is prevalent across the surface and the atmosphere, being picked up and spread at the low Martian gravity even by the weak wind of the tenuous atmosphere.\nThe terrain of Mars roughly follows a north–south divide, the Martian dichotomy, with the northern hemisphere mainly consisting of relatively flat, low lying plains, and the southern hemisphere of cratered highlands. Geologically, the planet is fairly active with marsquakes trembling underneath the ground, but also hosts many enormous volcanoes that are extinct (the tallest is Olympus Mons, 21.9 km or 13.6 mi tall), as well as one of the largest canyons in the Solar System (Valles Marineris, 4,000 km or 2,500 mi long)."
   },
   {
    "id": "sci-017",
@@ -213,7 +227,8 @@
    "wikiTitle": "Saturn",
    "difficulty": 1,
    "imageUrl": "https://upload.wikimedia.org/wikipedia/commons/thumb/4/43/Saturn_global_view_from_Cassini%2C_rings_open_Better_Colour.png/960px-Saturn_global_view_from_Cassini%2C_rings_open_Better_Colour.png?utm_source=en.wikipedia.org&utm_campaign=api&utm_content=thumbnail",
-   "pageUrl": "https://en.wikipedia.org/wiki/Saturn"
+   "pageUrl": "https://en.wikipedia.org/wiki/Saturn",
+   "details": "Saturn is the sixth planet from the Sun and the second largest in the Solar System, after Jupiter. It is a gas giant, with an average radius of about 9 times that of Earth. It has an eighth of the average density of Earth, but is over 95 times more massive. Even though Saturn is almost as big as Jupiter, Saturn has less than a third of its mass. Saturn orbits the Sun at a distance of 9.59 AU (1,434 million km), with an orbital period of 29.45 years.\nSaturn's interior is thought to be composed of a rocky core, surrounded by a deep layer of metallic hydrogen, an intermediate layer of liquid hydrogen and liquid helium, and an outer layer of gas. Saturn has a pale yellow hue, due to ammonia crystals in its upper atmosphere. An electrical current in the metallic hydrogen layer is thought to give rise to Saturn's planetary magnetic field, which is weaker than Earth's, but has a magnetic moment 580 times that of Earth because of Saturn's greater size. Saturn's magnetic field strength is about a twentieth that of Jupiter. The outer atmosphere is generally bland and lacking in contrast, although long-lived features can appear."
   },
   {
    "id": "sci-018",
@@ -225,7 +240,8 @@
    "wikiTitle": "Mercury (planet)",
    "difficulty": 1,
    "imageUrl": "https://upload.wikimedia.org/wikipedia/commons/thumb/4/4a/Mercury_in_true_color.jpg/960px-Mercury_in_true_color.jpg?utm_source=en.wikipedia.org&utm_campaign=api&utm_content=thumbnail",
-   "pageUrl": "https://en.wikipedia.org/wiki/Mercury_(planet)"
+   "pageUrl": "https://en.wikipedia.org/wiki/Mercury_(planet)",
+   "details": "Mercury is the first planet from the Sun and the smallest in the Solar System. It is a rocky planet with a trace atmosphere and a surface gravity slightly higher than that of Mars. The surface of Mercury is similar to Earth's Moon, being cratered, with an expansive rupes system generated from thrust faults, and bright ray systems, formed by ejecta. Its largest crater, Caloris Planitia, has a diameter of 1,550 km (960 mi), which is about one-third the diameter of the planet (4,880 km or 3,030 mi). Being the most inferior orbiting planet, it always appears close to the Sun in Earth's sky, as either a \"morning star\" or an \"evening star\". It is the planet with the highest delta-v required for travel from Earth, as well as to and from the other planets in the Solar System.\nMercury's sidereal year (88.0 Earth days) and sidereal day (58.65 Earth days) are in a 3:2 ratio, in a spin–orbit resonance. Consequently, one solar day (sunrise to sunrise) on Mercury lasts for around 176 Earth days, or twice Mercury's sidereal year. This means that one side of Mercury will remain in sunlight for one Mercurian year of 88 Earth days; while during the next orbit, that side will be in darkness all the time until the next sunrise after another 88 Earth days. Above the planet's surface is an extremely tenuous exosphere and a faint magnetic field just strong enough to deflect solar winds."
   },
   {
    "id": "sci-019",
@@ -238,7 +254,8 @@
    "wikiTitle": "Neptune",
    "difficulty": 1,
    "imageUrl": "https://upload.wikimedia.org/wikipedia/commons/thumb/b/b9/Neptune_Voyager2_color_calibrated.png/960px-Neptune_Voyager2_color_calibrated.png?utm_source=en.wikipedia.org&utm_campaign=api&utm_content=thumbnail",
-   "pageUrl": "https://en.wikipedia.org/wiki/Neptune"
+   "pageUrl": "https://en.wikipedia.org/wiki/Neptune",
+   "details": "Neptune is the eighth and farthest known planet orbiting the Sun. It is the fourth-largest planet in the Solar System by diameter, the third-most-massive planet, and the densest giant planet. It is 17 times the mass of Earth. Compared to Uranus, its neighbouring ice giant, Neptune is slightly smaller, but more massive and dense. Being composed primarily of gases and liquids, it has no well-defined solid surface. Neptune orbits the Sun once every 164.8 years at an orbital distance of 30.1 astronomical units (4.5 billion kilometres; 2.8 billion miles). It is named after the Roman god of the sea and has the astronomical symbol , representing Neptune's trident.\nNeptune is not visible to the unaided eye and is the only planet in the Solar System that was not initially observed by direct empirical observation. Rather, unexpected changes in the orbit of Uranus led Alexis Bouvard to hypothesise that its orbit was subject to gravitational perturbation by an unknown planet. After Bouvard's death, the position of Neptune was mathematically predicted from his observations, independently, by John Couch Adams and Urbain Le Verrier."
   },
   {
    "id": "sci-020",
@@ -250,7 +267,8 @@
    "wikiTitle": "Uranus",
    "difficulty": 2,
    "imageUrl": "https://upload.wikimedia.org/wikipedia/commons/6/69/Uranus_Voyager2_color_calibrated.png?utm_source=en.wikipedia.org&utm_campaign=api&utm_content=thumbnail_unscaled",
-   "pageUrl": "https://en.wikipedia.org/wiki/Uranus"
+   "pageUrl": "https://en.wikipedia.org/wiki/Uranus",
+   "details": "Uranus is the seventh planet from the Sun. It is a gaseous cyan-coloured ice giant. Most of the planet is made of water, ammonia, and methane in a supercritical phase of matter, which astronomy calls \"ice\" or volatiles. The planet's atmosphere has a complex layered cloud structure and has the lowest minimum temperature (49 K (−224 °C; −371 °F)) of all the Solar System's planets. It has a marked axial tilt of 82.23°  with a retrograde rotation period of 17 hours and 14 minutes. This means that in an 84-Earth-year orbital period around the Sun, its poles get around 42 years of continuous sunlight, followed by 42 years of continuous darkness.\nUranus has the third-largest diameter and fourth-largest mass among the Solar System's planets. Based on current models, inside its volatile mantle layer is a rocky core, and a thick hydrogen and helium atmosphere surrounds it. Trace amounts of hydrocarbons (thought to be produced via hydrolysis) and carbon monoxide along with carbon dioxide (thought to have originated from comets) have been detected in the upper atmosphere. There are many unexplained climate phenomena in Uranus's atmosphere, such as its peak wind speed of 900 km/h (560 mph), variations in its polar cap, and its erratic cloud formation."
   },
   {
    "id": "sci-021",
@@ -262,7 +280,8 @@
    "wikiTitle": "Earth",
    "difficulty": 2,
    "imageUrl": "https://upload.wikimedia.org/wikipedia/commons/thumb/2/2d/Meteosat-12-fci-march-equinox-2025-noon.jpg/960px-Meteosat-12-fci-march-equinox-2025-noon.jpg?utm_source=en.wikipedia.org&utm_campaign=api&utm_content=thumbnail",
-   "pageUrl": "https://en.wikipedia.org/wiki/Earth"
+   "pageUrl": "https://en.wikipedia.org/wiki/Earth",
+   "details": "Earth is the third planet from the Sun and the only astronomical object known to harbor life. This is made possible by Earth being an ocean world, the only one in the Solar System sustaining liquid surface water. Almost all of Earth's water is contained in its ocean, which covers 70.8% of Earth's crust. The remaining 29.2% of Earth's crust is land, which is predominantly located within Earth's land hemisphere in the form of continental landmasses. Most of Earth's land is at least somewhat humid and covered by vegetation, while large ice sheets at Earth's polar deserts retain more water than Earth's groundwater, lakes, rivers, and atmospheric water combined. Earth's crust consists of slowly moving tectonic plates, which interact to produce mountain ranges, volcanoes, and earthquakes. Earth has a liquid outer core that generates a magnetosphere capable of deflecting most of the destructive solar winds and cosmic radiation.\nEarth has a dynamic atmosphere, which sustains Earth's surface conditions and protects it from most meteoroids and ultraviolet light at entry. It is composed primarily of nitrogen and oxygen. Water vapor is widely present in the atmosphere, forming clouds that cover most of the planet."
   },
   {
    "id": "sci-022",
@@ -274,7 +293,8 @@
    "wikiTitle": "Albert Einstein",
    "difficulty": 1,
    "imageUrl": "https://upload.wikimedia.org/wikipedia/commons/thumb/2/28/Albert_Einstein_Head_cleaned.jpg/960px-Albert_Einstein_Head_cleaned.jpg?utm_source=en.wikipedia.org&utm_campaign=api&utm_content=thumbnail",
-   "pageUrl": "https://en.wikipedia.org/wiki/Albert_Einstein"
+   "pageUrl": "https://en.wikipedia.org/wiki/Albert_Einstein",
+   "details": "Albert Einstein (14 March 1879 – 18 April 1955) was a German-born theoretical physicist best known for developing the theory of relativity. Einstein also made important contributions to quantum theory. His mass–energy equivalence formula E = mc2, which arises from special relativity, has been called \"the world's most famous equation\". He received the 1921 Nobel Prize in Physics for \"his services to theoretical physics, and especially for his discovery of the law of the photoelectric effect\".\nBorn as a subject to the Kingdom of Württemberg, part of the German Empire, Einstein moved to Switzerland in 1895, forsaking his citizenship the following year. In 1896, at the age of seventeen, he enrolled in the mathematics and physics teaching diploma program at the Swiss federal polytechnic school in Zurich, graduating in 1900. He acquired Swiss citizenship a year later, which he kept for the rest of his life, and afterwards secured a permanent position at the Swiss Patent Office in Bern. In 1905, he submitted a successful PhD dissertation to the University of Zurich. In 1914, he moved to Berlin to join the Prussian Academy of Sciences and the Humboldt University of Berlin, becoming director of the Kaiser Wilhelm Institute for Physics in 1917; he also became a Prussian and consequently also German citizen again. In 1933, while Einstein was visiting the United States, Adolf Hitler came to power in Germany."
   },
   {
    "id": "sci-023",
@@ -286,7 +306,8 @@
    "wikiTitle": "Isaac Newton",
    "difficulty": 1,
    "imageUrl": "https://upload.wikimedia.org/wikipedia/commons/thumb/f/f7/Portrait_of_Sir_Isaac_Newton%2C_1689_%28brightened%29.jpg/960px-Portrait_of_Sir_Isaac_Newton%2C_1689_%28brightened%29.jpg?utm_source=en.wikipedia.org&utm_campaign=api&utm_content=thumbnail",
-   "pageUrl": "https://en.wikipedia.org/wiki/Isaac_Newton"
+   "pageUrl": "https://en.wikipedia.org/wiki/Isaac_Newton",
+   "details": "Sir Isaac Newton ( ; (1643-01-04)4 January 1643 [O.S. 25 December 1642] – 31 March [O.S. 20 March] 1727) was an English polymath who was a mathematician, physicist, astronomer, alchemist, theologian, author and inventor. He was a key figure in the Scientific Revolution and the Enlightenment that followed. His book Philosophiæ Naturalis Principia Mathematica (Mathematical Principles of Natural Philosophy), first published in 1687, achieved the first great unification in physics and established classical mechanics. Newton also made seminal contributions to optics, and shares credit with the German mathematician Gottfried Wilhelm Leibniz for formulating infinitesimal calculus, although he developed calculus years before Leibniz. Newton contributed to and refined the scientific method, and his work is considered the most influential in bringing forth modern science.\nIn the Principia, Newton formulated the laws of motion and universal gravitation that formed the dominant scientific viewpoint for centuries until it was superseded by the theory of relativity. While this is the case, his laws still serve as excellent approximations for the vast majority of physical phenomena involving low speeds (much less than the speed of light) and weak gravitational fields. He used his mathematical description of gravity to derive Kepler's laws of planetary motion, account for tides, the trajectories of comets, the precession of the equinoxes and other phenomena, eradicating doubt about the Solar System's heliocentricity. Newton solved the two-body problem and introduced the three-body problem. He demonstrated that the motion of objects on Earth and celestial bodies could be accounted for by the same principles."
   },
   {
    "id": "sci-024",
@@ -298,7 +319,8 @@
    "wikiTitle": "Charles Darwin",
    "difficulty": 1,
    "imageUrl": "https://upload.wikimedia.org/wikipedia/commons/thumb/2/2e/Charles_Darwin_seated_crop.jpg/960px-Charles_Darwin_seated_crop.jpg?utm_source=en.wikipedia.org&utm_campaign=api&utm_content=thumbnail",
-   "pageUrl": "https://en.wikipedia.org/wiki/Charles_Darwin"
+   "pageUrl": "https://en.wikipedia.org/wiki/Charles_Darwin",
+   "details": "Charles Robert Darwin ( DAR-win; 12 February 1809 – 19 April 1882) was an English naturalist, geologist, and biologist, widely known for his contributions to evolutionary biology. His proposition that all species of life have descended from a common ancestor is now generally accepted and considered a fundamental scientific concept. In a joint presentation with Alfred Russel Wallace, he introduced his scientific theory that this branching pattern of evolution resulted from a process he called natural selection, in which the struggle for existence has a similar effect to the artificial selection involved in selective breeding. Darwin has been described as one of the most influential figures in human history and was honoured by burial in Westminster Abbey.\nDarwin's early interest in nature led him to neglect his medical education at the University of Edinburgh; instead, he helped Robert Edmond Grant to investigate marine invertebrates. His studies at the University of Cambridge's Christ's College from 1828 to 1831 encouraged his passion for natural science. However, it was his five-year voyage on HMS Beagle from 1831 to 1836 that truly established Darwin as an eminent geologist. The observations and theories he developed during his voyage supported Charles Lyell's concept of gradual geological change. Publication of his journal of the voyage made Darwin famous as a popular author. His first scientific work was The Structure and Distribution of Coral Reefs (1842)."
   },
   {
    "id": "sci-025",
@@ -310,7 +332,8 @@
    "wikiTitle": "Marie Curie",
    "difficulty": 1,
    "imageUrl": "https://upload.wikimedia.org/wikipedia/commons/thumb/c/c8/Marie_Curie_c._1920s.jpg/960px-Marie_Curie_c._1920s.jpg?utm_source=en.wikipedia.org&utm_campaign=api&utm_content=thumbnail",
-   "pageUrl": "https://en.wikipedia.org/wiki/Marie_Curie"
+   "pageUrl": "https://en.wikipedia.org/wiki/Marie_Curie",
+   "details": "Maria Salomea Skłodowska Curie, better known as Marie Curie (7 November 1867 – 4 July 1934) was a Polish and naturalised-French physicist and chemist. She shared the 1903 Nobel Prize in Physics with her husband, Pierre Curie, \"for their joint researches on the  radioactivity phenomena discovered by Professor Henri Becquerel\". She won the 1911 Nobel Prize in Chemistry \"[for] the discovery of the elements radium and polonium, by the isolation of radium and the study of the nature and compounds of this remarkable element\". \nCurie was the first woman to win a Nobel Prize, the first person to win a Nobel Prize twice and the only person to win a Nobel Prize in two different scientific fields. She and Pierre were the first married couple to win the Nobel Prize, launching the Curie family legacy of five Nobel Prizes. She was, in 1906, the first woman to become a professor at the University of Paris.\nCurie was born in Warsaw, Russian Empire, where she studied at the clandestine Flying University and began her practical scientific training. In 1891, Curie followed her elder sister Bronisława to study in Paris, where she earned her higher degrees and conducted her subsequent scientific work. In 1895, Curie married Pierre, with whom she conducted pioneering research on radioactivity—a term she coined. In 1906, he died in a Paris street accident."
   },
   {
    "id": "sci-026",
@@ -323,7 +346,8 @@
    "wikiTitle": "Alexander Fleming",
    "difficulty": 1,
    "imageUrl": "https://upload.wikimedia.org/wikipedia/commons/thumb/b/bf/Synthetic_Production_of_Penicillin_TR1468.jpg/960px-Synthetic_Production_of_Penicillin_TR1468.jpg?utm_source=en.wikipedia.org&utm_campaign=api&utm_content=thumbnail",
-   "pageUrl": "https://en.wikipedia.org/wiki/Alexander_Fleming"
+   "pageUrl": "https://en.wikipedia.org/wiki/Alexander_Fleming",
+   "details": "Sir Alexander Fleming (6 August 1881 – 11 March 1955) was a Scottish physician and microbiologist. He shared the 1945 Nobel Prize in Physiology or Medicine with Howard Florey and Ernst Chain \"for the discovery of penicillin and its curative effect in various infectious diseases\".\nThis was the first antibiotic substance discovered. His discovery in 1928 of what was later named benzylpenicillin (or penicillin G) from the mould Penicillium rubens has been described as the \"single greatest victory ever achieved over disease\".\nHe also discovered the enzyme lysozyme from his nasal discharge in 1922, and along with it a bacterium he named Micrococcus lysodeikticus, later renamed Micrococcus luteus.\nFleming was knighted for his scientific achievements in 1944. In 1999, he was named in Time magazine's list of the 100 Most Important People of the 20th century. In 2002, he was included in the BBC's television poll of the 100 Greatest Britons, and in 2009, he was also voted third \"greatest Scot\" in an opinion poll conducted by STV, behind only Robert Burns and William Wallace.\n\n\n== Early life and education ==\nBorn on 6 August 1881 at Lochfield farm near Darvel, in Ayrshire, Scotland, Alexander Fleming was the third of four children of farmer Hugh Fleming and Grace Stirling Morton, the daughter of a neighbouring farmer. Hugh Fleming had four surviving children from his first marriage."
   },
   {
    "id": "sci-027",
@@ -335,7 +359,8 @@
    "wikiTitle": "Rosalind Franklin",
    "difficulty": 2,
    "imageUrl": "https://upload.wikimedia.org/wikipedia/commons/f/fd/Rosalind_Franklin_%28retouched%29.jpg?utm_source=en.wikipedia.org&utm_campaign=api&utm_content=thumbnail_unscaled",
-   "pageUrl": "https://en.wikipedia.org/wiki/Rosalind_Franklin"
+   "pageUrl": "https://en.wikipedia.org/wiki/Rosalind_Franklin",
+   "details": "Rosalind Elsie Franklin (25 July 1920 – 16 April 1958) was an English chemist and X-ray crystallographer. Her work was central to the understanding of the molecular structures of DNA (deoxyribonucleic acid), RNA (ribonucleic acid), viruses, coal, and graphite. Although her works on coal and viruses were appreciated in her lifetime, Franklin's contributions to the discovery of the structure of DNA were largely unrecognised during her life, for which Franklin has been variously referred to as the \"wronged heroine\", the \"dark lady of DNA\", the \"forgotten heroine\", a \"feminist icon\", and the \"Sylvia Plath of molecular biology\". James Watson believed that, had she not died, ideally, Franklin would have been awarded a Nobel Prize in Chemistry.\nFranklin graduated in 1941 with a degree in natural sciences from Newnham College, Cambridge, and then enrolled for a PhD in physical chemistry under Ronald George Wreyford Norrish, the 1920 Chair of Physical Chemistry at the University of Cambridge. Disappointed by Norrish's lack of enthusiasm, she took up a research position under the British Coal Utilisation Research Association (BCURA) in 1942. The research on coal helped Franklin earn a PhD from Cambridge in 1945. Moving to Paris in 1947 as a chercheur (postdoctoral researcher) under Jacques Mering at the Laboratoire Central des Services Chimiques de l'État, she became an accomplished X-ray crystallographer. After joining King's College London in 1951 as a research associate, Franklin discovered some key properties of DNA, which eventually facilitated the correct description of the double helix structure of DNA. Owing to disagreement with her director, John Randall, and her colleague Maurice Wilkins, Franklin moved to Birkbeck College in 1953.\nFranklin is best known for her work on the X-ray diffraction images of DNA while at King's College London, particularly Photo 51, taken by her student Raymond Gosling, which led to the discovery of the DNA double helix for which Francis Crick, James Watson, and Maurice Wilkins shared the Nobel Prize in Physiology or Medicine in 1962."
   },
   {
    "id": "sci-028",
@@ -348,7 +373,8 @@
    "wikiTitle": "Dmitri Mendeleev",
    "difficulty": 2,
    "imageUrl": "https://upload.wikimedia.org/wikipedia/commons/thumb/a/af/Dmitri_Mendeleev.jpg/960px-Dmitri_Mendeleev.jpg?utm_source=en.wikipedia.org&utm_campaign=api&utm_content=thumbnail",
-   "pageUrl": "https://en.wikipedia.org/wiki/Dmitri_Mendeleev"
+   "pageUrl": "https://en.wikipedia.org/wiki/Dmitri_Mendeleev",
+   "details": "Dmitri Ivanovich Mendeleev ( MEN-dəl-AY-əf; 8 February [O.S. 27 January] 1834 – 2 February [O.S. 20 January] 1907) was a Russian chemist known for formulating the periodic law and creating a version of the periodic table of elements. He used the periodic law not only to correct the then-accepted properties of some known elements, such as the valence and atomic weight of uranium, but also to predict the properties of three elements that were yet to be discovered (germanium, gallium, and scandium). The synthetic element mendelevium is named in his honor.  \n\n\n== Early life ==\n\nMendeleev was born in the village of Verkhnie Aremzyani, near Tobolsk in Siberia, to Ivan Pavlovich Mendeleev (1783–1847) and Maria Dmitrievna Mendeleeva (née Kornilieva) (1793–1850). Ivan worked as a school principal and a teacher of fine arts, politics and philosophy at the Tambov and Saratov gymnasiums. Ivan's father, Pavel Maximovich Sokolov, was a Russian Orthodox priest from the Tver region. As per the tradition of priests of that time, Pavel's children were given new family names while attending the theological seminary, with Ivan getting the family name Mendeleev after the name of a local landlord.\nMaria Kornilieva came from a well-known family of Tobolsk merchants, founders of the first Siberian printing house who traced their ancestry to Yakov Korniliev, a 17th-century posad man turned a wealthy merchant. In 1889, a local librarian published an article in the Tobolsk newspaper where he claimed that Yakov was a baptized Teleut, an ethnic minority known as \"white Kalmyks\" at the time. Since no sources were provided and no documented facts of Yakov's life were ever revealed, biographers generally dismiss it as a myth."
   },
   {
    "id": "sci-029",
@@ -360,7 +386,8 @@
    "wikiTitle": "Nicolaus Copernicus",
    "difficulty": 2,
    "imageUrl": "https://upload.wikimedia.org/wikipedia/commons/thumb/e/e2/Nikolaus_Kopernikus_MOT.jpg/960px-Nikolaus_Kopernikus_MOT.jpg?utm_source=en.wikipedia.org&utm_campaign=api&utm_content=thumbnail",
-   "pageUrl": "https://en.wikipedia.org/wiki/Nicolaus_Copernicus"
+   "pageUrl": "https://en.wikipedia.org/wiki/Nicolaus_Copernicus",
+   "details": "Nicolaus Copernicus (19 February 1473 – 24 May 1543) was a Renaissance polymath who formulated a model of the universe that placed the Sun rather than Earth at its center. The publication of Copernicus's model in his book De revolutionibus orbium coelestium (On the Revolutions of the Celestial Spheres), just before his death in 1543, was a major event in the history of science, triggering the Copernican Revolution and making a pioneering contribution to the Scientific Revolution. Though a similar heliocentric model had been developed eighteen centuries earlier by Aristarchus of Samos, an ancient Greek astronomer, Copernicus likely arrived at his model independently.\nCopernicus was born and died in Royal Prussia, a semi-autonomous and multilingual region created within the Crown of the Kingdom of Poland from lands regained from the Teutonic Order after the Thirteen Years' War.\nA polyglot and polymath, he obtained a doctorate in canon law and was a mathematician, astronomer, physician, classics scholar, translator, governor, diplomat, and economist. From 1497 he was a Warmian Cathedral chapter canon. In 1517 he derived a quantity theory of money—a key concept in economics—and in 1519 he formulated an economic principle that later came to be called Gresham's law.\n\n\n== Life ==\n\nNicolaus Copernicus was born on 19 February 1473 in the city of Toruń (Thorn), in the province of Royal Prussia, in the Crown of the Kingdom of Poland, to German-speaking parents.\nHis father was a merchant from Kraków and his mother was the daughter of a wealthy Toruń merchant. Nicolaus was the youngest of four children."
   },
   {
    "id": "sci-030",
@@ -372,7 +399,8 @@
    "wikiTitle": "Johannes Kepler",
    "difficulty": 2,
    "imageUrl": "https://upload.wikimedia.org/wikipedia/commons/7/74/JKepler.jpg?utm_source=en.wikipedia.org&utm_campaign=api&utm_content=thumbnail_unscaled",
-   "pageUrl": "https://en.wikipedia.org/wiki/Johannes_Kepler"
+   "pageUrl": "https://en.wikipedia.org/wiki/Johannes_Kepler",
+   "details": "Johannes Kepler (27 December 1571 – 15 November 1630) was a German polymath who was an astronomer, mathematician, astrologer, natural philosopher and music theorist. He is a key figure in the 17th-century Scientific Revolution, best known for his laws of planetary motion, and his books Astronomia nova, Harmonice Mundi, and Epitome Astronomiae Copernicanae. The variety and impact of his work made Kepler one of the founders and fathers of modern astronomy, the scientific method, natural science, and modern science. He has been described as the \"father of science fiction\" for his novel Somnium.\nKepler was a mathematics teacher at a seminary school in Graz, where he became an associate of Prince Hans Ulrich von Eggenberg. Later he became an assistant to the astronomer Tycho Brahe in Prague, and eventually the imperial mathematician to Emperor Rudolf II and his two successors Matthias and Ferdinand II. He also taught mathematics in Linz, and was an adviser to General Wallenstein.\nKepler lived in an era when there was no clear distinction between astronomy and astrology, but there was a strong division between astronomy (a branch of mathematics within the liberal arts) and physics (a branch of natural philosophy). Kepler also incorporated religious arguments and reasoning into his work, motivated by the religious conviction and belief that God had created the world according to an intelligible plan that is accessible through the natural light of reason. Kepler described his new astronomy as \"celestial physics\", as \"an excursion into Aristotle's Metaphysics\", and as \"a supplement to Aristotle's On the Heavens\", transforming the ancient tradition of physical cosmology by treating astronomy as part of a universal mathematical physics. Additionally, he did fundamental work in the field of optics, being named the father of modern optics, in particular for his Astronomiae pars optica."
   },
   {
    "id": "sci-031",
@@ -384,7 +412,8 @@
    "wikiTitle": "Gregor Mendel",
    "difficulty": 2,
    "imageUrl": "https://upload.wikimedia.org/wikipedia/commons/thumb/b/ba/Gregor_Mendel_2.jpg/960px-Gregor_Mendel_2.jpg?utm_source=en.wikipedia.org&utm_campaign=api&utm_content=thumbnail",
-   "pageUrl": "https://en.wikipedia.org/wiki/Gregor_Mendel"
+   "pageUrl": "https://en.wikipedia.org/wiki/Gregor_Mendel",
+   "details": "Gregor Johann Mendel (; German: [ˈmɛndl̩]; Czech: Řehoř Jan Mendel; 20 July 1822 – 6 January 1884) was an Austrian biologist, meteorologist, mathematician, Augustinian friar and abbot of St. Thomas' Abbey in Brno (Brünn), Margraviate of Moravia. Mendel was born in a German-speaking family in the Silesian part of the Austrian Empire (today's Czech Republic) and gained posthumous recognition as the founder of the modern science of genetics. Though farmers had known for millennia that crossbreeding of animals and plants could favor certain desirable traits, Mendel's pea plant experiments conducted between 1856 and 1863 established many of the rules of heredity, now referred to as the laws of Mendelian inheritance.\nMendel worked with seven characteristics of pea plants: plant height, pod shape and colour, seed shape and colour, and flower position and colour. Taking seed colour as an example, Mendel showed that when a true-breeding yellow pea and a true-breeding green pea were cross-bred, their offspring always produced yellow seeds. However, in the next generation, the green peas reappeared at a ratio of 1 green to 3 yellow. To explain this phenomenon, Mendel coined the terms \"recessive\" and \"dominant\" in reference to certain traits. In the preceding example, the green trait, which seems to have vanished in the first filial generation, is recessive, and the yellow is dominant. He published his work in 1866, demonstrating the actions of invisible \"factors\"—now called genes—in predictably determining the traits of an organism."
   },
   {
    "id": "sci-032",
@@ -396,7 +425,8 @@
    "wikiTitle": "Louis Pasteur",
    "difficulty": 1,
    "imageUrl": "https://upload.wikimedia.org/wikipedia/commons/thumb/a/a6/Louis_Pasteur%2C_foto_av_Paul_Nadar%2C_Crisco_edit.jpg/960px-Louis_Pasteur%2C_foto_av_Paul_Nadar%2C_Crisco_edit.jpg?utm_source=en.wikipedia.org&utm_campaign=api&utm_content=thumbnail",
-   "pageUrl": "https://en.wikipedia.org/wiki/Louis_Pasteur"
+   "pageUrl": "https://en.wikipedia.org/wiki/Louis_Pasteur",
+   "details": "Louis Pasteur (; French: [lwi pastœʁ] ; 27 December 1822 – 28 September 1895) was a French chemist, pharmacist, and microbiologist renowned for his discoveries of the principles of vaccination, microbial fermentation, and pasteurization, the last of which was named after him. His research in chemistry led to remarkable breakthroughs in the understanding of the causes and prevention of diseases, which laid down the foundations of hygiene, public health and much of modern medicine. Pasteur's works are credited with saving millions of lives through the development of vaccines for rabies and anthrax. He is regarded as one of the founders of modern bacteriology and has been honored as the \"father of bacteriology\" and the \"father of microbiology\" (together with Robert Koch; the latter epithet also attributed to Antonie van Leeuwenhoek).\nPasteur was responsible for disproving the doctrine of spontaneous generation. Under the auspices of the French Academy of Sciences, his experiment demonstrated that in sterilized and sealed flasks, nothing ever developed; conversely, in sterilized but open flasks, microorganisms could grow. For this experiment, the academy awarded him the Alhumbert Prize carrying 2,500 francs in 1862.\nPasteur is also regarded as one of the fathers of the germ theory of diseases, which was a minor medical concept at the time. His many experiments showed that diseases could be prevented by killing or stopping germs, thereby directly supporting the germ theory and its application in clinical medicine. He is best known to the general public for his invention of the technique of treating milk and wine to stop bacterial contamination, a process now called pasteurization."
   },
   {
    "id": "sci-033",
@@ -408,7 +438,8 @@
    "wikiTitle": "Nikola Tesla",
    "difficulty": 1,
    "imageUrl": "https://upload.wikimedia.org/wikipedia/commons/7/79/Tesla_circa_1890.jpeg?utm_source=en.wikipedia.org&utm_campaign=api&utm_content=thumbnail_unscaled",
-   "pageUrl": "https://en.wikipedia.org/wiki/Nikola_Tesla"
+   "pageUrl": "https://en.wikipedia.org/wiki/Nikola_Tesla",
+   "details": "Nikola Tesla (10 July 1856 – 7 January 1943) was a Serbian-American engineer, futurist, and inventor. He is known for his contributions to the design of the modern alternating current (AC) electricity supply system.\nBorn and raised in the Austro-Hungarian Empire, Tesla first studied engineering and physics in the 1870s without receiving a degree. He then gained practical experience in the early 1880s working in telephony and at Continental Edison in the new electric power industry. In 1884, he migrated to the United States, where he became a naturalized citizen. He worked for a short time at the Edison Machine Works in New York City before he struck out on his own. With the help of partners to finance and market his ideas, Tesla set up laboratories and companies in New York to develop a range of electrical and mechanical devices. His AC induction motor and related polyphase AC patents, licensed by Westinghouse Electric in 1888, earned him a considerable amount of money and became the cornerstone of the polyphase system, which Westinghouse marketed.\nTesla conducted a range of experiments with mechanical oscillators/generators, electrical discharge tubes, and early X-ray imaging among other things, in an attempt to develop inventions he could patent and market. He built a wirelessly controlled boat, one of the first wirelessly controlled vehicles ever produced."
   },
   {
    "id": "sci-034",
@@ -420,7 +451,8 @@
    "wikiTitle": "Stephen Hawking",
    "difficulty": 1,
    "imageUrl": "https://upload.wikimedia.org/wikipedia/commons/e/eb/Stephen_Hawking.StarChild.jpg?utm_source=en.wikipedia.org&utm_campaign=api&utm_content=thumbnail_unscaled",
-   "pageUrl": "https://en.wikipedia.org/wiki/Stephen_Hawking"
+   "pageUrl": "https://en.wikipedia.org/wiki/Stephen_Hawking",
+   "details": "Stephen William Hawking (8 January 1942 – 14 March 2018) was an English theoretical astrophysicist, cosmologist, and author who was director of research at the Centre for Theoretical Cosmology at the University of Cambridge. Between 1979 and 2009, he was the Lucasian Professor of Mathematics at Cambridge, widely viewed as one of the most prestigious academic posts in the world.\nHawking was born in Oxford into a family of physicians. In 1959, at the age of 17, he began his university education at University College, Oxford, where he received a first-class BA degree in physics. In 1962, he began his graduate work at Trinity Hall, Cambridge, where, in 1966, he obtained his PhD in applied mathematics and theoretical physics, specialising in general relativity and cosmology. In 1963, at age 21, Hawking was diagnosed with an early-onset slow-progressing form of motor neurone disease that gradually, over decades, paralysed him. After the loss of his speech, he communicated through a speech-generating device, initially through use of a handheld switch, and eventually by using a single cheek muscle.\nHawking's scientific works included a collaboration with Roger Penrose on gravitational singularity theorems in the framework of general relativity, and the theoretical prediction that black holes emit radiation, often called Hawking radiation. Initially, Hawking radiation was controversial. By the late 1970s, and following the publication of further research, the discovery was widely accepted as a major breakthrough in theoretical physics."
   },
   {
    "id": "sci-035",
@@ -447,7 +479,8 @@
    "wikiTitle": "Edward Jenner",
    "difficulty": 2,
    "imageUrl": "https://upload.wikimedia.org/wikipedia/commons/thumb/b/be/Edward_Jenner.jpg/960px-Edward_Jenner.jpg?utm_source=en.wikipedia.org&utm_campaign=api&utm_content=thumbnail",
-   "pageUrl": "https://en.wikipedia.org/wiki/Edward_Jenner"
+   "pageUrl": "https://en.wikipedia.org/wiki/Edward_Jenner",
+   "details": "Edward Jenner (17 May 1749 – 26 January 1823) was an English physician and scientist who pioneered the concept of vaccines and created the smallpox vaccine, the world's first vaccine. The terms vaccine and vaccination are derived from Variolae vaccinae (\"pustules of the cow\"), the term devised by Jenner to denote cowpox. He used it in 1798 in the title of his Inquiry into the Variolae vaccinae known as the Cow Pox, in which Jenner described the protective effect of cowpox against smallpox.\nJenner is often called \"the father of immunology\", and his work is said to have saved \"more lives than any other man\". In Jenner's time, smallpox killed around 10% of the global population, with the number as high as 20% in towns and cities where infection spread more easily. In 1821, he was appointed physician to King George IV, and was also made mayor of Berkeley and justice of the peace. Jenner was a member of the Royal Society. In the field of zoology, he was among the first modern scholars to describe the brood parasitism of the cuckoo (Aristotle also noted this behaviour in his History of Animals). In 2002, Jenner was named in the BBC's list of the 100 Greatest Britons.\n\n\n== Early life ==\nEdward Jenner was born on 17 May 1749 in Berkeley, Gloucestershire, England, as the eighth of nine children."
   },
   {
    "id": "sci-037",
@@ -459,7 +492,8 @@
    "wikiTitle": "Human skin",
    "difficulty": 1,
    "imageUrl": "https://upload.wikimedia.org/wikipedia/commons/1/13/Human_skin_structure.jpg?utm_source=en.wikipedia.org&utm_campaign=api&utm_content=thumbnail_unscaled",
-   "pageUrl": "https://en.wikipedia.org/wiki/Human_skin"
+   "pageUrl": "https://en.wikipedia.org/wiki/Human_skin",
+   "details": "The human skin is the outer covering of the body and is the largest organ of the integumentary system.  The skin has up to seven layers of ectodermal tissue guarding muscles, bones, ligaments and internal organs. Human skin is similar to most of the other mammals' skin, and it is very similar to pig skin. Though nearly all human skin is covered with hair follicles, it can appear hairless. There are two general types of skin: hairy and glabrous skin (hairless).  The adjective cutaneous literally means \"of the skin\" (from Latin cutis, skin).\nSkin plays an important immunity role in protecting the body against pathogens and excessive water loss. Its other functions are insulation, temperature regulation, sensation, synthesis of vitamin D, and the protection of vitamin B folates. Severely damaged skin will try to heal by forming scar tissue. This is often discoloured and depigmented."
   },
   {
    "id": "sci-038",
@@ -471,7 +505,8 @@
    "wikiTitle": "Liver",
    "difficulty": 1,
    "imageUrl": "https://upload.wikimedia.org/wikipedia/commons/1/15/Anatomy_Abdomen_Tiesworks.jpg?utm_source=en.wikipedia.org&utm_campaign=api&utm_content=thumbnail_unscaled",
-   "pageUrl": "https://en.wikipedia.org/wiki/Liver"
+   "pageUrl": "https://en.wikipedia.org/wiki/Liver",
+   "details": "The liver is a major metabolic organ exclusively found in vertebrates, which performs many essential biological functions such as detoxification of the organism, and the synthesis of various proteins and various other biochemicals necessary for digestion and growth. In humans, it is located in the right upper quadrant of the abdomen, below the diaphragm and mostly shielded by the lower right rib cage. Its other metabolic roles include carbohydrate metabolism, the production of a number of hormones, conversion and storage of nutrients such as glucose and glycogen, and the decomposition of red blood cells. Anatomical and medical terminology often use the prefix hepat- from ἡπατο-, from the Greek word for liver, such as hepatology, and hepatitis.\nThe liver is also an accessory digestive organ that produces bile, an alkaline fluid containing cholesterol and bile acids, which emulsifies and aids the break up of dietary fat. The gallbladder, a small hollow pouch that sits just under the right lobe of liver, stores and concentrates the bile produced by the liver, which is later excreted to the duodenum to help with digestion. The liver's highly specialized tissue, consisting mostly of hepatocytes, regulates a wide variety of high-volume biochemical reactions, including the synthesis and breakdown of small and complex organic molecules, many of which are necessary for normal vital functions. Estimates regarding the organ's total number of functions vary, but is generally cited as being around 500. For this reason, the liver has sometimes been described as the body's chemical factory.\nIt is not known how to compensate for the absence of liver function in the long term, although liver dialysis techniques can be used in the short term."
   },
   {
    "id": "sci-039",
@@ -484,7 +519,8 @@
    "wikiTitle": "Stapes",
    "difficulty": 2,
    "imageUrl": "https://upload.wikimedia.org/wikipedia/commons/thumb/d/d5/Stapes_bone_svg_hariadhi.svg/960px-Stapes_bone_svg_hariadhi.svg.png?utm_source=en.wikipedia.org&utm_campaign=api&utm_content=thumbnail",
-   "pageUrl": "https://en.wikipedia.org/wiki/Stapes"
+   "pageUrl": "https://en.wikipedia.org/wiki/Stapes",
+   "details": "The stapes or stirrup is a bone in the middle ear of humans and other tetrapods which is involved in the conduction of sound vibrations to the inner ear. This bone is connected to the oval window by its annular ligament, which allows the footplate (or base) to transmit sound energy through the oval window into the inner ear. The stapes is the smallest and lightest bone in the human body, and is so called because of its resemblance to a stirrup (Latin: stapes).\n\n\n== Structure ==\n\nThe stapes is the third bone of the three ossicles in the middle ear and the smallest in the human body. It measures roughly 2 to 3 mm, greater along the head-base span. It rests on the oval window, to which it is connected by an annular ligament and articulates with the incus, or anvil through the incudostapedial joint. They are connected by anterior and posterior limbs (Latin: crura).  \n\n\n=== Development ===\nThe stapes develops from the second pharyngeal arch during the sixth to eighth week of embryological development in humans. The central cavity of the stapes, the obturator foramen, is due to the presence embryologically of the stapedial artery, which usually regresses in humans during normal development.\n\n\n=== Animals ===\n\nThe stapes is one of three ossicles in mammals."
   },
   {
    "id": "sci-040",
@@ -509,7 +545,8 @@
    "wikiTitle": "Pancreas",
    "difficulty": 2,
    "imageUrl": "https://upload.wikimedia.org/wikipedia/commons/thumb/7/7e/Blausen_0699_PancreasAnatomy2.png/960px-Blausen_0699_PancreasAnatomy2.png?utm_source=en.wikipedia.org&utm_campaign=api&utm_content=thumbnail",
-   "pageUrl": "https://en.wikipedia.org/wiki/Pancreas"
+   "pageUrl": "https://en.wikipedia.org/wiki/Pancreas",
+   "details": "The pancreas (plural pancreases, or pancreata) is an organ of the digestive system and endocrine system of vertebrates. In humans, it is located in the abdomen behind the stomach and functions as a gland. The pancreas is a mixed or heterocrine gland, i.e., it has both an endocrine and a digestive exocrine function. Ninety-nine percent of the pancreas is exocrine and 1% is endocrine. As an endocrine gland, it functions mostly to regulate blood sugar levels, secreting the hormones insulin, glucagon, somatostatin and pancreatic polypeptide. As a part of the digestive system, it functions as an exocrine gland secreting pancreatic juice into the duodenum through the pancreatic duct. This juice contains bicarbonate, which neutralizes acid entering the duodenum from the stomach; and digestive enzymes, which break down carbohydrates, proteins, and fats in food entering the duodenum from the stomach.\nInflammation of the pancreas is known as pancreatitis; common causes include chronic alcohol use and gallstones. Because of its role in the regulation of blood sugar, the pancreas is also a key organ in diabetes. Pancreatic cancer can arise following chronic pancreatitis or due to other reasons, and it carries a very poor prognosis, as it is often identified only after it has spread to other areas of the body."
   },
   {
    "id": "sci-042",
@@ -521,7 +558,8 @@
    "wikiTitle": "Kidney",
    "difficulty": 1,
    "imageUrl": "https://upload.wikimedia.org/wikipedia/commons/thumb/d/d6/Blausen_0592_KidneyAnatomy_01.png/960px-Blausen_0592_KidneyAnatomy_01.png?utm_source=en.wikipedia.org&utm_campaign=api&utm_content=thumbnail",
-   "pageUrl": "https://en.wikipedia.org/wiki/Kidney"
+   "pageUrl": "https://en.wikipedia.org/wiki/Kidney",
+   "details": "In humans, the kidneys are two reddish-brown bean-shaped blood-filtering organs that are a multilobar, multipapillary form of mammalian kidneys, usually without signs of external lobulation. They are located on the left and right in the retroperitoneal space, and in adult humans are about 12 centimetres (4+1⁄2 inches) in length. They receive blood from the paired renal arteries; blood exits into the paired renal veins. Each kidney is attached to a ureter, a tube that carries excreted urine to the bladder.\nThe kidney participates in the control of the volume of various body fluids, fluid osmolality, acid–base balance, various electrolyte concentrations, and removal of toxins. Filtration occurs in the glomerulus: one-fifth of the blood volume that enters the kidneys is filtered. Examples of substances reabsorbed are solute-free water, sodium, bicarbonate, glucose, and amino acids. Examples of substances secreted are hydrogen, ammonium, potassium and uric acid. The nephron is the structural and functional unit of the kidney. Each adult human kidney contains around 1 million nephrons, while a mouse kidney contains only about 12,500 nephrons."
   },
   {
    "id": "sci-043",
@@ -533,7 +571,8 @@
    "wikiTitle": "Hemoglobin",
    "difficulty": 2,
    "imageUrl": "https://upload.wikimedia.org/wikipedia/commons/thumb/3/3d/1GZX_Haemoglobin.png/960px-1GZX_Haemoglobin.png?utm_source=en.wikipedia.org&utm_campaign=api&utm_content=thumbnail",
-   "pageUrl": "https://en.wikipedia.org/wiki/Hemoglobin"
+   "pageUrl": "https://en.wikipedia.org/wiki/Hemoglobin",
+   "details": "Hemoglobin (haemoglobin, Hb or Hgb) is a protein containing iron that facilitates the transportation of oxygen in red blood cells. Almost all vertebrates contain hemoglobin, with the sole exception of the fish family Channichthyidae. Hemoglobin in the blood carries oxygen from the respiratory organs (lungs or gills) to the other tissues of the body, where it releases the oxygen to enable aerobic respiration which powers an animal's metabolism. A healthy human has 12 to 20 grams of hemoglobin in every 100 mL of blood. Hemoglobin is a metalloprotein, a chromoprotein, and a globulin.\nIn mammals, hemoglobin makes up about 96% of a red blood cell's dry weight (excluding water), and around 35% of the total weight (including water). Hemoglobin has an oxygen-binding capacity of 1.34 mL of O2 per gram, which increases the total blood oxygen capacity seventy-fold compared to dissolved oxygen in blood plasma alone. The mammalian hemoglobin molecule can bind and transport up to four oxygen molecules.\nHemoglobin also transports other gases. It carries off some of the body's respiratory carbon dioxide (about 20–25% of the total) as carbaminohemoglobin, in which CO2 binds to the heme protein."
   },
   {
    "id": "sci-044",
@@ -545,7 +584,8 @@
    "wikiTitle": "Human brain",
    "difficulty": 1,
    "imageUrl": "https://upload.wikimedia.org/wikipedia/commons/thumb/8/89/Brain_autopsy_lateral_view.jpg/960px-Brain_autopsy_lateral_view.jpg?utm_source=en.wikipedia.org&utm_campaign=api&utm_content=thumbnail",
-   "pageUrl": "https://en.wikipedia.org/wiki/Human_brain"
+   "pageUrl": "https://en.wikipedia.org/wiki/Human_brain",
+   "details": "The human brain is the central organ of the nervous system, and with the spinal cord, comprises the central nervous system. It consists of the cerebrum, the brainstem and the cerebellum. The brain controls most of the activities of the body, processing, integrating, and coordinating the information it receives from the sensory nervous system. The brain integrates sensory information and coordinates instructions sent to the rest of the body.\nThe cerebrum, the largest part of the human brain, consists of two cerebral hemispheres. Each hemisphere has an inner core composed of white matter, and an outer surface – the cerebral cortex – composed of grey matter. The cortex has an outer layer, the neocortex, and an inner allocortex. The neocortex is made up of six neuronal layers, while the allocortex has three or four. Each hemisphere is divided into four lobes – the frontal, parietal, temporal, and occipital lobes. The frontal lobe is associated with executive functions including self-control, planning, reasoning, and abstract thought, while the occipital lobe is dedicated to vision."
   },
   {
    "id": "sci-045",
@@ -558,7 +598,8 @@
    "wikiTitle": "Human skeleton",
    "difficulty": 1,
    "imageUrl": "https://upload.wikimedia.org/wikipedia/commons/1/14/Human-Skeleton.jpg?utm_source=en.wikipedia.org&utm_campaign=api&utm_content=thumbnail_unscaled",
-   "pageUrl": "https://en.wikipedia.org/wiki/Human_skeleton"
+   "pageUrl": "https://en.wikipedia.org/wiki/Human_skeleton",
+   "details": "The human skeleton is the internal framework of the human body. It is composed of around 270 bones at birth – this total decreases to around 206 bones by adulthood after some bones fuse together, not counting accessory bones. The bone mass in the skeleton makes up about 14% of the total body weight (ca. 10–11 kg for an average person) and reaches maximum mass between the ages of 25 and 30. The human skeleton can be divided into the axial skeleton and the appendicular skeleton. The axial skeleton is formed by the spinal column, the rib cage, the skull, and associated bones. The appendicular skeleton, which is attached to the axial skeleton, is formed by the shoulder girdle, the pelvic girdle and the bones of the upper and lower limbs.\nThe human skeleton performs six major functions: support, movement, protection, production of blood cells, storage of minerals, and endocrine regulation.\nThe human skeleton is not as sexually dimorphic as that of many other primate species, but subtle differences between sexes in the morphology of the skull, dentition, long bones, and pelvis exist. In general, female skeletal elements tend to be smaller and less robust than corresponding male elements within a given population."
   },
   {
    "id": "sci-046",
@@ -570,7 +611,8 @@
    "wikiTitle": "Heart",
    "difficulty": 1,
    "imageUrl": "https://upload.wikimedia.org/wikipedia/commons/1/1b/Heart_anterior_exterior_view.png?utm_source=en.wikipedia.org&utm_campaign=api&utm_content=thumbnail_unscaled",
-   "pageUrl": "https://en.wikipedia.org/wiki/Heart"
+   "pageUrl": "https://en.wikipedia.org/wiki/Heart",
+   "details": "The heart is a muscular organ found in humans and other animals. This organ pumps blood through the blood vessels. The heart and blood vessels together make up the circulatory system. The pumped blood carries oxygen and nutrients to the tissue, while carrying metabolic waste such as carbon dioxide to the lungs. In humans, the heart is approximately the size of a closed fist and is located between the lungs, in the middle compartment of the chest, called the mediastinum.\nIn humans, the heart is divided into four chambers: upper left and right atria and lower left and right ventricles. Commonly, the right atrium and ventricle are referred together as the right heart and their left counterparts as the left heart. In a healthy heart, blood flows one way through the heart due to heart valves, which prevent backflow. The heart is enclosed in a protective sac, the pericardium, which also contains a small amount of fluid. The wall of the heart is made up of three layers: epicardium, myocardium, and endocardium."
   },
   {
    "id": "sci-047",
@@ -582,7 +624,8 @@
    "wikiTitle": "Solar System",
    "difficulty": 1,
    "imageUrl": "https://upload.wikimedia.org/wikipedia/commons/thumb/2/28/Solar_System_True_Color_EN.png/960px-Solar_System_True_Color_EN.png?utm_source=en.wikipedia.org&utm_campaign=api&utm_content=thumbnail",
-   "pageUrl": "https://en.wikipedia.org/wiki/Solar_System"
+   "pageUrl": "https://en.wikipedia.org/wiki/Solar_System",
+   "details": "The Solar System is the gravitationally bound system of the Sun and the masses that orbit it, most prominently its eight planets, of which Earth is one. The Solar System is an isolated single-star planetary system (not part of a larger star system) within the Milky Way Galaxy. The system formed about 4.6 billion years ago when a dense region of a molecular cloud collapsed, creating the Sun and a protoplanetary disc from which the orbiting bodies assembled.\nThe Sun accounts for 99.86% of the Solar System's total mass. Inside the Sun's core, hydrogen is fused into helium, releasing energy that is emitted through the Sun's photosphere. This creates the heliosphere and a decreasing temperature gradient across the Solar System.\nThe next most massive objects of the system are the eight planets, which by definition dominate the orbits they occupy. Closest to the Sun in order of increasing distance are the terrestrial planets – Mercury, Venus, Earth and Mars. These four planets are part of the inner Solar System. Earth and Mars are the only planets that orbit within the Sun's habitable zone, in which sunlight can keep surface water liquid under atmospheric pressure."
   },
   {
    "id": "sci-048",
@@ -594,7 +637,8 @@
    "wikiTitle": "Chromosome",
    "difficulty": 2,
    "imageUrl": "https://upload.wikimedia.org/wikipedia/commons/thumb/d/d0/Chromosome_DNA_Gene_unannotated.svg/960px-Chromosome_DNA_Gene_unannotated.svg.png?utm_source=en.wikipedia.org&utm_campaign=api&utm_content=thumbnail",
-   "pageUrl": "https://en.wikipedia.org/wiki/Chromosome"
+   "pageUrl": "https://en.wikipedia.org/wiki/Chromosome",
+   "details": "A chromosome is a package of DNA containing part or all of the genetic material of an organism. In most chromosomes, the very long thin DNA fibers are coated with nucleosome-forming packaging proteins; in eukaryotic cells, the most important of these proteins are the histones. Aided by chaperone proteins, the histones bind to and condense the DNA molecule to maintain its integrity. These eukaryotic chromosomes display a complex three-dimensional structure that has a significant role in transcriptional regulation.\nNormally, chromosomes are visible under a light microscope only during the metaphase of cell division, where all chromosomes are aligned in the center of the cell in their condensed form. Before this stage occurs, each chromosome is duplicated (S phase), and the two copies are joined by a centromere—resulting in either an X-shaped structure if the centromere is located equatorially, or a two-armed structure if the centromere is located distally; the joined copies are called 'sister chromatids'. During metaphase, the duplicated structure (called a 'metaphase chromosome') is highly condensed and thus easiest to distinguish and study. In animal cells, chromosomes reach their highest compaction level in anaphase during chromosome segregation.\nChromosomal recombination during meiosis and subsequent sexual reproduction plays a crucial role in genetic diversity. If these structures are manipulated incorrectly, through processes known as chromosomal instability and translocation, the cell may undergo mitotic catastrophe."
   },
   {
    "id": "sci-049",
@@ -606,7 +650,8 @@
    "wikiTitle": "Periodic table",
    "difficulty": 2,
    "imageUrl": "https://upload.wikimedia.org/wikipedia/commons/thumb/f/f5/Colour_18-col_PT_with_labels.svg/960px-Colour_18-col_PT_with_labels.svg.png?utm_source=en.wikipedia.org&utm_campaign=api&utm_content=thumbnail",
-   "pageUrl": "https://en.wikipedia.org/wiki/Periodic_table"
+   "pageUrl": "https://en.wikipedia.org/wiki/Periodic_table",
+   "details": "The periodic table, also known as the periodic table of the elements, is an ordered arrangement of the chemical elements into rows (\"periods\") and columns (\"groups\"). An icon of chemistry, the periodic table is widely used in physics and other sciences. It is a depiction of the periodic law, which states that when the elements are arranged in order of their atomic numbers an approximate recurrence of their properties is evident. The table is divided into four roughly rectangular areas called blocks. Elements in the same group tend to show similar chemical characteristics.\nVertical, horizontal and diagonal trends characterize the periodic table. Metallic character increases going down a group and from right to left across a period. Nonmetallic character increases going from the bottom left of the periodic table to the top right.\nThe first periodic table to become generally accepted was that of the Russian chemist Dmitri Mendeleev in 1869; he formulated the periodic law as a dependence of chemical properties on atomic mass. As not all elements were then known, there were gaps in his periodic table, and Mendeleev successfully used the periodic law to predict some properties of some of the missing elements."
   },
   {
    "id": "sci-050",
@@ -619,7 +664,8 @@
    "wikiTitle": "Gravity",
    "difficulty": 1,
    "imageUrl": "https://upload.wikimedia.org/wikipedia/commons/thumb/1/14/UGC_1810_and_UGC_1813_in_Arp_273_%28captured_by_the_Hubble_Space_Telescope%29.jpg/960px-UGC_1810_and_UGC_1813_in_Arp_273_%28captured_by_the_Hubble_Space_Telescope%29.jpg?utm_source=en.wikipedia.org&utm_campaign=api&utm_content=thumbnail",
-   "pageUrl": "https://en.wikipedia.org/wiki/Gravity"
+   "pageUrl": "https://en.wikipedia.org/wiki/Gravity",
+   "details": "In physics, gravity (from Latin  gravitas 'weight'), also known as gravitation or a gravitational interaction, is a fundamental interaction, which may be described as the force that draws material objects towards each other.\nThe gravitational attraction between clouds of primordial hydrogen and clumps of dark matter in the early universe caused the hydrogen gas to coalesce, eventually condensing and fusing to form stars. At larger scales this resulted in galaxies and clusters, so gravity is a primary driver for the large-scale structures in the universe. Gravity has an infinite range, although its effects become weaker as objects get farther away.\nGravity is described by the general theory of relativity, proposed by Albert Einstein in 1915, which describes gravity in terms of the curvature of spacetime, caused by the uneven distribution of mass. The most extreme example of this curvature of spacetime is a black hole, from which nothing—not even light—can escape once past the black hole's event horizon. However, for most applications, gravity is sufficiently well approximated by Newton's law of universal gravitation, which describes gravity as an attractive force between any two bodies that is proportional to the product of their masses and inversely proportional to the square of the distance between them.\nScientists are looking for a theory that describes gravity in the framework of quantum mechanics (quantum gravity), which would unify gravity and the other known fundamental interactions of physics in a single mathematical framework (a theory of everything).\nOn the surface of a planetary body such as on Earth, the force of gravity operates towards the center of the body and is modified by the centrifugal effects arising from the rotation of the body. In this context, gravity gives weight to physical objects and is essential to understanding the mechanisms that are responsible for surface water waves, lunar tides and substantially contributes to weather patterns."
   },
   {
    "id": "sci-051",
@@ -631,7 +677,8 @@
    "wikiTitle": "Entropy",
    "difficulty": 2,
    "imageUrl": "https://upload.wikimedia.org/wikipedia/commons/thumb/2/22/Carnot_heat_engine_2.svg/960px-Carnot_heat_engine_2.svg.png?utm_source=en.wikipedia.org&utm_campaign=api&utm_content=thumbnail",
-   "pageUrl": "https://en.wikipedia.org/wiki/Entropy"
+   "pageUrl": "https://en.wikipedia.org/wiki/Entropy",
+   "details": "Entropy is a thermodynamic state variable that quantifies the probabilistic distribution of accessible microstates in a system. The term and the concept are used in diverse fields, from classical thermodynamics (where it was first recognized), to the microscopic description of nature in statistical physics, and the principles of information theory. It has far-ranging applications in chemistry and physics, in biological systems and their relation to life, in cosmology, economics, and information systems including the transmission of information in telecommunication.\nEntropy is central to the second law of thermodynamics, which states that the entropy of an isolated system left to spontaneous evolution cannot decrease with time. As a result, isolated systems evolve toward thermodynamic equilibrium, where the entropy is highest. \"High\" entropy means that energy is more disordered or dispersed, while \"low\" entropy means that energy is more ordered or concentrated. A consequence of the second law of thermodynamics is that certain processes are irreversible.\nThe thermodynamic concept was referred to by Scottish scientist and engineer William Rankine in 1850 with the names thermodynamic function and heat-potential. In 1865, German physicist Rudolf Clausius, one of the leading founders of the field of thermodynamics, defined it as the quotient of an infinitesimal amount of heat to the instantaneous temperature. He initially described it as transformation-content, in German Verwandlungsinhalt, and later coined the term entropy from a Greek word for transformation."
   },
   {
    "id": "sci-052",
@@ -642,7 +689,8 @@
    "answerType": "physics-concept",
    "wikiTitle": "Inertia",
    "difficulty": 1,
-   "pageUrl": "https://en.wikipedia.org/wiki/Inertia"
+   "pageUrl": "https://en.wikipedia.org/wiki/Inertia",
+   "details": "Inertia is the natural tendency of objects in motion to stay in motion and objects at rest to stay at rest, unless a force causes its velocity to change. It is one of the fundamental principles in classical physics, and is described by Isaac Newton in his first law of motion (also known as The Principle of Inertia). It is one of the primary manifestations of mass, one of the core quantitative properties of physical systems. Newton writes:\n\nLAW I. Every object perseveres in its state of rest, or of uniform motion in a right line, except insofar as it is compelled to change that state by forces impressed thereon.\nIn his 1687 work Philosophiæ Naturalis Principia Mathematica, Newton defined inertia as a property:\n\nDEFINITION III. The vis insita, or innate force of matter, is a power of resisting by which every body, as much as in it lies, endeavours to persevere in its present state, whether it be of rest or of moving uniformly forward in a right line.\n\n\n== History and development ==\n\n\n=== Early understanding of inertial motion ===\nProfessor John H. Lienhard points out the Mozi – based on a Chinese text from the Warring States period (475–221 BCE) – as having given the first description of inertia. Before the European Renaissance, the prevailing theory of motion in western philosophy was that of Aristotle (384–322 BCE). On the surface of the Earth, the inertia property of physical objects is often masked by gravity and the effects of friction and air resistance, both of which tend to decrease the speed of moving objects (commonly to the point of rest). This misled the philosopher Aristotle to believe that objects would move only as long as force was applied to them. Aristotle said that all moving objects (on Earth) eventually come to rest unless an external power (force) continued to move them."
   },
   {
    "id": "sci-053",
@@ -654,7 +702,8 @@
    "wikiTitle": "Buoyancy",
    "difficulty": 1,
    "imageUrl": "https://upload.wikimedia.org/wikipedia/commons/thumb/7/74/Buoyancy.svg/960px-Buoyancy.svg.png?utm_source=en.wikipedia.org&utm_campaign=api&utm_content=thumbnail",
-   "pageUrl": "https://en.wikipedia.org/wiki/Buoyancy"
+   "pageUrl": "https://en.wikipedia.org/wiki/Buoyancy",
+   "details": "Buoyancy (), or upthrust, is the force exerted by a fluid opposing the weight of a partially or fully immersed object (which may also be a parcel of fluid). In a column of fluid, pressure increases with depth as a result of the weight of the overlying fluid. Thus, the pressure at the bottom of a column of fluid is greater than at the top of the column. Similarly, the pressure at the bottom of an object submerged in a fluid is greater than at the top of the object. The pressure difference results in a net upward force on the object. The magnitude of the force is proportional to the pressure difference, and (as explained by Archimedes' principle) is equivalent to the weight of the fluid that would otherwise occupy the submerged volume of the object, i.e. the displaced fluid.\nFor this reason, an object under the influence of gravity  with average density greater than the surrounding fluid tends to sink because its weight is greater than the weight of the fluid it displaces. If the object is less dense, buoyancy can keep the object afloat.\nBuoyancy also applies to fluid mixtures, and is the most common driving force of convection currents."
   },
   {
    "id": "sci-054",
@@ -666,7 +715,8 @@
    "wikiTitle": "Refraction",
    "difficulty": 1,
    "imageUrl": "https://upload.wikimedia.org/wikipedia/commons/thumb/8/85/Refraction_photo.png/960px-Refraction_photo.png?utm_source=en.wikipedia.org&utm_campaign=api&utm_content=thumbnail",
-   "pageUrl": "https://en.wikipedia.org/wiki/Refraction"
+   "pageUrl": "https://en.wikipedia.org/wiki/Refraction",
+   "details": "In physics, refraction is the redirection of a wave as it passes from one medium to another. The redirection can be caused by the wave's change in speed or by a change in the medium. Refraction of light is the most commonly observed phenomenon, but other waves such as sound waves and water waves also experience refraction. How much a wave is refracted is determined by the change in wave speed and the initial direction of wave propagation relative to the direction of change in speed.\nOptical prisms and lenses use refraction to redirect light, as does the human eye. The refractive index of materials varies with the wavelength of light, and thus the angle of the refraction also varies correspondingly. This is called dispersion and allows certain prisms and raindrops in rainbows to divide white light into its constituent spectral colors.\n\n\n== Law ==\n \nFor light, refraction follows Snell's law, which states that, for a given pair of media, the ratio of the sines of the angle of incidence \n  \n    \n      \n        \n          \n            θ\n            \n              1\n            \n          \n        \n      \n    \n    {\\displaystyle {\\theta _{1}}}\n  \n and angle of refraction \n  \n    \n      \n        \n          \n            θ\n            \n              2\n            \n          \n        \n      \n    \n    {\\displaystyle {\\theta _{2}}}\n  \n is equal to the ratio of phase velocities \n  \n    \n      \n        \n          \n            \n              v\n              \n                1\n              \n            \n            \n              v\n              \n                2\n              \n            \n          \n        \n      \n    \n    {\\textstyle {\\frac {v_{1}}{v_{2}}}}\n  \n in the two media, or equivalently, to the refractive indices \n  \n    \n      \n        \n          \n            \n              n\n              \n                2\n              \n            \n            \n              n\n              \n                1\n              \n            \n          \n        \n      \n    \n    {\\textstyle {\\frac {n_{2}}{n_{1}}}}\n  \n of the two media:\n\n  \n    \n      \n        \n          \n            \n              sin\n              ⁡\n              \n                θ\n                \n                  1\n                \n              \n            \n            \n              sin\n              ⁡\n              \n                θ\n                \n                  2\n                \n              \n            \n          \n        \n        =\n        \n          \n            \n              v\n              \n                1\n              \n            \n            \n              v\n              \n                2\n              \n            \n          \n        \n        =\n        \n          \n            \n              n\n              \n                2\n              \n            \n            \n              n\n              \n                1\n              \n            \n          \n        \n      \n    \n    {\\displaystyle {\\frac {\\sin \\theta _{1}}{\\sin \\theta _{2}}}={\\frac {v_{1}}{v_{2}}}={\\frac {n_{2}}{n_{1}}}}\n  \n\n\n== General explanation ==\n\nRefraction involves two related parts, both a result of the wave nature of light: a reduced speed in an optical medium and a change in angle when a wave front crosses between different media at an angle.\n\nLight slows as it travels through a medium other than vacuum (such as air, glass or water). This is not because of scattering or absorption."
   },
   {
    "id": "sci-055",
@@ -678,7 +728,8 @@
    "wikiTitle": "Speed of light",
    "difficulty": 1,
    "imageUrl": "https://upload.wikimedia.org/wikipedia/commons/2/2e/Earth_to_Sun_-_en.png?utm_source=en.wikipedia.org&utm_campaign=api&utm_content=thumbnail_unscaled",
-   "pageUrl": "https://en.wikipedia.org/wiki/Speed_of_light"
+   "pageUrl": "https://en.wikipedia.org/wiki/Speed_of_light",
+   "details": "The speed of light is the speed of electromagnetic waves. Light travels at slower speed inside materials like glass or water; its highest speed is in a vacuum. The speed of light in vacuum is a universal physical constant denoted c (in ISO and IEC standards \n  \n    \n      \n        \n          c\n          \n            0\n          \n        \n      \n    \n    {\\displaystyle c_{0}}\n  \n),  exactly equal to 299792458 m⋅s−1. It is exact because, by international agreement, a metre is defined as the length of the path travelled by light in vacuum during a time interval of 1⁄299792458 second. The value 299,792,458 metres per second is approximately 1 billion kilometres per hour; 700 million miles per hour. For other approximations of c, valid for various units and size scales see the infobox. The shorter form, speed of light, means speed of light in vacuum in any context where the vacuum is implied.\nAll forms of electromagnetic radiation, including visible light, travel in vacuum at the speed c as do massless particles and field perturbations, such as gravitational waves. The speed of light in vacuum is the same for all observers, no matter their relative velocity. As a result, massless particles and waves travel at c in a vacuum regardless of the motion of the source or the inertial reference frame of the observer."
   },
   {
    "id": "sci-056",
@@ -691,7 +742,8 @@
    "wikiTitle": "Nuclear fission",
    "difficulty": 2,
    "imageUrl": "https://upload.wikimedia.org/wikipedia/commons/thumb/1/15/Nuclear_fission.svg/960px-Nuclear_fission.svg.png?utm_source=en.wikipedia.org&utm_campaign=api&utm_content=thumbnail",
-   "pageUrl": "https://en.wikipedia.org/wiki/Nuclear_fission"
+   "pageUrl": "https://en.wikipedia.org/wiki/Nuclear_fission",
+   "details": "Nuclear fission is a reaction in which the nucleus of an atom splits into two or more smaller nuclei. The fission process often produces gamma photons, and releases a very large amount of energy even by the energetic standards of radioactive decay.\nNuclear fission was discovered by chemists Otto Hahn and Fritz Strassmann and physicists Lise Meitner and Otto Robert Frisch. Hahn and Strassmann proved that a fission reaction had taken place on 19 December 1938, and Meitner and her nephew Frisch explained it theoretically in January 1939. Frisch named the process \"fission\" by analogy with biological fission of living cells; according to Richard Rhodes, the idea arose in a discussion with physicist William A. Arnold, who suggested \"binary fission\". In their second publication on nuclear fission in February 1939, Hahn and Strassmann predicted the existence and liberation of additional neutrons during the fission process, opening up the possibility of a nuclear chain reaction.\nFor heavy nuclides, it is an exothermic reaction which releases large amounts of energy both as electromagnetic radiation and as kinetic energy of the fragments (heating the bulk material where fission takes place). Like nuclear fusion, for fission to produce energy, the total binding energy of the resulting elements must be greater than that of the starting element. The fission barrier must also be overcome. Fissionable nuclides primarily split in interactions with fast neutrons, while fissile nuclides easily split in interactions with \"slow\" i.e."
   },
   {
    "id": "sci-057",
@@ -703,7 +755,8 @@
    "wikiTitle": "Newton (unit)",
    "difficulty": 1,
    "imageUrl": "https://upload.wikimedia.org/wikipedia/commons/thumb/a/ad/One_Newton%2C_illustrated_%28transparent_background%29.svg/960px-One_Newton%2C_illustrated_%28transparent_background%29.svg.png?utm_source=en.wikipedia.org&utm_campaign=api&utm_content=thumbnail",
-   "pageUrl": "https://en.wikipedia.org/wiki/Newton_(unit)"
+   "pageUrl": "https://en.wikipedia.org/wiki/Newton_(unit)",
+   "details": "The newton (symbol: N) is the unit of force in the International System of Units (SI). Expressed in terms of SI base units, it is 1 kg⋅m/s2, the force that accelerates a mass of one kilogram at one metre per second squared.\nThe unit is named after Isaac Newton in recognition of his work on classical mechanics, specifically his second law of motion.\n\n\n== Definition ==\nA newton is defined as 1 kg⋅m/s2 (it is a named derived unit defined in terms of the SI base units). One newton is, therefore, the force needed to accelerate one kilogram of mass at the rate of one metre per second squared in the direction of the applied force.\nThe units \"metre per second squared\" can be understood as measuring a rate of change in velocity per unit of time, i.e. an increase in velocity by one metre per second every second.\nIn 1946, the General Conference on Weights and Measures (CGPM) Resolution 2 standardized the unit of force in the MKS system of units to be the amount needed to accelerate one kilogram of mass at the rate of one metre per second squared. In 1948, the 9th CGPM Resolution 7 adopted the name newton for this force. The MKS system then became the blueprint for today's SI system of units."
   },
   {
    "id": "sci-058",
@@ -715,7 +768,8 @@
    "wikiTitle": "Watt",
    "difficulty": 1,
    "imageUrl": "https://upload.wikimedia.org/wikipedia/commons/thumb/9/9a/Alimentation_420_W.jpg/960px-Alimentation_420_W.jpg?utm_source=en.wikipedia.org&utm_campaign=api&utm_content=thumbnail",
-   "pageUrl": "https://en.wikipedia.org/wiki/Watt"
+   "pageUrl": "https://en.wikipedia.org/wiki/Watt",
+   "details": "The watt (symbol: W) is the unit of power or radiant flux in the International System of Units (SI), equal to 1 joule per second or 1 kg⋅m2⋅s−3. It is used to quantify the rate of energy transfer. The watt is named in honor of James Watt (1736–1819), an 18th-century Scottish inventor, mechanical engineer, and chemist who in 1776 improved the Newcomen engine with his own steam engine, which became fundamental for the Industrial Revolution.\n\n\n== Overview ==\nWhen an object's velocity is held constant at one meter per second against a constant opposing force of one newton, the rate at which work is done is one watt.\n\n  \n    \n      \n        \n          1\n           \n          W\n          =\n          1\n           \n          J\n          \n            \n              /\n            \n          \n          s\n          =\n          1\n           \n          N\n          \n            ⋅\n          \n          m\n          \n            \n              /\n            \n          \n          s\n          =\n          1\n           \n          k\n          g\n          \n            ⋅\n          \n          \n            m\n            \n              2\n            \n          \n          \n            ⋅\n          \n          \n            s\n            \n              −\n              3\n            \n          \n        \n        .\n      \n    \n    {\\displaystyle \\mathrm {1~W=1~J{/}s=1~N{\\cdot }m{/}s=1~kg{\\cdot }m^{2}{\\cdot }s^{-3}} .}\n  \n\nIn terms of electromagnetism, one watt is the rate at which electrical work is performed when a current of one ampere (A) flows across an electrical potential difference of one volt (V), meaning the watt is equivalent to the volt-ampere (the latter unit, however, is used for a different quantity from the real power of an electrical circuit).\n\n  \n    \n      \n        \n          1\n           \n          W\n          =\n          1\n           \n          V\n          \n            ⋅\n          \n          A\n        \n        .\n      \n    \n    {\\displaystyle \\mathrm {1~W=1~V{\\cdot }A} .}\n  \n\nTwo additional unit conversions for watt can be found using the above equation and Ohm's law.\n\n  \n    \n      \n        \n          1\n           \n          W\n          =\n          1\n           \n          \n            V\n            \n              2\n            \n          \n          \n            /\n          \n          Ω\n          =\n          1\n           \n          \n            A\n            \n              2\n            \n          \n          \n            ⋅\n          \n          Ω\n        \n        ,\n      \n    \n    {\\displaystyle \\mathrm {1~W=1~V^{2}/\\Omega =1~A^{2}{\\cdot }\\Omega } ,}\n  \n\nwhere ohm (\n  \n    \n      \n        Ω\n      \n    \n    {\\displaystyle \\Omega }\n  \n) is the SI derived unit of electrical resistance.\n\n\n=== Examples ===\nA person having a mass of 100 kg who climbs a 3-meter-high ladder in 5 seconds is doing work at a rate of about 600 watts."
   },
   {
    "id": "sci-059",
@@ -727,7 +781,8 @@
    "wikiTitle": "Hertz",
    "difficulty": 1,
    "imageUrl": "https://upload.wikimedia.org/wikipedia/commons/5/59/FrequencyAnimation.gif?utm_source=en.wikipedia.org&utm_campaign=api&utm_content=thumbnail_unscaled",
-   "pageUrl": "https://en.wikipedia.org/wiki/Hertz"
+   "pageUrl": "https://en.wikipedia.org/wiki/Hertz",
+   "details": "The hertz (symbol: Hz) is the unit of frequency in the International System of Units (SI), often described as being equivalent to one event (or cycle) per second. The hertz is an SI derived unit whose formal expression in terms of SI base units is 1/s or s−1, meaning that one hertz is one per second or the reciprocal of one second. It is used only in the case of periodic events. It is named after Heinrich Rudolf Hertz (1857–1894), the first person to provide conclusive proof of the existence of electromagnetic waves. For high frequencies, the unit is commonly expressed in multiples: kilohertz (kHz), megahertz (MHz), gigahertz (GHz), terahertz (THz).\nSome of the unit's most common uses are in the description of periodic waveforms and musical tones, particularly those used in radio- and audio-related applications. It is also used to describe the clock speeds at which computers and other electronics are driven. The units are sometimes also used as a representation of the energy of a photon, via the Planck relation E = hν, where E is the photon's energy, ν is its frequency, and h is the Planck constant.\n\n\n== Definition ==\nThe hertz is defined as one per second for periodic events. The International Committee for Weights and Measures defined the second as \"the duration of 9192631770 periods of the radiation corresponding to the transition between the two hyperfine levels of the ground state of the caesium-133 atom\" and then adds: \"It follows that the hyperfine splitting in the ground state of the caesium 133 atom is exactly 9192631770 hertz, νhfs Cs = 9192631770 Hz.\" The dimension of the unit hertz is 1/time (T−1)."
   },
   {
    "id": "sci-060",
@@ -752,7 +807,8 @@
    "wikiTitle": "Joule",
    "difficulty": 1,
    "imageUrl": "https://upload.wikimedia.org/wikipedia/commons/thumb/a/a4/Definici%C3%B3n_del_Joule.svg/960px-Definici%C3%B3n_del_Joule.svg.png?utm_source=en.wikipedia.org&utm_campaign=api&utm_content=thumbnail",
-   "pageUrl": "https://en.wikipedia.org/wiki/Joule"
+   "pageUrl": "https://en.wikipedia.org/wiki/Joule",
+   "details": "The joule ( JOOL, or  JOWL; symbol: J) is the unit of energy in the International System of Units (SI). In terms of SI base units, one joule corresponds to one kilogram-metre squared per second squared (1 J = 1 kg⋅m2⋅s−2). One joule is equal to the amount of work done when a force of one newton displaces a body through a distance of one metre in the direction of that force. It is also the energy dissipated as heat when an electric current of one ampere passes through a resistance of one ohm for one second. It is named after the English physicist James Prescott Joule (1818–1889).\n\n\n== Definition ==\nAccording to the International Bureau of Weights and Measures the joule is defined as \"the work done when the point of application of 1 MKS unit of force [newton] moves a distance of 1 metre in the direction of the force.\"\nIn terms of SI base units and in terms of SI derived units with special names, the joule is defined as\n\nOne joule is also equivalent to any of the following:\n\nThe work required to move an electric charge of one coulomb through an electrical potential difference of one volt, or one coulomb-volt (C⋅V). This relationship can be used to define the volt.\nThe work required to produce one watt of power for one second, or one watt-second (W⋅s) (compare kilowatt-hour, which is 3.6 megajoules). This relationship can be used to define the watt.\nThe joule is named after James Prescott Joule."
   },
   {
    "id": "sci-062",
@@ -764,7 +820,8 @@
    "wikiTitle": "Pascal (unit)",
    "difficulty": 2,
    "imageUrl": "https://upload.wikimedia.org/wikipedia/commons/thumb/e/e4/Psidial.jpg/960px-Psidial.jpg?utm_source=en.wikipedia.org&utm_campaign=api&utm_content=thumbnail",
-   "pageUrl": "https://en.wikipedia.org/wiki/Pascal_(unit)"
+   "pageUrl": "https://en.wikipedia.org/wiki/Pascal_(unit)",
+   "details": "The pascal (symbol: Pa) is the unit of pressure in the International System of Units (SI). It is also used to quantify internal pressure, stress, Young's modulus, and ultimate tensile strength. The unit, named after Blaise Pascal, is an SI coherent derived unit defined as one newton per square metre (N/m2). It is also equivalent to 10 barye (10 Ba) in the CGS system. Common multiple units of the pascal are the hectopascal (1 hPa = 100 Pa), which is equal to one millibar, and the kilopascal (1 kPa = 1,000 Pa), which is equal to one centibar.\nThe unit of measurement called standard atmosphere (atm) is defined as 101325 Pa.\nMeteorological observations typically report atmospheric pressure in hectopascals per the recommendation of the World Meteorological Organization, thus a standard atmosphere or typical sea-level air pressure is about 1,013 hPa. Reports in the United States typically use inches of mercury or millibars (hectopascals). In Canada, these reports are given in kilopascals.\n\n\n== Etymology ==\nThe unit is named after Blaise Pascal, noted for his contributions to hydrodynamics and hydrostatics, and experiments with a barometer."
   },
   {
    "id": "sci-063",
@@ -776,7 +833,8 @@
    "wikiTitle": "Blue whale",
    "difficulty": 1,
    "imageUrl": "https://upload.wikimedia.org/wikipedia/commons/thumb/1/1c/Anim1754_-_Flickr_-_NOAA_Photo_Library.jpg/960px-Anim1754_-_Flickr_-_NOAA_Photo_Library.jpg?utm_source=en.wikipedia.org&utm_campaign=api&utm_content=thumbnail",
-   "pageUrl": "https://en.wikipedia.org/wiki/Blue_whale"
+   "pageUrl": "https://en.wikipedia.org/wiki/Blue_whale",
+   "details": "The blue whale (Balaenoptera musculus) is a species of baleen whale and the largest marine mammal in the rorqual family Balaenopteridae. Reaching a maximum confirmed length of 29.9–30.5 m (98–100 ft) and weighing up to 190–200 t (190–200 long tons; 210–220 short tons), it is the largest animal known to have ever existed. The blue whale's long and slender body can be of various shades of greyish-blue on its upper surface and somewhat lighter underneath. Four subspecies are recognized: B. m. musculus in the North Atlantic and North Pacific, B. m. intermedia in the Southern Ocean, B. m. brevicauda (the pygmy blue whale) in the Indian Ocean and South Pacific Ocean, and B. m. indica in the Northern Indian Ocean. There is a population in the waters off Chile that may constitute a fifth subspecies.\nIn general, blue whale populations migrate between their summer feeding areas near the poles and their winter breeding grounds near the tropics."
   },
   {
    "id": "sci-064",
@@ -788,7 +846,8 @@
    "wikiTitle": "Cheetah",
    "difficulty": 1,
    "imageUrl": "https://upload.wikimedia.org/wikipedia/commons/thumb/9/92/Male_cheetah_facing_left_in_South_Africa.jpg/960px-Male_cheetah_facing_left_in_South_Africa.jpg?utm_source=en.wikipedia.org&utm_campaign=api&utm_content=thumbnail",
-   "pageUrl": "https://en.wikipedia.org/wiki/Cheetah"
+   "pageUrl": "https://en.wikipedia.org/wiki/Cheetah",
+   "details": "The cheetah (Acinonyx jubatus) is a species of large feline and the only living member of the genus Acinonyx. The cheetah is a pursuit predator and the fastest land animal, capable of running at 93–104 km/h (58–65 mph); it has evolved for speed, having powerful hindlimb muscles, long limbs and a flexible spine. The cheetah has a tawny to creamy white or pale buff fur that is marked with evenly spaced, solid black spots. The head is small and rounded, with a short snout and black tear-like facial streaks. It reaches 67–94 cm (2.20–3.08 ft) at the shoulder, and the head-and-body length is between 1.1 and 1.5 m (3 ft 7 in and 4 ft 11 in). Adults weigh between 21 and 65 kg (46 and 143 lb).\nThe cheetah was first scientifically described in the late 18th century. Four subspecies are recognised today that are native to Africa and central Iran. An African subspecies was introduced to India in 2022. It is now distributed mainly in small, fragmented populations in northwestern, eastern and southern Africa and central Iran."
   },
   {
    "id": "sci-065",
@@ -801,7 +860,8 @@
    "wikiTitle": "Peregrine falcon",
    "difficulty": 2,
    "imageUrl": "https://upload.wikimedia.org/wikipedia/commons/thumb/9/9c/Falco_peregrinus_m_Humber_Bay_Park_Toronto.jpg/960px-Falco_peregrinus_m_Humber_Bay_Park_Toronto.jpg?utm_source=en.wikipedia.org&utm_campaign=api&utm_content=thumbnail",
-   "pageUrl": "https://en.wikipedia.org/wiki/Peregrine_falcon"
+   "pageUrl": "https://en.wikipedia.org/wiki/Peregrine_falcon",
+   "details": "The peregrine falcon (Falco peregrinus), also referred to simply as the peregrine, is a bird of prey (raptor) in the family Falconidae known for its speed. A large, crow-sized falcon, it has a blue-grey back, barred white underparts and a black head. As is typical for bird-eating (avivore) raptors, peregrine falcons are sexually dimorphic, with females being considerably larger than males. Historically, the bird has also been known as the \"black-cheeked falcon\" in Australia and the \"duck hawk\" in North America.\nThe breeding range includes land regions from the Arctic tundra to the tropics. It can be found nearly everywhere on Earth, except extreme polar regions, very high mountains, and most tropical rainforests. The only major ice-free landmasses from which it is entirely absent are the islands of New Zealand, making it the world's most widespread raptor and one of the most widely found wild bird species. In fact, the only land-based bird species found over a larger geographic area, domestic and feral pigeons, owe their success to human-led introduction. Both are domesticated forms of the rock dove, and are a major prey species for peregrine populations. Due to their greater abundance in cities than most other birds, feral pigeons support many peregrine populations as a staple food source, especially in urban settings."
   },
   {
    "id": "sci-066",
@@ -813,7 +873,8 @@
    "wikiTitle": "African bush elephant",
    "difficulty": 1,
    "imageUrl": "https://upload.wikimedia.org/wikipedia/commons/thumb/9/94/178_Male_African_bush_elephant_in_Etosha_National_Park_Photo_by_Giles_Laurent.jpg/960px-178_Male_African_bush_elephant_in_Etosha_National_Park_Photo_by_Giles_Laurent.jpg?utm_source=en.wikipedia.org&utm_campaign=api&utm_content=thumbnail",
-   "pageUrl": "https://en.wikipedia.org/wiki/African_bush_elephant"
+   "pageUrl": "https://en.wikipedia.org/wiki/African_bush_elephant",
+   "details": "The African bush elephant (Loxodonta africana), also known as the African savanna elephant, is a species of elephant native to sub-Saharan Africa and the largest living terrestrial animal, with fully grown bulls reaching an average shoulder height of 3.04–3.36 m (10.0–11.0 ft) and a body mass of 5.2–6.9 t (5.7–7.6 short tons); the largest recorded specimen had a shoulder height of 3.96 m (13.0 ft) and an estimated body mass of 10.4 t (11.5 short tons). It is characterised by its long prehensile trunk with two finger-like processes; a concave back; large ears which help reduce body heat; and sturdy tusks that are noticeably curved. Its skin is grey with scanty hairs, and bending cracks which support thermoregulation by retaining water.\nThe African bush elephant inhabits a variety of habitats such as forests, grasslands, woodlands, wetlands and agricultural land. It is a mixed herbivore feeding mostly on grasses, creepers, herbs, leaves, and bark. The average adult consumes about 150 kg (330 lb) of vegetation and 230 L (51 imp gal; 61 US gal) of water each day. It is a social animal that lives in herds of cows and their offspring. Adult bulls usually live alone or in small bachelor groups. During the mating season, males undergo musth, a period of high testosterone levels and heightened aggression. The menstrual cycle of cows lasts three to four months, and gestation around 22 months, the longest of any mammal."
   },
   {
    "id": "sci-067",
@@ -825,7 +886,8 @@
    "wikiTitle": "Bat",
    "difficulty": 1,
    "imageUrl": "https://upload.wikimedia.org/wikipedia/commons/7/77/Big-eared-townsend-fledermaus.jpg?utm_source=en.wikipedia.org&utm_campaign=api&utm_content=thumbnail_unscaled",
-   "pageUrl": "https://en.wikipedia.org/wiki/Bat"
+   "pageUrl": "https://en.wikipedia.org/wiki/Bat",
+   "details": "Bats (order Chiroptera ) are winged mammals, the only mammals capable of true and sustained flight. Bats are more agile in flight than most birds, using long, spread-out digits covered with a thin membrane or patagium. The smallest bat, and one of the smallest extant mammals, is Kitti's hog-nosed bat, which is 29–33 mm (1.1–1.3 in) in length, 150 mm (5.9 in) across the forearm and 2 g (0.071 oz) in mass. The largest bats are the flying foxes, with the giant golden-crowned flying fox (Acerodon jubatus) reaching a weight of 1.5 kg (3.3 lb) and having a wingspan of 1.6 m (5 ft 3 in).\nThe second-largest order of mammals after rodents, bats account for about 20% of all classified mammal species worldwide, with at least 1,500 known species. These were traditionally divided into two suborders: the largely fruit-eating megabats and the microbats. But more recent evidence has supported dividing the order into Yinpterochiroptera and Yangochiroptera, with megabats as members of the former along with several species of microbats. Many bats are insectivores, and most of the rest are frugivores (fruit-eaters) or nectarivores (nectar-eaters). A few species feed on animals other than insects; for example, the vampire bats are haematophagous (feed on blood). Most bats are nocturnal, and many roost in caves or other refuges; it is uncertain whether bats have these behaviours to escape predators."
   },
   {
    "id": "sci-068",
@@ -837,7 +899,8 @@
    "wikiTitle": "Octopus",
    "difficulty": 2,
    "imageUrl": "https://upload.wikimedia.org/wikipedia/commons/thumb/5/57/Octopus2.jpg/960px-Octopus2.jpg?utm_source=en.wikipedia.org&utm_campaign=api&utm_content=thumbnail",
-   "pageUrl": "https://en.wikipedia.org/wiki/Octopus"
+   "pageUrl": "https://en.wikipedia.org/wiki/Octopus",
+   "details": "An octopus (pl.: octopuses or octopodes) is a soft-bodied, eight-limbed mollusc of the order Octopoda (, ok-TOP-ə-də). The order consists of some 300 species and is grouped within the class Cephalopoda with squids, cuttlefish, and nautiloids. Like other cephalopods, an octopus is bilaterally symmetric with two eyes and a beaked mouth at the centre point of the eight limbs. An octopus can radically deform its shape, enabling it to squeeze through small gaps. They trail their appendages behind them as they swim backwards. The siphon is used for respiration and locomotion (by water jet propulsion). Octopuses have a complex nervous system and excellent sight, and are among the most intelligent and behaviourally diverse invertebrates.\nOctopuses inhabit various ocean habitats, including coral reefs, pelagic waters, and the seabed; some live in the intertidal zone and others at abyssal depths. Most species grow quickly, mature early, and are short-lived. In most species, the male uses a specially-adapted arm to deliver sperm directly into the female's mantle cavity, after which he becomes senescent and dies, while the female deposits fertilised eggs in a den and cares for them until they hatch, after which she also dies."
   },
   {
    "id": "sci-069",
@@ -850,7 +913,8 @@
    "wikiTitle": "Giraffe",
    "difficulty": 1,
    "imageUrl": "https://upload.wikimedia.org/wikipedia/commons/thumb/9/9e/Giraffe_Mikumi_National_Park.jpg/960px-Giraffe_Mikumi_National_Park.jpg?utm_source=en.wikipedia.org&utm_campaign=api&utm_content=thumbnail",
-   "pageUrl": "https://en.wikipedia.org/wiki/Giraffe"
+   "pageUrl": "https://en.wikipedia.org/wiki/Giraffe",
+   "details": "Giraffes (genus Giraffa) are large African hoofed mammals. They are the tallest living terrestrial animals and the largest ruminants on Earth. They are classified under the family Giraffidae, along with their closest extant relative, the okapi. Traditionally, giraffes have been thought of as one species, Giraffa camelopardalis, with nine subspecies. Most recently, researchers proposed dividing them into four extant species, with seven subspecies, which can be distinguished morphologically by their fur coat patterns. Six valid extinct species of Giraffa are known from the fossil record.\nThe distinguishing characteristics of giraffes are their extremely long neck and legs, horn-like ossicones, and spotted coat patterns. Their scattered range extends from Chad in the north to South Africa in the south and from Niger in the west to Somalia in the east. Giraffes usually inhabit savannahs and woodlands. Their food source is leaves, fruits, and flowers of woody plants, primarily acacia species, which they browse at heights most other ground-based herbivores cannot reach."
   },
   {
    "id": "sci-070",
@@ -862,7 +926,8 @@
    "wikiTitle": "Saltwater crocodile",
    "difficulty": 2,
    "imageUrl": "https://upload.wikimedia.org/wikipedia/commons/thumb/4/43/SaltwaterCrocodile%28%27Maximo%27%29.jpg/960px-SaltwaterCrocodile%28%27Maximo%27%29.jpg?utm_source=en.wikipedia.org&utm_campaign=api&utm_content=thumbnail",
-   "pageUrl": "https://en.wikipedia.org/wiki/Saltwater_crocodile"
+   "pageUrl": "https://en.wikipedia.org/wiki/Saltwater_crocodile",
+   "details": "The saltwater crocodile (Crocodylus porosus) is a crocodilian native to saltwater habitats, brackish wetlands and freshwater rivers from India's east coast across Southeast Asia and the Sundaland to northern Australia and Micronesia. It has been listed as Least Concern on the IUCN Red List since 1996. It was hunted for its skin throughout its range up to the 1970s, and is threatened by illegal killing and habitat loss. It is regarded as dangerous to humans.\nThe saltwater crocodile is the largest living reptile. Males can grow to a weight of 1,000–1,500 kg (2,200–3,300 lb) and a length of 6 m (20 ft), rarely exceeding 6.3 m (21 ft). Females are much smaller and rarely surpass 3 m (9.8 ft). It is also called the estuarine crocodile, Indo-Pacific crocodile, marine crocodile, sea crocodile, and, informally, the saltie. A large and opportunistic hypercarnivorous apex predator, they ambush most of their prey and then drown or swallow it whole. They will prey on almost any animal that enters their territory, including other predators such as sharks, varieties of freshwater and saltwater fish including pelagic species, invertebrates such as crustaceans, various amphibians, other reptiles, birds, and mammals."
   },
   {
    "id": "sci-071",
@@ -874,7 +939,8 @@
    "wikiTitle": "Proton",
    "difficulty": 1,
    "imageUrl": "https://upload.wikimedia.org/wikipedia/commons/thumb/9/92/Quark_structure_proton.svg/960px-Quark_structure_proton.svg.png?utm_source=en.wikipedia.org&utm_campaign=api&utm_content=thumbnail",
-   "pageUrl": "https://en.wikipedia.org/wiki/Proton"
+   "pageUrl": "https://en.wikipedia.org/wiki/Proton",
+   "details": "A proton is a stable subatomic particle, symbol p, H+, or 1H+ with a positive electric charge of +1 e (elementary charge). Its mass is slightly less than the mass of a neutron and approximately 1836 times the mass of an electron (the proton-to-electron mass ratio). Protons and neutrons, each with a mass of approximately one dalton, are jointly referred to as nucleons (particles present in atomic nuclei).\nOne or more protons are present in the nucleus of every atom. They provide the attractive electrostatic central force which binds the atomic electrons. The number of protons in the nucleus is the defining property of an element, and is referred to as the atomic number (represented by the symbol Z). Since each element is identified by the number of protons in its nucleus, each element has its own atomic number, which determines the number of atomic electrons and consequently the identity and chemical characteristics of the element.\nThe word proton is Greek for \"first\", and the name was given to the hydrogen nucleus by Ernest Rutherford in 1920. In previous years, Rutherford had discovered that the hydrogen nucleus (known to be the lightest nucleus) could be extracted from the nuclei of nitrogen by atomic collisions. Protons were therefore a candidate to be a fundamental or elementary particle, and hence a building block of nitrogen and all other heavier atomic nuclei."
   },
   {
    "id": "sci-072",
@@ -885,7 +951,8 @@
    "answerType": "particle",
    "wikiTitle": "Photon",
    "difficulty": 1,
-   "pageUrl": "https://en.wikipedia.org/wiki/Photon"
+   "pageUrl": "https://en.wikipedia.org/wiki/Photon",
+   "details": "A photon (from Ancient Greek  φῶς, φωτός (phôs, phōtós) 'light') is an elementary particle that is a quantum of the electromagnetic field, including electromagnetic radiation such as light and radio waves, and the force carrier for the electromagnetic force. Photons are massless particles that can only move at one speed, the speed of light measured in a vacuum. The photon belongs to the class of boson particles.\nAs with other elementary particles, photons are best explained by quantum mechanics and exhibit wave–particle duality, their behavior featuring properties of both waves and particles. The modern photon concept originated during the first two decades of the 20th century with the work of Albert Einstein, who built upon the research of Max Planck. While Planck was trying to explain how matter and electromagnetic radiation could be in thermal equilibrium with one another, he proposed that the energy stored within a material object should be regarded as composed of an integer number of discrete, equal-sized parts. To explain the photoelectric effect, Einstein introduced the idea that light itself is made of discrete units of energy. In 1926, Gilbert N. Lewis popularized the term photon for these energy units. Subsequently, many other experiments validated Einstein's approach.\nIn the Standard Model of particle physics, photons and other elementary particles are described as a necessary consequence of physical laws having a certain symmetry at every point in spacetime."
   },
   {
    "id": "sci-073",
@@ -897,7 +964,8 @@
    "wikiTitle": "Electron",
    "difficulty": 1,
    "imageUrl": "https://upload.wikimedia.org/wikipedia/commons/thumb/3/35/Atomic-orbital-clouds_spd_m0.png/960px-Atomic-orbital-clouds_spd_m0.png?utm_source=en.wikipedia.org&utm_campaign=api&utm_content=thumbnail",
-   "pageUrl": "https://en.wikipedia.org/wiki/Electron"
+   "pageUrl": "https://en.wikipedia.org/wiki/Electron",
+   "details": "The electron (e−, or β− in nuclear reactions) is a subatomic particle whose electric charge is negative one elementary charge. It is an elementary particle contained in the matter that makes up the universe.\nAll atoms are composed of electrons, as well as varying numbers protons and neutrons, but the electrons have almost 2000 times less mass than the other two constituents. In atoms, an electron's matter wave occupies atomic orbitals around a positively charged atomic nucleus. The configuration and energy levels of an atom's electrons determine the atom's chemical properties. Electrons are bound to the nucleus to different degrees. The outermost or valence electrons are the least tightly bound and are responsible for the formation of chemical bonds between atoms to create molecules and crystals. These valence electrons also facilitate all types of chemical reactions by being transferred or shared between atoms. The inner electron shells make up the atomic core.\nThe concept of electrons explains numerous physical phenomena."
   },
   {
    "id": "sci-074",
@@ -909,7 +977,8 @@
    "wikiTitle": "Quark",
    "difficulty": 2,
    "imageUrl": "https://upload.wikimedia.org/wikipedia/commons/thumb/9/92/Quark_structure_proton.svg/960px-Quark_structure_proton.svg.png?utm_source=en.wikipedia.org&utm_campaign=api&utm_content=thumbnail",
-   "pageUrl": "https://en.wikipedia.org/wiki/Quark"
+   "pageUrl": "https://en.wikipedia.org/wiki/Quark",
+   "details": "A quark ( ) is a type of elementary particle and a fundamental constituent of matter. Quarks combine to form composite particles called hadrons, the most stable of which are protons and neutrons, the components of atomic nuclei. All commonly observable matter is composed of up quarks, down quarks, and electrons. Owing to a phenomenon known as color confinement, quarks are never found in isolation; they can be found only within hadrons, which include baryons (such as protons and neutrons) and mesons, or in quark–gluon plasmas. For this reason, much of what is known about quarks has been drawn from observations of hadrons.\nQuarks have various intrinsic properties, including electric charge, mass, color charge, and spin. They are the only elementary particles in the Standard Model of particle physics to experience all four fundamental interactions, also known as fundamental forces (electromagnetism, gravitation, strong interaction, and weak interaction), as well as the only known particles whose electric charges are not integer multiples of the elementary charge.\nThere are six types, known as flavors, of quarks: up, down, charm, strange, top, and bottom. Up and down quarks have the lowest masses of all quarks. The heavier quarks rapidly change into up and down quarks through a process of particle decay: the transformation from a higher mass state to a lower mass state."
   },
   {
    "id": "sci-075",
@@ -921,7 +990,8 @@
    "wikiTitle": "Neutrino",
    "difficulty": 2,
    "imageUrl": "https://upload.wikimedia.org/wikipedia/commons/5/57/FirstNeutrinoEventAnnotated.jpg?utm_source=en.wikipedia.org&utm_campaign=api&utm_content=thumbnail_unscaled",
-   "pageUrl": "https://en.wikipedia.org/wiki/Neutrino"
+   "pageUrl": "https://en.wikipedia.org/wiki/Neutrino",
+   "details": "A neutrino ( new-TREE-noh; denoted by the Greek letter ν) is an elementary particle that interacts  via the weak interaction and gravity. The neutrino is so named because it is electrically neutral and because its rest mass is so small (-ino) that it was long thought to be zero. The rest mass of the neutrino is much smaller than that of the other known elementary particles (excluding massless particles).\nThe weak force has a very short range, the gravitational interaction is extremely weak due to the very small mass of the neutrino, and neutrinos do not participate in the electromagnetic interaction or the strong interaction.\nConsequently, neutrinos typically pass through normal matter unimpeded and with no detectable effect.\nWeak interactions create neutrinos in one of three leptonic flavors: electron neutrino, νe; muon neutrino, νμ and tau neutrino, ντ. Each flavor is associated with the correspondingly named charged lepton. Although neutrinos were long believed to be massless, it is now known that there are three discrete neutrino masses with different values (all tiny, the smallest of which could be zero), but the three masses do not uniquely correspond to the three flavors: A neutrino created with a specific flavor is a specific mixture of all three mass states (a quantum superposition). Similar to some other neutral particles, neutrinos oscillate between different flavors in flight as a consequence. For example, an electron neutrino produced in a beta decay reaction may interact in a distant detector as a muon or tau neutrino."
   },
   {
    "id": "sci-076",
@@ -934,7 +1004,8 @@
    "wikiTitle": "Water",
    "difficulty": 1,
    "imageUrl": "https://upload.wikimedia.org/wikipedia/commons/thumb/b/b7/H2O_2D_labelled.svg/960px-H2O_2D_labelled.svg.png?utm_source=en.wikipedia.org&utm_campaign=api&utm_content=thumbnail",
-   "pageUrl": "https://en.wikipedia.org/wiki/Water"
+   "pageUrl": "https://en.wikipedia.org/wiki/Water",
+   "details": "Water is an inorganic compound with the chemical formula H2O. It is a transparent, tasteless, odorless, and nearly colorless chemical substance. It is the main constituent of Earth's streams, lakes, and oceans. Water is also the fluid of all known living organisms, in which it acts as a solvent. Water, being a polar molecule, undergoes strong intermolecular hydrogen bonding which is a large contributor to its physical and chemical properties. It is vital for all known forms of life, despite not providing food energy or being an organic micronutrient. Due to its presence in all organisms, its chemical stability, its worldwide abundance, and its strong polarity relative to its small molecular size, water is often referred to as the \"universal solvent\".\nBecause Earth's surface temperature and pressure is relatively close to water's triple point, water exists on Earth as a solid, a liquid, and a gas. It forms precipitation in the form of rain and aerosols in the form of fog. Clouds consist of suspended droplets of water and ice, its solid state. When finely divided, crystalline ice may precipitate in the form of snow."
   },
   {
    "id": "sci-077",
@@ -946,7 +1017,8 @@
    "wikiTitle": "Sodium chloride",
    "difficulty": 1,
    "imageUrl": "https://upload.wikimedia.org/wikipedia/commons/thumb/7/7c/Selpologne.jpg/960px-Selpologne.jpg?utm_source=en.wikipedia.org&utm_campaign=api&utm_content=thumbnail",
-   "pageUrl": "https://en.wikipedia.org/wiki/Sodium_chloride"
+   "pageUrl": "https://en.wikipedia.org/wiki/Sodium_chloride",
+   "details": "Sodium chloride , is an ionic compound with the chemical formula NaCl, representing a 1:1 ratio of sodium and chloride ions. It is transparent or translucent, brittle, hygroscopic, and occurs as the mineral halite. In its edible form, common table salt, it is commonly used as a condiment and food preservative. Large quantities of sodium chloride are used in many industrial processes, and it is a major source of sodium and chlorine compounds used as feedstocks for further chemical syntheses. Another major application of sodium chloride is de-icing of roadways in sub-freezing weather.\n\n\n== Uses ==\nIn addition to the many familiar domestic uses of salt, more dominant applications of the approximately 250 million tonnes per year production (2008 data) include chemicals and de-icing.\n\n\n=== Chemical functions ===\nSalt is used, directly or indirectly, in the production of many chemicals, which consumes most of the world's production.\n\n\n==== Chlor-alkali industry ====\n\nIt is the starting point for the chloralkali process, the industrial process to produce chlorine and sodium hydroxide, according to the chemical equation:\n\n  \n    \n      \n        \n          2\n          \n          NaCl\n          \n\n          \n          +\n          2\n          \n          \n            H\n            \n              2\n            \n            \n              \n            \n          \n          O\n          \n            \n              →\n              \n                \n                  electrolysis\n                \n              \n            \n          \n          \n            Cl\n            \n              2\n            \n            \n              \n            \n          \n          \n\n          \n          +\n          \n            H\n            \n              2\n            \n            \n              \n            \n          \n          \n\n          \n          +\n          2\n          \n          NaOH\n        \n      \n    \n    {\\displaystyle {\\ce {2NaCl{}+2H2O->[{\\text{electrolysis}}]Cl2{}+H2{}+2NaOH}}}\n  \n\nThis electrolysis is conducted in either a mercury cell, a diaphragm cell, or a membrane cell. Each of those uses a different method to separate the chlorine from the sodium hydroxide. Other technologies are under development due to the high energy consumption of the electrolysis, whereby small improvements in the efficiency can have large economic paybacks."
   },
   {
    "id": "sci-078",
@@ -958,7 +1030,8 @@
    "wikiTitle": "Carbon dioxide",
    "difficulty": 1,
    "imageUrl": "https://upload.wikimedia.org/wikipedia/commons/thumb/1/1f/Carbon-dioxide-2D-dimensions.svg/960px-Carbon-dioxide-2D-dimensions.svg.png?utm_source=en.wikipedia.org&utm_campaign=api&utm_content=thumbnail",
-   "pageUrl": "https://en.wikipedia.org/wiki/Carbon_dioxide"
+   "pageUrl": "https://en.wikipedia.org/wiki/Carbon_dioxide",
+   "details": "Carbon dioxide is a chemical compound with the chemical formula CO2. It is made up of molecules that each have one carbon atom covalently double bonded to two oxygen atoms. It is found in a gas state at room temperature and at normally-encountered concentrations it is odorless. As the source of carbon in the carbon cycle, atmospheric CO2 is the primary carbon source for life on Earth. In the air, carbon dioxide is transparent to visible light but absorbs infrared radiation, acting as a greenhouse gas. Carbon dioxide is soluble in water and is found in groundwater, lakes, ice caps, and seawater.\nIt is a trace gas in Earth's atmosphere at 428 parts per million (ppm), or about 0.043% (as of July 2025) having risen from pre-industrial levels of 280 ppm or about 0.028%. Burning fossil fuels is the main cause of these increased CO2 concentrations, which are the primary cause of climate change.\nIts concentration in Earth's pre-industrial atmosphere since late in the Precambrian was regulated by organisms and geological features. Plants, algae and cyanobacteria use energy from sunlight to synthesize carbohydrates from carbon dioxide and water in a process called photosynthesis, which produces oxygen as a waste product."
   },
   {
    "id": "sci-079",
@@ -970,7 +1043,8 @@
    "wikiTitle": "Methane",
    "difficulty": 2,
    "imageUrl": "https://upload.wikimedia.org/wikipedia/commons/thumb/9/9b/Methane-2D-dimensions.svg/960px-Methane-2D-dimensions.svg.png?utm_source=en.wikipedia.org&utm_campaign=api&utm_content=thumbnail",
-   "pageUrl": "https://en.wikipedia.org/wiki/Methane"
+   "pageUrl": "https://en.wikipedia.org/wiki/Methane",
+   "details": "Methane (US:  METH-ayn, UK:  MEE-thayn) is a chemical compound that has the chemical formula CH4 (one carbon atom bonded to four hydrogen atoms). It is a group-14 hydride, the simplest alkane, and the main constituent of natural gas. The abundance of methane on Earth makes it an economically attractive fuel, although capturing and storing it is difficult because it is a gas at standard temperature and pressure. In the Earth's atmosphere methane is transparent to visible light but absorbs infrared radiation, acting as a greenhouse gas. Methane is an organic hydrocarbon, and among the simplest of organic compounds.\nNaturally occurring methane is found both below ground and under the seafloor and is formed by both geological and biological processes. The largest reservoir of methane is under the seafloor in the form of methane clathrates. When methane reaches the surface and the atmosphere, it is known as atmospheric methane.\nMethane has also been detected on other planets, including Mars, which has implications for astrobiology research.\n\n\n== Properties and bonding ==\nMethane is a tetrahedral molecule with four equivalent C–H bonds."
   },
   {
    "id": "sci-080",
@@ -982,7 +1056,8 @@
    "wikiTitle": "Ammonia",
    "difficulty": 2,
    "imageUrl": "https://upload.wikimedia.org/wikipedia/commons/thumb/7/75/Ammonia-2D.svg/960px-Ammonia-2D.svg.png?utm_source=en.wikipedia.org&utm_campaign=api&utm_content=thumbnail",
-   "pageUrl": "https://en.wikipedia.org/wiki/Ammonia"
+   "pageUrl": "https://en.wikipedia.org/wiki/Ammonia",
+   "details": "Ammonia is an inorganic chemical compound of nitrogen and hydrogen with the formula NH3. A stable binary hydride and the simplest pnictogen hydride, ammonia is a colourless gas with a distinctive pungent smell. It is widely used in fertilizers, refrigerants, explosives, cleaning agents, and is a precursor for numerous chemicals. Renewable ammonia is considered as an important energy carrier in future energy systems. Biologically, it is a common nitrogenous waste, and it contributes significantly to the nutritional needs of terrestrial organisms by serving as a precursor to fertilisers. Around 70% of ammonia produced industrially is used to make fertilisers in various forms and composition, such as urea and diammonium phosphate. Ammonia in pure form is also applied directly into the soil.\nAmmonia, either directly or indirectly, is also a building block for the synthesis of many chemicals. In many countries, it is classified as an extremely hazardous substance. Ammonia is toxic, causing damage to cells and tissues."
   },
   {
    "id": "sci-081",
@@ -994,7 +1069,8 @@
    "wikiTitle": "DNA",
    "difficulty": 1,
    "imageUrl": "https://upload.wikimedia.org/wikipedia/commons/thumb/4/4c/DNA_Structure%2BKey%2BLabelled.pn_NoBB.png/960px-DNA_Structure%2BKey%2BLabelled.pn_NoBB.png?utm_source=en.wikipedia.org&utm_campaign=api&utm_content=thumbnail",
-   "pageUrl": "https://en.wikipedia.org/wiki/DNA"
+   "pageUrl": "https://en.wikipedia.org/wiki/DNA",
+   "details": "Deoxyribonucleic acid (; DNA) is a polymer composed of two polynucleotide chains that coil around each other to form a double helix. The polymer carries genetic instructions for the development, functioning, growth and reproduction of all known organisms and many viruses. DNA and ribonucleic acid (RNA) are nucleic acids. Alongside proteins, lipids and complex carbohydrates (polysaccharides), nucleic acids are one of the four major types of macromolecules that are essential for all known forms of life.\nThe two DNA strands are known as polynucleotides as they are composed of simpler monomeric units called nucleotides. Each nucleotide is composed of one of four nitrogen-containing nucleobases (cytosine [C], guanine [G], adenine [A] or thymine [T]), a sugar called deoxyribose, and a phosphate group. The nucleotides are joined to one another in a chain by covalent bonds (known as the phosphodiester linkage) between the sugar of one nucleotide and the phosphate of the next, resulting in an alternating sugar-phosphate backbone. The nitrogenous bases of the two separate polynucleotide strands are bound together, according to base pairing rules (A with T and C with G), with hydrogen bonds to make double-stranded DNA. The complementary nitrogenous bases are divided into two groups, the single-ringed pyrimidines and the double-ringed purines. In DNA, the pyrimidines are thymine and cytosine; the purines are adenine and guanine.\nBoth strands of double-stranded DNA store the same biological information."
   },
   {
    "id": "sci-082",
@@ -1006,7 +1082,8 @@
    "wikiTitle": "Seismology",
    "difficulty": 2,
    "imageUrl": "https://upload.wikimedia.org/wikipedia/commons/7/78/Earth_cutaway.png?utm_source=en.wikipedia.org&utm_campaign=api&utm_content=thumbnail_unscaled",
-   "pageUrl": "https://en.wikipedia.org/wiki/Seismology"
+   "pageUrl": "https://en.wikipedia.org/wiki/Seismology",
+   "details": "Seismology (; from Ancient Greek σεισμός (seismós), meaning 'earthquake', and -λογία (-logía), meaning 'study of') is the scientific study of earthquakes (or generally, quakes) and the generation and propagation of elastic waves through planetary bodies. It also includes studies of the environmental effects of earthquakes such as tsunamis; other seismic sources such as volcanoes, plate tectonics, glaciers, rivers, oceanic microseisms, and the atmosphere; and artificial processes such as explosions.\nPaleoseismology is a related field that uses geology to infer information regarding past earthquakes. A recording of Earth's motion as a function of time, created by a seismograph is called a seismogram. A seismologist is a scientist who works in basic or applied seismology.\n\n\n== History ==\n\n\n=== Ancient and classical eras ===\nScholarly interest in earthquakes can be traced back to antiquity. Early speculations on the natural causes of earthquakes were included in the writings of Thales of Miletus (c. 585 BCE), Anaximenes of Miletus (c. 550 BCE), Aristotle (c. 340 BCE), and Zhang Heng (132 CE).\nIn 132 CE, Zhang Heng of China's Han dynasty designed the first known seismoscope.\n\n\n=== Beginnings of modern science ===\nIn the 17th century, Athanasius Kircher argued that earthquakes were caused by the movement of fire within a system of channels inside the Earth. Martin Lister (1638–1712) and Nicolas Lemery (1645–1715) proposed that earthquakes were caused by chemical explosions within the Earth."
   },
   {
    "id": "sci-083",
@@ -1018,7 +1095,8 @@
    "wikiTitle": "Ornithology",
    "difficulty": 2,
    "imageUrl": "https://upload.wikimedia.org/wikipedia/commons/5/5b/Banding_Marbled_Godwit_on_Bowdoin_NWR_%2812820314955%29.jpg?utm_source=en.wikipedia.org&utm_campaign=api&utm_content=thumbnail_unscaled",
-   "pageUrl": "https://en.wikipedia.org/wiki/Ornithology"
+   "pageUrl": "https://en.wikipedia.org/wiki/Ornithology",
+   "details": "Ornithology (from Ancient Greek  ὄρνις (órnis) 'bird' and  λόγος (lógos) 'study of') is a branch of zoology dedicated to the study of birds. Several aspects of ornithology differ from related disciplines, due partly to the high visibility and the aesthetic appeal of birds. It has also been an area with a large contribution made by amateurs in terms of time, resources, and financial support. Studies on birds have helped develop key concepts in biology including evolution, behaviour and ecology such as the definition of species, the process of speciation, instinct, learning, ecological niches, guilds, insular biogeography, phylogeography, and conservation.\nWhile early ornithology was principally concerned with descriptions and distributions of species, ornithologists today seek answers to very specific questions, often using birds as models to test hypotheses or predictions based on theories. Most modern biological theories apply across life forms, and the number of scientists who identify themselves as ornithologists has therefore declined. A wide range of tools and techniques are used in ornithology, both inside the laboratory and out in the field, and innovations are constantly made. Most biologists who recognise themselves as ornithologists study specific biology research areas, such as anatomy, physiology, taxonomy (phylogenetics), ecology, or behaviour.\n\n\n== Definition and etymology ==\n\nThe word ornithology comes from the late 16th-century Latin ornithologia meaning 'bird science' from the Greek ὄρνις órnis ('bird') and λόγος lógos ('theory, science, thought').\n\n\n== History ==\n\nThe history of ornithology largely reflects the trends in the history of biology, as well as many other scientific disciplines, including ecology, anatomy, physiology, paleontology, and more recently, molecular biology."
   },
   {
    "id": "sci-084",
@@ -1030,7 +1108,8 @@
    "wikiTitle": "Paleontology",
    "difficulty": 2,
    "imageUrl": "https://upload.wikimedia.org/wikipedia/commons/thumb/9/94/Tyrannosaurus_Rex_Holotype.jpg/960px-Tyrannosaurus_Rex_Holotype.jpg?utm_source=en.wikipedia.org&utm_campaign=api&utm_content=thumbnail",
-   "pageUrl": "https://en.wikipedia.org/wiki/Paleontology"
+   "pageUrl": "https://en.wikipedia.org/wiki/Paleontology",
+   "details": "Paleontology or palaeontology is the scientific study of the life of the past, mainly but not exclusively through the study of fossils. Paleontologists use fossils as a means to classify organisms, measure geologic time, and assess the interactions between prehistoric organisms and their natural environment. While paleontological observations are known from at least the 6th century BC, the foundation of paleontology as a science dates back to the work of Georges Cuvier in 1796. Cuvier demonstrated evidence for the concept of extinction and how the life of the past was not necessarily the same as that of the present. The field developed rapidly over the course of the following decades, and the French word paléontologie was introduced for the study in 1822, which was derived from the Ancient Greek word for 'ancient' and words describing relatedness and a field of study. Further advances in the field accompanied the work of Charles Darwin who popularized the concept of evolution. Together, evolution and extinction can be understood as complementary processes that shaped the history of life.\nPaleontology overlaps the most with the fields of geology and biology. It draws on technology and analysis of a wide range of sciences to apply them to the study of life and environments of the past, particularly for the subdisciplines of paleobiology and paleoecology that are analogous to biology and ecology. Paleontology also contributes to other sciences, being utilized for biostratigraphy to reconstruct the geologic time scale of Earth, or in studies on extinction to establish both external and internal factors that can lead to the disappearance of a species."
   },
   {
    "id": "sci-085",
@@ -1043,7 +1122,8 @@
    "wikiTitle": "Mycology",
    "difficulty": 3,
    "imageUrl": "https://upload.wikimedia.org/wikipedia/commons/thumb/7/70/Mycena_leaiana_var._australis.jpg/960px-Mycena_leaiana_var._australis.jpg?utm_source=en.wikipedia.org&utm_campaign=api&utm_content=thumbnail",
-   "pageUrl": "https://en.wikipedia.org/wiki/Mycology"
+   "pageUrl": "https://en.wikipedia.org/wiki/Mycology",
+   "details": "Mycology is the branch of biology concerned with the study of fungi, including their taxonomy, genetics, biochemical properties, and use by humans. Fungi can be a source of tinder, food, and traditional medicine, as well as entheogens, poison, and infection. Yeasts are among the most heavily utilized members of the fungus kingdom, particularly in food manufacturing.\nMycology overlaps with the field of phytopathology, the study of plant diseases. The two disciplines are closely related, because the majority of plant pathogens are fungi. A biologist specializing in mycology is called a mycologist.\n\n\n== Overview ==\nThe word mycology comes from the Ancient Greek: μύκης (mukēs), meaning \"fungus\" and the suffix -λογία (-logia), meaning \"study.\" Pioneer mycologists included Elias Magnus Fries, Christiaan Hendrik Persoon, Heinrich Anton de Bary, Elizabeth Eaton Morse, and Lewis David de Schweinitz. Beatrix Potter, author of The Tale of Peter Rabbit, also made significant contributions to the field.\nPier Andrea Saccardo developed a system for classifying the imperfect fungi by spore color and form, which became the primary system used before classification by DNA analysis. He is most famous for his Sylloge Fungorum, which was a comprehensive list of all of the names that had been used for mushrooms."
   },
   {
    "id": "sci-086",
@@ -1055,7 +1135,8 @@
    "wikiTitle": "Meteorology",
    "difficulty": 1,
    "imageUrl": "https://upload.wikimedia.org/wikipedia/commons/thumb/0/01/ISS-48_Towering_cumulonimbus_and_other_clouds_over_the_Earth_%282%29.jpg/960px-ISS-48_Towering_cumulonimbus_and_other_clouds_over_the_Earth_%282%29.jpg?utm_source=en.wikipedia.org&utm_campaign=api&utm_content=thumbnail",
-   "pageUrl": "https://en.wikipedia.org/wiki/Meteorology"
+   "pageUrl": "https://en.wikipedia.org/wiki/Meteorology",
+   "details": "Meteorology is the scientific study of the Earth's atmosphere and short-term atmospheric phenomena (i.e., weather), with a focus on weather forecasting. It has applications in the military, aviation, energy production, transport, agriculture, construction, weather warnings, and disaster management.\nAlong with climatology, atmospheric physics, atmospheric chemistry, and aeronomy, meteorology forms the broader field of the atmospheric sciences. The interactions between Earth's atmosphere and its oceans (notably El Niño and La Niña) are studied in the interdisciplinary field of hydrometeorology. Other interdisciplinary areas include biometeorology, space weather, and planetary meteorology. Marine weather forecasting relates meteorology to maritime and coastal safety, based on atmospheric interactions with large bodies of water.\nMeteorologists study meteorological phenomena driven by solar radiation, Earth's rotation, ocean currents, and other factors. These include everyday weather like clouds, precipitation, and wind patterns, as well as severe weather events such as tropical cyclones and severe winter storms. Such phenomena are quantified using variables like temperature, pressure, and humidity, which are then used to forecast weather at local (microscale), regional (mesoscale and synoptic scale), and global scales. Meteorologists collect data using basic instruments like thermometers, barometers, and weather vanes (for surface-level measurements), alongside advanced tools like weather satellites, balloons, reconnaissance aircraft, buoys, and radars."
   },
   {
    "id": "sci-087",
@@ -1067,7 +1148,8 @@
    "wikiTitle": "Malaria",
    "difficulty": 1,
    "imageUrl": "https://upload.wikimedia.org/wikipedia/commons/thumb/6/69/Malaria_Parasite_Connecting_to_Human_Red_Blood_Cell_%2834034143483%29.jpg/960px-Malaria_Parasite_Connecting_to_Human_Red_Blood_Cell_%2834034143483%29.jpg?utm_source=en.wikipedia.org&utm_campaign=api&utm_content=thumbnail",
-   "pageUrl": "https://en.wikipedia.org/wiki/Malaria"
+   "pageUrl": "https://en.wikipedia.org/wiki/Malaria",
+   "details": "Malaria is a mosquito-borne infectious disease that is transmitted by the bite of Anopheles mosquitoes. The symptoms of human malaria typically include fever, fatigue, vomiting, and headaches. In severe cases, the disease can cause jaundice, seizures, coma, or death. Symptoms usually begin 10 to 15 days after being bitten by an infected Anopheles mosquito. If not properly treated, people may have recurrences of the disease months later. Those who survive an infection develop partial immunity, being susceptible to reinfection although with milder symptoms. This partial resistance disappears over months to years if the person has no continuing exposure to malaria.\nMalaria is caused by single-celled parasites of the genus Plasmodium, generally spread through the bites of an infected female Anopheles mosquito. The mosquito bite introduces the parasites from the mosquito's saliva into the blood. The parasites initially reproduce and mature in the liver without causing symptoms."
   },
   {
    "id": "sci-088",
@@ -1079,7 +1161,8 @@
    "wikiTitle": "Scurvy",
    "difficulty": 2,
    "imageUrl": "https://upload.wikimedia.org/wikipedia/commons/thumb/8/88/Scorbutic_gums.jpg/960px-Scorbutic_gums.jpg?utm_source=en.wikipedia.org&utm_campaign=api&utm_content=thumbnail",
-   "pageUrl": "https://en.wikipedia.org/wiki/Scurvy"
+   "pageUrl": "https://en.wikipedia.org/wiki/Scurvy",
+   "details": "Scurvy or scorbutus is a deficiency disease (state of malnutrition) resulting from a lack of vitamin C (ascorbic acid). Early symptoms of deficiency include weakness, fatigue, and sore arms and legs. Without treatment, decreased red blood cells, gum disease, changes to hair, and bleeding from the skin may occur. As scurvy worsens, there can be poor wound healing, personality changes, and finally death from infection or bleeding.\nIt takes at least a month of little to no vitamin C in the diet before symptoms occur. In modern times, scurvy occurs most commonly in neglected children, people with mental disorders, unusual eating habits such as ARFID, alcoholism, and older people who live alone. Other risk factors include intestinal malabsorption and dialysis.\nWhile almost all animals, plants, and other life forms produce their vitamin C, humans and a few others do not. Vitamin C, an antioxidant, is required to make the building blocks for collagen, carnitine, and catecholamines, and assists the intestines in the absorption of iron from foods. Diagnosis is typically based on outward appearance, X-rays, and improvement after treatment."
   },
   {
    "id": "sci-089",
@@ -1091,7 +1174,8 @@
    "wikiTitle": "Black Death",
    "difficulty": 1,
    "imageUrl": "https://upload.wikimedia.org/wikipedia/commons/thumb/4/4e/1346-1353_spread_of_the_Black_Death_in_Europe_map.svg/960px-1346-1353_spread_of_the_Black_Death_in_Europe_map.svg.png?utm_source=en.wikipedia.org&utm_campaign=api&utm_content=thumbnail",
-   "pageUrl": "https://en.wikipedia.org/wiki/Black_Death"
+   "pageUrl": "https://en.wikipedia.org/wiki/Black_Death",
+   "details": "The Black Death was a plague pandemic that occurred in Europe from 1346 to 1353. It was one of the most fatal pandemics in human history, leading to the death of up to 50 million people, or 50% of Europe's 14th-century population. The disease was caused by the bacterium Yersinia pestis, which is primarily spread by flea bites, though it may also spread through contact with infected tissues or fluids and, in pneumonic cases, through respiratory droplets. \nThe Black Death had far-reaching population, economic, and cultural effects. It has been tentatively considered as the second plague pandemic, despite each of these outbreaks being separated by around 500–600 years.\nThe Black Death was the second great natural disaster to strike Europe during the Late Middle Ages (the first one being the Great Famine of 1315–1317) and is estimated to have killed 30% to 60% of the European population and approximately 33% of the Middle Eastern population. There were further outbreaks throughout the Late Middle Ages. Due to the crisis of the late Middle Ages, the European population did not regain its 14th century level until the 16th century. Outbreaks of the plague recurred around the world until the early 19th century.\n\n\n== Names ==\nEuropean writers contemporary with the plague described the disease in Latin as pestis or pestilentia, 'pestilence'; epidemia, 'epidemic'; mortalitas, 'mortality'."
   },
   {
    "id": "sci-090",
@@ -1103,7 +1187,8 @@
    "wikiTitle": "Rickets",
    "difficulty": 2,
    "imageUrl": "https://upload.wikimedia.org/wikipedia/commons/a/a9/XrayRicketsLegssmall.jpg?utm_source=en.wikipedia.org&utm_campaign=api&utm_content=thumbnail_unscaled",
-   "pageUrl": "https://en.wikipedia.org/wiki/Rickets"
+   "pageUrl": "https://en.wikipedia.org/wiki/Rickets",
+   "details": "Rickets (scientific nomenclature: rachitis; from Greek ῥαχίτης rhakhítēs, meaning \"in or of the spine\" which was chosen as a back-formation, see Etymology) is a condition that results in weak or soft bones in children and may have either dietary-deficiency or genetic causes. Symptoms include bowed legs, stunted growth, bone pain, large forehead, and trouble sleeping. Complications may include bone deformities, bone pseudofractures and fractures, muscle spasms, or an abnormally curved spine. The analogous condition in adults is osteomalacia.\nOne can characterise a child who appears to suffer from rickets as rachitic.\nThe most common cause of rickets is a vitamin-D deficiency, although hereditary genetic forms also exist. The condition can result from eating a diet without enough vitamin D, dark skin, too little sun exposure, exclusive breastfeeding without vitamin D supplementation, celiac disease, and certain genetic conditions. Other factors may include not enough calcium or phosphorus. The underlying mechanism involves insufficient calcification of the growth plate. Diagnosis is generally based on blood tests finding a low calcium, low phosphorus, and a high alkaline phosphatase together with X-rays."
   },
   {
    "id": "sci-091",
@@ -1115,7 +1200,8 @@
    "wikiTitle": "Photosynthesis",
    "difficulty": 1,
    "imageUrl": "https://upload.wikimedia.org/wikipedia/commons/thumb/5/55/Photosynthesis_en.svg/960px-Photosynthesis_en.svg.png?utm_source=en.wikipedia.org&utm_campaign=api&utm_content=thumbnail",
-   "pageUrl": "https://en.wikipedia.org/wiki/Photosynthesis"
+   "pageUrl": "https://en.wikipedia.org/wiki/Photosynthesis",
+   "details": "Photosynthesis is a system of biological processes by which photopigment-bearing autotrophic organisms, such as most plants, algae and cyanobacteria, convert light energy—typically from sunlight—into the chemical energy necessary to fuel their metabolism. The term photosynthesis usually refers to oxygenic photosynthesis, a process that releases oxygen as a byproduct of water splitting. Photosynthetic organisms store the converted chemical energy within the bonds of intracellular organic compounds (complex compounds containing carbon), typically carbohydrates like sugars (mainly glucose, fructose and sucrose), starches, phytoglycogen and cellulose. When needing to use this stored energy, an organism's cells then metabolize the organic compounds through cellular respiration. Photosynthesis plays a critical role in producing and maintaining the oxygen content of the Earth's atmosphere, and it supplies most of the biological energy necessary for complex life on Earth.\nSome organisms also perform anoxygenic photosynthesis, which does not produce oxygen. Some bacteria (e.g. purple bacteria) use bacteriochlorophyll to split hydrogen sulfide as a reductant instead of water, releasing sulfur instead of oxygen, which was a dominant form of photosynthesis in the euxinic Canfield oceans during the Boring Billion. Archaea such as Halobacterium also perform a type of non-carbon-fixing anoxygenic photosynthesis, where the simpler photopigment retinal and its microbial rhodopsin derivatives are used to absorb green light and produce a proton (hydron) gradient across the cell membrane, and the subsequent ion movement powers transmembrane proton pumps to directly synthesize adenosine triphosphate (ATP), the \"energy currency\" of cells. Such archaeal photosynthesis might have been the earliest form of photosynthesis that evolved on Earth, as far back as the Paleoarchean, preceding that of cyanobacteria (see Purple Earth hypothesis)."
   },
   {
    "id": "sci-092",
@@ -1128,8 +1214,9 @@
    "wikiTitle": "Mitochondrion",
    "difficulty": 1,
    "imageUrl": "https://upload.wikimedia.org/wikipedia/commons/thumb/3/3b/Animal_mitochondrion_diagram_en.svg/960px-Animal_mitochondrion_diagram_en.svg.png?utm_source=en.wikipedia.org&utm_campaign=api&utm_content=thumbnail",
-   "pageUrl": "https://en.wikipedia.org/wiki/Mitochondria"
+   "pageUrl": "https://en.wikipedia.org/wiki/Mitochondria",
+   "details": "A mitochondrion (pl. mitochondria) is an organelle found in the cells of most eukaryotes, such as animals, plants and fungi. Mitochondria have a double membrane structure and use aerobic respiration to generate adenosine triphosphate (ATP), which is used throughout the cell as a source of chemical energy. They were discovered by Albert von Kölliker in 1857 in the voluntary muscles of insects. The term mitochondrion, meaning \"a thread-like granule\", was coined by Carl Benda in 1898. The mitochondrion is popularly nicknamed the \"powerhouse of the cell\", a phrase popularized by Philip Siekevitz in a 1957 Scientific American article of the same name.\nMitochondria are commonly between 0.75 and 3 μm2 in cross section, but vary considerably in size and structure. Unless specifically stained, they are not visible. The mitochondrion is composed of compartments that carry out specialized functions. These compartments or regions include the outer membrane, intermembrane space, inner membrane, cristae, and matrix.\nIn addition to supplying cellular energy, mitochondria are involved in other tasks, such as signaling, cellular differentiation, and cell death, as well as maintaining control of the cell cycle and cell growth."
   }
  ],
- "version": "45233ed083f7"
+ "version": "683f414ebdde"
 }

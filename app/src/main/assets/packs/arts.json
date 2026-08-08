@@ -14,7 +14,8 @@
    "wikiTitle": "Mona Lisa",
    "difficulty": 1,
    "imageUrl": "https://upload.wikimedia.org/wikipedia/commons/thumb/e/ec/Mona_Lisa%2C_by_Leonardo_da_Vinci%2C_from_C2RMF_retouched.jpg/960px-Mona_Lisa%2C_by_Leonardo_da_Vinci%2C_from_C2RMF_retouched.jpg?utm_source=en.wikipedia.org&utm_campaign=api&utm_content=thumbnail",
-   "pageUrl": "https://en.wikipedia.org/wiki/Mona_Lisa"
+   "pageUrl": "https://en.wikipedia.org/wiki/Mona_Lisa",
+   "details": "The Mona Lisa is a half-length portrait painting by the Italian artist Leonardo da Vinci. Considered an archetypal masterpiece of the Italian Renaissance, it has been described as \"the best known, the most visited, the most written about, the most sung about, [and] the most parodied work of art in the world.\" The painting's novel qualities include the subject's enigmatic expression, the monumentality of the composition, the subtle modelling of forms, and the atmospheric illusionism.\nThe painting has been traditionally considered to depict the Italian noblewoman Lisa del Giocondo. It is painted in oil on a white poplar panel. Leonardo never gave the painting to the Giocondo family. It was believed to have been painted between 1503 and 1506; however, Leonardo may have continued working on it as late as 1517. King Francis I of France acquired the Mona Lisa after Leonardo's death in 1519, and it became the property of the French Republic. It has normally been on display at the Louvre in Paris since 1797.\nThe painting's global fame and popularity partly stem from its 1911 theft by Vincenzo Peruggia, who attributed his actions to Italian patriotism—a belief it should belong to Italy. The theft and subsequent recovery in 1914 generated unprecedented publicity for an art theft, and led to the publication of many cultural depictions such as the 1915 opera Mona Lisa, two early 1930s films (The Theft of the Mona Lisa and Arsène Lupin), and the song \"Mona Lisa\" recorded by Nat King Cole—one of the most successful songs of the 1950s."
   },
   {
    "id": "art-002",
@@ -26,7 +27,8 @@
    "wikiTitle": "The Starry Night",
    "difficulty": 1,
    "imageUrl": "https://upload.wikimedia.org/wikipedia/commons/thumb/e/ea/Van_Gogh_-_Starry_Night_-_Google_Art_Project.jpg/960px-Van_Gogh_-_Starry_Night_-_Google_Art_Project.jpg?utm_source=en.wikipedia.org&utm_campaign=api&utm_content=thumbnail",
-   "pageUrl": "https://en.wikipedia.org/wiki/The_Starry_Night"
+   "pageUrl": "https://en.wikipedia.org/wiki/The_Starry_Night",
+   "details": "The Starry Night is an oil-on-canvas painting by the Dutch Post-Impressionist painter Vincent van Gogh. Painted in June 1889, it depicts the view from the east-facing window of his asylum room at Saint-Rémy-de-Provence, just before sunrise, with the addition of an imaginary village. It has been in the permanent collection of the Museum of Modern Art in New York City since 1941, acquired through the Lillie P. Bliss Bequest. Described as a \"touchstone of modern art\", The Starry Night has been regarded as one of the most recognizable paintings in the Western canon.\nThe painting was created in mid-June 1889, inspired by the view from Van Gogh’s bedroom window at the Saint-Paul-de-Mausole mental asylum near Saint-Rémy-de-Provence. The former monastery functioned as a mental asylum, where Van Gogh voluntarily admitted himself on 8 May 1889, following a mental breakdown and his infamous act of self-mutilation that occurred in late December 1888. Catering to wealthy patients, the facility was less than half full at the time of Van Gogh's admission, allowing the artist access to both a second-story bedroom and a ground-floor studio. During his year-long stay, he remained highly productive, creating many paintings including Irises, a self-portrait, and The Starry Night.\nThe painting's celestial elements include Venus, which was visible in the sky at the time, and the Moon, although the Moon's depiction is not astronomically accurate. The cypress trees in the foreground were exaggerated in scale compared to other works."
   },
   {
    "id": "art-003",
@@ -38,7 +40,8 @@
    "wikiTitle": "The Scream",
    "difficulty": 1,
    "imageUrl": "https://upload.wikimedia.org/wikipedia/commons/thumb/6/65/Edvard_Munch_-_The_Scream.jpg/960px-Edvard_Munch_-_The_Scream.jpg?utm_source=en.wikipedia.org&utm_campaign=api&utm_content=thumbnail",
-   "pageUrl": "https://en.wikipedia.org/wiki/The_Scream"
+   "pageUrl": "https://en.wikipedia.org/wiki/The_Scream",
+   "details": "The Scream is an art composition created by Norwegian artist Edvard Munch in 1893. The Norwegian name of the piece is Skrik ('Scream'), and the German title under which it was first exhibited is Der Schrei der Natur ('The Scream of Nature'). The agonized face in the painting has become one of the most iconic images in art, seen as representing a profound experience of existential dread related to the human condition. Munch's work, including The Scream, had a formative influence on the Expressionist movement.\nMunch recalled that he had been out for a walk at sunset when suddenly the setting sun's light turned the clouds \"a blood red\". He sensed an \"infinite scream passing through nature\". Scholars have located the spot along a fjord path overlooking Oslo and have suggested various explanations for the unnaturally orange sky, ranging from the effects of a volcanic eruption to a psychological reaction by Munch to his sister's commitment at a nearby lunatic asylum.\nMunch created two versions in paint and two in pastels, as well as a lithograph stone from which several prints survive. Both painted versions have been stolen from public museums, but since recovered. In 2012, one of the pastel versions commanded the highest nominal price paid for an artwork at a public auction at that time."
   },
   {
    "id": "art-004",
@@ -49,7 +52,9 @@
    "answerType": "painting",
    "wikiTitle": "Guernica (Picasso)",
    "difficulty": 2,
-   "pageUrl": "https://en.wikipedia.org/wiki/Guernica_(Picasso)"
+   "imageUrl": "https://upload.wikimedia.org/wikipedia/en/7/74/PicassoGuernica.jpg?utm_source=en.wikipedia.org&utm_campaign=api&utm_content=thumbnail_unscaled",
+   "pageUrl": "https://en.wikipedia.org/wiki/Guernica_(Picasso)",
+   "details": "Guernica is a large 1937 oil painting by Spanish artist Pablo Picasso. It is one of his best-known works, regarded by many art critics as the most moving and powerful anti-war painting in history. It is exhibited in the Museo Reina Sofía in Madrid.\nThe grey, black, and white painting, done on a canvas 3.49 meters (11 ft 5 in) tall and 7.76 meters (25 ft 6 in) across, portrays the suffering wrought by violence and chaos. Prominently featured in the composition are a gored horse, a bull, screaming women, a dead baby, a dismembered soldier, and flames.\nPicasso painted Guernica at his home in Paris in response to the 26 April 1937 bombing of Guernica, a town in the Basque Country in northern Spain, by Nazi Germany's Condor Legion and the fascist government of Italy. Upon completion, Guernica was exhibited at the Spanish pavilion at the 1937 Paris International Exposition and then at other venues around the world. The touring exhibition was used to raise funds for Spanish war relief. The painting soon became widely acclaimed, helping to bring worldwide attention to the Spanish Civil War that took place from 1936 to 1939.\n\n\n== Commission ==\nIn January 1937, while Pablo Picasso was living in Paris on Rue des Grands Augustins, he was commissioned by the Spanish Republican government to create a large artwork for the Spanish pavilion at the Exposition Internationale des Arts et Techniques dans la Vie Moderne, a 1937 Paris International Exposition."
   },
   {
    "id": "art-005",
@@ -60,7 +65,9 @@
    "answerType": "painting",
    "wikiTitle": "The Persistence of Memory",
    "difficulty": 2,
-   "pageUrl": "https://en.wikipedia.org/wiki/The_Persistence_of_Memory"
+   "imageUrl": "https://upload.wikimedia.org/wikipedia/en/d/dd/The_Persistence_of_Memory.jpg?utm_source=en.wikipedia.org&utm_campaign=api&utm_content=thumbnail_unscaled",
+   "pageUrl": "https://en.wikipedia.org/wiki/The_Persistence_of_Memory",
+   "details": "The Persistence of Memory (Catalan: La persistència de la memòria, Spanish: La persistencia de la memoria) is a 1931 painting by artist Salvador Dalí and one of the most recognizable works of Surrealism. First exhibited at the Julien Levy Gallery in 1932 and sold for $250, The Persistence of Memory was donated to the Museum of Modern Art (MoMA) in New York City two years later in 1934 by an anonymous donor, where it has remained ever since. It is widely recognized and frequently referred to in popular culture, and sometimes referred to by more descriptive titles, such as \"The Melting Clocks\", \"The Soft Watches\" or \"The Melting Watches\".\n\n\n== Analysis ==\nThe well-known surrealist piece introduced the image of the soft melting pocket watch. It epitomizes Dalí's theory of \"softness\" and \"hardness\", which was central to his thinking at the time. As Dawn Adès wrote, \"The soft watches are an unconscious symbol of the relativity of space and time, a Surrealist meditation on the collapse of our notions of a fixed cosmic order\". This interpretation suggests that Dalí was incorporating an understanding of the world introduced by Albert Einstein's theory of special relativity. Asked by Ilya Prigogine whether this was the case, Dalí replied that the soft watches were not inspired by the theory of relativity, but by the surrealist perception of a Camembert melting in the sun.\nThe year prior to painting the Persistence of Memory, Dalí developed his \"paranoiac-critical method\", deliberately inducing psychotic hallucinations to inspire his art. He remarked, \"The difference between a madman and me is that I am not mad.\"\n\nIn the center of the painting, beneath the rightmost clock, is a distorted human face in profile."
   },
   {
    "id": "art-006",
@@ -72,7 +79,8 @@
    "wikiTitle": "The Birth of Venus",
    "difficulty": 2,
    "imageUrl": "https://upload.wikimedia.org/wikipedia/commons/thumb/0/0b/Sandro_Botticelli_-_La_nascita_di_Venere_-_Google_Art_Project_-_edited.jpg/960px-Sandro_Botticelli_-_La_nascita_di_Venere_-_Google_Art_Project_-_edited.jpg?utm_source=en.wikipedia.org&utm_campaign=api&utm_content=thumbnail",
-   "pageUrl": "https://en.wikipedia.org/wiki/The_Birth_of_Venus"
+   "pageUrl": "https://en.wikipedia.org/wiki/The_Birth_of_Venus",
+   "details": "The Birth of Venus (Italian: Nascita di Venere [ˈnaʃʃita di ˈvɛːnere]) is a painting by the Italian artist Sandro Botticelli, probably executed in the mid-1480s. It depicts the goddess Venus arriving at the shore after her birth, when she had emerged from the sea fully grown (called Venus Anadyomene and often depicted in art). The painting is in the Uffizi Gallery in Florence, Italy.\nAlthough the two are not a pair, the painting is inevitably discussed with Botticelli's other very large mythological painting, the Primavera, also in the Uffizi.  They are among the most famous paintings in the world, and icons of Italian Renaissance painting; of the two, the Birth is better known than the Primavera.  As depictions of subjects from classical mythology on a very large scale they were virtually unprecedented in Western art since classical antiquity, as was the size and prominence of a nude female figure in the Birth. It used to be thought that they were both commissioned by the same member of the Medici family, but this is now uncertain.\nThey have been endlessly analysed by art historians, with the main themes being: the emulation of ancient painters and the context of wedding celebrations (generally agreed), the influence of Renaissance Neo-Platonism (somewhat controversial), and the identity of the commissioners (not agreed).  Most art historians agree, however, that the Birth does not require complex analysis to decode its meaning, in the way that the Primavera probably does.  While there are subtleties in the painting, its main meaning is a straightforward, if individual, treatment of a traditional scene from Greek mythology, and its appeal is sensory and very accessible, hence its enormous popularity."
   },
   {
    "id": "art-007",
@@ -84,7 +92,8 @@
    "wikiTitle": "Girl with a Pearl Earring",
    "difficulty": 2,
    "imageUrl": "https://upload.wikimedia.org/wikipedia/commons/thumb/0/0f/1665_Girl_with_a_Pearl_Earring.jpg/960px-1665_Girl_with_a_Pearl_Earring.jpg?utm_source=en.wikipedia.org&utm_campaign=api&utm_content=thumbnail",
-   "pageUrl": "https://en.wikipedia.org/wiki/Girl_with_a_Pearl_Earring"
+   "pageUrl": "https://en.wikipedia.org/wiki/Girl_with_a_Pearl_Earring",
+   "details": "Girl with a Pearl Earring (Dutch: Meisje met de parel) is an oil painting by Dutch Golden Age painter Johannes Vermeer, dated c. 1665. Going by various names over the centuries, it acquired its present title towards the end of the 20th century. The work has been in the collection of the Mauritshuis in The Hague since 1902 and has been the subject of various literary and cinematic treatments.\n\n\n== Description ==\nThe painting is a tronie, the Dutch 17th-century description of a \"head\" that was not meant to be a portrait. It depicts a European girl wearing \"exotic dress\", an \"oriental turban\", and what appears to be a very large pearl as an earring. The work is oil on canvas and is 44.5 cm (17.5 in) tall by 39 cm (15 in) wide. It is signed \"IVMeer\" but not dated. It is estimated to have been painted around 1665.\nThe most recent (1994) restoration of the painting brought out  hidden subtleties in the colour scheme and deepened the intimacy of the girl's gaze towards the viewer."
   },
   {
    "id": "art-008",
@@ -96,7 +105,8 @@
    "wikiTitle": "The Last Supper (Leonardo)",
    "difficulty": 1,
    "imageUrl": "https://upload.wikimedia.org/wikipedia/commons/thumb/4/48/The_Last_Supper_-_Leonardo_Da_Vinci_-_High_Resolution_32x16.jpg/960px-The_Last_Supper_-_Leonardo_Da_Vinci_-_High_Resolution_32x16.jpg?utm_source=en.wikipedia.org&utm_campaign=api&utm_content=thumbnail",
-   "pageUrl": "https://en.wikipedia.org/wiki/The_Last_Supper_(Leonardo)"
+   "pageUrl": "https://en.wikipedia.org/wiki/The_Last_Supper_(Leonardo)",
+   "details": "The Last Supper (Italian: Il Cenacolo [il tʃeˈnaːkolo] or L'Ultima Cena [ˈlultima ˈtʃeːna]) is a mural painting by the Italian High Renaissance artist Leonardo da Vinci, dated to c. 1495–1498, housed in the refectory of the Convent of Santa Maria delle Grazie in Milan, Italy. The painting represents the scene of the Last Supper of Jesus with the Twelve Apostles, as it is told in the Gospel of John – specifically the moment after Jesus announces that one of his apostles will betray him. Its handling of space, mastery of perspective, treatment of motion and complex display of human emotion has made it one of the Western world's most recognizable paintings and among Leonardo's most celebrated works. Some commentators consider it pivotal in inaugurating the transition into what is now termed the High Renaissance.\nThe work was commissioned as part of a plan of renovations to the church and its convent buildings by Leonardo's patron Ludovico Sforza, Duke of Milan. In order to permit his inconsistent painting schedule and frequent revisions, it is painted with materials that allowed for regular alterations: tempera on gesso, pitch, and mastic. Due to the methods used, a variety of environmental factors, and intentional damage, little of the original painting remains today despite numerous restoration attempts, the last being completed in 1999. The Last Supper is Leonardo's largest work, aside from the Sala delle Asse.\n\n\n== Painting ==\n\n\n=== Commission and creation ===\nThe Last Supper measures 460 cm × 880 cm (15 ft 1 in × 28 ft 10 in) and covers an end wall of the dining hall at the monastery of Santa Maria delle Grazie in Milan, Italy. The theme was a traditional one for refectories, although the room was not a refectory at the time that Leonardo painted it."
   },
   {
    "id": "art-009",
@@ -121,7 +131,8 @@
    "wikiTitle": "Las Meninas",
    "difficulty": 3,
    "imageUrl": "https://upload.wikimedia.org/wikipedia/commons/thumb/3/31/Las_Meninas%2C_by_Diego_Vel%C3%A1zquez%2C_from_Prado_in_Google_Earth.jpg/960px-Las_Meninas%2C_by_Diego_Vel%C3%A1zquez%2C_from_Prado_in_Google_Earth.jpg?utm_source=en.wikipedia.org&utm_campaign=api&utm_content=thumbnail",
-   "pageUrl": "https://en.wikipedia.org/wiki/Las_Meninas"
+   "pageUrl": "https://en.wikipedia.org/wiki/Las_Meninas",
+   "details": "Las Meninas (Spanish: [las meˈninas]; Spanish for 'The Ladies-in-waiting') is a 1656 oil painting in the Museo del Prado in Madrid, by Diego Velázquez, the leading artist in the court of King Philip IV of Spain and Portugal, and of the Spanish Golden Age. It has become one of the most widely analysed works in Western painting for the way its complex and enigmatic composition raises questions about reality and illusion, and for the uncertain relationship it creates between the viewer and the figures depicted.\nThe painting is believed by the art historian F. J. Sánchez Cantón to depict a room in the Royal Alcázar of Madrid during the reign of Philip IV, and presents several figures, most of them identifiable from the Spanish court, captured in a particular moment as if in a snapshot. Some of the figures look out of the canvas towards the viewer, while others interact among themselves. The five-year-old Infanta Margaret Theresa is surrounded by her entourage of maids of honour, chaperone, bodyguard, two dwarfs and a dog. Just behind them, Velázquez portrays himself working at a large canvas. Velázquez looks outwards beyond the pictorial space to where a viewer of the painting would stand. The mirror in the background reflects the upper bodies of the king and queen. They appear to be placed outside the picture space in a position similar to that of the viewer, although some scholars have speculated that their image is a reflection from the painting on which Velázquez is shown working.\nThe Italian Baroque painter Luca Giordano described Las Meninas as the \"theology of painting\", and in 1827 the president of the Royal Academy of Arts in London Sir Thomas Lawrence called the work \"the true philosophy of the art\"."
   },
   {
    "id": "art-011",
@@ -134,7 +145,8 @@
    "wikiTitle": "The Night Watch",
    "difficulty": 2,
    "imageUrl": "https://upload.wikimedia.org/wikipedia/commons/thumb/3/3a/La_ronda_de_noche%2C_por_Rembrandt_van_Rijn.jpg/960px-La_ronda_de_noche%2C_por_Rembrandt_van_Rijn.jpg?utm_source=en.wikipedia.org&utm_campaign=api&utm_content=thumbnail",
-   "pageUrl": "https://en.wikipedia.org/wiki/The_Night_Watch"
+   "pageUrl": "https://en.wikipedia.org/wiki/The_Night_Watch",
+   "details": "Militia Company of District II under the Command of Captain Frans Banninck Cocq, also known as The Shooting Company of Frans Banning Cocq and Willem van Ruytenburch, but commonly referred to as The Night Watch (Dutch: De Nachtwacht), is a 1642 painting by Rembrandt van Rijn. It is in the collection of the Amsterdam Museum but is prominently displayed in the Rijksmuseum as the best-known painting in its collection. The Night Watch is one of the most famous Dutch Golden Age paintings. Rembrandt's large painting of 363 by 437 centimetres (12 by 14+1⁄2 feet) is famed for transforming a group portrait of a civic militia guards (Dutch: schutterij or kloveniers) company into a compelling drama energised by light and shadow (tenebrism). The title is a misnomer; the painting does not depict a nocturnal scene.\nThe Night Watch was completed in 1642 at the peak of the Dutch Golden Age. It depicts the eponymous company moving out, led by Captain Frans Banninck Cocq (dressed in black, with a red sash) and his lieutenant, Willem van Ruytenburch (dressed in yellow, with a white sash). Behind them, the company's colours are carried by the ensign, Jan Visscher Cornelissen. Rembrandt incorporated the traditional emblem of the arquebusiers in the figure of the young girl who carries a dead chicken on her belt, referencing the clauweniers (arquebusiers) and a type of drinking horn used at group banquets.\n\n\n== History ==\n\n\n=== Commission ===\nThe painting was commissioned around 1639 by Frans Banninck Cocq and seventeen members of his civic militia guards (Dutch: schutterij or kloveniers)."
   },
   {
    "id": "art-012",
@@ -146,7 +158,8 @@
    "wikiTitle": "Sistine Chapel ceiling",
    "difficulty": 1,
    "imageUrl": "https://upload.wikimedia.org/wikipedia/commons/thumb/1/1d/Sistine_Chapel_ceiling_02_%28brightened%29.jpg/960px-Sistine_Chapel_ceiling_02_%28brightened%29.jpg?utm_source=en.wikipedia.org&utm_campaign=api&utm_content=thumbnail",
-   "pageUrl": "https://en.wikipedia.org/wiki/Sistine_Chapel_ceiling"
+   "pageUrl": "https://en.wikipedia.org/wiki/Sistine_Chapel_ceiling",
+   "details": "The Sistine Chapel ceiling (Italian: Soffitto della Cappella Sistina), painted in fresco by Michelangelo between 1508 and 1512, is a cornerstone work of High Renaissance art.\nThe Sistine Chapel is the large papal chapel built within the Vatican between 1477 and 1480 by Pope Sixtus IV, for whom the chapel is named. The ceiling was painted at the commission of Pope Julius II.\nThe ceiling's various painted elements form part of a larger scheme of decoration within the chapel. Prior to Michelangelo's contribution, the walls were painted by several leading artists of the late 15th century including Sandro Botticelli, Domenico Ghirlandaio, and Pietro Perugino. After the ceiling was painted, Raphael created a set of large tapestries (1515–1516) to cover the lower portion of the wall. Michelangelo returned to the chapel to create The Last Judgment, a large wall fresco situated behind the altar. The chapel's decoration illustrates much of the doctrine of the Catholic Church, serving as the setting for papal conclaves and many other important services.\nCentral to the ceiling decoration are nine scenes from the Book of Genesis, including The Creation of Adam. The complex design includes several sets of figures, some clothed and some nude, allowing Michelangelo to demonstrate his skill in depicting the human figure in a variety of poses. The ceiling was immediately well-received and imitated by other artists, continuing to the present."
   },
   {
    "id": "art-013",
@@ -158,7 +171,8 @@
    "wikiTitle": "Leonardo da Vinci",
    "difficulty": 1,
    "imageUrl": "https://upload.wikimedia.org/wikipedia/commons/thumb/c/cb/Francesco_Melzi_-_Portrait_of_Leonardo.png/960px-Francesco_Melzi_-_Portrait_of_Leonardo.png?utm_source=en.wikipedia.org&utm_campaign=api&utm_content=thumbnail",
-   "pageUrl": "https://en.wikipedia.org/wiki/Leonardo_da_Vinci"
+   "pageUrl": "https://en.wikipedia.org/wiki/Leonardo_da_Vinci",
+   "details": "Leonardo di ser Piero da Vinci (15 April 1452 – 2 May 1519) was an Italian polymath of the High Renaissance who was active as a painter, draughtsman, engineer, scientist, theorist, sculptor, and architect. While his fame initially rested on his achievements as a painter, he has also become known for his notebooks, in which he made drawings and notes on a variety of subjects, including anatomy, astronomy, botany, cartography, painting, and palaeontology. Leonardo is widely regarded as a genius who epitomised the Renaissance humanist ideal, and his collective works contributed to the development of European art to an extent rivalled only by that of his younger contemporary Michelangelo.\nBorn out of wedlock to a successful notary and a lower-class woman in, or near, Vinci, he was educated in Florence by the Italian painter and sculptor Andrea del Verrocchio. He began his career in the city, but then spent much time in the service of Ludovico Sforza in Milan. Later, he worked in Florence and Milan again, as well as briefly in Rome, all while attracting a large following of imitators and students. Upon the invitation of Francis I, he spent his last three years in France, where he died in 1519. Since his death, there has not been a time when his achievements, diverse interests, personal life, and empirical thinking have failed to incite interest and admiration, making him a frequent namesake and subject in culture.\nLeonardo is identified as one of the greatest painters in the history of Western art and is often credited as the founder of the High Renaissance. Despite having many lost works and fewer than 25 attributed major works – including numerous unfinished works – he created some of the most influential paintings in the Western canon."
   },
   {
    "id": "art-014",
@@ -170,7 +184,8 @@
    "wikiTitle": "Vincent van Gogh",
    "difficulty": 1,
    "imageUrl": "https://upload.wikimedia.org/wikipedia/commons/thumb/4/4c/Vincent_van_Gogh_-_Self-Portrait_-_Google_Art_Project_%28454045%29.jpg/960px-Vincent_van_Gogh_-_Self-Portrait_-_Google_Art_Project_%28454045%29.jpg?utm_source=en.wikipedia.org&utm_campaign=api&utm_content=thumbnail",
-   "pageUrl": "https://en.wikipedia.org/wiki/Vincent_van_Gogh"
+   "pageUrl": "https://en.wikipedia.org/wiki/Vincent_van_Gogh",
+   "details": "Vincent Willem van Gogh (Dutch: [ˈvɪnsɛnt ˈʋɪləɱ vɑŋ ˈɣɔx] ; 30 March 1853 – 29 July 1890) was a Dutch Post-Impressionist painter who is among the most famous and influential figures in the history of Western art. In just over a decade he created about 2,100 artworks, including around 860 oil paintings, most of them in the last two years of his life. They include landscapes, still lifes, portraits and self-portraits, and are characterised by bold colours and dramatic, impulsive and expressive brushwork that contributed to the foundations of modern art. His suicide at 37 followed years of mental illness and poverty.\nBorn into an upper-middle-class family in Zundert, Van Gogh drew as a child and was serious, quiet and thoughtful. As a young man he worked as an art dealer, often travelling, but became depressed after he was transferred to London. He turned to religion, and spent time as a Protestant missionary in southern Belgium. He drifted in ill health and solitude before taking up painting in 1881, having moved back home with his parents. His younger brother Theo supported him financially, and the two kept up a long correspondence by letter. His early works, mostly still lifes and depictions of peasant labourers, contain few signs of the vivid colour that distinguished his later work."
   },
   {
    "id": "art-015",
@@ -182,7 +197,8 @@
    "wikiTitle": "Pablo Picasso",
    "difficulty": 1,
    "imageUrl": "https://upload.wikimedia.org/wikipedia/commons/thumb/9/98/Pablo_picasso_1.jpg/960px-Pablo_picasso_1.jpg?utm_source=en.wikipedia.org&utm_campaign=api&utm_content=thumbnail",
-   "pageUrl": "https://en.wikipedia.org/wiki/Pablo_Picasso"
+   "pageUrl": "https://en.wikipedia.org/wiki/Pablo_Picasso",
+   "details": "Pablo Ruiz Picasso (25 October 1881 – 8 April 1973) was a Spanish painter and sculptor who spent most of his adult life in France. One of the most influential artists of the 20th century, he is known for co-founding the Cubist movement, the invention of constructed sculpture, the co-invention of collage, and for the wide variety of styles that he helped develop and explore. Among his most famous works are the proto-Cubist Les Demoiselles d'Avignon (1907) and the anti-war painting Guernica (1937), a dramatic portrayal of the bombing of Guernica by German and Italian air forces during the Spanish Civil War. His career spanned more than 76 years, from his late teens to his death in 1973.\nBeginning his formal training under his father José Ruiz y Blasco aged seven, Picasso demonstrated extraordinary artistic talent from a young age, painting in a naturalistic manner through his childhood and adolescence. During the first decade of the 20th century, his style changed as he experimented with different theories, techniques, and ideas. After 1906, the Fauvist work of the older artist Henri Matisse motivated Picasso to explore more radical styles, beginning a fruitful rivalry between the two artists, who subsequently were often paired by critics as the leaders of modern art.\nPicasso's output, especially in his early career, is often periodized. While the names of many of his later periods are debated, the most commonly accepted periods in his work are the Blue Period (1901–1904), the Rose Period (1904–1906), the African-influenced Period (1907–1909), Analytic Cubism (1909–1912), and Synthetic Cubism (1912–1919), also referred to as the Crystal period. Much of Picasso's work of the late 1910s and early 1920s is in a neoclassical style, and his work in the mid-1920s often has characteristics of Surrealism."
   },
   {
    "id": "art-016",
@@ -194,7 +210,8 @@
    "wikiTitle": "Claude Monet",
    "difficulty": 1,
    "imageUrl": "https://upload.wikimedia.org/wikipedia/commons/thumb/a/a4/Claude_Monet_1899_Nadar_crop.jpg/960px-Claude_Monet_1899_Nadar_crop.jpg?utm_source=en.wikipedia.org&utm_campaign=api&utm_content=thumbnail",
-   "pageUrl": "https://en.wikipedia.org/wiki/Claude_Monet"
+   "pageUrl": "https://en.wikipedia.org/wiki/Claude_Monet",
+   "details": "Oscar-Claude Monet (UK: , US: ; French: [klod mɔnɛ]; 14 November 1840 – 5 December 1926) was a French painter and founder of Impressionism who is seen as a key precursor to modernism, especially in his attempts to paint nature as he perceived it. During his long career, he was the most consistent and prolific practitioner of Impressionism's philosophy of expressing one's perceptions of nature, especially as applied to plein air (outdoor) landscape painting. The term \"Impressionism\" is derived from the title of his painting Impression, Sunrise (Impression, soleil levant), which was exhibited in 1874 at the First Impressionist Exhibition, initiated by Monet and a number of like-minded artists as an alternative to the Salon.\nMonet was raised in Le Havre, Normandy, and became interested in the outdoors and drawing from an early age. Although his mother, Louise-Justine Aubrée Monet, supported his ambitions to be a painter, his father, Claude-Adolphe, disapproved and wanted him to pursue a career in business. He was very close to his mother, but she died in January 1857 when he was sixteen years old, and he was sent to live with his childless, widowed but wealthy aunt, Marie-Jeanne Lecadre. He went on to study at the Académie Suisse, and under the academic history painter Charles Gleyre, where he was a classmate of Auguste Renoir. His early works include landscapes, seascapes, and portraits, but attracted little attention. A key early influence was Eugène Boudin, who introduced him to the concept of plein air painting. From 1883, Monet lived in Giverny, also in northern France, where he purchased a house and property and began a vast landscaping project, including a water-lily pond."
   },
   {
    "id": "art-017",
@@ -206,7 +223,8 @@
    "wikiTitle": "Rembrandt",
    "difficulty": 1,
    "imageUrl": "https://upload.wikimedia.org/wikipedia/commons/thumb/b/bd/Rembrandt_van_Rijn_-_Self-Portrait_-_Google_Art_Project.jpg/960px-Rembrandt_van_Rijn_-_Self-Portrait_-_Google_Art_Project.jpg?utm_source=en.wikipedia.org&utm_campaign=api&utm_content=thumbnail",
-   "pageUrl": "https://en.wikipedia.org/wiki/Rembrandt"
+   "pageUrl": "https://en.wikipedia.org/wiki/Rembrandt",
+   "details": "Rembrandt Harmenszoon van Rijn (15 July 1606 – 4 October 1669), known mononymously as Rembrandt, was a Dutch Golden Age painter, printmaker, and draughtsman. He is generally considered one of the greatest visual artists in the history of Western art. It is estimated that Rembrandt's surviving works amount to about three hundred paintings, three hundred etchings, and several hundred drawings.\nUnlike most Dutch painters of the 17th century, Rembrandt's works depict a wide range of styles and subject matter, from portraits and self-portraits to landscapes, genre scenes, allegorical and historical scenes, biblical and mythological subjects and animal studies. His contributions to art came in a period that historians call the Dutch Golden Age.\nRembrandt never went abroad, but was considerably influenced by the work of the Italian Old Masters and Dutch and Flemish artists who had studied in Italy.  After he achieved youthful success as a portrait painter, Rembrandt's later years were marked by personal tragedy and financial hardships. Yet his etchings and paintings were popular throughout his lifetime, his reputation as an artist remained high, and for twenty years he taught many important Dutch painters. Rembrandt's portraits of his contemporaries, self-portraits and illustrations of scenes from the Bible are regarded as his greatest creative triumphs. His approximately 100 self-portraits, over 40 of which are paintings, form an intimate autobiography."
   },
   {
    "id": "art-018",
@@ -218,7 +236,8 @@
    "wikiTitle": "Michelangelo",
    "difficulty": 1,
    "imageUrl": "https://upload.wikimedia.org/wikipedia/commons/thumb/0/02/Michelangelo_Daniele_da_Volterra_%28dettaglio%29.jpg/960px-Michelangelo_Daniele_da_Volterra_%28dettaglio%29.jpg?utm_source=en.wikipedia.org&utm_campaign=api&utm_content=thumbnail",
-   "pageUrl": "https://en.wikipedia.org/wiki/Michelangelo"
+   "pageUrl": "https://en.wikipedia.org/wiki/Michelangelo",
+   "details": "Michelangelo di Lodovico Buonarroti Simoni (6 March 1475 – 18 February 1564), known mononymously as Michelangelo, was an Italian sculptor, painter, architect, and poet of the High Renaissance. He was born in the Republic of Florence but was mostly active in Rome from his 30s onwards. His work was inspired by models from classical antiquity and had a lasting influence on Western art. Michelangelo's creative abilities and mastery in a range of artistic arenas define him as an archetypal Renaissance man, along with his rival and elder contemporary, Leonardo da Vinci. Given the sheer volume of surviving correspondence, sketches, and reminiscences, Michelangelo is one of the best-documented artists of the 16th century. He was lauded by contemporary biographers as the most accomplished artist of his era.\nMichelangelo achieved fame early. Two of his best-known works, the Pietà and David, were sculpted before the age of 30. Although he did not consider himself a painter, Michelangelo created two of the most influential frescoes in the history of Western art: the scenes from Genesis on the ceiling of the Sistine Chapel in Rome, and The Last Judgment on its altar wall. His design of the Laurentian Library pioneered Mannerist architecture."
   },
   {
    "id": "art-019",
@@ -230,7 +249,8 @@
    "wikiTitle": "Frida Kahlo",
    "difficulty": 1,
    "imageUrl": "https://upload.wikimedia.org/wikipedia/commons/thumb/0/06/Frida_Kahlo%2C_by_Guillermo_Kahlo.jpg/960px-Frida_Kahlo%2C_by_Guillermo_Kahlo.jpg?utm_source=en.wikipedia.org&utm_campaign=api&utm_content=thumbnail",
-   "pageUrl": "https://en.wikipedia.org/wiki/Frida_Kahlo"
+   "pageUrl": "https://en.wikipedia.org/wiki/Frida_Kahlo",
+   "details": "Magdalena Carmen Frida Kahlo y Calderón (Spanish pronunciation: [ˈfɾiða ˈkalo]; 6 July 1907 – 13 July 1954) was a Mexican painter known for her many portraits, self-portraits, and works inspired by the nature and artifacts of Mexico. Inspired by the country's popular culture, she employed a naïve folk art style to explore questions of identity, postcolonialism, gender, class, and race in Mexican society. Her paintings often had strong autobiographical elements and mixed realism with fantasy. In addition to belonging to the post-revolutionary Mexicayotl movement, which sought to define a Mexican identity, Kahlo has been described as a surrealist or magical realist. She is also known for painting about her experience of chronic pain. Her 1940 self-portrait titled The Dream (The Bed) holds the record for the most expensive work by a female artist ever auctioned, at $54.7 million.\nBorn to a German father and a mestiza mother (of Purépecha descent), Kahlo spent most of her childhood and adult life at La Casa Azul, her family home in Coyoacán – now publicly accessible as the Frida Kahlo Museum. Although she contracted polio in 1913, which left her disabled, Kahlo had been a promising student headed for medical school until being injured in a bus accident at the age of 18, which caused her lifelong pain and medical problems. During her recovery, she returned to her childhood interest in art with the idea of becoming an artist. Around the same time, she approached artist Diego Rivera, whom she had encountered several years prior when he was painting a mural in her school auditorium, to ask for his opinion whether she should pursue a career as a painter or find another means to support herself."
   },
   {
    "id": "art-020",
@@ -242,7 +262,8 @@
    "wikiTitle": "Gustav Klimt",
    "difficulty": 2,
    "imageUrl": "https://upload.wikimedia.org/wikipedia/commons/d/d8/Klimt.jpg?utm_source=en.wikipedia.org&utm_campaign=api&utm_content=thumbnail_unscaled",
-   "pageUrl": "https://en.wikipedia.org/wiki/Gustav_Klimt"
+   "pageUrl": "https://en.wikipedia.org/wiki/Gustav_Klimt",
+   "details": "Gustav Klimt (14 July 1862 – 6 February 1918) was an Austrian symbolist painter and a founding member of the Vienna Secession movement. His work helped define the Art Nouveau style in Europe. Klimt is known for his paintings, murals, sketches, and other objets d'art. Klimt's primary subject was the female body, and his works are marked by a frank eroticism. Amongst his figurative works, which include allegories and portraits, he painted landscapes. He is best known for The Kiss and Portrait of Adele Bloch-Bauer I. Among the artists of the Vienna Secession, Klimt was the most influenced by Japanese art and its methods.\nEarly in his career, he was a successful painter of architectural decorations in a conventional manner. As he began to develop a more personal style, his work was the subject of controversy that culminated when the paintings he completed around 1900 for the ceiling of the Great Hall of the University of Vienna were criticised as pornographic. He subsequently accepted no more public commissions, but achieved a new success with the paintings of his \"golden phase\", many of which include gold leaf. Klimt's work was an important influence on his younger peer Egon Schiele."
   },
   {
    "id": "art-021",
@@ -254,7 +275,8 @@
    "wikiTitle": "Jackson Pollock",
    "difficulty": 2,
    "imageUrl": "https://upload.wikimedia.org/wikipedia/commons/2/2f/Jackson_Pollock%27s_passport_%28cropped%29.jpg?utm_source=en.wikipedia.org&utm_campaign=api&utm_content=thumbnail_unscaled",
-   "pageUrl": "https://en.wikipedia.org/wiki/Jackson_Pollock"
+   "pageUrl": "https://en.wikipedia.org/wiki/Jackson_Pollock",
+   "details": "Paul Jackson Pollock (; January 28, 1912 – August 11, 1956) was an American painter. A major figure in the abstract expressionist movement, he was widely noticed for his \"drip technique\" of pouring or splashing liquid household paint onto a horizontal surface, enabling him to view and paint his canvases from all angles. It was called all-over painting and action painting, because Pollock covered the entire canvas and used the force of his whole body to paint, often in a frenetic dancing style. This extreme form of abstraction divided critics: some praised the immediacy of the creation, while others derided the random effects.\nA reclusive and volatile personality, Pollock struggled with alcoholism for most of his life. In 1945, he married artist Lee Krasner, who became an important influence on his career and on his legacy. Pollock died in August 1956 at age 44 in an alcohol-related single-car collision when he was driving. Four months after his death, Pollock was given a memorial retrospective exhibition at the Museum of Modern Art (MoMA) in New York City. A larger, more comprehensive exhibition of his work was held there in 1967. In 1998 and 1999, Pollock's work was honored with large-scale retrospective exhibitions at MoMA and the Tate Gallery in London."
   },
   {
    "id": "art-022",
@@ -266,7 +288,8 @@
    "wikiTitle": "Andy Warhol",
    "difficulty": 1,
    "imageUrl": "https://upload.wikimedia.org/wikipedia/commons/thumb/5/5b/Andy_Warhol_at_the_Jewish_Museum_%28by_Bernard_Gotfryd%29_%E2%80%93_LOC.jpg/960px-Andy_Warhol_at_the_Jewish_Museum_%28by_Bernard_Gotfryd%29_%E2%80%93_LOC.jpg?utm_source=en.wikipedia.org&utm_campaign=api&utm_content=thumbnail",
-   "pageUrl": "https://en.wikipedia.org/wiki/Andy_Warhol"
+   "pageUrl": "https://en.wikipedia.org/wiki/Andy_Warhol",
+   "details": "Andy Warhol ( ; born Andrew Warhola Jr.; August 6, 1928 – February 22, 1987) was an American artist and filmmaker. Widely regarded as the most important artist of the second half of the 20th century, Warhol's practice spanned various media, including painting, filmmaking, photography, publishing, and performance art. A leading figure in the Pop art movement, his work explores the relationship between advertising, consumerism, mass media, and celebrity culture. His embrace of mechanical reproduction challenged traditional boundaries between high and low culture. He is also credited with popularizing the expression \"15 minutes of fame.\"\nBorn to working-class Rusyn immigrant parents in Pittsburgh, Warhol began his career as a commercial artist in New York before transitioning to fine art. Among his best-known early silkscreen paintings are Campbell's Soup Can (1962), Marilyn Diptych (1962), and Coca-Cola (3) (1962). In the mid-1960s, Warhol began devoting his attention to creating experimental films such as Blow Job (1964) and Empire (1965). He subsequently directed a number of underground films—including Chelsea Girls (1966), Four Stars (1967), and Blue Movie (1969)—featuring a shifting group of personalities known as Warhol superstars. His studio, the Factory, became a hub for avant-garde experimentation, bringing together drag queens, poets, bohemians, musicians, and wealthy patrons. Warhol also managed the influential rock band the Velvet Underground, who performed at his Exploding Plastic Inevitable (1966–67) multimedia events."
   },
   {
    "id": "art-023",
@@ -278,7 +301,8 @@
    "wikiTitle": "Salvador Dalí",
    "difficulty": 1,
    "imageUrl": "https://upload.wikimedia.org/wikipedia/commons/thumb/2/24/Salvador_Dal%C3%AD_1939.jpg/960px-Salvador_Dal%C3%AD_1939.jpg?utm_source=en.wikipedia.org&utm_campaign=api&utm_content=thumbnail",
-   "pageUrl": "https://en.wikipedia.org/wiki/Salvador_Dal%C3%AD"
+   "pageUrl": "https://en.wikipedia.org/wiki/Salvador_Dal%C3%AD",
+   "details": "Salvador Domingo Felipe Jacinto Dalí i Domènech, Marquess of Dalí de Púbol (11 May 1904 – 23 January 1989), known as Salvador Dalí, was a Spanish surrealist artist renowned for his technical skill, precise draftsmanship, and the striking and bizarre images in his work.\nBorn in Figueres in Catalonia, Dalí received his formal education in fine arts in Madrid. Influenced by Impressionism and the Renaissance masters from a young age, he became increasingly attracted to Cubism and avant-garde movements. He moved closer to Surrealism in the late 1920s and joined the Surrealist group in 1929, soon becoming one of its leading exponents. His best-known work, The Persistence of Memory, was completed in August 1931. Dalí lived in France throughout the Spanish Civil War (1936 to 1939) before leaving for the United States in 1940 where he achieved commercial success. He returned to Spain in 1948 where he announced his return to the Catholic faith and developed his \"nuclear mysticism\" style, based on his interest in classicism, mysticism, and recent scientific developments.\nDalí's artistic repertoire included painting, sculpture, film, graphic arts, animation, fashion, and photography, at times in collaboration with other artists. He also wrote fiction, poetry, autobiography, essays, and criticism. Major themes in his work include dreams, the subconscious, sexuality, religion, science and his closest personal relationships."
   },
   {
    "id": "art-024",
@@ -303,7 +327,8 @@
    "wikiTitle": "William Shakespeare",
    "difficulty": 1,
    "imageUrl": "https://upload.wikimedia.org/wikipedia/commons/thumb/2/21/William_Shakespeare_by_John_Taylor%2C_edited.jpg/960px-William_Shakespeare_by_John_Taylor%2C_edited.jpg?utm_source=en.wikipedia.org&utm_campaign=api&utm_content=thumbnail",
-   "pageUrl": "https://en.wikipedia.org/wiki/William_Shakespeare"
+   "pageUrl": "https://en.wikipedia.org/wiki/William_Shakespeare",
+   "details": "William Shakespeare (c. 23 April 1564 – 23 April 1616) was an English playwright, poet and actor. He is widely regarded as the greatest writer in the English language and the world's pre-eminent dramatist. He is often called England's national poet and the \"Bard of Avon\" or simply \"the Bard\". His extant works, including collaborations, consist of some 39 plays, 154 sonnets, three long narrative poems and a few other verses, some of uncertain authorship. His plays have been translated into every major living language and are performed more often than those of any other playwright. Shakespeare remains arguably the most influential writer in the English language, and his works continue to be studied and reinterpreted.\nShakespeare was born and raised in Stratford-upon-Avon, Warwickshire. At the age of 18, he married Anne Hathaway, with whom he had three children: Susanna, and twins Hamnet and Judith. Sometime between 1585 and 1592 he began a successful career in London as an actor, writer, and part-owner (\"sharer\") of a playing company called the Lord Chamberlain's Men, later known as the King's Men after the ascension of King James VI of Scotland to the English throne."
   },
   {
    "id": "art-026",
@@ -315,7 +340,8 @@
    "wikiTitle": "Leo Tolstoy",
    "difficulty": 1,
    "imageUrl": "https://upload.wikimedia.org/wikipedia/commons/thumb/b/be/Leo_Tolstoy_1908_Portrait_%283x4_cropped%29.jpg/960px-Leo_Tolstoy_1908_Portrait_%283x4_cropped%29.jpg?utm_source=en.wikipedia.org&utm_campaign=api&utm_content=thumbnail",
-   "pageUrl": "https://en.wikipedia.org/wiki/Leo_Tolstoy"
+   "pageUrl": "https://en.wikipedia.org/wiki/Leo_Tolstoy",
+   "details": "Count Lev Nikolayevich Tolstoy (; Russian: Лев Николаевич Толстой, IPA: [ˈlʲef nʲɪkɐˈla(j)ɪvʲɪtɕ tɐlˈstoj] ; 9 September [O.S. 28 August] 1828 – 20 November [O.S. 7 November] 1910), usually referred to in English as Leo Tolstoy, was a Russian writer. He is regarded as one of the greatest and most influential authors of all time.\nBorn to an aristocratic family, Tolstoy achieved  acclaim in his twenties with his semi-autobiographical trilogy, Childhood, Boyhood and Youth (1852–1856), and with Sevastopol Sketches (1855), based on his experiences in the Crimean War. War and Peace (1869), Anna Karenina (1878), and Resurrection (1899), which is based on his \"youthful sins\", are often cited as pinnacles of realist fiction and three of the greatest novels ever written. His oeuvre includes short stories such as \"Alyosha the Pot\" (1911) and \"After the Ball\" (1911) and novellas such as Family Happiness (1859), The Death of Ivan Ilyich (1886), The Kreutzer Sonata (1889), The Devil (1911),  and Hadji Murat (1912). He also wrote plays and essays concerning philosophical, moral and religious themes.\nIn the 1870s, Tolstoy experienced a profound moral crisis, followed by what he regarded as an equally profound spiritual awakening, as outlined in his non-fiction work Confession (1882). His literal interpretation of the ethical teachings of Jesus, centering on the Sermon on the Mount, caused him to become a fervent Christian anarchist and pacifist. His ideas on nonviolent resistance, expressed in such works as The Kingdom of God Is Within You (1894), had a profound impact on such pivotal 20th-century figures as Mahatma Gandhi, Ludwig Wittgenstein, Martin Luther King Jr., and James Bevel.  He also became a dedicated advocate of Georgism, the economic philosophy of Henry George, which he incorporated into his writing, particularly in his novel Resurrection (1899)."
   },
   {
    "id": "art-027",
@@ -327,7 +353,8 @@
    "wikiTitle": "Charles Dickens",
    "difficulty": 1,
    "imageUrl": "https://upload.wikimedia.org/wikipedia/commons/a/aa/Dickens_Gurney_head.jpg?utm_source=en.wikipedia.org&utm_campaign=api&utm_content=thumbnail_unscaled",
-   "pageUrl": "https://en.wikipedia.org/wiki/Charles_Dickens"
+   "pageUrl": "https://en.wikipedia.org/wiki/Charles_Dickens",
+   "details": "Charles John Huffam Dickens ( ; 7 February 1812 – 9 June 1870) was an English writer and journalist. He created some of literature's best-known fictional characters, and is regarded by many as the greatest novelist of the Victorian era. His works enjoyed unprecedented popularity during his lifetime and, by the 20th century, critics and scholars had recognised him as a literary genius. His novels and short stories are widely read today.\nBorn in Portsmouth, Dickens left school at age 12 to work in a boot-blacking factory when his father John was incarcerated in a debtors' prison. After three years, he returned to school before beginning his literary career as a journalist. Dickens edited a weekly journal for 20 years; wrote 15 novels, 5 novellas, hundreds of short stories and nonfiction articles; lectured and performed readings extensively; was a tireless letter writer; and campaigned vigorously for children's rights, education and other social reforms.\nDickens's literary success began with the 1836 serial publication of The Pickwick Papers, a publishing phenomenon—thanks largely to the introduction of the character Sam Weller in the fourth episode—that sparked Pickwick merchandise and spin-offs. Within a few years, Dickens had become an international literary celebrity, famous for his humour, satire and keen observation of character and society. His novels, most of them published in monthly or weekly instalments, pioneered the serial publication of narrative fiction, which became the dominant Victorian mode for novel publication."
   },
   {
    "id": "art-028",
@@ -339,7 +366,8 @@
    "wikiTitle": "Jane Austen",
    "difficulty": 1,
    "imageUrl": "https://upload.wikimedia.org/wikipedia/commons/thumb/c/cc/CassandraAusten-JaneAusten%28c.1810%29_hires.jpg/960px-CassandraAusten-JaneAusten%28c.1810%29_hires.jpg?utm_source=en.wikipedia.org&utm_campaign=api&utm_content=thumbnail",
-   "pageUrl": "https://en.wikipedia.org/wiki/Jane_Austen"
+   "pageUrl": "https://en.wikipedia.org/wiki/Jane_Austen",
+   "details": "Jane Austen ( OST-in, AW-stin; 16 December 1775 – 18 July 1817) was an English writer known primarily for her six novels, which implicitly interpret, critique, and comment on the English landed gentry at the end of the 18th century.\nAusten's plots often explore the dependence of women on marriage for the pursuit of favourable social standing and economic security. Her works are implicit critiques of the novels of sensibility of the second half of the 18th century and are part of the transition to 19th-century literary realism. Her use of social commentary, realism, wit, and irony have earned her acclaim amongst critics and scholars.\nAusten wrote major novels before the age of 22, but she was not published until she was 35. The anonymously published Sense and Sensibility (1811), Pride and Prejudice (1813), Mansfield Park (1814), and Emma (1815) were moderate successes, but they did not bring her public fame in her lifetime. She wrote two other novels—Northanger Abbey and Persuasion, both published posthumously in 1817—and began another, eventually titled Sanditon, but it was left unfinished on her death. She also left behind three volumes of juvenile writings in manuscript, the short epistolary novel Lady Susan, and the unfinished novel The Watsons.\nSince her death Austen's novels have rarely been out of print. A significant transition in her reputation occurred in 1833, when they were republished in Richard Bentley's Standard Novels series (illustrated by Ferdinand Pickering and sold as a set)."
   },
   {
    "id": "art-029",
@@ -351,7 +379,8 @@
    "wikiTitle": "George Orwell",
    "difficulty": 1,
    "imageUrl": "https://upload.wikimedia.org/wikipedia/commons/thumb/7/7e/George_Orwell_press_photo.jpg/960px-George_Orwell_press_photo.jpg?utm_source=en.wikipedia.org&utm_campaign=api&utm_content=thumbnail",
-   "pageUrl": "https://en.wikipedia.org/wiki/George_Orwell"
+   "pageUrl": "https://en.wikipedia.org/wiki/George_Orwell",
+   "details": "Eric Arthur Blair (25 June 1903 – 21 January 1950) was an English novelist, poet, essayist, journalist, and critic who wrote under the pen name of George Orwell. His work is characterised by lucid prose, social criticism, opposition to all totalitarianism (both authoritarian communism and fascism), and support of democratic socialism.\nOrwell is best known for his allegorical novella Animal Farm (1945) and the dystopian novel Nineteen Eighty-Four (1949), although his works also encompass literary criticism, poetry, fiction and polemical journalism. His non-fiction works, including The Road to Wigan Pier (1937), documenting his experience of working-class life in industrial Northern England, and Homage to Catalonia (1938), an account of his experiences soldiering for the Republican faction of the Spanish Civil War (1936–1939), are as critically respected as his essays on politics, literature, language and culture.\nOrwell's work remains influential in both popular and political culture, with the adjective \"Orwellian\"—describing totalitarian and authoritarian social practices—becoming part of the English language, as are many of his neologisms, such as \"Big Brother\", \"Thought Police\", \"Room 101\", \"Newspeak\", \"memory hole\", \"doublethink\", and \"thoughtcrime\". In 2008, The Times named Orwell the second-greatest British writer since 1945.\n\n\n== Biography ==\n\n\n=== Early years ===\n\nEric Arthur Blair was born on 25 June 1903 in Motihari, Bengal Presidency (now Bihar), British India, into what he described as a \"lower-upper-middle class\" family. His paternal great-great-grandfather, Charles Blair, was a wealthy slave-owning country gentleman and an absentee owner of two Jamaican plantations; hailing from Dorset, he married Lady Mary Fane, daughter of Thomas Fane, 8th Earl of Westmorland. His grandfather, Thomas Richard Arthur Blair, was an Anglican clergyman.\nOrwell's father was Richard Walmesley Blair, who worked as a sub-deputy opium agent in the Opium Department of the Indian Civil Service, overseeing the production and storage of opium for sale to China."
   },
   {
    "id": "art-030",
@@ -363,7 +392,8 @@
    "wikiTitle": "Homer",
    "difficulty": 1,
    "imageUrl": "https://upload.wikimedia.org/wikipedia/commons/thumb/f/f1/Homer_At_the_British_Museum_2024_%283x4_cropped%29.jpg/960px-Homer_At_the_British_Museum_2024_%283x4_cropped%29.jpg?utm_source=en.wikipedia.org&utm_campaign=api&utm_content=thumbnail",
-   "pageUrl": "https://en.wikipedia.org/wiki/Homer"
+   "pageUrl": "https://en.wikipedia.org/wiki/Homer",
+   "details": "Homer (; Ancient Greek: Ὅμηρος [hómɛːros], Hómēros, possibly born c. 8th century BC) was an ancient Greek poet who is traditionally credited as the author of the Iliad and the Odyssey, two epic poems that are foundational works of ancient Greek literature. Homer was highly revered in ancient Greek society and is considered one of the most influential authors in history. Today, the question of Homer's identity and existence—dubbed the \"Homeric Question\"—continues to be debated, and scholars generally regard the two poems as the works of separate authors.\nThe Iliad centers on a quarrel between King Agamemnon and the warrior Achilles during the last year of the Trojan War. The Odyssey chronicles the ten-year journey of Odysseus, king of Ithaca, back to his home after the fall of Troy. The epics depict man's struggle, the Odyssey especially so, as Odysseus perseveres through the punishment of the gods. The poems are in Homeric Greek, also known as Epic Greek, a literary language that shows a mixture of features of the Ionic and Aeolic dialects from different centuries; the predominant influence is Eastern Ionic. Most researchers believe that the poems were originally transmitted orally. Despite being predominantly known for their tragic and serious themes, the Homeric poems also contain instances of comedy and laughter.\nThe Homeric poems shaped aspects of ancient Greek culture and education, fostering ideals of heroism, glory, and honor."
   },
   {
    "id": "art-031",
@@ -375,7 +405,8 @@
    "wikiTitle": "Miguel de Cervantes",
    "difficulty": 2,
    "imageUrl": "https://upload.wikimedia.org/wikipedia/commons/thumb/0/09/Cervantes_J%C3%A1uregui.jpg/960px-Cervantes_J%C3%A1uregui.jpg?utm_source=en.wikipedia.org&utm_campaign=api&utm_content=thumbnail",
-   "pageUrl": "https://en.wikipedia.org/wiki/Miguel_de_Cervantes"
+   "pageUrl": "https://en.wikipedia.org/wiki/Miguel_de_Cervantes",
+   "details": "Miguel de Cervantes Saavedra ( sur-VAN-teez, -⁠tiz; Spanish: [miˈɣel de θeɾˈβantes saːˈβeðɾa]; 29 September 1547 (assumed) – 22 April 1616) was a Spanish writer widely regarded as the greatest writer in the Spanish language and one of the world's pre-eminent novelists. He is best known for his two-part novel Don Quixote, a work considered to be the first modern novel. Don Quixote has been labelled by many well-known authors as the \"best book of all time\" and the \"best and most central work in world literature\".\nMuch of his life was spent in relative poverty and obscurity, which led to many of his early works being lost. Despite this, his influence and literary contribution are reflected by the fact that Spanish is often referred to as \"the language of Cervantes\".\nIn 1569, Cervantes was forced to leave Spain and move to Rome, where he worked in the household of a cardinal. In 1570, he enlisted in a Spanish Navy infantry regiment, and was badly wounded at the Battle of Lepanto in October 1571 and lost the use of his left arm and hand. He served as a soldier until 1575, when he was captured by Barbary pirates; after five years in captivity, he was ransomed, and returned to Madrid.\nHis first significant novel, titled La Galatea, was published in 1585, but he continued to work as a purchasing agent, and later as a government tax collector. Part One of Don Quixote was published in 1605, and Part Two in 1615."
   },
   {
    "id": "art-032",
@@ -401,7 +432,8 @@
    "wikiTitle": "Ernest Hemingway",
    "difficulty": 1,
    "imageUrl": "https://upload.wikimedia.org/wikipedia/commons/thumb/2/28/ErnestHemingway.jpg/960px-ErnestHemingway.jpg?utm_source=en.wikipedia.org&utm_campaign=api&utm_content=thumbnail",
-   "pageUrl": "https://en.wikipedia.org/wiki/Ernest_Hemingway"
+   "pageUrl": "https://en.wikipedia.org/wiki/Ernest_Hemingway",
+   "details": "Ernest Miller Hemingway ( HEM-ing-way; July 21, 1899 – July 2, 1961) was an American novelist, short-story writer, and journalist. Known for an economical, understated style that influenced later 20th-century writers, he has been romanticized for his adventurous lifestyle and outspoken, blunt public image. Some of his seven novels, six short-story collections and two non-fiction works have become classics of American literature, and he was awarded the 1954 Nobel Prize in Literature.\nHemingway was raised in Oak Park, Illinois. After high school, he spent six months as a reporter for The Kansas City Star before enlisting in the Red Cross. He served as an ambulance driver on the Italian Front in World War I and was seriously wounded by shrapnel in 1918. In 1921, Hemingway moved to Paris, where he worked as a foreign correspondent for the Toronto Star and was influenced by the modernist writers and artists of the \"Lost Generation\" expatriate community. His debut novel, The Sun Also Rises, was published in 1926. In 1928, Hemingway returned to the U.S., where he settled in Key West, Florida. His experiences during the war supplied material for his 1929 novel A Farewell to Arms."
   },
   {
    "id": "art-034",
@@ -413,7 +445,8 @@
    "wikiTitle": "Gabriel García Márquez",
    "difficulty": 2,
    "imageUrl": "https://upload.wikimedia.org/wikipedia/commons/0/0f/Gabriel_Garcia_Marquez.jpg?utm_source=en.wikipedia.org&utm_campaign=api&utm_content=thumbnail_unscaled",
-   "pageUrl": "https://en.wikipedia.org/wiki/Gabriel_Garc%C3%ADa_M%C3%A1rquez"
+   "pageUrl": "https://en.wikipedia.org/wiki/Gabriel_Garc%C3%ADa_M%C3%A1rquez",
+   "details": "Gabriel José García Márquez (Latin American Spanish: [ɡaˈβɾjel ɣaɾˈsi.a ˈmaɾ.kes] ; 6 March 1927 – 17 April 2014) was a Colombian writer and journalist, known affectionately as Gabo ([ˈɡaβo]) or Gabito ([ɡaˈβito]) throughout Latin America. Considered one of the most significant authors of the 20th century, particularly in the Spanish language, he was awarded the 1972 Neustadt International Prize for Literature and the 1982 Nobel Prize in Literature. He pursued a self-directed education that resulted in leaving law school for a career in journalism. From early on he showed no inhibitions in his criticism of Colombian and foreign politics. In 1958, he married Mercedes Barcha Pardo; they had two sons, Rodrigo and Gonzalo.\nGarcía Márquez started as a journalist and wrote many acclaimed non-fiction works and short stories. He is best known for his novels, such as No One Writes to the Colonel (1961); One Hundred Years of Solitude (1967), which has sold over fifty million copies worldwide; Chronicle of a Death Foretold (1981); and Love in the Time of Cholera (1985). His works have achieved significant critical acclaim and widespread commercial success, most notably for popularizing a literary style known as magic realism, which uses magical elements and events in otherwise ordinary and realistic situations. Some of his works are set in the fictional village of Macondo (mainly inspired by his birthplace, Aracataca), and most of them explore the theme of solitude. He is the most-translated Spanish-language author."
   },
   {
    "id": "art-035",
@@ -425,7 +458,8 @@
    "wikiTitle": "Fyodor Dostoevsky",
    "difficulty": 1,
    "imageUrl": "https://upload.wikimedia.org/wikipedia/commons/thumb/7/78/Vasily_Perov_-_%D0%9F%D0%BE%D1%80%D1%82%D1%80%D0%B5%D1%82_%D0%A4.%D0%9C.%D0%94%D0%BE%D1%81%D1%82%D0%BE%D0%B5%D0%B2%D1%81%D0%BA%D0%BE%D0%B3%D0%BE_-_Google_Art_Project.jpg/960px-Vasily_Perov_-_%D0%9F%D0%BE%D1%80%D1%82%D1%80%D0%B5%D1%82_%D0%A4.%D0%9C.%D0%94%D0%BE%D1%81%D1%82%D0%BE%D0%B5%D0%B2%D1%81%D0%BA%D0%BE%D0%B3%D0%BE_-_Google_Art_Project.jpg?utm_source=en.wikipedia.org&utm_campaign=api&utm_content=thumbnail",
-   "pageUrl": "https://en.wikipedia.org/wiki/Fyodor_Dostoevsky"
+   "pageUrl": "https://en.wikipedia.org/wiki/Fyodor_Dostoevsky",
+   "details": "Fyodor Mikhailovich Dostoevsky (11 November [O.S. 30 October] 1821 – 9 February [O.S. 28 January] 1881) was a Russian philosopher, novelist, short-story writer, essayist and journalist. He is regarded as one of the greatest novelists in both Russian and world literature, and many of his works are considered highly influential masterpieces. Dostoevsky's literary works explore the human condition in the troubled political, social and spiritual atmospheres of 19th-century Russia, and engage with a variety of philosophical and religious themes. His most acclaimed novels include Crime and Punishment (1866), The Idiot (1869), Demons (1872), The Adolescent (1875) and The Brothers Karamazov (1880). His Notes from Underground, a novella published in 1864, is considered one of the first works of existentialist literature.\nBorn in Moscow in 1821, Dostoevsky was introduced to literature at an early age through fairy tales and legends and through books by Russian and foreign authors. His mother died in 1837, and around the same time, he left school to enter the Nikolayevsky Engineering Academy. After graduating, he worked as an engineer and briefly enjoyed a lavish lifestyle, translating books to earn extra money. In the mid-1840s, he wrote his first novel, Poor Folk, which gained him entry into Saint Petersburg's literary circles. However, he was arrested in 1849 for belonging to a literary group, the Petrashevsky Circle, that discussed banned books critical of Tsarist Russia."
   },
   {
    "id": "art-036",
@@ -437,7 +471,8 @@
    "wikiTitle": "Virginia Woolf",
    "difficulty": 2,
    "imageUrl": "https://upload.wikimedia.org/wikipedia/commons/thumb/0/0b/George_Charles_Beresford_-_Virginia_Woolf_in_1902_-_Restoration.jpg/960px-George_Charles_Beresford_-_Virginia_Woolf_in_1902_-_Restoration.jpg?utm_source=en.wikipedia.org&utm_campaign=api&utm_content=thumbnail",
-   "pageUrl": "https://en.wikipedia.org/wiki/Virginia_Woolf"
+   "pageUrl": "https://en.wikipedia.org/wiki/Virginia_Woolf",
+   "details": "Adeline Virginia Woolf ( \"wolf\"; née Stephen; 25 January 1882 –  28 March 1941) was an English writer and one of the most influential 20th-century modernist authors. She helped to pioneer the use of stream of consciousness narration as a literary device.\nVirginia Woolf was born in South Kensington, London, into an affluent and intellectual family as the seventh child of Julia Prinsep Jackson and Leslie Stephen. She grew up in a blended household of eight children, including her sister, the painter Vanessa Bell. Educated at home in English classics and Victorian literature, Woolf later attended King's College London, where she studied classics and history and encountered early advocates for women's rights and education.\nAfter the death of her father in 1904, Woolf and her siblings moved to the bohemian Bloomsbury district, where she became a founding member of the influential Bloomsbury Group. She married Leonard Woolf in 1912, and together they established the Hogarth Press in 1917, which published much of her work. They split their time between London and Sussex, maintaining their involvement in literary circles throughout their lives.\nWoolf began publishing professionally in 1904 and rose to prominence during the interwar period with novels including Mrs Dalloway (1925), To the Lighthouse (1927), and Orlando (1928). She also wrote the influential feminist essay A Room of One's Own (1929), followed by Three Guineas (1938), which explores the roots of fascism in the society."
   },
   {
    "id": "art-037",
@@ -449,7 +484,8 @@
    "wikiTitle": "Mark Twain",
    "difficulty": 1,
    "imageUrl": "https://upload.wikimedia.org/wikipedia/commons/7/7a/Mark_Twain_by_AF_Bradley_%28cropped_2%29.jpg?utm_source=en.wikipedia.org&utm_campaign=api&utm_content=thumbnail_unscaled",
-   "pageUrl": "https://en.wikipedia.org/wiki/Mark_Twain"
+   "pageUrl": "https://en.wikipedia.org/wiki/Mark_Twain",
+   "details": "Samuel Langhorne Clemens (November 30, 1835 – April 21, 1910), known by the pen name Mark Twain, was an American writer, humorist, and essayist. He has been praised as the \"greatest humorist the United States has produced\", with William Faulkner calling him \"the father of American literature\". Twain's novels include The Adventures of Tom Sawyer (1876) and its sequel, Adventures of Huckleberry Finn (1884), with the latter often called the \"Great American Novel\". He also wrote A Connecticut Yankee in King Arthur's Court (1889) and Pudd'nhead Wilson (1894) and cowrote The Gilded Age: A Tale of Today (1873) with Charles Dudley Warner.\nTwain was raised in Hannibal, Missouri, which later provided the setting for both Tom Sawyer and Huckleberry Finn. He served an apprenticeship with a printer early in his career, and then worked as a typesetter, contributing articles to his older brother Orion Clemens's newspaper. Twain then became a riverboat pilot on the Mississippi River, which provided him the material for Life on the Mississippi (1883). Soon after, Twain headed west to join Orion in Nevada. He referred humorously to his lack of success at mining, turning to journalism for the Virginia City Territorial Enterprise.\nTwain first achieved success as a writer with the humorous story \"The Celebrated Jumping Frog of Calaveras County,\" which was published in 1865; it was based on a story that he heard at the Angels Hotel in Angels Camp, California, where Twain had spent some time while he was working as a miner."
   },
   {
    "id": "art-038",
@@ -461,7 +497,8 @@
    "wikiTitle": "Herman Melville",
    "difficulty": 1,
    "imageUrl": "https://upload.wikimedia.org/wikipedia/commons/thumb/e/e8/Herman_Melville_by_Joseph_O_Eaton.jpg/960px-Herman_Melville_by_Joseph_O_Eaton.jpg?utm_source=en.wikipedia.org&utm_campaign=api&utm_content=thumbnail",
-   "pageUrl": "https://en.wikipedia.org/wiki/Herman_Melville"
+   "pageUrl": "https://en.wikipedia.org/wiki/Herman_Melville",
+   "details": "Herman Melville (born Melvill; August 1, 1819 – September 28, 1891) was an American writer of the American Renaissance period. Among his best-known works are Moby-Dick (1851), Typee (1846), a romanticized account of his experiences in Polynesia, and Billy Budd, Sailor, a posthumously published novella. At the time of his death, Melville was not well known to the public, but 1919, the centennial of his birth, was the starting point of a Melville revival. Moby-Dick would eventually be considered one of the Great American Novels.\nMelville was born in New York City, the third child of a prosperous merchant whose death in 1832 left the family in dire financial straits. He took to the sea in 1839 as a common sailor on the merchant ship St. Lawrence and then in 1841, on the whaler Acushnet. However, he jumped ship in the Marquesas Islands. Typee, his first book, and its sequel, Omoo (1847), were travel adventures based on his encounters with the peoples of the islands. Their success gave him the financial security to marry Elizabeth Shaw, the daughter of Boston jurist Lemuel Shaw."
   },
   {
    "id": "art-039",
@@ -473,7 +510,8 @@
    "wikiTitle": "F. Scott Fitzgerald",
    "difficulty": 1,
    "imageUrl": "https://upload.wikimedia.org/wikipedia/commons/thumb/d/dc/F._Scott_Fitzgerald_%281921_portrait_-_crop%29_Retouched.jpg/960px-F._Scott_Fitzgerald_%281921_portrait_-_crop%29_Retouched.jpg?utm_source=en.wikipedia.org&utm_campaign=api&utm_content=thumbnail",
-   "pageUrl": "https://en.wikipedia.org/wiki/F._Scott_Fitzgerald"
+   "pageUrl": "https://en.wikipedia.org/wiki/F._Scott_Fitzgerald",
+   "details": "Francis Scott Key Fitzgerald (September 24, 1896 – December 21, 1940), widely known as F. Scott Fitzgerald or simply Scott Fitzgerald, was an American novelist, essayist, and short story writer. He is best known for his novels depicting the flamboyance and excess of the Jazz Age, a term that he popularized in his short story collection Tales of the Jazz Age. He published four novels, four story collections, and 164 short stories. He achieved transient success and fortune in the 1920s, but did not receive critical acclaim until after his death. He is now widely regarded as one of the greatest American writers of the 20th century.\nFitzgerald was born into a middle-class family in Saint Paul, Minnesota, but he was raised primarily in New York state. He attended Princeton University where he befriended future literary critic Edmund Wilson. He had a failed romantic relationship with Chicago socialite Ginevra King and dropped out of Princeton in 1917 to join the Army during World War I. While stationed in Alabama, he met Zelda Sayre, a Southern debutante who belonged to Montgomery's exclusive country-club set. She initially rejected Fitzgerald's marriage proposal due to his lack of financial prospects, but she agreed to marry him after he published the commercially successful This Side of Paradise (1920). The novel became a cultural sensation and cemented his reputation as one of the eminent writers of the decade."
   },
   {
    "id": "art-040",
@@ -485,7 +523,8 @@
    "wikiTitle": "War and Peace",
    "difficulty": 1,
    "imageUrl": "https://upload.wikimedia.org/wikipedia/commons/a/af/Tolstoy_-_War_and_Peace_-_first_edition%2C_1869.jpg?utm_source=en.wikipedia.org&utm_campaign=api&utm_content=thumbnail_unscaled",
-   "pageUrl": "https://en.wikipedia.org/wiki/War_and_Peace"
+   "pageUrl": "https://en.wikipedia.org/wiki/War_and_Peace",
+   "details": "War and Peace (Russian: Война и мир, romanized: Voyna i mir; pre-reform Russian: Война и миръ; IPA: [vɐjˈna i ˈmʲir]) is an epic novel by the Russian author Leo Tolstoy. Set during the Napoleonic Wars, the work comprises both a fictional narrative and chapters in which Tolstoy discusses history and philosophy. An early version was published serially beginning in 1865, after which the entire book was rewritten and published in 1869. The novel has claims to be the greatest novel written. It is regarded, with Anna Karenina, as Tolstoy's finest literary achievement, and it remains an internationally praised classic of world literature.\nThe book chronicles the French invasion of Russia and its aftermath during the Napoleonic era. It uses five interlocking narratives following different Russian aristocratic families to illustrate Napoleon's impact on Tsarist society. Portions of an earlier version, titled The Year 1805, were serialized in The Russian Messenger from 1865 to 1867 before the novel was published in its entirety in 1869.\nTolstoy said that the best Russian literature does not conform to European standards of literature and hence hesitated to classify War and Peace, saying it is \"not a novel, even less is it a poem, and still less a historical chronicle\". Large sections, especially the later chapters, are philosophical discussions rather than narrative."
   },
   {
    "id": "art-041",
@@ -497,7 +536,8 @@
    "wikiTitle": "Pride and Prejudice",
    "difficulty": 1,
    "imageUrl": "https://upload.wikimedia.org/wikipedia/commons/thumb/1/17/PrideAndPrejudiceTitlePage.jpg/960px-PrideAndPrejudiceTitlePage.jpg?utm_source=en.wikipedia.org&utm_campaign=api&utm_content=thumbnail",
-   "pageUrl": "https://en.wikipedia.org/wiki/Pride_and_Prejudice"
+   "pageUrl": "https://en.wikipedia.org/wiki/Pride_and_Prejudice",
+   "details": "Pride and Prejudice is a novel by English author Jane Austen. Written when she was aged 20–21, it was her third novel scribed and became the second to see print when it was published in 1813. A novel of manners, it follows the character development of Elizabeth Bennet, the protagonist of the book, who learns about the repercussions of hasty judgments and comes to appreciate the difference between superficial goodness and actual goodness.\nHer father, Mr Bennet—owner of the Longbourn estate in Hertfordshire—has five daughters; but this estate is entailed by a strict settlement that Mr Bennet entered into when coming of age, so now can only be inherited in the male line. His wife brought a settlement of £5,000 into the marriage as her 'separate estate', and has since inherited an additional £4,000 on the death of her father; however, Mrs Bennet and her daughters face living only on the interest from these sums upon Mr Bennet's death. To his regret, he has failed to save out of the income from the Longbourn estate to provide enhanced marriage portions for his daughters. From the Bennets' perspective, it is imperative that at least one of their daughters marry well to support the others, which is a primary motivation driving the plot.\nPride and Prejudice has consistently appeared near the top of lists of \"most-loved books\" among literary scholars and the reading public. It has become one of the most popular novels in English literature, with over 20 million copies sold, and has inspired many derivatives in modern literature. For more than a century, dramatic adaptations, reprints, unofficial sequels, films, and TV versions of Pride and Prejudice have portrayed the memorable characters and themes of the novel, reaching mass audiences."
   },
   {
    "id": "art-042",
@@ -509,7 +549,8 @@
    "wikiTitle": "Nineteen Eighty-Four",
    "difficulty": 1,
    "imageUrl": "https://upload.wikimedia.org/wikipedia/commons/5/51/1984_first_edition_cover.jpg?utm_source=en.wikipedia.org&utm_campaign=api&utm_content=thumbnail_unscaled",
-   "pageUrl": "https://en.wikipedia.org/wiki/Nineteen_Eighty-Four"
+   "pageUrl": "https://en.wikipedia.org/wiki/Nineteen_Eighty-Four",
+   "details": "Nineteen Eighty-Four (also published as 1984) is a dystopian speculative fiction novel by the English writer George Orwell. It was published on 8 June 1949 by Secker & Warburg as Orwell's ninth and final completed book. Thematically, it centres on totalitarianism, mass surveillance and repressive regimentation of people and behaviours. Nineteen Eighty-Four has often been regarded as a classic and has been acknowledged for its impact on twentieth-century literature. \nThe story takes place in a fictional future. The year is believed to be 1984, but this is uncertain. Much of the world is in perpetual war. Great Britain, now known as Airstrip One, has become a province of the totalitarian superstate Oceania, which is led by Big Brother, a dictatorial leader supported by an intense cult of personality manufactured by the Party's Thought Police. The Party engages in omnipresent government surveillance and, through the Ministry of Truth, historical negationism and constant propaganda to persecute individuality and independent thinking. Orwell described his book as a \"satire\", and a display of the \"perversions to which a centralised economy is liable\", while also stating he believed \"that something resembling it could arrive\"."
   },
   {
    "id": "art-043",
@@ -521,7 +562,8 @@
    "wikiTitle": "Don Quixote",
    "difficulty": 1,
    "imageUrl": "https://upload.wikimedia.org/wikipedia/commons/thumb/b/ba/Title_page_first_edition_Don_Quijote.jpg/960px-Title_page_first_edition_Don_Quijote.jpg?utm_source=en.wikipedia.org&utm_campaign=api&utm_content=thumbnail",
-   "pageUrl": "https://en.wikipedia.org/wiki/Don_Quixote"
+   "pageUrl": "https://en.wikipedia.org/wiki/Don_Quixote",
+   "details": "Don Quixote is a novel by Miguel de Cervantes, written in Early Modern Spanish and published in two parts in 1605 and 1615. It is considered a founding work of Western literature and the first modern novel. It is also one of the most-translated books in the world and one of the best-selling books of all time.\nThe plot revolves around the adventures of a member of the lowest nobility, a hidalgo from La Mancha named Alonso Quijano, who reads so many chivalric romances that he decides to become a knight-errant (caballero andante) to revive chivalry and serve his nation, under the name Don Quixote de la Mancha. He recruits as his squire a simple farm labourer, Sancho Panza, who brings an earthy wit to Don Quixote's lofty rhetoric. In the first part of the book, Don Quixote does not see the world for what it is and prefers to imagine that he is living out a knightly story meant for the annals of all time. As Salvador de Madariaga pointed out in his Guía del lector del Quijote (1972 [1926]), referring to \"the Sanchification of Don Quixote and the Quixotization of Sancho\", \"Sancho's spirit ascends from reality to illusion, Don Quixote's declines from illusion to reality\".\nThe book had a major influence on the literary community, as evidenced by direct references in Alexandre Dumas's The Three Musketeers (1844), and Edmond Rostand's Cyrano de Bergerac (1897) as well as the word quixotic. Mark Twain referred to the book as having \"swept the world's admiration for the mediaeval chivalry-silliness out of existence\". It has been described by some as the greatest work ever written."
   },
   {
    "id": "art-044",
@@ -533,7 +575,8 @@
    "wikiTitle": "Moby-Dick",
    "difficulty": 1,
    "imageUrl": "https://upload.wikimedia.org/wikipedia/commons/3/36/Moby-Dick_FE_title_page.jpg?utm_source=en.wikipedia.org&utm_campaign=api&utm_content=thumbnail_unscaled",
-   "pageUrl": "https://en.wikipedia.org/wiki/Moby-Dick"
+   "pageUrl": "https://en.wikipedia.org/wiki/Moby-Dick",
+   "details": "Moby-Dick; or, The Whale is an 1851 epic novel by American writer Herman Melville. The book centers on the sailor Ishmael's narrative of the maniacal quest of Ahab, captain of the whaling ship Pequod, for vengeance against Moby Dick, the giant white sperm whale that bit off his leg on the ship's previous voyage. A contribution to the literature of the American Renaissance, Moby-Dick was published to mixed reviews, was a commercial failure, and was out of print at the time of the author's death in 1891. Its reputation as a Great American Novel was established only in the 20th century, after the 1919 centennial of its author's birth. William Faulkner said he wished he had written the book himself, and D. H. Lawrence called it \"one of the strangest and most wonderful books in the world\" and \"the greatest book of the sea ever written\". Its opening sentence, \"Call me Ishmael\", is among world literature's most famous.\nMelville began writing Moby-Dick in February 1850 and finished 18 months later, a year after he had anticipated. Melville drew on his experience as a common sailor from 1841 to 1844, including on whalers, and on wide reading in whaling literature. The white whale is modeled on a notoriously hard-to-catch albino whale Mocha Dick, and the book's ending is based on the sinking of the whaleship Essex in 1820. The detailed and realistic descriptions of sailing, whale hunting and of extracting whale oil, as well as life aboard ship among a culturally diverse crew, are mixed with exploration of class and social status, good and evil, and the existence of God."
   },
   {
    "id": "art-045",
@@ -544,7 +587,9 @@
    "answerType": "novel",
    "wikiTitle": "One Hundred Years of Solitude",
    "difficulty": 2,
-   "pageUrl": "https://en.wikipedia.org/wiki/One_Hundred_Years_of_Solitude"
+   "imageUrl": "https://upload.wikimedia.org/wikipedia/en/a/a0/Cien_a%C3%B1os_de_soledad_%28book_cover%2C_1967%29.jpg?utm_source=en.wikipedia.org&utm_campaign=api&utm_content=thumbnail_unscaled",
+   "pageUrl": "https://en.wikipedia.org/wiki/One_Hundred_Years_of_Solitude",
+   "details": "One Hundred Years of Solitude (Spanish: Cien años de soledad, Latin American Spanish: [sjen ˈaɲos ðe soleˈðað]) is a 1967 novel by Colombian author Gabriel García Márquez that tells the multi-generational story of the Buendía family, whose patriarch, José Arcadio Buendía, founded the fictitious town of Macondo. The novel is often cited as one of the supreme achievements in world literature. It was recognized as one of the most important works of the Spanish language during the 4th International Conference of the Spanish Language held in Cartagena de Indias in March 2007.\nThe magical realist style and thematic substance of the book established it as an important representative novel of the literary Latin American Boom of the 1960s and 1970s, which was stylistically influenced by Modernism (European and North American) and the Cuban Vanguardia (Avant-Garde) literary movement.\nSince it was first published in May 1967 in Buenos Aires by Editorial Sudamericana, the book has been translated into 46 languages and sold more than 50 million copies. The novel, considered García Márquez's magnum opus, remains widely acclaimed and is recognized as one of the most significant works both in the Hispanic literary canon and in world literature.\nIn 2024, the book was adapted into an authorized television series released on Netflix and executive produced by García Márquez's sons.\n\n\n== Background ==\nIn 1965, Gabriel García Márquez was driving to Acapulco for a vacation with his family when he thought of the beginning for a new book; he then turned his car around, asked his wife to manage the family's finances for the coming months, and drove back home to Mexico City. For the next year and a half, García Márquez spent his time writing what would eventually become One Hundred Years of Solitude. Though inspired by Colombian history and his experiences as a journalist, García Márquez was greatly influenced by his maternal grandparents: Nicolás Ricardo Márquez and Tranquilina Iguarán Cotes."
   },
   {
    "id": "art-046",
@@ -555,7 +600,9 @@
    "answerType": "novel",
    "wikiTitle": "Crime and Punishment",
    "difficulty": 2,
-   "pageUrl": "https://en.wikipedia.org/wiki/Crime_and_Punishment"
+   "imageUrl": "https://upload.wikimedia.org/wikipedia/en/4/4b/Crimeandpunishmentcover.png?utm_source=en.wikipedia.org&utm_campaign=api&utm_content=thumbnail_unscaled",
+   "pageUrl": "https://en.wikipedia.org/wiki/Crime_and_Punishment",
+   "details": "Crime and Punishment is a novel by the Russian author Fyodor Dostoevsky. It was first published in the literary journal The Russian Messenger in twelve monthly installments during 1866. It was later published in a single volume. It is the second of Dostoevsky's full-length novels following his return from ten years of exile in Siberia. Crime and Punishment is considered the first great novel of his mature period of writing and is often cited as one of the greatest works of world literature.\nCrime and Punishment follows the mental anguish and moral dilemmas of Rodion Raskolnikov, an impoverished former law student in Saint Petersburg who plans to kill an unscrupulous pawnbroker, an old woman who stores money and valuable objects in her flat. He theorises that with the money he could liberate himself from poverty and go on to perform great deeds, and seeks to convince himself that certain crimes are justifiable if they are committed in order to remove obstacles to the higher goals of \"extraordinary\" men. Once the deed is done, however, he finds himself wracked with confusion, paranoia, and disgust. His theoretical justifications lose all their power as he struggles with guilt and horror and is confronted with both internal and external consequences of his deed.\n\n\n== Background ==\nAt the time, Dostoevsky owed large sums of money to creditors and was trying to help the family of his brother Mikhail, who had died in early 1864."
   },
   {
    "id": "art-047",
@@ -567,7 +614,8 @@
    "wikiTitle": "The Great Gatsby",
    "difficulty": 1,
    "imageUrl": "https://upload.wikimedia.org/wikipedia/commons/thumb/7/7a/The_Great_Gatsby_Cover_1925_Retouched.jpg/960px-The_Great_Gatsby_Cover_1925_Retouched.jpg?utm_source=en.wikipedia.org&utm_campaign=api&utm_content=thumbnail",
-   "pageUrl": "https://en.wikipedia.org/wiki/The_Great_Gatsby"
+   "pageUrl": "https://en.wikipedia.org/wiki/The_Great_Gatsby",
+   "details": "The Great Gatsby ( ) is a 1925 tragedy novel by American writer F. Scott Fitzgerald. Set in the Jazz Age on Long Island, near New York City, the novel depicts first-person narrator Nick Carraway's interactions with Jay Gatsby, a mysterious millionaire obsessed with reuniting with his former lover, Daisy Buchanan.\nThe novel was inspired by a youthful romance Fitzgerald had with socialite Ginevra King and the riotous parties he attended on Long Island's North Shore in 1922. Following a move to the French Riviera, Fitzgerald completed a rough draft of the novel in 1924. He submitted it to editor Maxwell Perkins, who persuaded Fitzgerald to revise the work over the following winter. After making revisions, Fitzgerald was satisfied with the text but remained ambivalent about the book's title and considered several alternatives. Painter Francis Cugat's dust jacket art, named Celestial Eyes, greatly impressed Fitzgerald, and he incorporated its imagery into the novel.\nAfter its publication by Scribner's in April 1925, The Great Gatsby received generally favorable reviews, though some literary critics believed it did not equal Fitzgerald's previous efforts. Compared to his earlier novels, This Side of Paradise (1920) and The Beautiful and Damned (1922), the novel was a commercial disappointment. It sold fewer than 20,000 copies by October, and Fitzgerald's hopes of a monetary windfall from the novel were unrealized."
   },
   {
    "id": "art-048",
@@ -579,7 +627,8 @@
    "wikiTitle": "Ulysses (novel)",
    "difficulty": 2,
    "imageUrl": "https://upload.wikimedia.org/wikipedia/commons/a/ab/JoyceUlysses2.jpg?utm_source=en.wikipedia.org&utm_campaign=api&utm_content=thumbnail_unscaled",
-   "pageUrl": "https://en.wikipedia.org/wiki/Ulysses_(novel)"
+   "pageUrl": "https://en.wikipedia.org/wiki/Ulysses_(novel)",
+   "details": "Ulysses is a modernist novel by the Irish writer James Joyce. Partially serialised in the American journal The Little Review from March 1918 to December 1920, the entire work was published in Paris by Sylvia Beach on 2 February 1922, Joyce's fortieth birthday. It is considered one of the most important works of modernist literature and a classic of the genre, having been called \"a demonstration and summation of the entire movement\".\nUlysses chronicles the experiences of three Dubliners over the course of a single day, 16 June 1904 (which its fans now celebrate annually as Bloomsday). Ulysses is the Latinised name of Odysseus, the hero of Homer's epic poem the Odyssey, and the novel establishes a series of parallels between Leopold Bloom and Odysseus, Molly Bloom and Penelope, and Stephen Dedalus and Telemachus. There are also correspondences with William Shakespeare's play Hamlet and with other literary, religious, and mythological figures, including Jesus, Elijah, Moses, Dante Alighieri and Don Juan. Such themes as antisemitism, human sexuality, British rule in Ireland, Catholicism and Irish nationalism are treated in the context of early-20th-century Dublin. It is highly allusive and written in a variety of styles.\nThe writer Djuna Barnes quoted Joyce as saying, \"The pity is ... the public will demand and find a moral in my book—or worse they may take it in some more serious way, and on the honour of a gentleman, there is not one single serious line in it."
   },
   {
    "id": "art-049",
@@ -605,7 +654,8 @@
    "wikiTitle": "Ludwig van Beethoven",
    "difficulty": 1,
    "imageUrl": "https://upload.wikimedia.org/wikipedia/commons/thumb/6/6e/Joseph_Karl_Stieler%27s_Beethoven_mit_dem_Manuskript_der_Missa_solemnis.jpg/960px-Joseph_Karl_Stieler%27s_Beethoven_mit_dem_Manuskript_der_Missa_solemnis.jpg?utm_source=en.wikipedia.org&utm_campaign=api&utm_content=thumbnail",
-   "pageUrl": "https://en.wikipedia.org/wiki/Ludwig_van_Beethoven"
+   "pageUrl": "https://en.wikipedia.org/wiki/Ludwig_van_Beethoven",
+   "details": "Ludwig van Beethoven (baptised 17 December 1770 – 26 March 1827) was a German composer, conductor, and pianist. Regarded as one of the greatest composers in the history of Western music, he was mentored during the Classical period, and his musical style was a key driver of the transition to Romantic music, and the expansion of instrumental forms such as the symphony, the piano sonata and the string quartet. His compositions have attracted extraordinary casual and scholarly interest, and remain among the most performed in the world.\nBorn in Bonn, Beethoven was a musical prodigy. He was initially taught intensively by his father, Johann van Beethoven, and later by Christian Gottlob Neefe. He found relief from a dysfunctional home life with the family of Helene von Breuning, whose children he loved, befriended, and taught piano. At age 21, he moved to Vienna, which subsequently became his base, and studied composition with Joseph Haydn. Beethoven gained a reputation as a virtuoso pianist, and was soon patronized by Karl Alois, Prince Lichnowsky for compositions, which resulted in his three Piano Trios, Op. 1, (the earliest works to which he accorded an opus number) in 1795. His Pathétique Sonata was composed in 1798."
   },
   {
    "id": "art-051",
@@ -617,7 +667,8 @@
    "wikiTitle": "Wolfgang Amadeus Mozart",
    "difficulty": 1,
    "imageUrl": "https://upload.wikimedia.org/wikipedia/commons/thumb/a/ad/The_Mozart_Family_-_Wolfgang_Amadeus_Mozart_headshot.jpg/960px-The_Mozart_Family_-_Wolfgang_Amadeus_Mozart_headshot.jpg?utm_source=en.wikipedia.org&utm_campaign=api&utm_content=thumbnail",
-   "pageUrl": "https://en.wikipedia.org/wiki/Wolfgang_Amadeus_Mozart"
+   "pageUrl": "https://en.wikipedia.org/wiki/Wolfgang_Amadeus_Mozart",
+   "details": "Wolfgang Amadeus Mozart (27 January 1756 – 5 December 1791) was a Classical composer and musician. He completed more than 800 works in his life—including outstanding examples of most of the genres of his time: symphonies, concertos, chamber music, opera, and choral music—and is regarded as one of the greatest composers in the history of Western music.\nBorn in Salzburg, Mozart quickly emerged as a child prodigy under the training of his father Leopold, a skilled pedagogue. At the age of five he was already competent on keyboard and violin, had begun to compose, and had performed before European royalty. His father took him on a grand tour of Europe and then three trips to Italy. At 17 he was a musician at the Salzburg court but grew restless and travelled in search of a better position. A fruitless journey in search of employment (1777–1779) led him to Paris, Mannheim, Munich, and eventually back to Salzburg. During this time he wrote his five violin concertos, the Sinfonia Concertante, various masses, and the opera Idomeneo.\nWhile he was visiting Vienna in 1781, Mozart's quarrels with his Salzburg employers came to a head and he was dismissed. He chose to remain in Vienna, where he stayed for the rest of his life, achieving fame and some financial success, but no long-term security."
   },
   {
    "id": "art-052",
@@ -629,7 +680,8 @@
    "wikiTitle": "Johann Sebastian Bach",
    "difficulty": 1,
    "imageUrl": "https://upload.wikimedia.org/wikipedia/commons/thumb/6/6a/Johann_Sebastian_Bach.jpg/960px-Johann_Sebastian_Bach.jpg?utm_source=en.wikipedia.org&utm_campaign=api&utm_content=thumbnail",
-   "pageUrl": "https://en.wikipedia.org/wiki/Johann_Sebastian_Bach"
+   "pageUrl": "https://en.wikipedia.org/wiki/Johann_Sebastian_Bach",
+   "details": "Johann Sebastian Bach (31 March [O.S. 21 March] 1685 – 28 July 1750) was a German composer and musician of the late Baroque period. He is known for his prolific output across a variety of instruments and forms, including the orchestral Brandenburg Concertos; solo instrumental works such as the Cello Suites and Sonatas and Partitas for Solo Violin; keyboard works such as the Goldberg Variations and The Well-Tempered Clavier; organ works such as the Schübler Chorales and the Toccata and Fugue in D minor; and choral works such as the St. Matthew Passion and the Mass in B minor. He is known for his mastery of counterpoint, as heard in The Musical Offering and The Art of Fugue. Felix Mendelssohn precipitated the Bach Revival with a performance of the St. Matthew Passion in 1829. Ever since, Bach has been acclaimed as one of the greatest composers in the history of Western music.\nThe Bach family had already produced several composers when Johann Sebastian was born in Eisenach, the youngest child of the city musician Johann Ambrosius Bach. After being orphaned at age 10, he lived for five years with his eldest brother, Johann Christoph, then continued his musical education in Lüneburg. In 1703 he returned to Thuringia, working as a musician for Protestant churches in Arnstadt and Mühlhausen."
   },
   {
    "id": "art-053",
@@ -641,7 +693,8 @@
    "wikiTitle": "Pyotr Ilyich Tchaikovsky",
    "difficulty": 1,
    "imageUrl": "https://upload.wikimedia.org/wikipedia/commons/thumb/2/20/Tchaikovsky_by_Reutlinger_%28cropped%29.jpg/960px-Tchaikovsky_by_Reutlinger_%28cropped%29.jpg?utm_source=en.wikipedia.org&utm_campaign=api&utm_content=thumbnail",
-   "pageUrl": "https://en.wikipedia.org/wiki/Pyotr_Ilyich_Tchaikovsky"
+   "pageUrl": "https://en.wikipedia.org/wiki/Pyotr_Ilyich_Tchaikovsky",
+   "details": "Pyotr Ilyich Tchaikovsky (  chy-KOF-skee; 7 May 1840 – 6 November 1893) was a Russian composer of the Romantic period. He was the first Russian composer whose music made a lasting impression internationally. Tchaikovsky wrote some of the most popular concert and theatrical music in the classical repertoire, including the 1812 Overture, his First Piano Concerto, the Violin Concerto, the Romeo and Juliet Overture-Fantasy, several symphonies, the opera Eugene Onegin, and the ballets Swan Lake, The Sleeping Beauty and The Nutcracker.\nAlthough musically precocious, Tchaikovsky was educated for a career as a civil servant as there was little opportunity for a musical career in Russia at the time and no public music education system. When an opportunity for such an education arose, he entered the nascent Saint Petersburg Conservatory, from which he graduated in 1865. The formal Western-oriented teaching Tchaikovsky received there set him apart from composers of the contemporary nationalist movement embodied by the Russian composers of The Five, with whom his professional relationship was mixed.\nTchaikovsky's training set him on a path to reconcile what he had learned with the native musical practices to which he had been exposed from childhood. From that reconciliation, he forged a personal but unmistakably Russian style. The principles that governed melody, harmony, and other fundamentals of Russian music diverged from those that governed Western European music.  There seemed to be little potential for using Russian music in large-scale Western composition or for forming a composite style, and this caused personal antipathies that dented Tchaikovsky's self-confidence."
   },
   {
    "id": "art-054",
@@ -653,7 +706,8 @@
    "wikiTitle": "Frédéric Chopin",
    "difficulty": 2,
    "imageUrl": "https://upload.wikimedia.org/wikipedia/commons/thumb/e/e8/Frederic_Chopin_photo.jpeg/960px-Frederic_Chopin_photo.jpeg?utm_source=en.wikipedia.org&utm_campaign=api&utm_content=thumbnail",
-   "pageUrl": "https://en.wikipedia.org/wiki/Fr%C3%A9d%C3%A9ric_Chopin"
+   "pageUrl": "https://en.wikipedia.org/wiki/Fr%C3%A9d%C3%A9ric_Chopin",
+   "details": "Frédéric François Chopin (born Fryderyk Franciszek Chopin; 1 March 1810 – 17 October 1849) was a Polish composer and virtuoso pianist of the early Romantic period who wrote primarily for solo piano. He has maintained worldwide renown as a leading composer of his era whose \"poetic genius was based on a professional technique that was without equal in his generation\".\nChopin was born in Żelazowa Wola and grew up in Warsaw, which in 1815 became part of Congress Poland. A child prodigy, he completed his musical education and composed his early works in Warsaw before leaving Poland at age 20, less than a month before the outbreak of the November 1830 Uprising; at 21, he settled in Paris. Thereafter he gave only 30 public performances, preferring the more intimate atmosphere of the salon. He supported himself by selling his compositions and giving piano lessons, for which he was in high demand. Chopin formed a friendship with Franz Liszt and was admired by many musical contemporaries, including Robert Schumann. After a failed engagement to Maria Wodzińska from 1836 to 1837, he maintained an often troubled relationship with the French writer Aurore Dupin (known by her pen name George Sand). A brief and unhappy visit to Mallorca with Sand in 1838–39 proved one of his most productive periods of composition. In his final years he was supported financially by his admirer Jane Stirling."
   },
   {
    "id": "art-055",
@@ -665,7 +719,8 @@
    "wikiTitle": "Antonio Vivaldi",
    "difficulty": 1,
    "imageUrl": "https://upload.wikimedia.org/wikipedia/commons/thumb/b/bd/Vivaldi.jpg/960px-Vivaldi.jpg?utm_source=en.wikipedia.org&utm_campaign=api&utm_content=thumbnail",
-   "pageUrl": "https://en.wikipedia.org/wiki/Antonio_Vivaldi"
+   "pageUrl": "https://en.wikipedia.org/wiki/Antonio_Vivaldi",
+   "details": "Antonio Lucio Vivaldi (4 March 1678 – 28 July 1741) was an Italian composer, virtuoso violinist and impresario of Baroque music. Regarded as one of the greatest Baroque composers, Vivaldi's influence during his lifetime was widespread across Europe, giving origin to many imitators and admirers. He pioneered many developments in orchestration, violin technique and programmatic music. He consolidated the emerging concerto form, especially the solo concerto, into a widely accepted and followed idiom.\nVivaldi composed many instrumental concertos, for the violin and a variety of other musical instruments, as well as sacred choral works and more than fifty operas. His best-known work is a series of violin concertos known as The Four Seasons. Many of his compositions were written for the all-female music ensemble of the Ospedale della Pietà, a home for abandoned children in his native Venice. Vivaldi began studying for the Catholic priesthood at the age of 15 and was ordained at 25, but was given dispensation to no longer say public Masses because of a health problem. Vivaldi also had some success with expensive stagings of his operas in Venice, Mantua, and Vienna. After meeting the Emperor Charles VI, he moved to Vienna, hoping for royal support, but the Emperor died soon after his arrival, and Vivaldi died in poverty less than a year later."
   },
   {
    "id": "art-056",
@@ -690,7 +745,8 @@
    "wikiTitle": "Giuseppe Verdi",
    "difficulty": 2,
    "imageUrl": "https://upload.wikimedia.org/wikipedia/commons/thumb/9/9a/Giuseppe_Verdi_by_Ferdinand_Mulnier_BW.jpg/960px-Giuseppe_Verdi_by_Ferdinand_Mulnier_BW.jpg?utm_source=en.wikipedia.org&utm_campaign=api&utm_content=thumbnail",
-   "pageUrl": "https://en.wikipedia.org/wiki/Giuseppe_Verdi"
+   "pageUrl": "https://en.wikipedia.org/wiki/Giuseppe_Verdi",
+   "details": "Giuseppe Fortunino Francesco Verdi ( VAIR-dee; Italian: [dʒuˈzɛppe ˈverdi]; 9 or 10 October 1813 – 27 January 1901) was an Italian composer best known for his operas. He was born near Busseto, a small town in the modern province of Parma, to a family of moderate means, receiving a musical education with the help of a local patron named Antonio Barezzi.\nVerdi came to dominate the Italian opera scene after the era of Gioachino Rossini, Vincenzo Bellini, and Gaetano Donizetti, whose works significantly influenced him. He was also strongly influenced by the French Grand opera style, particularly Giacomo Meyerbeer and Gaspare Spontini.\nIn his early operas, Verdi demonstrated sympathy with the Risorgimento movement which sought the unification of Italy. He also served briefly as an elected politician. The chorus \"Va, pensiero\" from his early opera Nabucco (1842), and similar choruses in later operas, were much in the spirit of the unification movement, and the composer himself became esteemed as a representative of these ideals. Macbeth (1847) has been called his first masterpiece.\nAn intensely private person, Verdi did not seek to ingratiate himself with popular movements. As he became professionally successful, he was able to reduce his operatic workload and sought to establish himself as a landowner in his native region."
   },
   {
    "id": "art-058",
@@ -702,7 +758,8 @@
    "wikiTitle": "Igor Stravinsky",
    "difficulty": 2,
    "imageUrl": "https://upload.wikimedia.org/wikipedia/commons/thumb/3/33/Igor_Stravinsky_LOC_32392u.jpg/960px-Igor_Stravinsky_LOC_32392u.jpg?utm_source=en.wikipedia.org&utm_campaign=api&utm_content=thumbnail",
-   "pageUrl": "https://en.wikipedia.org/wiki/Igor_Stravinsky"
+   "pageUrl": "https://en.wikipedia.org/wiki/Igor_Stravinsky",
+   "details": "Igor Fyodorovich Stravinsky (17 June [O.S. 5 June] 1882 – 6 April 1971) was a Russian composer and conductor with French (from 1934) and American citizenship (from 1945). He is widely considered one of the most important and influential composers of the 20th century and a pivotal figure in modernist music.\nBorn into a musical family in Saint Petersburg, Stravinsky grew up taking piano and music theory lessons. While studying law at the University of Saint Petersburg, he met Nikolai Rimsky-Korsakov and studied music under him until the latter's death in 1908. Soon after, Stravinsky met impresario Sergei Diaghilev, who commissioned him to write three ballets for the Ballets Russes's Paris seasons: The Firebird (1910), Petrushka (1911), and The Rite of Spring (1913), the last of which caused a near-riot at the premiere due to its avant-garde nature and later changed the way composers understood rhythmic structure.\nStravinsky's compositional career is often divided into three main periods: his Russian period (1913–1920), his neoclassical period (1920–1951), and his serial period (1954–1968). During his Russian period, Stravinsky was heavily influenced by Russian styles and folklore. Works such as Renard (1916) and Les noces (1923) drew upon Russian folk poetry, while compositions like L'Histoire du soldat (1918) integrated these folk elements with popular musical forms, including the tango, waltz, ragtime, and chorale. His neoclassical period exhibited themes and techniques from the classical period, like the use of the sonata form in his Octet (1923) and use of Greek mythological themes in works including Apollon musagète (1927), Oedipus rex (1927), and Persephone (1935). In his serial period, Stravinsky turned towards compositional techniques from the Second Viennese School like Arnold Schoenberg's twelve-tone technique."
   },
   {
    "id": "art-059",
@@ -714,7 +771,8 @@
    "wikiTitle": "George Frideric Handel",
    "difficulty": 2,
    "imageUrl": "https://upload.wikimedia.org/wikipedia/commons/thumb/f/fa/George_Frideric_Handel_by_Balthasar_Denner.jpg/960px-George_Frideric_Handel_by_Balthasar_Denner.jpg?utm_source=en.wikipedia.org&utm_campaign=api&utm_content=thumbnail",
-   "pageUrl": "https://en.wikipedia.org/wiki/George_Frideric_Handel"
+   "pageUrl": "https://en.wikipedia.org/wiki/George_Frideric_Handel",
+   "details": "George Frideric (or Frederick) Handel ( HAN-dəl; baptised Georg Fried[e]rich Händel, German: [ˈɡeːɔʁk ˈfʁiːdʁɪç ˈhɛndl̩] ; 5 March [O.S. 23 February] 1685  – 14 April 1759) was a German-British Baroque composer well-known for his operas, oratorios, anthems, concerti grossi, and organ concerti.\nBorn in Halle, Handel spent his early life in Hamburg and Italy before settling in London in 1712, where he spent the bulk of his career and became a naturalised British subject in 1727. He was strongly influenced both by the middle-German polyphonic choral tradition and by composers of the Italian Baroque. In turn, Handel's music forms one of the peaks of the \"high baroque\" style, bringing Italian opera to its highest development, creating the genres of English oratorio and organ concerto, and introducing a new style into English church music. He is consistently recognised as one of the greatest composers of his age.\nHandel started three commercial opera companies to supply the English nobility with Italian opera. In 1737 he had a physical breakdown, changed direction creatively, addressed the middle class and made a transition to English choral works. After his success with Messiah (1742), he never composed an Italian opera again. His orchestral Water Music and Music for the Royal Fireworks remain steadfastly popular. One of his four coronation anthems, Zadok the Priest, has been performed at every British coronation since 1727."
   },
   {
    "id": "art-060",
@@ -726,7 +784,8 @@
    "wikiTitle": "The Four Seasons (Vivaldi)",
    "difficulty": 1,
    "imageUrl": "https://upload.wikimedia.org/wikipedia/commons/thumb/2/27/Antonio_Vivaldi_2.jpg/960px-Antonio_Vivaldi_2.jpg?utm_source=en.wikipedia.org&utm_campaign=api&utm_content=thumbnail",
-   "pageUrl": "https://en.wikipedia.org/wiki/The_Four_Seasons_(Vivaldi)"
+   "pageUrl": "https://en.wikipedia.org/wiki/The_Four_Seasons_(Vivaldi)",
+   "details": "The Four Seasons (Italian: Le quattro stagioni) is a group of four violin concerti by Italian composer Antonio Vivaldi, each of which gives musical expression to a season of the year. These were composed around 1718–1723, when Vivaldi was the court chapel master in Mantua. They were published in 1725 in Amsterdam in what was at the time the Dutch Republic, together with eight additional concerti, as Il cimento dell'armonia e dell'inventione (The Contest Between Harmony and Invention).\nThe Four Seasons is the best known of Vivaldi's works. The inspiration for the concertos is not the countryside around Mantua, as initially supposed, where Vivaldi was living at the time, since according to Karl Heller they could have been written as early as 1716–1717, while Vivaldi was engaged with the court of Mantua only in 1718.\nThey were a revolution in musical conception: Vivaldi represented flowing creeks, singing birds (of different species, each specifically characterized), a shepherd and his barking dog, buzzing flies, storms, drunken dancers, hunting parties from both the hunters' and the prey's point of view, frozen landscapes, and warm winter fires.\nUnusual for the period, Vivaldi published the concerti with accompanying sonnets (possibly written by the composer himself) that elucidated what it was in the spirit of each season that his music was intended to evoke. The concerti therefore stand as one of the earliest and most detailed examples of what would come to be called program music—in other words, music with a narrative element. Vivaldi took great pains to relate his music to the texts of the poems, translating the poetic lines themselves directly into the music on the page. For example, in the second movement of \"Spring\", when the goatherd sleeps, his barking dog can be heard in the viola section."
   },
   {
    "id": "art-061",
@@ -738,7 +797,8 @@
    "wikiTitle": "The Nutcracker",
    "difficulty": 1,
    "imageUrl": "https://upload.wikimedia.org/wikipedia/commons/thumb/1/10/Tschaikowsky_EBieber_1888.jpg/960px-Tschaikowsky_EBieber_1888.jpg?utm_source=en.wikipedia.org&utm_campaign=api&utm_content=thumbnail",
-   "pageUrl": "https://en.wikipedia.org/wiki/The_Nutcracker"
+   "pageUrl": "https://en.wikipedia.org/wiki/The_Nutcracker",
+   "details": "The Nutcracker (Russian: Щелкунчик, romanized: Shchelkunchik, pronounced [ɕːɪlˈkunʲtɕɪk] ), Op. 71, is an 1892 two-act classical ballet (conceived as a ballet-féerie; Russian: балет-феерия, romanized: balet-feyeriya) by Pyotr Ilyich Tchaikovsky, set on Christmas Eve at the foot of a Christmas tree in a child's imagination featuring a Nutcracker doll. The plot is an adaptation of Alexandre Dumas's 1844 short story The Tale of a Nutcracker, itself a retelling of E. T. A. Hoffmann's 1816 short story The Nutcracker and the Mouse King. The ballet's first choreographer was Marius Petipa, with whom Tchaikovsky had worked three years earlier on The Sleeping Beauty, assisted by Lev Ivanov. Although the complete and staged The Nutcracker ballet was not initially as successful as the 20-minute Nutcracker Suite that Tchaikovsky had premiered nine months earlier, it became popular in later years.\nSince the late 1960s, The Nutcracker has been danced by many ballet companies, especially in North America. Major American ballet companies generate around 40% of their annual ticket revenues from performances of the ballet. Its score has been used in several film adaptations of Hoffmann's story.\nTchaikovsky's score has become one of his most famous compositions. Among other things, the score is noted for its use of the celesta, an instrument the composer had already employed in his much lesser known symphonic ballad The Voyevoda (1891)."
   },
   {
    "id": "art-062",
@@ -750,7 +810,8 @@
    "wikiTitle": "Der Ring des Nibelungen",
    "difficulty": 3,
    "imageUrl": "https://upload.wikimedia.org/wikipedia/commons/thumb/e/ec/B%C3%BChnenbildentwurf_Rheingold.JPG/960px-B%C3%BChnenbildentwurf_Rheingold.JPG?utm_source=en.wikipedia.org&utm_campaign=api&utm_content=thumbnail",
-   "pageUrl": "https://en.wikipedia.org/wiki/Der_Ring_des_Nibelungen"
+   "pageUrl": "https://en.wikipedia.org/wiki/Der_Ring_des_Nibelungen",
+   "details": "Der Ring des Nibelungen (The Ring of the Nibelung), WWV 86, is a cycle of four German-language epic music dramas composed by Richard Wagner. The works are based loosely on characters from Germanic heroic legend, namely Norse legendary sagas and the Nibelungenlied. The composer termed the cycle a \"Bühnenfestspiel\" (stage festival play), structured in three days preceded by a Vorabend (\"preliminary evening\"). It is often referred to as the Ring cycle, Wagner's Ring, or simply The Ring.\nWagner wrote the libretto and music over the course of about twenty-six years, from 1848 to 1874. The four parts that constitute the Ring cycle are, in sequence:\n\nDas Rheingold (The Rhinegold)\nDie Walküre (The Valkyrie)\nSiegfried\nGötterdämmerung (Twilight of the Gods)\nIndividual works of the sequence are often performed separately, and indeed the operas contain dialogues that mention events in the previous operas, so that a viewer could watch any of them without having watched the previous parts and still understand the plot. However, Wagner intended them to be performed in series. The first performance as a cycle opened the first Bayreuth Festival in 1876, beginning with Das Rheingold on 13 August and ending with Götterdämmerung on 17 August. Opera stage director Anthony Freud stated that Der Ring des Nibelungen \"marks the high-water mark of our art form, the most massive challenge any opera company can undertake.\"\n\n\n== Title ==\nWagner's title is most literally rendered in English as The Ring of the Nibelung. The Nibelung of the title is the dwarf Alberich, and the ring in question is the one he fashions from the Rhinegold."
   },
   {
    "id": "art-063",
@@ -762,7 +823,8 @@
    "wikiTitle": "Symphony No. 9 (Beethoven)",
    "difficulty": 2,
    "imageUrl": "https://upload.wikimedia.org/wikipedia/commons/6/6e/The_Premiere_of_Symphony_No._9.jpg?utm_source=en.wikipedia.org&utm_campaign=api&utm_content=thumbnail_unscaled",
-   "pageUrl": "https://en.wikipedia.org/wiki/Symphony_No._9_(Beethoven)"
+   "pageUrl": "https://en.wikipedia.org/wiki/Symphony_No._9_(Beethoven)",
+   "details": "The Symphony No. 9 in D minor, Op. 125, is a choral symphony, the final complete symphony by Ludwig van Beethoven, composed between 1822 and 1824. It was first performed in Vienna on 7 May 1824. The symphony is regarded by many critics and musicologists as a masterpiece of Western classical music and one of the supreme achievements in the history of music. One of the best-known works in common practice music, it stands as one of the most frequently performed symphonies in the world.\nThe Ninth was the first example of a major composer scoring vocal parts in a symphony. The final (4th) movement of the symphony, commonly known as the Ode to Joy, features four vocal soloists and a chorus in the parallel key of D major. The text was adapted from the \"An die Freude (Ode to Joy)\", a poem written by Friedrich Schiller in 1785 and revised in 1803, with additional text written by Beethoven. In the 20th century, an instrumental arrangement of the chorus was adopted by the Council of Europe, and later the European Union, as the Anthem of Europe."
   },
   {
    "id": "art-064",
@@ -774,7 +836,8 @@
    "wikiTitle": "The Rite of Spring",
    "difficulty": 2,
    "imageUrl": "https://upload.wikimedia.org/wikipedia/commons/thumb/6/62/Roerich_Rite_of_Spring.jpg/960px-Roerich_Rite_of_Spring.jpg?utm_source=en.wikipedia.org&utm_campaign=api&utm_content=thumbnail",
-   "pageUrl": "https://en.wikipedia.org/wiki/The_Rite_of_Spring"
+   "pageUrl": "https://en.wikipedia.org/wiki/The_Rite_of_Spring",
+   "details": "The Rite of Spring (French: Le Sacre du printemps) is a ballet and orchestral concert work by the Russian composer Igor Stravinsky. It was written for the 1913 Paris season of Sergei Diaghilev's Ballets Russes company; the original choreography was by Vaslav Nijinsky with stage designs and costumes by Nicholas Roerich. When first performed at the Théâtre des Champs-Élysées on 29 May 1913, the avant-garde nature of the music and choreography caused a sensation. Many have called the first-night reaction a \"riot\" or \"near-riot\", though this wording did not come about until reviews of later performances in 1924, over a decade later. Although designed as a work for the stage, with specific passages accompanying characters and action, the music achieved equal if not greater recognition as a concert piece and is widely considered to be one of the most influential musical works of the 20th century.\nStravinsky was a young, virtually unknown composer when Diaghilev recruited him to create works for the Ballets Russes. Le Sacre du printemps was the third such major project, after the acclaimed Firebird (1910) and Petrushka (1911). The concept behind The Rite of Spring, developed by Roerich from Stravinsky's outline idea, is suggested by its subtitle, \"Pictures of Pagan Russia in Two Parts\"; the scenario depicts various primitive rituals celebrating the advent of spring, after which a young girl is chosen as a sacrificial victim and dances herself to death. After a mixed critical reception for its original run and a short London tour, the ballet was not performed again until the 1920s, when a version choreographed by Léonide Massine replaced Nijinsky's original, which saw only eight performances. Massine's was the forerunner of many innovative productions directed by the world's leading choreographers, gaining the work worldwide acceptance."
   },
   {
    "id": "art-065",
@@ -786,7 +849,8 @@
    "wikiTitle": "Dante Alighieri",
    "difficulty": 1,
    "imageUrl": "https://upload.wikimedia.org/wikipedia/commons/e/ea/Bargello_-_Kapelle_Fresko_2a.jpg?utm_source=en.wikipedia.org&utm_campaign=api&utm_content=thumbnail_unscaled",
-   "pageUrl": "https://en.wikipedia.org/wiki/Dante_Alighieri"
+   "pageUrl": "https://en.wikipedia.org/wiki/Dante_Alighieri",
+   "details": "Dante Alighieri (Italian: [ˈdante aliˈɡjɛːri]; most likely baptized Durante di Alighiero degli Alighieri; c. May 1265 – September 14, 1321), widely known mononymously as Dante, was an Italian poet, writer, and philosopher. His Divine Comedy, originally called Comedìa (modern Italian: Commedia) and later christened Divina by Giovanni Boccaccio, is widely considered one of the most important poems of the Middle Ages and the greatest literary work in the Italian language.\nAt a time when Latin was still the dominant language for scholarly and literary writing—and when many Italian poets drew inspiration from French or Provençal traditions—Dante broke with both by writing in the vernacular, specifically his native Tuscan dialect. His De vulgari eloquentia (On Eloquence in the Vernacular) was one of the first scholarly defenses of the vernacular. His use of the Florentine dialect for works such as The New Life (1295) and Divine Comedy helped establish the modern-day standardized Italian language. His work set a precedent that important Italian writers such as Petrarch and Boccaccio would later follow.\nDante was instrumental in establishing the literature of Italy, and is considered to be among the country's national poets and the Western world's greatest literary icons. His depictions of Hell, Purgatory, and Heaven provided inspiration for the larger body of Western art and literature. He influenced English writers such as Geoffrey Chaucer, John Milton, and Alfred Tennyson, among many others. In addition, the first use of the interlocking three-line rhyme scheme, or the terza rima, is attributed to him."
   },
   {
    "id": "art-066",
@@ -798,7 +862,8 @@
    "wikiTitle": "Emily Dickinson",
    "difficulty": 2,
    "imageUrl": "https://upload.wikimedia.org/wikipedia/commons/thumb/5/56/Black-white_photograph_of_Emily_Dickinson2.png/960px-Black-white_photograph_of_Emily_Dickinson2.png?utm_source=en.wikipedia.org&utm_campaign=api&utm_content=thumbnail",
-   "pageUrl": "https://en.wikipedia.org/wiki/Emily_Dickinson"
+   "pageUrl": "https://en.wikipedia.org/wiki/Emily_Dickinson",
+   "details": "Emily Elizabeth Dickinson (December 10, 1830 – May 15, 1886) was an American poet. Largely unpublished and unknown during her lifetime, her work is now widely regarded as canonical. The Poetry Foundation describes her as having \"created in her writing a distinctively elliptical language for expressing what was possible but not yet realized.\"\nDickinson was born in Amherst, Massachusetts to a prominent family. After studying at the Amherst Academy for seven years, she briefly attended the Mount Holyoke Female Seminary before returning home to Amherst.\nAlthough Dickinson was a prolific writer, only 10 of her nearly 1,800 poems were published during her lifetime. Today her poems are widely regarded as groundbreaking with their use of short acerbic lines, lean descriptions, and slant or off-rhyme. Her poetry primarily deals with nature and mortality.\nFew in Dickinson's circle were aware of her writing until after her death, when her younger sister Lavinia discovered the poems in her desk. First published as a selection in 1890, edited by Thomas Wentworth Higginson and Mabel Loomis Todd, the poems were significantly altered to fit the prevailing poetic conventions of the time. Not until 1955, when Thomas H. Johnson compiled a complete collection of her poetry, \"The Poems of Emily Dickinson,\" was Dickinson's work restored closer to her original intention."
   },
   {
    "id": "art-067",
@@ -810,7 +875,8 @@
    "wikiTitle": "Walt Whitman",
    "difficulty": 2,
    "imageUrl": "https://upload.wikimedia.org/wikipedia/commons/thumb/f/fa/Walt_Whitman_-_George_Collins_Cox.jpg/960px-Walt_Whitman_-_George_Collins_Cox.jpg?utm_source=en.wikipedia.org&utm_campaign=api&utm_content=thumbnail",
-   "pageUrl": "https://en.wikipedia.org/wiki/Walt_Whitman"
+   "pageUrl": "https://en.wikipedia.org/wiki/Walt_Whitman",
+   "details": "Walter Whitman Jr. (; May 31, 1819 – March 26, 1892) was an American poet, essayist, and journalist; he also wrote two novels. He is considered one of the most influential poets in American literature and world literature. Whitman incorporated both transcendentalism and realism in his writings and is often called the father of free verse. His work was controversial in his time, particularly his 1855 poetry collection Leaves of Grass, which was described by some as obscene for its overt sensuality.\nWhitman was born in Huntington on Long Island and lived in Brooklyn as a child and through much of his career. At age 11, he left formal schooling to go to work. He worked as a journalist, a teacher, and a government clerk. Whitman's major poetry collection, Leaves of Grass, first published in 1855, was financed with his own money and became well known. The work was an attempt to reach out to the common person with an American epic."
   },
   {
    "id": "art-068",
@@ -822,7 +888,8 @@
    "wikiTitle": "T. S. Eliot",
    "difficulty": 2,
    "imageUrl": "https://upload.wikimedia.org/wikipedia/commons/2/26/Thomas_Stearns_Eliot_by_Lady_Ottoline_Morrell_%281934%29.jpg?utm_source=en.wikipedia.org&utm_campaign=api&utm_content=thumbnail_unscaled",
-   "pageUrl": "https://en.wikipedia.org/wiki/T._S._Eliot"
+   "pageUrl": "https://en.wikipedia.org/wiki/T._S._Eliot",
+   "details": "Thomas Stearns Eliot (26 September 1888 – 4 January 1965) was a poet, essayist and playwright. He was a leading figure of modernist poetry in the English language where he altered the art through his use of pessimistic language, writing style, and verse structure. Awarded the Nobel Prize in Literature in 1948, he is considered one of the greatest poets of the English language. He is also noted for his critical essays, which often re-evaluated long-held cultural beliefs.\nBorn in St. Louis, Missouri, United States, to a prominent Boston Brahmin family, he moved to England in 1914 at the age of 25 and went on to settle, work, and marry there. He became a British subject in 1927 at the age of 39 and renounced his American citizenship.\nEliot first attracted widespread attention for \"The Love Song of J. Alfred Prufrock\" (1915), which, at the time of its publication, was considered outlandish. It was followed by The Waste Land (1922), \"The Hollow Men\" (1925), Ash Wednesday (1930), and Four Quartets (1943). He wrote seven plays, including Murder in the Cathedral (1935) and The Cocktail Party (1949)."
   },
   {
    "id": "art-069",
@@ -834,7 +901,8 @@
    "wikiTitle": "Rumi",
    "difficulty": 2,
    "imageUrl": "https://upload.wikimedia.org/wikipedia/commons/e/ea/%D9%85%D9%88%D9%84%D8%A7%D9%86%D8%A7_%D8%A7%D8%AB%D8%B1_%D8%AD%D8%B3%DB%8C%D9%86_%D8%A8%D9%87%D8%B2%D8%A7%D8%AF_%28cropped%29.jpg?utm_source=en.wikipedia.org&utm_campaign=api&utm_content=thumbnail_unscaled",
-   "pageUrl": "https://en.wikipedia.org/wiki/Rumi"
+   "pageUrl": "https://en.wikipedia.org/wiki/Rumi",
+   "details": "Jalāl al-Dīn Muḥammad Rūmī (30 September 1207 – 17 December 1273), commonly known as Rumi, was a Sufi mystic, poet, and founder of the Islamic brotherhood known as the Mevlevi Order. His family hailed from Balkh. Rumi is an influential figure in Sufism, and his thought and works loom large both in Persian literature and mystic poetry in general. Today, his translated works are enjoyed all over the world.\nThe rapidly advancing Mongol hordes forced his family to flee west early on in his life. After spending time in various cities across Iran, Baghdad, and Damascus, he settled in Konya with his family at age 19. Until recently, Konya had been a province of the Eastern Roman Empire, hence his name, Rumi, i.e. \"the Roman\". Although he was exposed to Sufi thought from his early childhood, he was expected to follow his fathers footsteps as an Islamic scholar.\nHowever, the arrival to Konya of the mysterious wandering dervish, Shams Tabrīzī, would alter the course of his life permanently."
   },
   {
    "id": "art-070",
@@ -846,7 +914,8 @@
    "wikiTitle": "William Wordsworth",
    "difficulty": 2,
    "imageUrl": "https://upload.wikimedia.org/wikipedia/commons/thumb/8/8c/Wordsworth_on_Helvellyn_by_Benjamin_Robert_Haydon.jpg/960px-Wordsworth_on_Helvellyn_by_Benjamin_Robert_Haydon.jpg?utm_source=en.wikipedia.org&utm_campaign=api&utm_content=thumbnail",
-   "pageUrl": "https://en.wikipedia.org/wiki/William_Wordsworth"
+   "pageUrl": "https://en.wikipedia.org/wiki/William_Wordsworth",
+   "details": "William Wordsworth (7 April 1770 – 23 April 1850) was an English Romantic poet who, with Samuel Taylor Coleridge, helped to launch the Romantic Age in English literature with their joint publication Lyrical Ballads (1798).\nWordsworth's magnum opus is generally considered to be The Prelude, a semi-autobiographical poem of his early years that he revised and expanded a number of times. It was posthumously titled and published by his wife in the year of his death, before which it was generally known as \"The Poem to Coleridge\".\nWordsworth was Poet Laureate from 1843 until his death from pleurisy in 1850. He remains one of the most recognisable names in English poetry and was a key figure among the Romantic poets.\n\n\n== Early life ==\n\n\n=== Family and education ===\n\nWilliam Wordsworth was born on 7 April 1770, the second of five children born to John Wordsworth and Ann Cookson in what is now named Wordsworth House in Cockermouth, Cumberland (now in Cumbria), part of the scenic region in northwestern England known as the Lake District. William's sister, the poet and diarist Dorothy Wordsworth, to whom he was close all his life, was born the following year, and the two were baptised together. They had three other siblings: Richard, the eldest, who became a lawyer; John Wordsworth, born after Dorothy, who went to sea and died in 1805 when the ship of which he was captain, the Earl of Abergavenny, was wrecked off the south coast of England; and Christopher, the youngest, who entered the Church and rose to be Master of Trinity College, Cambridge.\nWordsworth's father was a legal representative of James Lowther, 1st Earl of Lonsdale, and, through his connections, lived in a large mansion in the small town. He was frequently away from home on business, so the young William and his siblings had little involvement with him and remained distant until he died in 1783."
   },
   {
    "id": "art-071",
@@ -858,7 +927,8 @@
    "wikiTitle": "Anton Chekhov",
    "difficulty": 2,
    "imageUrl": "https://upload.wikimedia.org/wikipedia/commons/thumb/9/93/Anton_Chekhov_1889.jpg/960px-Anton_Chekhov_1889.jpg?utm_source=en.wikipedia.org&utm_campaign=api&utm_content=thumbnail",
-   "pageUrl": "https://en.wikipedia.org/wiki/Anton_Chekhov"
+   "pageUrl": "https://en.wikipedia.org/wiki/Anton_Chekhov",
+   "details": "Anton Pavlovich Chekhov (; Russian: Антон Павлович Чехов;\n29 January [O.S. 17 January] 1860 – 15 July [O.S. 2 July] 1904) was a Russian playwright and short story writer. Widely considered one of the greatest writers of all time, his career as a playwright produced four classics, and his best short stories are held in high esteem by writers and critics. Along with Henrik Ibsen and August Strindberg, Chekhov is often referred to as one of the three seminal figures in the birth of early modernism in the theatre. Chekhov was a physician by profession. \"Medicine is my lawful wife,\" he once said, \"and literature is my mistress.\"\nChekhov renounced the theatre after the reception of The Seagull in 1896, but the play was revived to acclaim in 1898 by Konstantin Stanislavski's Moscow Art Theatre, which subsequently also produced Chekhov's Uncle Vanya and premiered his last two plays, Three Sisters and The Cherry Orchard. These four works present a challenge to the acting ensemble as well as to audiences, because in place of conventional action Chekhov offers a \"theatre of mood\" and a \"submerged life in the text.\" \nChekhov began writing stories to earn money, but as his artistic ambition grew, he made formal innovations that influenced the evolution of the modern short story. He wrote that it is not the duty of writers to solve problems, but to correctly state them.\n\n\n== Biography ==\n\n\n=== Childhood ===\nAnton Pavlovich Chekhov was born on the feast day of St. Anthony the Great on 29 January [O.S. 17 January] 1860) in Taganrog, a commercial port city on the Sea of Azov – on Politseyskaya (Police) street, later renamed Chekhova street – in southern Russia. He was the third of six surviving children; he had two older brothers, Alexander and Nikolai, and three younger siblings, Ivan, Maria, and Mikhail."
   },
   {
    "id": "art-072",
@@ -870,7 +940,8 @@
    "wikiTitle": "Henrik Ibsen",
    "difficulty": 2,
    "imageUrl": "https://upload.wikimedia.org/wikipedia/commons/a/a6/Henrik_Ibsen_av_Eilif_Peterssen_1895.jpg?utm_source=en.wikipedia.org&utm_campaign=api&utm_content=thumbnail_unscaled",
-   "pageUrl": "https://en.wikipedia.org/wiki/Henrik_Ibsen"
+   "pageUrl": "https://en.wikipedia.org/wiki/Henrik_Ibsen",
+   "details": "Henrik Johan Ibsen (; Norwegian: [ˈhɛ̀nrɪk ˈɪ̀psn̩]; 20 March 1828 – 23 May 1906) was a Norwegian playwright. He is considered one of the world's pre-eminent writers of the 19th century and is often referred to as \"the father of modern drama\". He pioneered theatrical realism but also wrote lyrical epic works. His major works include Brand, Peer Gynt, Emperor and Galilean, A Doll's House, Ghosts, An Enemy of the People, The Wild Duck, Rosmersholm, Hedda Gabler, The Master Builder, and When We Dead Awaken. In 2014 Ibsen was considered the most frequently performed dramatist in the world after Shakespeare. Store norske leksikon describes him as \"the center of the Norwegian literary canon\".\nIbsen was born into the merchant elite of the port town of Skien and had strong family ties to the Paus family and other families who had held power and wealth in Telemark since the mid-1500s. He established himself as a theater director in Norway during the 1850s and gained international recognition as a playwright with the plays Brand and Peer Gynt in the 1860s. From 1864, he lived for 27 years in Italy and Germany, primarily in Rome, Dresden, and Munich, making only brief visits to Norway, before moving to Christiania (Oslo) in 1891. Most of Ibsen's plays are set in Norway, often in bourgeois environments and places reminiscent of Skien, and he frequently drew inspiration from family members."
   },
   {
    "id": "art-073",
@@ -882,7 +953,8 @@
    "wikiTitle": "Samuel Beckett",
    "difficulty": 2,
    "imageUrl": "https://upload.wikimedia.org/wikipedia/commons/thumb/8/88/Samuel_Beckett%2C_Pic%2C_1_%28cropped%29.jpg/960px-Samuel_Beckett%2C_Pic%2C_1_%28cropped%29.jpg?utm_source=en.wikipedia.org&utm_campaign=api&utm_content=thumbnail",
-   "pageUrl": "https://en.wikipedia.org/wiki/Samuel_Beckett"
+   "pageUrl": "https://en.wikipedia.org/wiki/Samuel_Beckett",
+   "details": "Samuel Barclay Beckett ( ; 13 April 1906 – 22 December 1989) was an Irish playwright, novelist, and poet. Written in both English and French, his literary and theatrical works feature bleak, impersonal, and tragicomic episodes of life, coupled with black comedy and literary nonsense. Beckett is widely regarded as one of the most influential and important writers of the 20th century, credited with transforming modern theatre. As a major figure of Irish literature, he is best known for his tragicomedy play Waiting for Godot (1953). For his foundational contribution to both literature and theatre, Beckett received the 1969 Nobel Prize in Literature, \"for his writing, which—in new forms for the novel and drama—in the destitution of modern man acquires its elevation.\"\nDuring his early career, Beckett worked as a literary critic and commentator, and in 1930 he took up a role as a lecturer in Dublin. He wrote his first novel Dream of Fair to Middling Women in 1932, which influenced many of his later works, but it was not published until after his death. Around this time, Beckett also began studying artistic expressions and art history, particularly of paintings displayed at the National Gallery of Ireland. He was a close friend of the Irish writer James Joyce, and cited him as a major inspiration for his works. As a resident of Paris for most of his adult life, Beckett wrote in both French and English, sometimes under the pseudonym Andrew Belis. His later literary works, especially his plays, became increasingly austere and minimalistic as his career progressed, involving more aesthetic and linguistic experimentation, with techniques of stream of consciousness, repetition and self-reference."
   },
   {
    "id": "art-074",
@@ -894,7 +966,8 @@
    "wikiTitle": "Sophocles",
    "difficulty": 2,
    "imageUrl": "https://upload.wikimedia.org/wikipedia/commons/1/19/Sophocles_pushkin.jpg?utm_source=en.wikipedia.org&utm_campaign=api&utm_content=thumbnail_unscaled",
-   "pageUrl": "https://en.wikipedia.org/wiki/Sophocles"
+   "pageUrl": "https://en.wikipedia.org/wiki/Sophocles",
+   "details": "Sophocles (; Ancient Greek: Σοφοκλῆς, pronounced [so.pʰo.klɛ̂ːs], Sophoklễs; c. 497/496 – winter 406/405 BC) was an ancient Greek tragedian, one of three from whom at least two plays have survived in full. His first plays were written later than, or contemporary with, those of Aeschylus and earlier than, or contemporary with, those of Euripides. Sophocles wrote more than 120 plays, but only seven have survived in a complete form: Ajax, Antigone, Women of Trachis, Oedipus Rex, Electra, Philoctetes, and Oedipus at Colonus. For almost 50 years, Sophocles was the most celebrated playwright in the dramatic competitions of the city-state of Athens, which took place during the religious festivals of the Lenaea and the Dionysia. He competed in 30 competitions, won 24, and was never judged lower than second place. Aeschylus won 13 competitions and was sometimes beaten by Sophocles; Euripides won four.\nThe most famous tragedies of Sophocles feature Oedipus and Antigone: they are generally known as the Theban plays, though each was part of a different tetralogy (the other members of which are now lost). Sophocles influenced the development of drama, most importantly by adding a third actor (attributed to Sophocles by Aristotle; to Aeschylus by Themistius), thereby reducing the importance of the chorus in the presentation of the plot. He also developed his characters to a greater extent than earlier playwrights."
   },
   {
    "id": "art-075",
@@ -906,7 +979,8 @@
    "wikiTitle": "Oscar Wilde",
    "difficulty": 1,
    "imageUrl": "https://upload.wikimedia.org/wikipedia/commons/thumb/a/a2/Oscar_Wilde_by_Napoleon_Sarony._Three-quarter-length_photograph%2C_seated_%28cropped%29.jpg/960px-Oscar_Wilde_by_Napoleon_Sarony._Three-quarter-length_photograph%2C_seated_%28cropped%29.jpg?utm_source=en.wikipedia.org&utm_campaign=api&utm_content=thumbnail",
-   "pageUrl": "https://en.wikipedia.org/wiki/Oscar_Wilde"
+   "pageUrl": "https://en.wikipedia.org/wiki/Oscar_Wilde",
+   "details": "Oscar Fingal O'Fflahertie Wills Wilde (16 October 1854 – 30 November 1900) was an Irish author, poet and playwright. After writing in different literary styles throughout the 1880s, he became one of the most popular and influential dramatists in London in the early 1890s. He was a key figure in the emerging Aestheticism movement of the late 19th century and is widely regarded as the greatest playwright of the Victorian era. Wilde is best known for his Gothic novel The Picture of Dorian Gray (1890), his epigrams, plays and bedtime stories for children, as well as his criminal conviction in 1895 for gross indecency and for practicing homosexual acts.\nWilde's parents were Anglo-Irish intellectuals in Dublin. In his youth, Wilde became conversant in French and German. At university, he read Greats; he demonstrated himself to be an exceptional classicist, first at Trinity College Dublin, then at Magdalen College, Oxford. He became associated with the emerging philosophy of aestheticism during this time, led by two of his tutors, Walter Pater and John Ruskin. After university, Wilde moved to London into fashionable cultural and social circles.\nWilde tried his hand at various literary activities: he wrote a play, published a book of poems, lectured in the United States and Canada on \"The English Renaissance\" in art and interior decoration, and then returned to London where he lectured on his American travels and wrote reviews for various periodicals."
   },
   {
    "id": "art-076",
@@ -918,7 +992,8 @@
    "wikiTitle": "Molière",
    "difficulty": 2,
    "imageUrl": "https://upload.wikimedia.org/wikipedia/commons/thumb/d/d1/Pierre_Mignard_-_Portrait_de_Jean-Baptiste_Poquelin_dit_Moli%C3%A8re_%281622-1673%29_-_Google_Art_Project_%28cropped%29.jpg/960px-Pierre_Mignard_-_Portrait_de_Jean-Baptiste_Poquelin_dit_Moli%C3%A8re_%281622-1673%29_-_Google_Art_Project_%28cropped%29.jpg?utm_source=en.wikipedia.org&utm_campaign=api&utm_content=thumbnail",
-   "pageUrl": "https://en.wikipedia.org/wiki/Moli%C3%A8re"
+   "pageUrl": "https://en.wikipedia.org/wiki/Moli%C3%A8re",
+   "details": "Jean-Baptiste Poquelin (French: [ʒɑ̃ batist pɔklɛ̃]; 15 January 1622 (baptised) – 17 February 1673), known by his stage name Molière (UK: , US: ; French: [mɔljɛʁ] ), was a French playwright, actor, and poet, widely regarded as one of the great writers in the French language and world literature. His extant works include comedies, farces, tragicomedies, comédie-ballets, and more. His plays have been translated into every major living language and are performed at the Comédie-Française more often than those of any other playwright today. His influence is such that the French language is often referred to as the \"language of Molière\".\nBorn into a prosperous family and having studied at the Collège de Clermont (now Lycée Louis-le-Grand), Molière was well suited to begin a life in the theatre. Thirteen years as an itinerant actor helped him polish his comedic abilities while he began writing, combining Commedia dell'arte elements with the more refined French comedy.\nThrough the patronage of aristocrats including Philippe I, Duke of Orléans—the brother of Louis XIV—Molière procured a command performance before the King at the Louvre. Performing a classic play by Pierre Corneille and a farce of his own, The Doctor in Love, Molière was granted the use of the grande salle of the Petit-Bourbon near the Louvre, a spacious room appointed for theatrical performances. Later, he was granted the use of the theatre in the Palais-Royal. In both locations, Molière found success among Parisians with plays such as The Affected Ladies, The School for Husbands, and The School for Wives."
   },
   {
    "id": "art-077",
@@ -930,7 +1005,8 @@
    "wikiTitle": "David (Michelangelo)",
    "difficulty": 1,
    "imageUrl": "https://upload.wikimedia.org/wikipedia/commons/thumb/b/bb/%27David%27_by_Michelangelo_Fir_JBU004.jpg/960px-%27David%27_by_Michelangelo_Fir_JBU004.jpg?utm_source=en.wikipedia.org&utm_campaign=api&utm_content=thumbnail",
-   "pageUrl": "https://en.wikipedia.org/wiki/David_(Michelangelo)"
+   "pageUrl": "https://en.wikipedia.org/wiki/David_(Michelangelo)",
+   "details": "David is  a masterpiece of Italian Renaissance sculpture in marble created from 1501 to 1504 by Michelangelo. With a height of 5.17 metres (17 ft 0 in), the David was not only the first colossal marble statue made in the High Renaissance, but also the first since classical antiquity, setting a precedent for the 16th century and beyond. David was originally commissioned as one of a series of statues of twelve prophets to be positioned along the roofline of the east end of Florence Cathedral, but was instead placed in the public square in front of the Piazza della Signoria, the seat of civic government in Florence, where it was unveiled on 8 September 1504. In 1873, the statue was moved to the Galleria dell'Accademia, Florence. In 1910 a replica was installed at the original site on the public square.\nThe biblical figure David was a favoured subject in the art of Florence. Because of the nature of the figure it represented, the statue soon came to symbolize the defence of civil liberties embodied in the 1494 constitution of the Republic of Florence, an independent city-state threatened on all sides by more powerful rival states and by the political aspirations of the Medici family.\n\n\n== History ==\n\n\n=== Commission ===\nThe history of the statue of David begins before Michelangelo's work on it from 1501 to 1504. The commission was made during a decisive period in the history of the Florentine republic established before the expulsion of the Medici. The advantages of democratic government never materialized, and internal circumstances grew worse as dangers from without increased."
   },
   {
    "id": "art-078",
@@ -942,7 +1018,8 @@
    "wikiTitle": "The Thinker",
    "difficulty": 1,
    "imageUrl": "https://upload.wikimedia.org/wikipedia/commons/thumb/a/a4/Le_Penseur_by_Rodin_%28Kunsthalle_Bielefeld%29_2014-04-10.JPG/960px-Le_Penseur_by_Rodin_%28Kunsthalle_Bielefeld%29_2014-04-10.JPG?utm_source=en.wikipedia.org&utm_campaign=api&utm_content=thumbnail",
-   "pageUrl": "https://en.wikipedia.org/wiki/The_Thinker"
+   "pageUrl": "https://en.wikipedia.org/wiki/The_Thinker",
+   "details": "The Thinker (French: Le Penseur), by Auguste Rodin, is a bronze sculpture depicting a nude male figure of heroic size, seated on a large rock, leaning forward, his right elbow placed upon his left thigh, with the back of his right hand supporting his chin in a posture evocative of deep thought and contemplation. This universally recognized expression of \"deep thought\" has made the sculpture one of the most widely known artworks in the world. It has become the iconic symbol of thinking; images of the sculpture in profile are often used to indicate philosophy and other practices of contemplation or introspection.\nRodin conceived the figure as part of his work The Gates of Hell commissioned in 1880, but the first of the familiar monumental bronze castings was made in 1904, and is now exhibited at the Musée Rodin, in Paris.\nThere are 27 other known full-sized bronze castings of the figure, approximately 185 centimetres (73 in) tall, though not all were made under Rodin's supervision. Various other versions, several in plaster, as well as studies and dozens of posthumous castings, exist in a range of sizes.\n\n\n== Origin ==\n\nThe Thinker was initially named The Poet (French: Le Poète), and was part of a large commission begun in 1880 for a doorway surround called The Gates of Hell. Rodin based this on the early 14th century poem the Divine Comedy by Dante Alighieri, and most of the figures in the work represented the main characters in the poem with The Thinker at the center of the composition over the doorway and somewhat larger than most of the other figures. Some critics believe that it was originally intended to depict Dante at the gates of Hell, pondering his great poem.\nOther critics reject that theory, pointing out that the figure is naked while Dante is fully clothed throughout his poem, and that the sculpture's physique does not correspond to Dante's effete figure."
   },
   {
    "id": "art-079",
@@ -954,7 +1031,8 @@
    "wikiTitle": "Venus de Milo",
    "difficulty": 2,
    "imageUrl": "https://upload.wikimedia.org/wikipedia/commons/thumb/c/c2/Front_views_of_the_Venus_de_Milo.jpg/960px-Front_views_of_the_Venus_de_Milo.jpg?utm_source=en.wikipedia.org&utm_campaign=api&utm_content=thumbnail",
-   "pageUrl": "https://en.wikipedia.org/wiki/Venus_de_Milo"
+   "pageUrl": "https://en.wikipedia.org/wiki/Venus_de_Milo",
+   "details": "The Venus de Milo or Aphrodite of Melos is an ancient Greek marble sculpture that was created during the Hellenistic period.  Its exact dating is uncertain, but the modern consensus places it in the 2nd century BC, perhaps between 160 and 110 BC.  It was discovered in 1820 on the island of Milos, Greece, and has been displayed at the Louvre Museum since 1821. Since the statue's discovery, it has become one of the most famous works of ancient Greek sculpture in the world.\nThe Venus de Milo is believed to depict Aphrodite, the Greek goddess of love, whose Roman counterpart was Venus.  Made of Parian marble, the statue is larger than life size, standing over 2 metres (6 ft 7 in) high. The statue is missing both arms. The original position of these missing arms is uncertain. The sculpture was originally identified as depicting Aphrodite holding the apple of discord as a marble hand holding an apple was found alongside it; recent scientific analysis supports the identification of this hand as part of the sculpture. On the basis of a now-lost inscription found near the sculpture, it has been attributed to Alexandros from Antioch on the Maeander, though the name on the inscription is uncertain and its connection to the Venus is disputed.\nThe Venus de Milo rapidly became a cornerstone of the Louvre's antiquities collection in the aftermath of the Napoleonic Wars, and its fame spread through distribution in photographs and three-dimensional copies."
   },
   {
    "id": "art-080",
@@ -966,7 +1044,8 @@
    "wikiTitle": "Winged Victory of Samothrace",
    "difficulty": 3,
    "imageUrl": "https://upload.wikimedia.org/wikipedia/commons/thumb/b/bf/Victoire_de_Samothrace_-_Musee_du_Louvre_-_20190812.jpg/960px-Victoire_de_Samothrace_-_Musee_du_Louvre_-_20190812.jpg?utm_source=en.wikipedia.org&utm_campaign=api&utm_content=thumbnail",
-   "pageUrl": "https://en.wikipedia.org/wiki/Winged_Victory_of_Samothrace"
+   "pageUrl": "https://en.wikipedia.org/wiki/Winged_Victory_of_Samothrace",
+   "details": "The Winged Victory of Samothrace, or the Nike of Samothrace, is a votive monument originally discovered on the island of Samothrace in the northeastern Aegean Sea. It is a masterpiece of Greek sculpture from the Hellenistic era, dating from the beginning of the 2nd century BC (190 BC).  It is composed of a statue representing the goddess Nike (Victory), whose head and arms are missing, and a base in the shape of a ship's bow.\nThe total height of the monument is 5.57 metres (18 ft 3 in) including the socle; the statue alone measures 2.75 metres (9 ft 0 in). The sculpture is one of a small number of major Hellenistic statues surviving in the original, rather than Roman copies.\nWinged Victory has been exhibited at the Louvre in Paris, at the top of the main staircase, since 1884. Greece is seeking the return of the sculpture.\n\n\n== Discovery and restorations ==\n\n\n=== In the 19th century ===\n\nIn 1863, Charles Champoiseau (1830–1909), acting chief of the Consulate of France in Adrianopolis (now Edirne in Turkey), undertook from March 6 to May 7 the exploration of the ruins of the sanctuary of the Great Gods on the island of Samothrace. On April 13, 1863, he discovered part of the bust and the body of a large female statue in white marble accompanied by numerous fragments of drapery and feathers. He recognised this as the goddess Nike, Victory, traditionally represented in Greek antiquity as a winged woman."
   },
   {
    "id": "art-081",
@@ -978,7 +1057,8 @@
    "wikiTitle": "Christ the Redeemer (statue)",
    "difficulty": 1,
    "imageUrl": "https://upload.wikimedia.org/wikipedia/commons/thumb/4/4f/Christ_the_Redeemer_-_Cristo_Redentor.jpg/960px-Christ_the_Redeemer_-_Cristo_Redentor.jpg?utm_source=en.wikipedia.org&utm_campaign=api&utm_content=thumbnail",
-   "pageUrl": "https://en.wikipedia.org/wiki/Christ_the_Redeemer_(statue)"
+   "pageUrl": "https://en.wikipedia.org/wiki/Christ_the_Redeemer_(statue)",
+   "details": "Christ the Redeemer (Portuguese: Cristo Redentor, standard Brazilian Portuguese: [ˈkɾistu ʁedẽˈtoʁ]) is an Art Deco statue of Jesus in Rio de Janeiro, Brazil, created by French-Polish sculptor Paul Landowski and built by Brazilian engineer Heitor da Silva Costa, in collaboration with French engineer Albert Caquot and Romanian sculptor Gheorghe Leonida who sculpted the face. Constructed between 1922 and 1931, the statue is 30 metres (98 ft) high, excluding its 8-metre (26 ft) pedestal, and faces east. The arms stretch 28 metres (92 ft) wide. It is made of reinforced concrete and soapstone. Christ the Redeemer differs considerably from its original design, as the initial plan was a large Christ with a globe in one hand and a cross in the other. Although the project organizers originally accepted the design, it later changed to the statue of today, with the arms spread out wide.\nThe statue weighs 635 metric tons (625 long, 700 short tons), and is located at the peak of the 700-metre (2,300 ft) Corcovado mountain in the Tijuca National Park overlooking the city of Rio de Janeiro. This statue is the largest Art Deco–style sculpture in the world. A symbol of Christianity around the world, the statue has also become a cultural icon of both Rio de Janeiro and Brazil and was voted one of the New 7 Wonders of the World.\n\n\n== History ==\n\nVincentian priest Pedro Maria Boss first suggested placing a Christian monument on Mount Corcovado in the mid-1850s to honor Princess Isabel, regent of Brazil and the daughter of Emperor Pedro II, but the project was not approved."
   },
   {
    "id": "art-082",
@@ -990,7 +1070,8 @@
    "wikiTitle": "Frank Lloyd Wright",
    "difficulty": 2,
    "imageUrl": "https://upload.wikimedia.org/wikipedia/commons/thumb/3/30/Frank_Lloyd_Wright_portrait.jpg/960px-Frank_Lloyd_Wright_portrait.jpg?utm_source=en.wikipedia.org&utm_campaign=api&utm_content=thumbnail",
-   "pageUrl": "https://en.wikipedia.org/wiki/Frank_Lloyd_Wright"
+   "pageUrl": "https://en.wikipedia.org/wiki/Frank_Lloyd_Wright",
+   "details": "Frank Lloyd Wright Sr. (June 8, 1867 – April 9, 1959) was an American architect, designer, writer, and educator. He designed more than 1,000 structures over a creative period of 70 years. Wright played a key role in the architectural movements of the twentieth century, influencing architects worldwide through his works and mentoring hundreds of apprentices in his Taliesin Fellowship. Wright believed in designing in harmony with humanity and the environment, a philosophy he called organic architecture. This philosophy was exemplified in Fallingwater (1935), which has been called \"the best all-time work of American architecture\".\nWright was a pioneer of what came to be called the Prairie School movement of architecture and also developed the concept of the Usonian home within Broadacre City, his vision for urban planning in the United States. Wright also designed original and innovative offices, churches, schools, skyscrapers, hotels, museums, and other commercial projects. Wright-designed interior elements (including leaded glass windows, floors, furniture and even tableware) were integrated into these structures. He wrote several books and numerous articles and was a popular lecturer in the United States and in Europe."
   },
   {
    "id": "art-083",
@@ -1003,7 +1084,8 @@
    "wikiTitle": "Antoni Gaudí",
    "difficulty": 2,
    "imageUrl": "https://upload.wikimedia.org/wikipedia/commons/thumb/7/72/Antoni_Gaudi_1878.jpg/960px-Antoni_Gaudi_1878.jpg?utm_source=en.wikipedia.org&utm_campaign=api&utm_content=thumbnail",
-   "pageUrl": "https://en.wikipedia.org/wiki/Antoni_Gaud%C3%AD"
+   "pageUrl": "https://en.wikipedia.org/wiki/Antoni_Gaud%C3%AD",
+   "details": "Antoni Gaudí i Cornet ( gow-DEE,  GOW-dee; Catalan: [ənˈtɔni‿ɣəwˈði]; 25 June 1852 – 10 June 1926) was a Catalan architect and designer, widely known as the greatest exponent of Catalan Modernisme. Gaudí's works have a sui generis style, with most located in Barcelona, including his magnum opus, the Sagrada Família church.\nGaudí's work was influenced by his passions in life: architecture, nature, and religion. He considered every detail of his creations and combined crafts such as ceramics, stained glass, wrought ironwork forging, and carpentry. He introduced new techniques in the treatment of materials, such as trencadís which used waste ceramic pieces.\nInfluenced by neo-Gothic art and Oriental techniques, Gaudí became part of the Modernista movement, which peaked in the late 19th and early 20th centuries. His work eventually transcended mainstream Modernisme, developing into a unique style inspired by natural forms. Gaudí rarely drew detailed plans, preferring to create three-dimensional scale models and mold the details as he conceived them.\nGaudí's work enjoys global admiration and ongoing study. His masterpiece, the still-incomplete Sagrada Família, is the most-visited monument in Spain."
   },
   {
    "id": "art-084",
@@ -1015,7 +1097,8 @@
    "wikiTitle": "Le Corbusier",
    "difficulty": 3,
    "imageUrl": "https://upload.wikimedia.org/wikipedia/commons/thumb/c/c8/Le_Corbusier_%281964%29.jpg/960px-Le_Corbusier_%281964%29.jpg?utm_source=en.wikipedia.org&utm_campaign=api&utm_content=thumbnail",
-   "pageUrl": "https://en.wikipedia.org/wiki/Le_Corbusier"
+   "pageUrl": "https://en.wikipedia.org/wiki/Le_Corbusier",
+   "details": "Charles-Édouard Jeanneret (6 October 1887 – 27 August 1965), known as Le Corbusier, was a French-Swiss architectural designer, painter, urban planner and writer who was one of the pioneers of what is now regarded as modern architecture. He was born in Switzerland to French-speaking Swiss parents and acquired French nationality in 1930. He designed buildings in Europe, Japan, India, and the Americas during a five-decade career. He considered that \"the roots of modern architecture are to be found in Viollet-le-Duc.\"\nDedicated to providing better living conditions for the residents of crowded cities, Le Corbusier was influential in urban planning, and was a founding member of the Congrès International d'Architecture Moderne (CIAM). Le Corbusier prepared the master plan for the city of Chandigarh in India, and contributed specific designs for several buildings there, especially the government buildings. In 2016, seventeen projects by Le Corbusier in seven countries were inscribed in the list of UNESCO World Heritage Sites as The Architectural Work of Le Corbusier, an Outstanding Contribution to the Modern Movement.\nLe Corbusier remains a controversial figure. Some of his urban planning ideas have been criticized for their indifference to pre-existing cultural sites, societal expression and equality, and his alleged ties with fascism, antisemitism, eugenics, and the dictator Benito Mussolini have resulted in some continuing contention. Le Corbusier also designed well-known furniture such as the LC4 chaise longue and the LC1 chair, both made of leather with metal framing.\n\n\n== Early life (1887–1904) ==\n\nCharles-Édouard Jeanneret was born on 6 October 1887 in La Chaux-de-Fonds, a city in the Neuchâtel canton in the Romandie region of Switzerland."
   },
   {
    "id": "art-085",
@@ -1027,7 +1110,8 @@
    "wikiTitle": "Zaha Hadid",
    "difficulty": 2,
    "imageUrl": "https://upload.wikimedia.org/wikipedia/commons/thumb/7/73/Zaha_Hadid_in_Heydar_Aliyev_Cultural_center_in_Baku_nov_2013.jpg/960px-Zaha_Hadid_in_Heydar_Aliyev_Cultural_center_in_Baku_nov_2013.jpg?utm_source=en.wikipedia.org&utm_campaign=api&utm_content=thumbnail",
-   "pageUrl": "https://en.wikipedia.org/wiki/Zaha_Hadid"
+   "pageUrl": "https://en.wikipedia.org/wiki/Zaha_Hadid",
+   "details": "Dame Zaha Mohammad Hadid (Arabic: زَها حديد, romanized: Zahā Ḥadīd; 31 October 1950 – 31 March 2016) was an Iraqi and British architect, artist, and designer. She is recognised as a key figure in the architecture of the late-20th and early-21st centuries. Born in Baghdad, Iraq, Hadid studied mathematics as an undergraduate and later enrolled at the Architectural Association School of Architecture in 1972. In search of an alternative to traditional architectural drawing, and influenced by Suprematism and the Russian avant-garde, Hadid adopted painting as a design tool and abstraction as a method to \"reinvestigate the aborted and untested experiments of Modernism [...] to unveil new fields of building\".\nShe was described by The Guardian as the \"Queen of Curves\", who \"liberated architectural geometry, giving it a whole new expressive identity\". Her major works include the London Aquatics Centre for the 2012 Olympics, the Broad Art Museum, Rome's MAXXI Museum, and the Guangzhou Opera House. Some of her awards have been presented posthumously, including the statuette for the 2017 Brit Awards. She was also recognized by the 2013 Forbes List as one of the \"World's Most Powerful Women\". Several of her buildings were still under construction at the time of her death, including the Daxing International Airport in Beijing and the Al Wakrah Stadium (now Al Janoub) in Qatar, a venue for the 2022 FIFA World Cup.\nHadid was the first woman to receive the Pritzker Architecture Prize, in 2004."
   },
   {
    "id": "art-086",
@@ -1040,7 +1124,8 @@
    "wikiTitle": "Gustave Eiffel",
    "difficulty": 2,
    "imageUrl": "https://upload.wikimedia.org/wikipedia/commons/thumb/5/5e/Gustave_Eiffel_1888_Nadar2.jpg/960px-Gustave_Eiffel_1888_Nadar2.jpg?utm_source=en.wikipedia.org&utm_campaign=api&utm_content=thumbnail",
-   "pageUrl": "https://en.wikipedia.org/wiki/Gustave_Eiffel"
+   "pageUrl": "https://en.wikipedia.org/wiki/Gustave_Eiffel",
+   "details": "Alexandre Gustave Eiffel (  EYE-fəl, French: [alɛksɑ̃dʁ ɡystav ɛfɛl]; né Bonickhausen dit Eiffel; 15 December 1832 – 27 December 1923) was a French civil engineer. A graduate of École Centrale des Arts et Métiers, he made his name with various bridges for the French railway network, most famously the Garabit Viaduct. He is best known for the Eiffel Tower, designed by his company and built for the 1889 Universal Exposition in Paris, and his contribution to building the Statue of Liberty in New York. After his retirement from engineering, Eiffel focused on research into meteorology and aerodynamics, making significant contributions in both fields.\n\n\n== Early life ==\nAlexandre Gustave Eiffel was born in France, in the Côte-d'Or, the first child of Catherine-Mélanie (née Moneuse) and Alexandre Bonickhausen dit Eiffel. He was a descendant of Jean-René Bönickhausen, who had emigrated from the German town of Marmagen and settled in Paris at the beginning of the 18th century. The family adopted the name Eiffel as a reference to the Eifel mountains in the region from which they had come. Although the family always used the name Eiffel, Gustave's name was registered at birth as Bonickhausen dit Eiffel,  and was not formally changed to Eiffel until 1880.\nAt the time of Gustave's birth, his father, an ex-soldier, was working as an administrator for the French Army; but shortly after his birth his mother expanded a charcoal business she had inherited from her parents to include a coal-distribution business, and soon afterwards his father gave up his job to assist her. Due to his mother's business commitments, Gustave spent his childhood living with his grandmother, but nevertheless remained close to his mother, who was to remain an influential figure until her death in 1878."
   },
   {
    "id": "art-087",
@@ -1052,7 +1137,8 @@
    "wikiTitle": "Impressionism",
    "difficulty": 1,
    "imageUrl": "https://upload.wikimedia.org/wikipedia/commons/thumb/5/54/Claude_Monet%2C_Impression%2C_soleil_levant.jpg/960px-Claude_Monet%2C_Impression%2C_soleil_levant.jpg?utm_source=en.wikipedia.org&utm_campaign=api&utm_content=thumbnail",
-   "pageUrl": "https://en.wikipedia.org/wiki/Impressionism"
+   "pageUrl": "https://en.wikipedia.org/wiki/Impressionism",
+   "details": "Impressionism was a 19th-century art movement characterised by visible brush strokes, open composition, emphasis on accurate depiction of light in its changing qualities (often accentuating the effects of the passage of time), ordinary subject matter, unusual visual angles, and inclusion of movement as a crucial element of human perception and experience. Impressionism originated with a group of Paris-based artists whose independent exhibitions brought them to prominence during the 1870s and 1880s.\nThe Impressionists faced harsh opposition from the conventional art community in France. The name of the style derives from the title of a Claude Monet work, Impression, Sunrise, which provoked the critic Louis Leroy to coin the term in a satirical 1874 review of the First Impressionist Exhibition published in the Parisian newspaper Le Charivari. The development of Impressionism in the visual arts was soon followed by analogous styles in other media that became known as Impressionist music and Impressionist literature.\n\n\n== Overview ==\n\nRadicals in their time, the early Impressionists violated the rules of academic painting. They constructed their pictures from freely brushed colours that took precedence over lines and contours, following the example of painters such as Eugène Delacroix and J. M. W. Turner. They also painted realistic scenes of everyday life in natural settings, often outdoors, attempting to capture a moment as experienced.\nPreviously, paintings were accomplished in studio, whether landscape art, still life or portrait, with an emphasis on verisimilitude. The Impressionists found that they could capture the momentary and transient effects of sunlight by painting outdoors or en plein air."
   },
   {
    "id": "art-088",
@@ -1064,7 +1150,8 @@
    "wikiTitle": "Cubism",
    "difficulty": 1,
    "imageUrl": "https://upload.wikimedia.org/wikipedia/en/thumb/1/1c/Pablo_Picasso%2C_1910%2C_Girl_with_a_Mandolin_%28Fanny_Tellier%29%2C_oil_on_canvas%2C_100.3_x_73.6_cm%2C_Museum_of_Modern_Art_New_York..jpg/960px-Pablo_Picasso%2C_1910%2C_Girl_with_a_Mandolin_%28Fanny_Tellier%29%2C_oil_on_canvas%2C_100.3_x_73.6_cm%2C_Museum_of_Modern_Art_New_York..jpg?utm_source=en.wikipedia.org&utm_campaign=api&utm_content=thumbnail",
-   "pageUrl": "https://en.wikipedia.org/wiki/Cubism"
+   "pageUrl": "https://en.wikipedia.org/wiki/Cubism",
+   "details": "Cubism is an early-20th-century avant-garde art movement which began in Paris. It revolutionized painting and the visual arts, and sparked artistic innovations in music, ballet, literature, and architecture.\nCubist subjects are analyzed, broken up, and reassembled in an abstract form. Instead of depicting objects from a single perspective, the artist depicts the subject from multiple perspectives to represent the subject in a greater context. Cubism has been considered the most influential art movement of the 20th century. The term cubism is broadly associated with a variety of artworks produced in Paris (Montmartre and Montparnasse) or near Paris (Puteaux) during the 1910s and throughout the 1920s.\nThe movement was pioneered in partnership by Pablo Picasso and Georges Braque, and joined by Jean Metzinger, Albert Gleizes, Robert Delaunay, Henri Le Fauconnier, Juan Gris, and Fernand Léger. One primary influence that led to Cubism was the representation of three-dimensional form in the late works of Paul Cézanne. A retrospective of Cézanne's paintings was held at the Salon d'Automne of 1904, current works were displayed at the 1905 and 1906 Salon d'Automne, followed by two commemorative retrospectives after his death in 1907.\nIn France, offshoots of Cubism developed, including Orphism, abstract art and later Purism."
   },
   {
    "id": "art-089",
@@ -1075,7 +1162,9 @@
    "answerType": "art-movement",
    "wikiTitle": "Surrealism",
    "difficulty": 1,
-   "pageUrl": "https://en.wikipedia.org/wiki/Surrealism"
+   "imageUrl": "https://upload.wikimedia.org/wikipedia/en/b/b9/MagrittePipe.jpg?utm_source=en.wikipedia.org&utm_campaign=api&utm_content=thumbnail_unscaled",
+   "pageUrl": "https://en.wikipedia.org/wiki/Surrealism",
+   "details": "Surrealism is an art and cultural movement that developed in Europe in the aftermath of World War I in which artists aimed to allow the unconscious mind to express itself, often resulting in the depiction of illogical or dreamlike scenes and ideas. Its intention was, according to leader André Breton, to \"resolve the previously contradictory conditions of dream and reality into an absolute reality, a super-reality\", or surreality. It produced works of painting, writing, photography, theatre, filmmaking, music, comedy and other media as well.\nWorks of Surrealism feature the element of surprise, unexpected juxtapositions and non sequitur. However, many Surrealist artists and writers regard their work as an expression of the philosophical movement first and foremost (for instance, of the \"pure psychic automatism\" Breton speaks of in the first Surrealist Manifesto), with the works themselves being secondary, i.e., artifacts of surrealist experimentation. Leader Breton was explicit in his assertion that Surrealism was, above all, a revolutionary movement. At the time, the movement was associated with political causes such as communism and anarchism. It was influenced by the Dada movement of the 1910s.\nThe term \"Surrealism\" originated with Guillaume Apollinaire in 1917. However, the Surrealist movement was not officially established until after October 1924, when the Surrealist Manifesto published by Breton succeeded in claiming the term for his group over a rival faction led by Yvan Goll, who had published his own surrealist manifesto two weeks prior."
   },
   {
    "id": "art-090",
@@ -1087,7 +1176,8 @@
    "wikiTitle": "Renaissance",
    "difficulty": 1,
    "imageUrl": "https://upload.wikimedia.org/wikipedia/commons/thumb/2/22/Da_Vinci_Vitruve_Luc_Viatour.jpg/960px-Da_Vinci_Vitruve_Luc_Viatour.jpg?utm_source=en.wikipedia.org&utm_campaign=api&utm_content=thumbnail",
-   "pageUrl": "https://en.wikipedia.org/wiki/Renaissance"
+   "pageUrl": "https://en.wikipedia.org/wiki/Renaissance",
+   "details": "The Renaissance (UK:  rin-AY-sənss, US:   REN-ə-sahnss) was a European period of history and cultural movement taking place at the end of the Late Middle Ages and the beginning of the early modern era. It is variously defined as covering the 15th and 16th centuries or, more broadly, as lasting from the 14th century to the 17th. It was characterized by the European rediscovery and revival of the literary, philosophical, and artistic achievements of classical antiquity. Associated with great change in art, architecture, politics, literature, exploration and technology, the Renaissance was first centered in the Republic of Florence, then spread to the rest of Italy and later throughout Europe.\nThe Renaissance's intellectual basis was founded in its version of humanism, derived from the concept of Roman humanitas and the rediscovery of classical Greek philosophy, such as that of Protagoras, who said that \"man is the measure of all things\". Although the invention of metal movable type sped the dissemination of ideas from the later 15th century, the changes of the Renaissance were not uniform across Europe: the first traces appear in Italy as early as the late 13th century, in particular with the writings of Dante and the paintings of Giotto.\nAs a cultural movement, the Renaissance encompassed innovative flowering of literary Latin and an explosion of vernacular literatures, beginning with the 14th-century resurgence of learning based on classical sources, which contemporaries credited to Petrarch; the development of linear perspective and other techniques of rendering a more natural reality in painting; and gradual but widespread educational reform. It saw myriad artistic developments and contributions from such polymaths as Leonardo da Vinci and Michelangelo, who inspired the term \"Renaissance man\". In politics, the Renaissance contributed to the development of the customs and conventions of diplomacy. The period also saw revolutions in printing and navigation, as well as the introduction of modern banking and the field of accounting."
   },
   {
    "id": "art-091",
@@ -1099,7 +1189,8 @@
    "wikiTitle": "Baroque",
    "difficulty": 2,
    "imageUrl": "https://upload.wikimedia.org/wikipedia/commons/thumb/6/6c/WLA_metmuseum_Venus_and_Adonis_by_Peter_Paul_Rubens.jpg/960px-WLA_metmuseum_Venus_and_Adonis_by_Peter_Paul_Rubens.jpg?utm_source=en.wikipedia.org&utm_campaign=api&utm_content=thumbnail",
-   "pageUrl": "https://en.wikipedia.org/wiki/Baroque"
+   "pageUrl": "https://en.wikipedia.org/wiki/Baroque",
+   "details": "The Baroque (UK:  bə-ROK, US:  bə-ROHK, French: [baʁɔk]) is a Western style of architecture, music, dance, painting, sculpture, poetry, and other arts that flourished from the early 1600s until the 1750s. It followed Renaissance art and Mannerism and preceded the Rococo (in the past often referred to as \"late Baroque\") and Neoclassical styles. It was encouraged by the Catholic Church as a means to counter the simplicity and austerity of Protestant architecture, art, and music, though Lutheran Baroque art developed in parts of Europe as well.\nThe Baroque style used contrast, movement, exuberant detail, deep color, grandeur, and surprise to achieve a sense of awe. The style began at the start of the 17th century in Rome, then spread rapidly to the rest of Italy, France, Spain, and Portugal, then to Austria, southern Germany, Poland and Russia. By the 1730s, it had evolved into an even more flamboyant style, called rocaille or Rococo, which appeared in France and Central Europe until the mid to late 18th century. In the territories of the Spanish and Portuguese Empires including the Iberian Peninsula it continued, together with new styles, until the first decade of the 19th century.\nIn the decorative arts, the style employs plentiful and intricate ornamentation. The departure from Renaissance classicism has its own ways in each country, but a general feature is that everywhere the starting point is the ornamental elements introduced by the Renaissance. The classical repertoire is crowded, dense, overlapping, loaded, in order to provoke shock effects."
   },
   {
    "id": "art-092",
@@ -1111,8 +1202,9 @@
    "wikiTitle": "Expressionism",
    "difficulty": 2,
    "imageUrl": "https://upload.wikimedia.org/wikipedia/commons/thumb/c/c5/Edvard_Munch%2C_1893%2C_The_Scream%2C_oil%2C_tempera_and_pastel_on_cardboard%2C_91_x_73_cm%2C_National_Gallery_of_Norway.jpg/960px-Edvard_Munch%2C_1893%2C_The_Scream%2C_oil%2C_tempera_and_pastel_on_cardboard%2C_91_x_73_cm%2C_National_Gallery_of_Norway.jpg?utm_source=en.wikipedia.org&utm_campaign=api&utm_content=thumbnail",
-   "pageUrl": "https://en.wikipedia.org/wiki/Expressionism"
+   "pageUrl": "https://en.wikipedia.org/wiki/Expressionism",
+   "details": "Expressionism is a modernist movement, initially in poetry and painting, originating in Northern Europe around the beginning of the 20th century. Its typical trait is to present the world solely from a subjective perspective, distorting it radically for emotional effect in order to evoke moods or ideas. Expressionist artists have sought to express the meaning of emotional experience rather than physical reality.\nExpressionism developed as an avant-garde style before the First World War. It remained popular during the Weimar Republic, particularly in Berlin. The style extended to a wide range of the arts, including expressionist architecture, painting, literature, theatre, dance, film and music. Paris became a gathering place for a group of Expressionist artists, many of Jewish origin, dubbed the School of Paris. After World War II, figurative expressionism influenced artists and styles around the world.\nThe term is sometimes suggestive of angst. In a historical sense, much older painters such as Matthias Grünewald and El Greco are sometimes termed expressionist, though the term is applied mainly to 20th-century works."
   }
  ],
- "version": "7cbe82cfc27a"
+ "version": "4422f5088ff1"
 }
