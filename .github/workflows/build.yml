@@ -71,11 +71,11 @@ jobs:
       # A rolling public release so the APK installs from one stable link on a phone,
       # with no GitHub login and no artifact-zip dance.
       - name: Publish rolling release
-        if: github.event_name == 'push' && github.ref == 'refs/heads/main'
+        if: github.event_name != 'pull_request' && github.ref == 'refs/heads/main'
         run: |
           cp app/build/outputs/apk/debug/app-debug.apk smart.apk
       - uses: softprops/action-gh-release@v2
-        if: github.event_name == 'push' && github.ref == 'refs/heads/main'
+        if: github.event_name != 'pull_request' && github.ref == 'refs/heads/main'
         with:
           tag_name: latest
           name: Smart (latest build)
