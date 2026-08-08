@@ -1,0 +1,712 @@
+{
+  "category": "sports",
+  "facts": [
+    {
+      "id": "spo-001",
+      "title": "The Greatest",
+      "statement": "Muhammad Ali won the world heavyweight title three times, refused the Vietnam draft, and was stripped of his title for over three years at his peak.",
+      "question": "Which boxer called himself 'The Greatest' and won the heavyweight title three times?",
+      "answer": "Muhammad Ali",
+      "answerType": "athlete",
+      "wikiTitle": "Muhammad Ali",
+      "difficulty": 1
+    },
+    {
+      "id": "spo-002",
+      "title": "Three World Cups",
+      "statement": "Pelé is the only player to win three FIFA World Cups, in 1958, 1962 and 1970, the first at just seventeen.",
+      "question": "Who is the only footballer to have won three World Cups?",
+      "answer": "Pelé",
+      "answerType": "athlete",
+      "wikiTitle": "Pelé",
+      "difficulty": 1
+    },
+    {
+      "id": "spo-003",
+      "title": "Six rings in Chicago",
+      "statement": "Michael Jordan won six NBA championships with the Chicago Bulls and was named Finals MVP all six times.",
+      "question": "Which basketball player won six NBA titles with the Chicago Bulls?",
+      "answer": "Michael Jordan",
+      "answerType": "athlete",
+      "wikiTitle": "Michael Jordan",
+      "difficulty": 1
+    },
+    {
+      "id": "spo-004",
+      "title": "The fastest man",
+      "statement": "Usain Bolt holds the 100 m world record at 9.58 seconds, set in Berlin in 2009, and won eight Olympic golds.",
+      "question": "Who holds the men's 100 metres world record of 9.58 seconds?",
+      "answer": "Usain Bolt",
+      "answerType": "athlete",
+      "wikiTitle": "Usain Bolt",
+      "difficulty": 1
+    },
+    {
+      "id": "spo-005",
+      "title": "23 Grand Slam singles titles",
+      "statement": "Serena Williams won 23 Grand Slam singles titles in the Open Era, including the 2017 Australian Open while pregnant.",
+      "question": "Which tennis player won 23 Grand Slam singles titles in the Open Era?",
+      "answer": "Serena Williams",
+      "answerType": "athlete",
+      "wikiTitle": "Serena Williams",
+      "difficulty": 1
+    },
+    {
+      "id": "spo-006",
+      "title": "The most decorated Olympian",
+      "statement": "Michael Phelps won 28 Olympic medals, 23 of them gold — more than any other athlete in history.",
+      "question": "Which swimmer is the most decorated Olympian of all time?",
+      "answer": "Michael Phelps",
+      "answerType": "athlete",
+      "wikiTitle": "Michael Phelps",
+      "difficulty": 1
+    },
+    {
+      "id": "spo-007",
+      "title": "The Hand of God",
+      "statement": "Diego Maradona scored twice against England in the 1986 World Cup quarter-final: once illegally with his hand, and minutes later with a run past five defenders.",
+      "question": "Which footballer scored the 'Hand of God' goal in 1986?",
+      "answer": "Diego Maradona",
+      "answerType": "athlete",
+      "hook": "The same four minutes produced the most notorious and the most admired goal in World Cup history.",
+      "wikiTitle": "Diego Maradona",
+      "difficulty": 1
+    },
+    {
+      "id": "spo-008",
+      "title": "Eight Wimbledon titles",
+      "statement": "Roger Federer won a record eight Wimbledon men's singles titles and 20 Grand Slams in total.",
+      "question": "Which player has won the most Wimbledon men's singles titles?",
+      "answer": "Roger Federer",
+      "answerType": "athlete",
+      "wikiTitle": "Roger Federer",
+      "difficulty": 2
+    },
+    {
+      "id": "spo-009",
+      "title": "The gymnast with her own moves",
+      "statement": "Simone Biles has five skills named after her in the Code of Points, more than any other gymnast.",
+      "question": "Which gymnast has five different skills named after her?",
+      "answer": "Simone Biles",
+      "answerType": "athlete",
+      "wikiTitle": "Simone Biles",
+      "difficulty": 2
+    },
+    {
+      "id": "spo-010",
+      "title": "Four golds in Berlin",
+      "statement": "Jesse Owens won four gold medals at the 1936 Berlin Olympics, undermining Nazi propaganda about racial superiority in front of Hitler.",
+      "question": "Which athlete won four golds at the 1936 Berlin Olympics?",
+      "answer": "Jesse Owens",
+      "answerType": "athlete",
+      "wikiTitle": "Jesse Owens",
+      "difficulty": 2
+    },
+    {
+      "id": "spo-011",
+      "title": "The perfect 10",
+      "statement": "Nadia Comăneci scored the first perfect 10 in Olympic gymnastics in 1976 — the scoreboard could only display three digits, so it read 1.00.",
+      "question": "Which gymnast scored the first perfect 10 in Olympic history?",
+      "answer": "Nadia Comăneci",
+      "answerType": "athlete",
+      "hook": "The scoreboard literally could not show the score.",
+      "wikiTitle": "Nadia Comăneci",
+      "difficulty": 2
+    },
+    {
+      "id": "spo-012",
+      "title": "The Great One",
+      "statement": "Wayne Gretzky holds more NHL records than any player; his assists alone would make him the league's all-time leading scorer.",
+      "question": "Which ice hockey player is nicknamed 'The Great One'?",
+      "answer": "Wayne Gretzky",
+      "answerType": "athlete",
+      "wikiTitle": "Wayne Gretzky",
+      "difficulty": 2
+    },
+    {
+      "id": "spo-013",
+      "title": "The Ballon d'Or record",
+      "statement": "Lionel Messi has won a record eight Ballon d'Or awards and captained Argentina to the 2022 World Cup.",
+      "question": "Which footballer has won the most Ballon d'Or awards?",
+      "answer": "Lionel Messi",
+      "answerType": "athlete",
+      "wikiTitle": "Lionel Messi",
+      "difficulty": 1
+    },
+    {
+      "id": "spo-014",
+      "title": "The Sultan of Swat",
+      "statement": "Babe Ruth transformed baseball into a power-hitting game and hit 714 home runs, a record that stood for 39 years.",
+      "question": "Which baseball player was known as the Sultan of Swat?",
+      "answer": "Babe Ruth",
+      "answerType": "athlete",
+      "wikiTitle": "Babe Ruth",
+      "difficulty": 2
+    },
+    {
+      "id": "spo-015",
+      "title": "Kings of Europe",
+      "statement": "Real Madrid have won the European Cup and Champions League more times than any other club, by a wide margin.",
+      "question": "Which club has won the most European Cup / Champions League titles?",
+      "answer": "Real Madrid",
+      "answerType": "team",
+      "wikiTitle": "Real Madrid CF",
+      "difficulty": 1
+    },
+    {
+      "id": "spo-016",
+      "title": "27 World Series",
+      "statement": "The New York Yankees have won 27 World Series titles, more than any other Major League Baseball franchise.",
+      "question": "Which team has won the most World Series titles?",
+      "answer": "New York Yankees",
+      "answerType": "team",
+      "wikiTitle": "New York Yankees",
+      "difficulty": 2
+    },
+    {
+      "id": "spo-017",
+      "title": "The men in black",
+      "statement": "The All Blacks, New Zealand's rugby union team, have the highest win rate of any international team in any major sport, and perform the haka before matches.",
+      "question": "What is New Zealand's national rugby union team called?",
+      "answer": "All Blacks",
+      "answerType": "team",
+      "wikiTitle": "New Zealand national rugby union team",
+      "difficulty": 1
+    },
+    {
+      "id": "spo-018",
+      "title": "The oldest team in Formula One",
+      "statement": "Scuderia Ferrari is the oldest and most successful team in Formula One, and the only one to have competed in every season since 1950.",
+      "question": "Which is the oldest and most successful team in Formula One?",
+      "answer": "Ferrari",
+      "answerType": "team",
+      "wikiTitle": "Scuderia Ferrari",
+      "difficulty": 1
+    },
+    {
+      "id": "spo-019",
+      "title": "The Celtics dynasty",
+      "statement": "The Boston Celtics won eight consecutive NBA championships from 1959 to 1966, a run unmatched in major American sport.",
+      "question": "Which NBA team won eight straight championships from 1959 to 1966?",
+      "answer": "Boston Celtics",
+      "answerType": "team",
+      "wikiTitle": "Boston Celtics",
+      "difficulty": 3
+    },
+    {
+      "id": "spo-020",
+      "title": "The Red Devils",
+      "statement": "Manchester United have won a record 20 English top-flight league titles.",
+      "question": "Which club has won the most English top-flight league titles?",
+      "answer": "Manchester United",
+      "answerType": "team",
+      "wikiTitle": "Manchester United F.C.",
+      "difficulty": 2
+    },
+    {
+      "id": "spo-021",
+      "title": "Most World Cup wins",
+      "statement": "Brazil have won the FIFA World Cup five times and are the only nation to have played in every tournament.",
+      "question": "Which country has won the most FIFA World Cups?",
+      "answer": "Brazil",
+      "answerType": "sporting-nation",
+      "wikiTitle": "Brazil national football team",
+      "difficulty": 1
+    },
+    {
+      "id": "spo-022",
+      "title": "The 2022 World Cup",
+      "statement": "Argentina won the 2022 World Cup in Qatar, beating France on penalties after a 3–3 draw widely called the greatest final ever played.",
+      "question": "Which country won the 2022 FIFA World Cup?",
+      "answer": "Argentina",
+      "answerType": "sporting-nation",
+      "wikiTitle": "2022 FIFA World Cup",
+      "difficulty": 1
+    },
+    {
+      "id": "spo-023",
+      "title": "The first World Cup",
+      "statement": "Uruguay hosted and won the first FIFA World Cup in 1930, and won again in 1950.",
+      "question": "Which country hosted and won the first FIFA World Cup in 1930?",
+      "answer": "Uruguay",
+      "answerType": "sporting-nation",
+      "wikiTitle": "1930 FIFA World Cup",
+      "difficulty": 2
+    },
+    {
+      "id": "spo-024",
+      "title": "The home of cricket",
+      "statement": "Cricket originated in England, where the Marylebone Cricket Club has maintained the laws of the game since 1787.",
+      "question": "In which country did cricket originate?",
+      "answer": "England",
+      "answerType": "sporting-nation",
+      "wikiTitle": "Cricket",
+      "difficulty": 1
+    },
+    {
+      "id": "spo-025",
+      "title": "The national sport of Japan",
+      "statement": "Sumo is Japan's national sport, with rituals drawn from Shinto and a professional history stretching back centuries.",
+      "question": "Which country is the home of sumo wrestling?",
+      "answer": "Japan",
+      "answerType": "sporting-nation",
+      "wikiTitle": "Sumo",
+      "difficulty": 1
+    },
+    {
+      "id": "spo-026",
+      "title": "The birthplace of the Olympics",
+      "statement": "The ancient Olympic Games were held at Olympia in Greece from 776 BC, and the first modern Games returned to Athens in 1896.",
+      "question": "In which country did the Olympic Games originate?",
+      "answer": "Greece",
+      "answerType": "sporting-nation",
+      "wikiTitle": "Ancient Olympic Games",
+      "difficulty": 1
+    },
+    {
+      "id": "spo-027",
+      "title": "The Tour de France",
+      "statement": "The Tour de France, first held in 1903, covers around 3,500 km over three weeks and finishes in Paris.",
+      "question": "In which country is the Tour de France principally held?",
+      "answer": "France",
+      "answerType": "sporting-nation",
+      "wikiTitle": "Tour de France",
+      "difficulty": 1
+    },
+    {
+      "id": "spo-028",
+      "title": "The 2024 Summer Olympics",
+      "statement": "Paris hosted the 2024 Summer Olympics, becoming only the second city to host three times.",
+      "question": "Which city hosted the 2024 Summer Olympics?",
+      "answer": "Paris",
+      "answerType": "olympic-city",
+      "wikiTitle": "2024 Summer Olympics",
+      "difficulty": 1
+    },
+    {
+      "id": "spo-029",
+      "title": "The delayed Olympics",
+      "statement": "Tokyo hosted the 2020 Summer Olympics in 2021, postponed by the COVID-19 pandemic and held almost without spectators.",
+      "question": "Which city hosted the Summer Olympics that were postponed to 2021?",
+      "answer": "Tokyo",
+      "answerType": "olympic-city",
+      "wikiTitle": "2020 Summer Olympics",
+      "difficulty": 1
+    },
+    {
+      "id": "spo-030",
+      "title": "The first South American Olympics",
+      "statement": "Rio de Janeiro hosted the 2016 Summer Olympics, the first held in South America.",
+      "question": "Which city hosted the first Olympic Games in South America?",
+      "answer": "Rio de Janeiro",
+      "answerType": "olympic-city",
+      "wikiTitle": "2016 Summer Olympics",
+      "difficulty": 2
+    },
+    {
+      "id": "spo-031",
+      "title": "The 2012 Games",
+      "statement": "London hosted the 2012 Summer Olympics, becoming the first city to host the modern Games three times.",
+      "question": "Which city became the first to host the Summer Olympics three times?",
+      "answer": "London",
+      "answerType": "olympic-city",
+      "wikiTitle": "2012 Summer Olympics",
+      "difficulty": 2
+    },
+    {
+      "id": "spo-032",
+      "title": "The first modern Games",
+      "statement": "Athens hosted the first modern Olympic Games in 1896, with 14 nations competing.",
+      "question": "Which city hosted the first modern Olympic Games in 1896?",
+      "answer": "Athens",
+      "answerType": "olympic-city",
+      "wikiTitle": "1896 Summer Olympics",
+      "difficulty": 1
+    },
+    {
+      "id": "spo-033",
+      "title": "The Bird's Nest",
+      "statement": "Beijing hosted the 2008 Summer Olympics and in 2022 became the first city to host both a Summer and a Winter Games.",
+      "question": "Which city hosted both the 2008 Summer and 2022 Winter Olympics?",
+      "answer": "Beijing",
+      "answerType": "olympic-city",
+      "wikiTitle": "2008 Summer Olympics",
+      "difficulty": 2
+    },
+    {
+      "id": "spo-034",
+      "title": "Players in a football team",
+      "statement": "An association football team fields 11 players, including the goalkeeper.",
+      "question": "How many players from each team are on the pitch in association football?",
+      "answer": "11",
+      "answerType": "player-count",
+      "wikiTitle": "Association football",
+      "difficulty": 1
+    },
+    {
+      "id": "spo-035",
+      "title": "Players in a basketball team",
+      "statement": "A basketball team has five players on court at a time.",
+      "question": "How many players from each team are on court in basketball?",
+      "answer": "5",
+      "answerType": "player-count",
+      "wikiTitle": "Basketball",
+      "difficulty": 1
+    },
+    {
+      "id": "spo-036",
+      "title": "Players in rugby union",
+      "statement": "A rugby union team fields 15 players; rugby league fields 13.",
+      "question": "How many players are in a rugby union team on the field?",
+      "answer": "15",
+      "answerType": "player-count",
+      "wikiTitle": "Rugby union",
+      "difficulty": 2
+    },
+    {
+      "id": "spo-037",
+      "title": "Players on the ice",
+      "statement": "An ice hockey team has six players on the ice, including the goaltender.",
+      "question": "How many players from each team are on the ice in hockey?",
+      "answer": "6",
+      "answerType": "player-count",
+      "wikiTitle": "Ice hockey",
+      "difficulty": 2
+    },
+    {
+      "id": "spo-038",
+      "title": "Players in a baseball team",
+      "statement": "A baseball team fields nine players, and the batting order runs to nine as well.",
+      "question": "How many players from a team are on the field in baseball?",
+      "answer": "9",
+      "answerType": "player-count",
+      "wikiTitle": "Baseball",
+      "difficulty": 2
+    },
+    {
+      "id": "spo-039",
+      "title": "Players in water polo",
+      "statement": "A water polo team has seven players in the pool, including the goalkeeper.",
+      "question": "How many players from each team are in the pool in water polo?",
+      "answer": "7",
+      "answerType": "player-count",
+      "wikiTitle": "Water polo",
+      "difficulty": 3
+    },
+    {
+      "id": "spo-040",
+      "title": "Three goals",
+      "statement": "A hat-trick is three goals by one player in a single match. The term comes from cricket, where a bowler taking three wickets in three balls won a hat.",
+      "question": "What is it called when one player scores three goals in a match?",
+      "answer": "Hat-trick",
+      "answerType": "sporting-term",
+      "hook": "It started in cricket, and the prize was an actual hat.",
+      "wikiTitle": "Hat-trick",
+      "difficulty": 1
+    },
+    {
+      "id": "spo-041",
+      "title": "Zero in tennis",
+      "statement": "In tennis, a score of zero is called love, probably from the French l'oeuf — 'the egg' — for its shape.",
+      "question": "What is the term for a score of zero in tennis?",
+      "answer": "Love",
+      "answerType": "sporting-term",
+      "wikiTitle": "Tennis scoring system",
+      "difficulty": 1
+    },
+    {
+      "id": "spo-042",
+      "title": "One under par",
+      "statement": "In golf, a birdie is one stroke under par for a hole; an eagle is two under and an albatross three under.",
+      "question": "In golf, what is a score of one stroke under par called?",
+      "answer": "Birdie",
+      "answerType": "sporting-term",
+      "wikiTitle": "Golf",
+      "difficulty": 1
+    },
+    {
+      "id": "spo-043",
+      "title": "The end of a chess game",
+      "statement": "Checkmate ends a chess game: the king is under attack and no legal move can save it. The word comes from Persian shah mat, 'the king is helpless'.",
+      "question": "What is the winning position in chess called?",
+      "answer": "Checkmate",
+      "answerType": "sporting-term",
+      "wikiTitle": "Checkmate",
+      "difficulty": 1
+    },
+    {
+      "id": "spo-044",
+      "title": "The offside rule",
+      "statement": "Offside in football penalises an attacker who is nearer the goal line than both the ball and the second-last defender when the ball is played to them.",
+      "question": "Which football rule penalises an attacker for being ahead of the second-last defender?",
+      "answer": "Offside",
+      "answerType": "sporting-term",
+      "wikiTitle": "Offside (association football)",
+      "difficulty": 1
+    },
+    {
+      "id": "spo-045",
+      "title": "The marathon distance",
+      "statement": "A marathon is 42.195 km. The odd distance was fixed at the 1908 London Olympics so the race could finish in front of the royal box.",
+      "question": "How long is a marathon?",
+      "answer": "42.195 kilometres",
+      "answerType": "sporting-term",
+      "hook": "The extra 195 metres exist so royalty would not have to move.",
+      "wikiTitle": "Marathon",
+      "difficulty": 2
+    },
+    {
+      "id": "spo-046",
+      "title": "The sport of the slam dunk",
+      "statement": "Basketball was invented in 1891 by James Naismith, who nailed peach baskets to a gymnasium balcony.",
+      "question": "In which sport would you perform a slam dunk?",
+      "answer": "Basketball",
+      "answerType": "sport",
+      "wikiTitle": "Basketball",
+      "difficulty": 1
+    },
+    {
+      "id": "spo-047",
+      "title": "The sport of the birdie",
+      "statement": "Golf is played over 18 holes, a number standardised by the Old Course at St Andrews in Scotland.",
+      "question": "In which sport do players aim for birdies and eagles?",
+      "answer": "Golf",
+      "answerType": "sport",
+      "wikiTitle": "Golf",
+      "difficulty": 1
+    },
+    {
+      "id": "spo-048",
+      "title": "The sport of the ace",
+      "statement": "Tennis is played on grass, clay and hard courts, and its four Grand Slams each use a different surface combination.",
+      "question": "In which sport is an unreturnable serve called an ace?",
+      "answer": "Tennis",
+      "answerType": "sport",
+      "wikiTitle": "Tennis",
+      "difficulty": 1
+    },
+    {
+      "id": "spo-049",
+      "title": "The sport of the wicket",
+      "statement": "Cricket's longest format, Test cricket, can last five days and still end in a draw.",
+      "question": "In which sport does a bowler try to take a wicket?",
+      "answer": "Cricket",
+      "answerType": "sport",
+      "wikiTitle": "Cricket",
+      "difficulty": 1
+    },
+    {
+      "id": "spo-050",
+      "title": "The sport of the foil",
+      "statement": "Fencing has three weapons — foil, épée and sabre — each with its own target area and rules.",
+      "question": "In which sport do competitors use a foil, épée or sabre?",
+      "answer": "Fencing",
+      "answerType": "sport",
+      "wikiTitle": "Fencing",
+      "difficulty": 2
+    },
+    {
+      "id": "spo-051",
+      "title": "The gentle way",
+      "statement": "Judo, founded by Jigoro Kano in 1882, means 'the gentle way' and uses an opponent's force against them.",
+      "question": "Which martial art's name means 'the gentle way'?",
+      "answer": "Judo",
+      "answerType": "sport",
+      "wikiTitle": "Judo",
+      "difficulty": 2
+    },
+    {
+      "id": "spo-052",
+      "title": "The oldest board game still played",
+      "statement": "Go originated in China over 2,500 years ago and has more possible board positions than there are atoms in the observable universe.",
+      "question": "Which ancient Chinese board game uses black and white stones on a 19x19 grid?",
+      "answer": "Go",
+      "answerType": "board-game",
+      "hook": "More legal positions than atoms in the universe, on a board of 361 points.",
+      "wikiTitle": "Go (game)",
+      "difficulty": 2
+    },
+    {
+      "id": "spo-053",
+      "title": "The royal game",
+      "statement": "Chess in its modern form emerged in Europe in the 15th century, developing from the Indian game chaturanga.",
+      "question": "Which board game features a king, queen, bishops, knights and rooks?",
+      "answer": "Chess",
+      "answerType": "board-game",
+      "wikiTitle": "Chess",
+      "difficulty": 1
+    },
+    {
+      "id": "spo-054",
+      "title": "Buying property",
+      "statement": "Monopoly was derived from The Landlord's Game, designed to demonstrate the harm of land monopolies — the opposite of how it is played today.",
+      "question": "Which board game involves buying properties and collecting rent?",
+      "answer": "Monopoly",
+      "answerType": "board-game",
+      "hook": "It was invented to criticise landlords, then sold as a game about becoming one.",
+      "wikiTitle": "Monopoly (game)",
+      "difficulty": 1
+    },
+    {
+      "id": "spo-055",
+      "title": "Words for points",
+      "statement": "Scrabble assigns letter values by frequency in English; Q and Z are worth 10 points each because they are rare.",
+      "question": "Which board game scores players for forming words on a grid?",
+      "answer": "Scrabble",
+      "answerType": "board-game",
+      "wikiTitle": "Scrabble",
+      "difficulty": 1
+    },
+    {
+      "id": "spo-056",
+      "title": "Dice and doubling",
+      "statement": "Backgammon is one of the oldest known board games, roughly 5,000 years old, combining dice luck with positional strategy.",
+      "question": "Which ancient game uses dice, checkers and a doubling cube?",
+      "answer": "Backgammon",
+      "answerType": "board-game",
+      "wikiTitle": "Backgammon",
+      "difficulty": 2
+    },
+    {
+      "id": "spo-057",
+      "title": "The solved game",
+      "statement": "Checkers, or draughts, was weakly solved by computers in 2007: perfect play by both sides always ends in a draw.",
+      "question": "Which board game was proved in 2007 to end in a draw with perfect play?",
+      "answer": "Checkers",
+      "answerType": "board-game",
+      "wikiTitle": "Draughts",
+      "difficulty": 3
+    },
+    {
+      "id": "spo-058",
+      "title": "The home of tennis",
+      "statement": "Wimbledon is the oldest tennis tournament in the world, founded in 1877, and the only Grand Slam still played on grass.",
+      "question": "Which is the oldest tennis tournament in the world?",
+      "answer": "Wimbledon",
+      "answerType": "venue",
+      "wikiTitle": "Wimbledon Championships",
+      "difficulty": 1
+    },
+    {
+      "id": "spo-059",
+      "title": "The green jacket",
+      "statement": "Augusta National in Georgia hosts the Masters every April, and the winner receives a green jacket.",
+      "question": "Which golf course hosts the Masters Tournament?",
+      "answer": "Augusta National",
+      "answerType": "venue",
+      "wikiTitle": "Augusta National Golf Club",
+      "difficulty": 2
+    },
+    {
+      "id": "spo-060",
+      "title": "The largest stadium in Europe",
+      "statement": "Camp Nou in Barcelona is the largest football stadium in Europe by capacity.",
+      "question": "Which Barcelona stadium is the largest football ground in Europe?",
+      "answer": "Camp Nou",
+      "answerType": "venue",
+      "wikiTitle": "Camp Nou",
+      "difficulty": 2
+    },
+    {
+      "id": "spo-061",
+      "title": "The Theatre of Dreams",
+      "statement": "Old Trafford, Manchester United's ground since 1910, is nicknamed the Theatre of Dreams.",
+      "question": "Which stadium is known as the Theatre of Dreams?",
+      "answer": "Old Trafford",
+      "answerType": "venue",
+      "wikiTitle": "Old Trafford",
+      "difficulty": 2
+    },
+    {
+      "id": "spo-062",
+      "title": "The world's most famous arena",
+      "statement": "Madison Square Garden in New York hosts the Knicks and Rangers and calls itself the world's most famous arena.",
+      "question": "Which New York arena is home to the Knicks and the Rangers?",
+      "answer": "Madison Square Garden",
+      "answerType": "venue",
+      "wikiTitle": "Madison Square Garden",
+      "difficulty": 2
+    },
+    {
+      "id": "spo-063",
+      "title": "The Olympic rings",
+      "statement": "The five Olympic rings represent the five inhabited continents, and their colours were chosen so that every national flag then in use contained at least one of them.",
+      "question": "What do the five Olympic rings represent?",
+      "answer": "The five inhabited continents",
+      "answerType": "sporting-fact",
+      "wikiTitle": "Olympic symbols",
+      "difficulty": 2
+    },
+    {
+      "id": "spo-064",
+      "title": "The Ashes",
+      "statement": "The Ashes is contested between England and Australia in cricket, named after a mock obituary declaring English cricket dead in 1882.",
+      "question": "Which two countries contest cricket's Ashes series?",
+      "answer": "England and Australia",
+      "answerType": "sporting-fact",
+      "wikiTitle": "The Ashes",
+      "difficulty": 2
+    },
+    {
+      "id": "spo-065",
+      "title": "The Grand Slam of tennis",
+      "statement": "Tennis has four Grand Slam tournaments: the Australian Open, the French Open, Wimbledon and the US Open.",
+      "question": "How many Grand Slam tournaments are there in tennis?",
+      "answer": "Four",
+      "answerType": "sporting-fact",
+      "wikiTitle": "Grand Slam (tennis)",
+      "difficulty": 1
+    },
+    {
+      "id": "spo-066",
+      "title": "The yellow jersey",
+      "statement": "The maillot jaune, or yellow jersey, is worn by the overall leader of the Tour de France, coloured to match the newspaper that founded the race.",
+      "question": "What colour jersey does the overall leader of the Tour de France wear?",
+      "answer": "Yellow",
+      "answerType": "sporting-fact",
+      "hook": "Yellow because the sponsoring newspaper was printed on yellow paper.",
+      "wikiTitle": "Tour de France",
+      "difficulty": 2
+    },
+    {
+      "id": "spo-067",
+      "title": "The World Cup interval",
+      "statement": "The FIFA World Cup is held every four years, and has been since 1930 apart from a break for the Second World War.",
+      "question": "How often is the FIFA World Cup held?",
+      "answer": "Every four years",
+      "answerType": "sporting-fact",
+      "wikiTitle": "FIFA World Cup",
+      "difficulty": 1
+    },
+    {
+      "id": "spo-068",
+      "title": "The sport played at the Superbowl",
+      "statement": "The Super Bowl is the championship game of the National Football League, played in American football and typically the most watched US broadcast of the year.",
+      "question": "Which sport's championship game is the Super Bowl?",
+      "answer": "American football",
+      "answerType": "sport",
+      "wikiTitle": "Super Bowl",
+      "difficulty": 1
+    },
+    {
+      "id": "spo-069",
+      "title": "The Formula One points leader",
+      "statement": "Formula One awards its drivers' championship on points across a season, with Michael Schumacher and Lewis Hamilton tied on a record seven titles each.",
+      "question": "Which two drivers share the record of seven Formula One world titles?",
+      "answer": "Schumacher and Hamilton",
+      "answerType": "sporting-fact",
+      "wikiTitle": "List of Formula One World Drivers' Champions",
+      "difficulty": 2
+    },
+    {
+      "id": "spo-070",
+      "title": "The sport of the peloton",
+      "statement": "In road cycling, the peloton is the main bunch of riders, whose drafting saves each rider up to 40% of their energy.",
+      "question": "In which sport does the main group of competitors form a peloton?",
+      "answer": "Cycling",
+      "answerType": "sport",
+      "wikiTitle": "Peloton",
+      "difficulty": 2
+    }
+  ]
+}

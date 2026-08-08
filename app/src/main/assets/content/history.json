@@ -1,0 +1,948 @@
+{
+  "category": "history",
+  "facts": [
+    {
+      "id": "hist-001",
+      "title": "The French Revolution begins",
+      "statement": "The French Revolution began in 1789, marked by the storming of the Bastille on 14 July.",
+      "question": "In which year did the French Revolution begin?",
+      "answer": "1789",
+      "answerType": "year",
+      "hook": "1789 — the same year George Washington became the first US president.",
+      "wikiTitle": "French Revolution",
+      "difficulty": 1
+    },
+    {
+      "id": "hist-002",
+      "title": "Columbus reaches the Americas",
+      "statement": "Christopher Columbus made landfall in the Bahamas in 1492, opening sustained contact between Europe and the Americas.",
+      "question": "In which year did Columbus first reach the Americas?",
+      "answer": "1492",
+      "answerType": "year",
+      "hook": "The same year Granada fell and Spain completed the Reconquista.",
+      "wikiTitle": "Christopher Columbus",
+      "difficulty": 1
+    },
+    {
+      "id": "hist-003",
+      "title": "The first Moon landing",
+      "statement": "Apollo 11 landed on the Moon on 20 July 1969, with Neil Armstrong and Buzz Aldrin walking on the surface.",
+      "question": "In which year did humans first land on the Moon?",
+      "answer": "1969",
+      "answerType": "year",
+      "wikiTitle": "Apollo 11",
+      "difficulty": 1
+    },
+    {
+      "id": "hist-004",
+      "title": "The end of the Second World War",
+      "statement": "The Second World War ended in 1945, with Germany surrendering in May and Japan in September.",
+      "question": "In which year did the Second World War end?",
+      "answer": "1945",
+      "answerType": "year",
+      "wikiTitle": "World War II",
+      "difficulty": 1
+    },
+    {
+      "id": "hist-005",
+      "title": "The First World War begins",
+      "statement": "The First World War began in 1914, triggered by the assassination of Archduke Franz Ferdinand in Sarajevo.",
+      "question": "In which year did the First World War begin?",
+      "answer": "1914",
+      "answerType": "year",
+      "wikiTitle": "World War I",
+      "difficulty": 1
+    },
+    {
+      "id": "hist-006",
+      "title": "The First World War ends",
+      "statement": "The First World War ended with an armistice on 11 November 1918 — the eleventh hour of the eleventh day of the eleventh month.",
+      "question": "In which year did the First World War end?",
+      "answer": "1918",
+      "answerType": "year",
+      "wikiTitle": "Armistice of 11 November 1918",
+      "difficulty": 1
+    },
+    {
+      "id": "hist-007",
+      "title": "The Norman conquest of England",
+      "statement": "William of Normandy defeated Harold II at the Battle of Hastings in 1066, permanently reshaping English language and law.",
+      "question": "In which year was the Battle of Hastings?",
+      "answer": "1066",
+      "answerType": "year",
+      "hook": "The single most quoted date in English history.",
+      "wikiTitle": "Battle of Hastings",
+      "difficulty": 1
+    },
+    {
+      "id": "hist-008",
+      "title": "American independence declared",
+      "statement": "The Thirteen Colonies adopted the Declaration of Independence on 4 July 1776.",
+      "question": "In which year was the American Declaration of Independence adopted?",
+      "answer": "1776",
+      "answerType": "year",
+      "wikiTitle": "United States Declaration of Independence",
+      "difficulty": 1
+    },
+    {
+      "id": "hist-009",
+      "title": "Magna Carta sealed",
+      "statement": "King John sealed Magna Carta at Runnymede in 1215, conceding that the monarch was not above the law.",
+      "question": "In which year was Magna Carta sealed?",
+      "answer": "1215",
+      "answerType": "year",
+      "wikiTitle": "Magna Carta",
+      "difficulty": 2
+    },
+    {
+      "id": "hist-010",
+      "title": "The fall of the Western Roman Empire",
+      "statement": "The Western Roman Empire is conventionally dated as ending in 476, when the Germanic leader Odoacer deposed Romulus Augustulus.",
+      "question": "In which year is the Western Roman Empire conventionally said to have fallen?",
+      "answer": "476",
+      "answerType": "year",
+      "hook": "The Eastern half carried on for almost another thousand years.",
+      "wikiTitle": "Fall of the Western Roman Empire",
+      "difficulty": 2
+    },
+    {
+      "id": "hist-011",
+      "title": "The fall of Constantinople",
+      "statement": "Constantinople fell to the Ottoman Empire in 1453, ending the Byzantine Empire and closing the Middle Ages for many historians.",
+      "question": "In which year did Constantinople fall to the Ottomans?",
+      "answer": "1453",
+      "answerType": "year",
+      "hook": "1453 also ended the Hundred Years' War — a year that closed two eras.",
+      "wikiTitle": "Fall of Constantinople",
+      "difficulty": 2
+    },
+    {
+      "id": "hist-012",
+      "title": "The Reformation begins",
+      "statement": "Martin Luther published his Ninety-five Theses in 1517, setting off the Protestant Reformation.",
+      "question": "In which year did Martin Luther publish his Ninety-five Theses?",
+      "answer": "1517",
+      "answerType": "year",
+      "wikiTitle": "Ninety-five Theses",
+      "difficulty": 2
+    },
+    {
+      "id": "hist-013",
+      "title": "The Berlin Wall falls",
+      "statement": "The Berlin Wall was opened on 9 November 1989 after 28 years, and Germany reunified less than a year later.",
+      "question": "In which year did the Berlin Wall fall?",
+      "answer": "1989",
+      "answerType": "year",
+      "wikiTitle": "Berlin Wall",
+      "difficulty": 1
+    },
+    {
+      "id": "hist-014",
+      "title": "The Soviet Union dissolves",
+      "statement": "The Soviet Union was formally dissolved in December 1991, splitting into fifteen independent republics.",
+      "question": "In which year was the Soviet Union dissolved?",
+      "answer": "1991",
+      "answerType": "year",
+      "wikiTitle": "Dissolution of the Soviet Union",
+      "difficulty": 1
+    },
+    {
+      "id": "hist-015",
+      "title": "The Titanic sinks",
+      "statement": "The RMS Titanic struck an iceberg and sank on her maiden voyage in April 1912, killing about 1,500 people.",
+      "question": "In which year did the Titanic sink?",
+      "answer": "1912",
+      "answerType": "year",
+      "wikiTitle": "Titanic",
+      "difficulty": 1
+    },
+    {
+      "id": "hist-016",
+      "title": "Indian independence",
+      "statement": "India became independent from British rule in 1947, and the subcontinent was partitioned into India and Pakistan.",
+      "question": "In which year did India gain independence?",
+      "answer": "1947",
+      "answerType": "year",
+      "wikiTitle": "Indian independence movement",
+      "difficulty": 1
+    },
+    {
+      "id": "hist-017",
+      "title": "The American Civil War begins",
+      "statement": "The American Civil War began in 1861 with the Confederate bombardment of Fort Sumter.",
+      "question": "In which year did the American Civil War begin?",
+      "answer": "1861",
+      "answerType": "year",
+      "wikiTitle": "American Civil War",
+      "difficulty": 2
+    },
+    {
+      "id": "hist-018",
+      "title": "Napoleon crowned emperor",
+      "statement": "Napoleon Bonaparte crowned himself Emperor of the French in 1804, famously taking the crown from the Pope's hands.",
+      "question": "In which year did Napoleon crown himself emperor?",
+      "answer": "1804",
+      "answerType": "year",
+      "wikiTitle": "Napoleon",
+      "difficulty": 2
+    },
+    {
+      "id": "hist-019",
+      "title": "Hitler becomes chancellor",
+      "statement": "Adolf Hitler was appointed Chancellor of Germany in January 1933, the start of Nazi rule.",
+      "question": "In which year did Hitler become Chancellor of Germany?",
+      "answer": "1933",
+      "answerType": "year",
+      "wikiTitle": "Adolf Hitler",
+      "difficulty": 2
+    },
+    {
+      "id": "hist-020",
+      "title": "Kennedy assassinated",
+      "statement": "US President John F. Kennedy was assassinated in Dallas, Texas, on 22 November 1963.",
+      "question": "In which year was John F. Kennedy assassinated?",
+      "answer": "1963",
+      "answerType": "year",
+      "wikiTitle": "Assassination of John F. Kennedy",
+      "difficulty": 2
+    },
+    {
+      "id": "hist-021",
+      "title": "The Montgomery bus boycott",
+      "statement": "Rosa Parks refused to give up her bus seat in Montgomery, Alabama, in 1955, sparking a 381-day boycott and launching the civil rights movement's mass phase.",
+      "question": "In which year did Rosa Parks refuse to give up her bus seat?",
+      "answer": "1955",
+      "answerType": "year",
+      "wikiTitle": "Rosa Parks",
+      "difficulty": 2
+    },
+    {
+      "id": "hist-022",
+      "title": "The first Roman emperor",
+      "statement": "Augustus, born Octavian, became the first Roman emperor in 27 BC after defeating Mark Antony and Cleopatra.",
+      "question": "Who was the first Roman emperor?",
+      "answer": "Augustus",
+      "answerType": "historical-figure",
+      "hook": "The month of August is named after him.",
+      "wikiTitle": "Augustus",
+      "difficulty": 1
+    },
+    {
+      "id": "hist-023",
+      "title": "Founder of the Mongol Empire",
+      "statement": "Genghis Khan united the Mongol tribes in 1206 and founded an empire that became the largest contiguous land empire in history.",
+      "question": "Who founded the Mongol Empire?",
+      "answer": "Genghis Khan",
+      "answerType": "historical-figure",
+      "wikiTitle": "Genghis Khan",
+      "difficulty": 1
+    },
+    {
+      "id": "hist-024",
+      "title": "The first US president",
+      "statement": "George Washington served as the first President of the United States from 1789 to 1797 and refused a third term, setting a lasting precedent.",
+      "question": "Who was the first President of the United States?",
+      "answer": "George Washington",
+      "answerType": "historical-figure",
+      "wikiTitle": "George Washington",
+      "difficulty": 1
+    },
+    {
+      "id": "hist-025",
+      "title": "Assassinated on the Ides of March",
+      "statement": "Julius Caesar was assassinated by a group of Roman senators on 15 March 44 BC — the Ides of March.",
+      "question": "Who was assassinated on the Ides of March, 44 BC?",
+      "answer": "Julius Caesar",
+      "answerType": "historical-figure",
+      "wikiTitle": "Julius Caesar",
+      "difficulty": 1
+    },
+    {
+      "id": "hist-026",
+      "title": "Conqueror who reached India",
+      "statement": "Alexander the Great of Macedon conquered the Persian Empire and pushed as far as the Indus by 326 BC, dying at 32 without losing a battle.",
+      "question": "Which Macedonian king conquered the Persian Empire and reached India?",
+      "answer": "Alexander the Great",
+      "answerType": "historical-figure",
+      "wikiTitle": "Alexander the Great",
+      "difficulty": 1
+    },
+    {
+      "id": "hist-027",
+      "title": "Crossing the Alps with elephants",
+      "statement": "Hannibal of Carthage led an army with war elephants over the Alps into Italy in 218 BC during the Second Punic War.",
+      "question": "Which Carthaginian general crossed the Alps with elephants?",
+      "answer": "Hannibal",
+      "answerType": "historical-figure",
+      "wikiTitle": "Hannibal",
+      "difficulty": 2
+    },
+    {
+      "id": "hist-028",
+      "title": "India's independence leader",
+      "statement": "Mahatma Gandhi led India's independence movement through mass non-violent civil disobedience, including the 1930 Salt March.",
+      "question": "Who led India's independence movement through non-violent resistance?",
+      "answer": "Mahatma Gandhi",
+      "answerType": "historical-figure",
+      "wikiTitle": "Mahatma Gandhi",
+      "difficulty": 1
+    },
+    {
+      "id": "hist-029",
+      "title": "South Africa's first Black president",
+      "statement": "Nelson Mandela spent 27 years in prison and became South Africa's first Black president in 1994 after the end of apartheid.",
+      "question": "Who became South Africa's first Black president in 1994?",
+      "answer": "Nelson Mandela",
+      "answerType": "historical-figure",
+      "wikiTitle": "Nelson Mandela",
+      "difficulty": 1
+    },
+    {
+      "id": "hist-030",
+      "title": "Britain's wartime prime minister",
+      "statement": "Winston Churchill led Britain as prime minister through most of the Second World War and won the Nobel Prize in Literature in 1953.",
+      "question": "Who was Britain's prime minister for most of the Second World War?",
+      "answer": "Winston Churchill",
+      "answerType": "historical-figure",
+      "wikiTitle": "Winston Churchill",
+      "difficulty": 1
+    },
+    {
+      "id": "hist-031",
+      "title": "Founder of the Soviet state",
+      "statement": "Vladimir Lenin led the Bolsheviks to power in the October Revolution of 1917 and founded the Soviet state.",
+      "question": "Who led the Bolsheviks to power in 1917?",
+      "answer": "Vladimir Lenin",
+      "answerType": "historical-figure",
+      "wikiTitle": "Vladimir Lenin",
+      "difficulty": 1
+    },
+    {
+      "id": "hist-032",
+      "title": "Egypt's last active pharaoh",
+      "statement": "Cleopatra VII was the last active ruler of Ptolemaic Egypt. She lived closer in time to the Moon landing than to the building of the Great Pyramid.",
+      "question": "Who was the last active pharaoh of Ptolemaic Egypt?",
+      "answer": "Cleopatra",
+      "answerType": "historical-figure",
+      "hook": "The pyramids were already 2,500 years old when she was born.",
+      "wikiTitle": "Cleopatra",
+      "difficulty": 1
+    },
+    {
+      "id": "hist-033",
+      "title": "China's first emperor",
+      "statement": "Qin Shi Huang unified China in 221 BC, standardised its script and measures, and was buried with the Terracotta Army.",
+      "question": "Who was the first emperor of a unified China?",
+      "answer": "Qin Shi Huang",
+      "answerType": "historical-figure",
+      "wikiTitle": "Qin Shi Huang",
+      "difficulty": 2
+    },
+    {
+      "id": "hist-034",
+      "title": "Conqueror of Constantinople",
+      "statement": "Mehmed II captured Constantinople in 1453 at the age of 21, making it the Ottoman capital.",
+      "question": "Which Ottoman sultan conquered Constantinople in 1453?",
+      "answer": "Mehmed II",
+      "answerType": "historical-figure",
+      "wikiTitle": "Mehmed the Conqueror",
+      "difficulty": 3
+    },
+    {
+      "id": "hist-035",
+      "title": "Leader of the Haitian Revolution",
+      "statement": "Toussaint Louverture led the Haitian Revolution, the only slave revolt in history to found an independent state.",
+      "question": "Who led the Haitian Revolution?",
+      "answer": "Toussaint Louverture",
+      "answerType": "historical-figure",
+      "wikiTitle": "Toussaint Louverture",
+      "difficulty": 3
+    },
+    {
+      "id": "hist-036",
+      "title": "The Maid of Orléans",
+      "statement": "Joan of Arc led French forces during the Hundred Years' War and was burned at the stake in 1431 at about nineteen.",
+      "question": "Which French teenager led armies in the Hundred Years' War and was burned at the stake in 1431?",
+      "answer": "Joan of Arc",
+      "answerType": "historical-figure",
+      "wikiTitle": "Joan of Arc",
+      "difficulty": 1
+    },
+    {
+      "id": "hist-037",
+      "title": "President during the American Civil War",
+      "statement": "Abraham Lincoln led the United States through the Civil War, issued the Emancipation Proclamation, and was assassinated in 1865.",
+      "question": "Who was US president during the American Civil War?",
+      "answer": "Abraham Lincoln",
+      "answerType": "historical-figure",
+      "wikiTitle": "Abraham Lincoln",
+      "difficulty": 1
+    },
+    {
+      "id": "hist-038",
+      "title": "The Indian emperor who turned to Buddhism",
+      "statement": "Ashoka, ruler of the Maurya Empire, renounced war after the bloody conquest of Kalinga around 261 BC and spread Buddhism across Asia.",
+      "question": "Which Indian emperor embraced Buddhism after the Kalinga war?",
+      "answer": "Ashoka",
+      "answerType": "historical-figure",
+      "wikiTitle": "Ashoka",
+      "difficulty": 3
+    },
+    {
+      "id": "hist-039",
+      "title": "Leader of the Cuban Revolution",
+      "statement": "Fidel Castro led the Cuban Revolution to victory in 1959 and governed Cuba for nearly five decades.",
+      "question": "Who led the Cuban Revolution of 1959?",
+      "answer": "Fidel Castro",
+      "answerType": "historical-figure",
+      "wikiTitle": "Fidel Castro",
+      "difficulty": 1
+    },
+    {
+      "id": "hist-040",
+      "title": "Author of the Communist Manifesto",
+      "statement": "Karl Marx, with Friedrich Engels, published The Communist Manifesto in 1848 and later wrote Das Kapital.",
+      "question": "Who wrote The Communist Manifesto with Friedrich Engels?",
+      "answer": "Karl Marx",
+      "answerType": "historical-figure",
+      "wikiTitle": "Karl Marx",
+      "difficulty": 1
+    },
+    {
+      "id": "hist-041",
+      "title": "Egypt's most famous female pharaoh",
+      "statement": "Hatshepsut ruled Egypt as pharaoh in the 15th century BC, one of the most successful and longest-reigning female rulers of the ancient world.",
+      "question": "Which woman ruled as pharaoh of Egypt in the 15th century BC?",
+      "answer": "Hatshepsut",
+      "answerType": "historical-figure",
+      "wikiTitle": "Hatshepsut",
+      "difficulty": 3
+    },
+    {
+      "id": "hist-042",
+      "title": "The longest-reigning British monarch",
+      "statement": "Elizabeth II reigned for 70 years, from 1952 to 2022, the longest of any British monarch.",
+      "question": "Who was the longest-reigning British monarch?",
+      "answer": "Elizabeth II",
+      "answerType": "monarch",
+      "wikiTitle": "Elizabeth II",
+      "difficulty": 1
+    },
+    {
+      "id": "hist-043",
+      "title": "The king with six wives",
+      "statement": "Henry VIII had six wives and broke with Rome to annul his first marriage, founding the Church of England.",
+      "question": "Which English king had six wives?",
+      "answer": "Henry VIII",
+      "answerType": "monarch",
+      "hook": "Divorced, beheaded, died; divorced, beheaded, survived.",
+      "wikiTitle": "Henry VIII",
+      "difficulty": 1
+    },
+    {
+      "id": "hist-044",
+      "title": "The queen who defeated the Armada",
+      "statement": "Elizabeth I reigned during the defeat of the Spanish Armada in 1588 and the flowering of English theatre.",
+      "question": "Which English queen reigned when the Spanish Armada was defeated?",
+      "answer": "Elizabeth I",
+      "answerType": "monarch",
+      "wikiTitle": "Elizabeth I",
+      "difficulty": 2
+    },
+    {
+      "id": "hist-045",
+      "title": "The Sun King",
+      "statement": "Louis XIV of France reigned for 72 years, built Versailles, and was known as the Sun King.",
+      "question": "Which French king was known as the Sun King?",
+      "answer": "Louis XIV",
+      "answerType": "monarch",
+      "wikiTitle": "Louis XIV",
+      "difficulty": 2
+    },
+    {
+      "id": "hist-046",
+      "title": "Founder of Saint Petersburg",
+      "statement": "Peter the Great founded Saint Petersburg in 1703 and forcibly modernised Russia along Western European lines.",
+      "question": "Which Russian ruler founded Saint Petersburg?",
+      "answer": "Peter the Great",
+      "answerType": "monarch",
+      "wikiTitle": "Peter the Great",
+      "difficulty": 2
+    },
+    {
+      "id": "hist-047",
+      "title": "The queen of the 19th century",
+      "statement": "Queen Victoria reigned from 1837 to 1901 over an empire covering roughly a quarter of the world's land.",
+      "question": "Which British queen reigned for most of the 19th century?",
+      "answer": "Victoria",
+      "answerType": "monarch",
+      "wikiTitle": "Queen Victoria",
+      "difficulty": 1
+    },
+    {
+      "id": "hist-048",
+      "title": "The Babylonian lawgiver",
+      "statement": "Hammurabi of Babylon issued one of the earliest surviving written law codes around 1750 BC, carved on a stone stele.",
+      "question": "Which Babylonian king issued one of the earliest written law codes?",
+      "answer": "Hammurabi",
+      "answerType": "monarch",
+      "wikiTitle": "Hammurabi",
+      "difficulty": 2
+    },
+    {
+      "id": "hist-049",
+      "title": "The king who sealed Magna Carta",
+      "statement": "King John of England was forced by rebellious barons to seal Magna Carta in 1215.",
+      "question": "Which English king was forced to seal Magna Carta?",
+      "answer": "King John",
+      "answerType": "monarch",
+      "wikiTitle": "John, King of England",
+      "difficulty": 2
+    },
+    {
+      "id": "hist-050",
+      "title": "Largest contiguous land empire",
+      "statement": "The Mongol Empire was the largest contiguous land empire in history, stretching from Korea to Hungary at its height.",
+      "question": "What was the largest contiguous land empire in history?",
+      "answer": "Mongol Empire",
+      "answerType": "empire",
+      "wikiTitle": "Mongol Empire",
+      "difficulty": 2
+    },
+    {
+      "id": "hist-051",
+      "title": "The largest empire ever",
+      "statement": "The British Empire was the largest empire in history by area, covering about a quarter of the world's land and population at its peak around 1920.",
+      "question": "Which was the largest empire in history by land area?",
+      "answer": "British Empire",
+      "answerType": "empire",
+      "hook": "'The empire on which the sun never sets' — at any hour, some part was in daylight.",
+      "wikiTitle": "British Empire",
+      "difficulty": 1
+    },
+    {
+      "id": "hist-052",
+      "title": "The empire ruled from Cusco",
+      "statement": "The Inca Empire was the largest state in pre-Columbian America, run from Cusco through a road network of over 40,000 km without the wheel or writing.",
+      "question": "Which empire was ruled from Cusco in the Andes?",
+      "answer": "Inca Empire",
+      "answerType": "empire",
+      "wikiTitle": "Inca Empire",
+      "difficulty": 2
+    },
+    {
+      "id": "hist-053",
+      "title": "The empire of Tenochtitlan",
+      "statement": "The Aztec Empire dominated central Mexico from its island capital Tenochtitlan until the Spanish conquest of 1521.",
+      "question": "Which empire was centred on the city of Tenochtitlan?",
+      "answer": "Aztec Empire",
+      "answerType": "empire",
+      "wikiTitle": "Aztec Empire",
+      "difficulty": 2
+    },
+    {
+      "id": "hist-054",
+      "title": "The surviving eastern Roman state",
+      "statement": "The Byzantine Empire was the eastern continuation of Rome, ruled from Constantinople until 1453 — nearly a thousand years after the west fell.",
+      "question": "What name is given to the eastern Roman Empire that survived until 1453?",
+      "answer": "Byzantine Empire",
+      "answerType": "empire",
+      "wikiTitle": "Byzantine Empire",
+      "difficulty": 2
+    },
+    {
+      "id": "hist-055",
+      "title": "The empire that lasted until 1922",
+      "statement": "The Ottoman Empire ruled from Constantinople for over six centuries and was dissolved in 1922 after the First World War.",
+      "question": "Which empire ruled from Constantinople from 1453 until 1922?",
+      "answer": "Ottoman Empire",
+      "answerType": "empire",
+      "wikiTitle": "Ottoman Empire",
+      "difficulty": 2
+    },
+    {
+      "id": "hist-056",
+      "title": "The Persian empire Alexander destroyed",
+      "statement": "The Achaemenid Empire, founded by Cyrus the Great, was the largest empire of the ancient world until Alexander conquered it in the 330s BC.",
+      "question": "Which Persian empire did Alexander the Great conquer?",
+      "answer": "Achaemenid Empire",
+      "answerType": "empire",
+      "wikiTitle": "Achaemenid Empire",
+      "difficulty": 3
+    },
+    {
+      "id": "hist-057",
+      "title": "Charlemagne's empire",
+      "statement": "The Carolingian Empire under Charlemagne united much of Western Europe around 800, and he was crowned Emperor of the Romans on Christmas Day.",
+      "question": "Which empire did Charlemagne rule?",
+      "answer": "Carolingian Empire",
+      "answerType": "empire",
+      "wikiTitle": "Carolingian Empire",
+      "difficulty": 3
+    },
+    {
+      "id": "hist-058",
+      "title": "The Hundred Years' War",
+      "statement": "The Hundred Years' War between England and France ran from 1337 to 1453 — 116 years of intermittent conflict.",
+      "question": "Which war between England and France lasted from 1337 to 1453?",
+      "answer": "Hundred Years' War",
+      "answerType": "war",
+      "hook": "It lasted 116 years, which makes the name an undersell.",
+      "wikiTitle": "Hundred Years' War",
+      "difficulty": 2
+    },
+    {
+      "id": "hist-059",
+      "title": "The Thirty Years' War",
+      "statement": "The Thirty Years' War (1618–1648) devastated Central Europe and ended with the Peace of Westphalia, which shaped the modern idea of state sovereignty.",
+      "question": "Which European war ran from 1618 to 1648?",
+      "answer": "Thirty Years' War",
+      "answerType": "war",
+      "wikiTitle": "Thirty Years' War",
+      "difficulty": 2
+    },
+    {
+      "id": "hist-060",
+      "title": "The Korean War",
+      "statement": "The Korean War lasted from 1950 to 1953 and ended in an armistice, not a peace treaty — so the war has technically never formally ended.",
+      "question": "Which war was fought from 1950 to 1953 and ended in an armistice?",
+      "answer": "Korean War",
+      "answerType": "war",
+      "wikiTitle": "Korean War",
+      "difficulty": 2
+    },
+    {
+      "id": "hist-061",
+      "title": "The Vietnam War",
+      "statement": "The Vietnam War ended in 1975 with the fall of Saigon and the reunification of Vietnam under the North.",
+      "question": "Which war ended with the fall of Saigon in 1975?",
+      "answer": "Vietnam War",
+      "answerType": "war",
+      "wikiTitle": "Vietnam War",
+      "difficulty": 1
+    },
+    {
+      "id": "hist-062",
+      "title": "The Punic Wars",
+      "statement": "The Punic Wars were three conflicts between Rome and Carthage; the third ended in 146 BC with Carthage destroyed.",
+      "question": "What were the three wars between Rome and Carthage called?",
+      "answer": "Punic Wars",
+      "answerType": "war",
+      "wikiTitle": "Punic Wars",
+      "difficulty": 2
+    },
+    {
+      "id": "hist-063",
+      "title": "The Cold War",
+      "statement": "The Cold War was the decades-long standoff between the United States and the Soviet Union, running from 1947 to 1991 without direct war between them.",
+      "question": "What name is given to the US–Soviet standoff from 1947 to 1991?",
+      "answer": "Cold War",
+      "answerType": "war",
+      "wikiTitle": "Cold War",
+      "difficulty": 1
+    },
+    {
+      "id": "hist-064",
+      "title": "The Crimean War",
+      "statement": "The Crimean War (1853–1856) pitted Russia against Britain, France and the Ottomans, and made Florence Nightingale famous for reforming battlefield nursing.",
+      "question": "During which war did Florence Nightingale reform battlefield nursing?",
+      "answer": "Crimean War",
+      "answerType": "war",
+      "wikiTitle": "Crimean War",
+      "difficulty": 2
+    },
+    {
+      "id": "hist-065",
+      "title": "The Spanish Civil War",
+      "statement": "The Spanish Civil War (1936–1939) ended with Francisco Franco's victory and nearly four decades of dictatorship.",
+      "question": "Which civil war ended in 1939 with Franco taking power?",
+      "answer": "Spanish Civil War",
+      "answerType": "war",
+      "wikiTitle": "Spanish Civil War",
+      "difficulty": 2
+    },
+    {
+      "id": "hist-066",
+      "title": "The treaty that ended the First World War",
+      "statement": "The Treaty of Versailles, signed in 1919, imposed heavy reparations on Germany and is widely seen as helping set the stage for the Second World War.",
+      "question": "Which treaty formally ended the First World War?",
+      "answer": "Treaty of Versailles",
+      "answerType": "document",
+      "wikiTitle": "Treaty of Versailles",
+      "difficulty": 1
+    },
+    {
+      "id": "hist-067",
+      "title": "The charter that limited the king",
+      "statement": "Magna Carta, sealed in 1215, established that the English monarch was subject to the law, and its principles echo in later constitutions.",
+      "question": "Which 1215 charter established that the English king was subject to the law?",
+      "answer": "Magna Carta",
+      "answerType": "document",
+      "wikiTitle": "Magna Carta",
+      "difficulty": 1
+    },
+    {
+      "id": "hist-068",
+      "title": "Dividing the New World",
+      "statement": "The Treaty of Tordesillas of 1494 divided newly discovered lands between Spain and Portugal along a line in the Atlantic — which is why Brazil speaks Portuguese.",
+      "question": "Which 1494 treaty divided the New World between Spain and Portugal?",
+      "answer": "Treaty of Tordesillas",
+      "answerType": "document",
+      "hook": "One line on a map is why Brazil speaks Portuguese and its neighbours speak Spanish.",
+      "wikiTitle": "Treaty of Tordesillas",
+      "difficulty": 3
+    },
+    {
+      "id": "hist-069",
+      "title": "The birth of state sovereignty",
+      "statement": "The Peace of Westphalia in 1648 ended the Thirty Years' War and is often taken as the origin of the modern system of sovereign states.",
+      "question": "Which 1648 settlement ended the Thirty Years' War?",
+      "answer": "Peace of Westphalia",
+      "answerType": "document",
+      "wikiTitle": "Peace of Westphalia",
+      "difficulty": 3
+    },
+    {
+      "id": "hist-070",
+      "title": "The document of 4 July 1776",
+      "statement": "The Declaration of Independence, largely drafted by Thomas Jefferson, announced the Thirteen Colonies' separation from Britain.",
+      "question": "Which document did the Thirteen Colonies adopt on 4 July 1776?",
+      "answer": "Declaration of Independence",
+      "answerType": "document",
+      "wikiTitle": "United States Declaration of Independence",
+      "difficulty": 1
+    },
+    {
+      "id": "hist-071",
+      "title": "Freeing the enslaved in rebel states",
+      "statement": "Lincoln's Emancipation Proclamation of 1863 declared enslaved people in Confederate-held territory to be free, reframing the Civil War around slavery.",
+      "question": "Which 1863 proclamation declared enslaved people in Confederate territory free?",
+      "answer": "Emancipation Proclamation",
+      "answerType": "document",
+      "wikiTitle": "Emancipation Proclamation",
+      "difficulty": 2
+    },
+    {
+      "id": "hist-072",
+      "title": "The first circumnavigation",
+      "statement": "Ferdinand Magellan's expedition completed the first circumnavigation of the globe in 1522, though Magellan himself was killed in the Philippines partway.",
+      "question": "Whose expedition first circumnavigated the globe?",
+      "answer": "Ferdinand Magellan",
+      "answerType": "explorer",
+      "hook": "The voyage went round the world; the captain did not.",
+      "wikiTitle": "Ferdinand Magellan",
+      "difficulty": 2
+    },
+    {
+      "id": "hist-073",
+      "title": "First to the South Pole",
+      "statement": "Roald Amundsen reached the South Pole in December 1911, beating Robert Falcon Scott's party by about five weeks.",
+      "question": "Who was the first person to reach the South Pole?",
+      "answer": "Roald Amundsen",
+      "answerType": "explorer",
+      "wikiTitle": "Roald Amundsen",
+      "difficulty": 2
+    },
+    {
+      "id": "hist-074",
+      "title": "The sea route to India",
+      "statement": "Vasco da Gama sailed around the Cape of Good Hope to reach India in 1498, opening the sea route between Europe and Asia.",
+      "question": "Who first sailed around Africa to reach India by sea?",
+      "answer": "Vasco da Gama",
+      "answerType": "explorer",
+      "wikiTitle": "Vasco da Gama",
+      "difficulty": 2
+    },
+    {
+      "id": "hist-075",
+      "title": "The Ming treasure fleets",
+      "statement": "Zheng He commanded enormous Chinese treasure fleets on seven voyages across the Indian Ocean in the early 1400s, decades before Columbus sailed.",
+      "question": "Which Chinese admiral led seven great treasure-fleet voyages in the 1400s?",
+      "answer": "Zheng He",
+      "answerType": "explorer",
+      "wikiTitle": "Zheng He",
+      "difficulty": 3
+    },
+    {
+      "id": "hist-076",
+      "title": "Mapping the Pacific",
+      "statement": "Captain James Cook charted the east coast of Australia and circumnavigated New Zealand on three Pacific voyages in the 1760s and 1770s.",
+      "question": "Which British captain charted Australia's east coast and New Zealand?",
+      "answer": "James Cook",
+      "answerType": "explorer",
+      "wikiTitle": "James Cook",
+      "difficulty": 2
+    },
+    {
+      "id": "hist-077",
+      "title": "First to reach the Americas from Europe",
+      "statement": "Leif Erikson led Norse settlers to North America around the year 1000, roughly five centuries before Columbus.",
+      "question": "Which Norse explorer reached North America around the year 1000?",
+      "answer": "Leif Erikson",
+      "answerType": "explorer",
+      "wikiTitle": "Leif Erikson",
+      "difficulty": 3
+    },
+    {
+      "id": "hist-078",
+      "title": "Napoleon's final defeat",
+      "statement": "The Battle of Waterloo in 1815 ended Napoleon's rule for good, fought in present-day Belgium against Wellington and Blücher.",
+      "question": "At which battle was Napoleon finally defeated in 1815?",
+      "answer": "Battle of Waterloo",
+      "answerType": "battle",
+      "wikiTitle": "Battle of Waterloo",
+      "difficulty": 1
+    },
+    {
+      "id": "hist-079",
+      "title": "The turning point on the Eastern Front",
+      "statement": "The Battle of Stalingrad (1942–43) was among the bloodiest battles in history and turned the Second World War against Germany in the east.",
+      "question": "Which battle turned the Second World War against Germany on the Eastern Front?",
+      "answer": "Battle of Stalingrad",
+      "answerType": "battle",
+      "wikiTitle": "Battle of Stalingrad",
+      "difficulty": 2
+    },
+    {
+      "id": "hist-080",
+      "title": "Nelson's last victory",
+      "statement": "At the Battle of Trafalgar in 1805, Admiral Nelson destroyed the Franco-Spanish fleet and was killed in the action, securing British naval dominance.",
+      "question": "At which 1805 naval battle was Admiral Nelson killed?",
+      "answer": "Battle of Trafalgar",
+      "answerType": "battle",
+      "wikiTitle": "Battle of Trafalgar",
+      "difficulty": 2
+    },
+    {
+      "id": "hist-081",
+      "title": "The Greek naval victory over Persia",
+      "statement": "At the Battle of Salamis in 480 BC, a smaller Greek fleet destroyed the Persian navy in narrow straits near Athens.",
+      "question": "At which 480 BC naval battle did the Greeks defeat the Persian fleet?",
+      "answer": "Battle of Salamis",
+      "answerType": "battle",
+      "wikiTitle": "Battle of Salamis",
+      "difficulty": 3
+    },
+    {
+      "id": "hist-082",
+      "title": "The turning point of the American Civil War",
+      "statement": "The Battle of Gettysburg in July 1863 halted the Confederate invasion of the North and is regarded as the war's turning point.",
+      "question": "Which 1863 battle is considered the turning point of the American Civil War?",
+      "answer": "Battle of Gettysburg",
+      "answerType": "battle",
+      "wikiTitle": "Battle of Gettysburg",
+      "difficulty": 2
+    },
+    {
+      "id": "hist-083",
+      "title": "The stand of the 300",
+      "statement": "At the Battle of Thermopylae in 480 BC, a small Greek force led by Spartan king Leonidas held a narrow pass against a vast Persian army.",
+      "question": "At which battle did Leonidas and a small Greek force hold a narrow pass against Persia?",
+      "answer": "Battle of Thermopylae",
+      "answerType": "battle",
+      "wikiTitle": "Battle of Thermopylae",
+      "difficulty": 2
+    },
+    {
+      "id": "hist-084",
+      "title": "The Aztec capital",
+      "statement": "Tenochtitlan, built on an island in Lake Texcoco, was the Aztec capital and one of the largest cities in the world before the Spanish destroyed it in 1521. Mexico City stands on its ruins.",
+      "question": "What was the capital city of the Aztec Empire?",
+      "answer": "Tenochtitlan",
+      "answerType": "ancient-city",
+      "wikiTitle": "Tenochtitlan",
+      "difficulty": 2
+    },
+    {
+      "id": "hist-085",
+      "title": "The city buried by Vesuvius",
+      "statement": "Pompeii was buried under volcanic ash when Mount Vesuvius erupted in AD 79, preserving its streets and residents in extraordinary detail.",
+      "question": "Which Roman city was buried by the eruption of Vesuvius in AD 79?",
+      "answer": "Pompeii",
+      "answerType": "ancient-city",
+      "wikiTitle": "Pompeii",
+      "difficulty": 1
+    },
+    {
+      "id": "hist-086",
+      "title": "The rose-red city",
+      "statement": "Petra, carved directly into sandstone cliffs in modern Jordan, was the capital of the Nabataean kingdom and a hub of the incense trade.",
+      "question": "Which ancient city in Jordan was carved into rose-coloured sandstone cliffs?",
+      "answer": "Petra",
+      "answerType": "ancient-city",
+      "wikiTitle": "Petra",
+      "difficulty": 2
+    },
+    {
+      "id": "hist-087",
+      "title": "The warrior city-state",
+      "statement": "Sparta was the militarised Greek city-state whose citizens trained for war from childhood, and Athens' great rival in the Peloponnesian War.",
+      "question": "Which Greek city-state was built around lifelong military training?",
+      "answer": "Sparta",
+      "answerType": "ancient-city",
+      "wikiTitle": "Sparta",
+      "difficulty": 1
+    },
+    {
+      "id": "hist-088",
+      "title": "The city of the Hanging Gardens",
+      "statement": "Babylon, in modern Iraq, was associated with the Hanging Gardens — one of the Seven Wonders of the Ancient World, and the only one whose existence is doubted.",
+      "question": "Which ancient city was associated with the Hanging Gardens?",
+      "answer": "Babylon",
+      "answerType": "ancient-city",
+      "wikiTitle": "Babylon",
+      "difficulty": 2
+    },
+    {
+      "id": "hist-089",
+      "title": "The revolution of 1917",
+      "statement": "The Russian Revolution of 1917 overthrew the Tsar and brought the Bolsheviks to power, ending three centuries of Romanov rule.",
+      "question": "Which revolution overthrew the Russian Tsar in 1917?",
+      "answer": "Russian Revolution",
+      "answerType": "revolution",
+      "wikiTitle": "Russian Revolution",
+      "difficulty": 1
+    },
+    {
+      "id": "hist-090",
+      "title": "The revolution that made a republic of France",
+      "statement": "The French Revolution abolished the monarchy, executed Louis XVI, and spread the ideas of liberty, equality and fraternity across Europe.",
+      "question": "Which revolution abolished the French monarchy and executed Louis XVI?",
+      "answer": "French Revolution",
+      "answerType": "revolution",
+      "wikiTitle": "French Revolution",
+      "difficulty": 1
+    },
+    {
+      "id": "hist-091",
+      "title": "The transformation that began in Britain",
+      "statement": "The Industrial Revolution began in Britain in the late 18th century, shifting the world from hand production to machines, factories and coal power.",
+      "question": "Which revolution shifted the world to machine production, beginning in Britain?",
+      "answer": "Industrial Revolution",
+      "answerType": "revolution",
+      "wikiTitle": "Industrial Revolution",
+      "difficulty": 1
+    },
+    {
+      "id": "hist-092",
+      "title": "The revolution that founded the United States",
+      "statement": "The American Revolution (1775–1783) won independence from Britain and produced a written constitution that is still in force.",
+      "question": "Which revolution won the Thirteen Colonies independence from Britain?",
+      "answer": "American Revolution",
+      "answerType": "revolution",
+      "wikiTitle": "American Revolution",
+      "difficulty": 1
+    },
+    {
+      "id": "hist-093",
+      "title": "The printing press",
+      "statement": "Johannes Gutenberg introduced movable-type printing to Europe around 1440, and within fifty years there were millions of printed books where there had been thousands of manuscripts.",
+      "question": "Who introduced movable-type printing to Europe around 1440?",
+      "answer": "Johannes Gutenberg",
+      "answerType": "historical-figure",
+      "hook": "Arguably the single invention that made every later revolution possible.",
+      "wikiTitle": "Johannes Gutenberg",
+      "difficulty": 1
+    }
+  ]
+}

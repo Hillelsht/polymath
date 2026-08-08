@@ -1,0 +1,759 @@
+{
+  "category": "culture",
+  "facts": [
+    {
+      "id": "cul-001",
+      "title": "The offer he couldn't refuse",
+      "statement": "The Godfather (1972), directed by Francis Ford Coppola, is regularly ranked among the greatest films ever made and won Best Picture.",
+      "question": "Which 1972 film features the line 'I'm gonna make him an offer he can't refuse'?",
+      "answer": "The Godfather",
+      "answerType": "film",
+      "wikiTitle": "The Godfather",
+      "difficulty": 1
+    },
+    {
+      "id": "cul-002",
+      "title": "Rosebud",
+      "statement": "Citizen Kane (1941), directed by and starring Orson Welles at 25, pioneered deep-focus cinematography and non-linear storytelling.",
+      "question": "Which 1941 film opens with a dying man whispering 'Rosebud'?",
+      "answer": "Citizen Kane",
+      "answerType": "film",
+      "wikiTitle": "Citizen Kane",
+      "difficulty": 2
+    },
+    {
+      "id": "cul-003",
+      "title": "Here's looking at you, kid",
+      "statement": "Casablanca (1942) was made as an ordinary studio picture with a script still being written during filming, and became one of cinema's most quoted classics.",
+      "question": "Which 1942 film ends at an airfield with the line 'Here's looking at you, kid'?",
+      "answer": "Casablanca",
+      "answerType": "film",
+      "wikiTitle": "Casablanca (film)",
+      "difficulty": 1
+    },
+    {
+      "id": "cul-004",
+      "title": "The highest-grossing film",
+      "statement": "Avatar (2009) is the highest-grossing film of all time, a position it regained after a re-release.",
+      "question": "Which film is the highest-grossing of all time at the global box office?",
+      "answer": "Avatar",
+      "answerType": "film",
+      "wikiTitle": "Avatar (2009 film)",
+      "difficulty": 2
+    },
+    {
+      "id": "cul-005",
+      "title": "Eleven Oscars",
+      "statement": "Titanic (1997) won 11 Academy Awards, tying Ben-Hur and The Lord of the Rings: The Return of the King for the record.",
+      "question": "Which 1997 James Cameron film won 11 Academy Awards?",
+      "answer": "Titanic",
+      "answerType": "film",
+      "wikiTitle": "Titanic (1997 film)",
+      "difficulty": 1
+    },
+    {
+      "id": "cul-006",
+      "title": "The first non-English Best Picture",
+      "statement": "Parasite (2019) became the first non-English-language film to win the Academy Award for Best Picture.",
+      "question": "Which South Korean film was the first non-English-language Best Picture winner?",
+      "answer": "Parasite",
+      "answerType": "film",
+      "wikiTitle": "Parasite (2019 film)",
+      "difficulty": 2
+    },
+    {
+      "id": "cul-007",
+      "title": "A galaxy far, far away",
+      "statement": "Star Wars (1977) was released to low studio expectations and became the highest-grossing film of its time, reshaping the blockbuster.",
+      "question": "Which 1977 film opens with the words 'A long time ago in a galaxy far, far away'?",
+      "answer": "Star Wars",
+      "answerType": "film",
+      "wikiTitle": "Star Wars (film)",
+      "difficulty": 1
+    },
+    {
+      "id": "cul-008",
+      "title": "The shark that barely appears",
+      "statement": "Jaws (1975) invented the summer blockbuster. Its mechanical shark kept malfunctioning, so Spielberg suggested it rather than showing it — which made it scarier.",
+      "question": "Which 1975 Spielberg film created the summer blockbuster?",
+      "answer": "Jaws",
+      "answerType": "film",
+      "hook": "The shark works because the machine broke.",
+      "wikiTitle": "Jaws (film)",
+      "difficulty": 1
+    },
+    {
+      "id": "cul-009",
+      "title": "The dream within a dream",
+      "statement": "Inception (2010), written and directed by Christopher Nolan, follows thieves who steal secrets by entering dreams.",
+      "question": "Which Christopher Nolan film follows thieves who steal secrets inside dreams?",
+      "answer": "Inception",
+      "answerType": "film",
+      "difficulty": 1,
+      "wikiTitle": "Inception"
+    },
+    {
+      "id": "cul-010",
+      "title": "The Shawshank Redemption",
+      "statement": "The Shawshank Redemption (1994) flopped in cinemas and became one of the most beloved films of all time through television and home video.",
+      "question": "Which 1994 prison film flopped at the box office but became a all-time favourite on television?",
+      "answer": "The Shawshank Redemption",
+      "answerType": "film",
+      "wikiTitle": "The Shawshank Redemption",
+      "difficulty": 2
+    },
+    {
+      "id": "cul-011",
+      "title": "The non-linear crime film",
+      "statement": "Pulp Fiction (1994) told its story out of order and won the Palme d'Or, making Quentin Tarantino a household name.",
+      "question": "Which 1994 Tarantino film tells its interlocking stories out of chronological order?",
+      "answer": "Pulp Fiction",
+      "answerType": "film",
+      "wikiTitle": "Pulp Fiction",
+      "difficulty": 1
+    },
+    {
+      "id": "cul-012",
+      "title": "The Wizard of Oz",
+      "statement": "The Wizard of Oz (1939) switches from sepia to Technicolor when Dorothy arrives in Oz — one of cinema's most famous visual moments.",
+      "question": "Which 1939 film switches from sepia to colour when the heroine arrives in a magical land?",
+      "answer": "The Wizard of Oz",
+      "answerType": "film",
+      "wikiTitle": "The Wizard of Oz (1939 film)",
+      "difficulty": 1
+    },
+    {
+      "id": "cul-013",
+      "title": "The master of suspense",
+      "statement": "Alfred Hitchcock directed Psycho, Vertigo and Rear Window, and never won a competitive Academy Award for directing.",
+      "question": "Which director was known as the Master of Suspense?",
+      "answer": "Alfred Hitchcock",
+      "answerType": "director",
+      "wikiTitle": "Alfred Hitchcock",
+      "difficulty": 1
+    },
+    {
+      "id": "cul-014",
+      "title": "The blockbuster architect",
+      "statement": "Steven Spielberg directed Jaws, E.T., Jurassic Park and Schindler's List, and is the highest-grossing director in history.",
+      "question": "Which director made Jaws, E.T. and Jurassic Park?",
+      "answer": "Steven Spielberg",
+      "answerType": "director",
+      "wikiTitle": "Steven Spielberg",
+      "difficulty": 1
+    },
+    {
+      "id": "cul-015",
+      "title": "The perfectionist",
+      "statement": "Stanley Kubrick directed 2001: A Space Odyssey, A Clockwork Orange and The Shining, and was famous for demanding dozens of takes.",
+      "question": "Which director made 2001: A Space Odyssey and The Shining?",
+      "answer": "Stanley Kubrick",
+      "answerType": "director",
+      "wikiTitle": "Stanley Kubrick",
+      "difficulty": 2
+    },
+    {
+      "id": "cul-016",
+      "title": "The samurai epics",
+      "statement": "Akira Kurosawa directed Seven Samurai and Rashomon, and profoundly influenced Western cinema — Star Wars and The Magnificent Seven both borrow from him.",
+      "question": "Which Japanese director made Seven Samurai and Rashomon?",
+      "answer": "Akira Kurosawa",
+      "answerType": "director",
+      "wikiTitle": "Akira Kurosawa",
+      "difficulty": 2
+    },
+    {
+      "id": "cul-017",
+      "title": "The animator of Spirited Away",
+      "statement": "Hayao Miyazaki co-founded Studio Ghibli and directed Spirited Away, which won the Academy Award for Best Animated Feature.",
+      "question": "Which Japanese animator directed Spirited Away and co-founded Studio Ghibli?",
+      "answer": "Hayao Miyazaki",
+      "answerType": "director",
+      "wikiTitle": "Hayao Miyazaki",
+      "difficulty": 2
+    },
+    {
+      "id": "cul-018",
+      "title": "The first woman to win Best Director",
+      "statement": "Kathryn Bigelow became the first woman to win the Academy Award for Best Director, for The Hurt Locker in 2010.",
+      "question": "Who was the first woman to win the Academy Award for Best Director?",
+      "answer": "Kathryn Bigelow",
+      "answerType": "director",
+      "wikiTitle": "Kathryn Bigelow",
+      "difficulty": 3
+    },
+    {
+      "id": "cul-019",
+      "title": "The Godfather's director",
+      "statement": "Francis Ford Coppola directed The Godfather trilogy and Apocalypse Now, winning five Academy Awards across his career.",
+      "question": "Who directed The Godfather and Apocalypse Now?",
+      "answer": "Francis Ford Coppola",
+      "answerType": "director",
+      "wikiTitle": "Francis Ford Coppola",
+      "difficulty": 2
+    },
+    {
+      "id": "cul-020",
+      "title": "The director of Parasite",
+      "statement": "Bong Joon-ho directed Parasite, winning four Oscars in one night including Best Director and Best Picture.",
+      "question": "Who directed Parasite?",
+      "answer": "Bong Joon-ho",
+      "answerType": "director",
+      "wikiTitle": "Bong Joon-ho",
+      "difficulty": 2
+    },
+    {
+      "id": "cul-021",
+      "title": "The most Oscar-nominated actor",
+      "statement": "Meryl Streep has received more acting Academy Award nominations than anyone in history, with 21 nominations and three wins.",
+      "question": "Which actor has the most Academy Award acting nominations?",
+      "answer": "Meryl Streep",
+      "answerType": "actor",
+      "wikiTitle": "Meryl Streep",
+      "difficulty": 1
+    },
+    {
+      "id": "cul-022",
+      "title": "The Little Tramp",
+      "statement": "Charlie Chaplin wrote, directed, scored and starred in his own films, and resisted sound cinema for years after it arrived.",
+      "question": "Which silent-film star created the character of the Little Tramp?",
+      "answer": "Charlie Chaplin",
+      "answerType": "actor",
+      "wikiTitle": "Charlie Chaplin",
+      "difficulty": 1
+    },
+    {
+      "id": "cul-023",
+      "title": "The Method actor of the Godfather",
+      "statement": "Marlon Brando won an Oscar for The Godfather and declined it in protest at Hollywood's portrayal of Native Americans.",
+      "question": "Which actor refused his Best Actor Oscar for The Godfather?",
+      "answer": "Marlon Brando",
+      "answerType": "actor",
+      "wikiTitle": "Marlon Brando",
+      "difficulty": 2
+    },
+    {
+      "id": "cul-024",
+      "title": "Breakfast at Tiffany's",
+      "statement": "Audrey Hepburn won an Oscar for Roman Holiday and later devoted much of her life to UNICEF.",
+      "question": "Which actor starred in Breakfast at Tiffany's and Roman Holiday?",
+      "answer": "Audrey Hepburn",
+      "answerType": "actor",
+      "wikiTitle": "Audrey Hepburn",
+      "difficulty": 1
+    },
+    {
+      "id": "cul-025",
+      "title": "Back-to-back Best Actor Oscars",
+      "statement": "Tom Hanks won consecutive Best Actor Oscars for Philadelphia and Forrest Gump, a feat matched by only one other actor.",
+      "question": "Which actor won back-to-back Best Actor Oscars for Philadelphia and Forrest Gump?",
+      "answer": "Tom Hanks",
+      "answerType": "actor",
+      "wikiTitle": "Tom Hanks",
+      "difficulty": 2
+    },
+    {
+      "id": "cul-026",
+      "title": "Three Best Actress wins",
+      "statement": "Frances McDormand has won three Best Actress Oscars, for Fargo, Three Billboards and Nomadland.",
+      "question": "Which actor won Best Actress Oscars for Fargo, Three Billboards and Nomadland?",
+      "answer": "Frances McDormand",
+      "answerType": "actor",
+      "wikiTitle": "Frances McDormand",
+      "difficulty": 3
+    },
+    {
+      "id": "cul-027",
+      "title": "The long-awaited Oscar",
+      "statement": "Leonardo DiCaprio won his first Academy Award for The Revenant in 2016, after five previous nominations.",
+      "question": "Which actor finally won an Oscar for The Revenant after years of nominations?",
+      "answer": "Leonardo DiCaprio",
+      "answerType": "actor",
+      "wikiTitle": "Leonardo DiCaprio",
+      "difficulty": 1
+    },
+    {
+      "id": "cul-028",
+      "title": "The most Oscar-winning actor",
+      "statement": "Katharine Hepburn won four Best Actress Academy Awards, more than any other performer, and attended none of the ceremonies.",
+      "question": "Which actor won four Best Actress Academy Awards?",
+      "answer": "Katharine Hepburn",
+      "answerType": "actor",
+      "wikiTitle": "Katharine Hepburn",
+      "difficulty": 3
+    },
+    {
+      "id": "cul-029",
+      "title": "The best-selling band",
+      "statement": "The Beatles are the best-selling music act in history, and in April 1964 held all top five positions on the US singles chart.",
+      "question": "Which band is the best-selling music act of all time?",
+      "answer": "The Beatles",
+      "answerType": "musician",
+      "hook": "In one week in 1964 they were the entire American top five.",
+      "wikiTitle": "The Beatles",
+      "difficulty": 1
+    },
+    {
+      "id": "cul-030",
+      "title": "The King of Pop",
+      "statement": "Michael Jackson's Thriller is the best-selling album of all time, and its 14-minute video changed what music videos could be.",
+      "question": "Which artist recorded Thriller, the best-selling album of all time?",
+      "answer": "Michael Jackson",
+      "answerType": "musician",
+      "wikiTitle": "Michael Jackson",
+      "difficulty": 1
+    },
+    {
+      "id": "cul-031",
+      "title": "The Queen of Soul",
+      "statement": "Aretha Franklin was the first woman inducted into the Rock and Roll Hall of Fame, and her version of Respect became a civil-rights and feminist anthem.",
+      "question": "Which singer was known as the Queen of Soul?",
+      "answer": "Aretha Franklin",
+      "answerType": "musician",
+      "wikiTitle": "Aretha Franklin",
+      "difficulty": 1
+    },
+    {
+      "id": "cul-032",
+      "title": "The Nobel laureate songwriter",
+      "statement": "Bob Dylan won the Nobel Prize in Literature in 2016, the first songwriter to receive it.",
+      "question": "Which songwriter won the Nobel Prize in Literature in 2016?",
+      "answer": "Bob Dylan",
+      "answerType": "musician",
+      "wikiTitle": "Bob Dylan",
+      "difficulty": 2
+    },
+    {
+      "id": "cul-033",
+      "title": "The Rolling Stones",
+      "statement": "The Rolling Stones have toured for over sixty years, the longest continuous run of any major rock band.",
+      "question": "Which band, formed in 1962, has toured for over sixty years with Mick Jagger as frontman?",
+      "answer": "The Rolling Stones",
+      "answerType": "musician",
+      "wikiTitle": "The Rolling Stones",
+      "difficulty": 1
+    },
+    {
+      "id": "cul-034",
+      "title": "Bohemian Rhapsody",
+      "statement": "Queen's Bohemian Rhapsody has no chorus, runs nearly six minutes, and was declared uncommercial by their label before becoming a global hit.",
+      "question": "Which band recorded Bohemian Rhapsody?",
+      "answer": "Queen",
+      "answerType": "musician",
+      "wikiTitle": "Queen (band)",
+      "difficulty": 1
+    },
+    {
+      "id": "cul-035",
+      "title": "The most Grammys",
+      "statement": "Beyoncé has won more Grammy Awards than any other artist in history.",
+      "question": "Which artist has won the most Grammy Awards of all time?",
+      "answer": "Beyoncé",
+      "answerType": "musician",
+      "wikiTitle": "Beyoncé",
+      "difficulty": 2
+    },
+    {
+      "id": "cul-036",
+      "title": "The King of Rock and Roll",
+      "statement": "Elvis Presley brought rhythm and blues into the American mainstream and remains one of the best-selling solo artists ever.",
+      "question": "Which singer was known as the King of Rock and Roll?",
+      "answer": "Elvis Presley",
+      "answerType": "musician",
+      "wikiTitle": "Elvis Presley",
+      "difficulty": 1
+    },
+    {
+      "id": "cul-037",
+      "title": "The re-recording artist",
+      "statement": "Taylor Swift re-recorded her early albums to regain control of her master recordings, and her Eras Tour became the highest-grossing concert tour ever.",
+      "question": "Which artist re-recorded her early albums to own her masters?",
+      "answer": "Taylor Swift",
+      "answerType": "musician",
+      "wikiTitle": "Taylor Swift",
+      "difficulty": 1
+    },
+    {
+      "id": "cul-038",
+      "title": "The reggae ambassador",
+      "statement": "Bob Marley brought reggae to a global audience with Exodus, named album of the century by Time magazine.",
+      "question": "Which Jamaican musician brought reggae to a worldwide audience?",
+      "answer": "Bob Marley",
+      "answerType": "musician",
+      "wikiTitle": "Bob Marley",
+      "difficulty": 1
+    },
+    {
+      "id": "cul-039",
+      "title": "The guitarist who played it upside down",
+      "statement": "Jimi Hendrix, left-handed, played a restrung right-handed Stratocaster and is regularly named the greatest electric guitarist in history.",
+      "question": "Which guitarist played a restrung right-handed Stratocaster left-handed?",
+      "answer": "Jimi Hendrix",
+      "answerType": "musician",
+      "wikiTitle": "Jimi Hendrix",
+      "difficulty": 2
+    },
+    {
+      "id": "cul-040",
+      "title": "The Swedish pop giants",
+      "statement": "ABBA won Eurovision in 1974 with Waterloo and became one of the best-selling acts in pop history.",
+      "question": "Which Swedish group won Eurovision in 1974 with Waterloo?",
+      "answer": "ABBA",
+      "answerType": "musician",
+      "wikiTitle": "ABBA",
+      "difficulty": 1
+    },
+    {
+      "id": "cul-041",
+      "title": "The best-selling album",
+      "statement": "Thriller (1982) is the best-selling album of all time, with estimated sales above 65 million copies.",
+      "question": "What is the best-selling album of all time?",
+      "answer": "Thriller",
+      "answerType": "recording",
+      "wikiTitle": "Thriller (album)",
+      "difficulty": 1
+    },
+    {
+      "id": "cul-042",
+      "title": "The album on the crossing",
+      "statement": "Abbey Road's cover, showing the Beatles on a zebra crossing, has made that London street corner a permanent tourist site.",
+      "question": "Which Beatles album cover shows the band crossing a London street?",
+      "answer": "Abbey Road",
+      "answerType": "recording",
+      "wikiTitle": "Abbey Road",
+      "difficulty": 1
+    },
+    {
+      "id": "cul-043",
+      "title": "The prism cover",
+      "statement": "Pink Floyd's The Dark Side of the Moon spent over 900 weeks on the Billboard 200, and its prism cover is one of the most recognisable images in music.",
+      "question": "Which Pink Floyd album has a prism splitting light on its cover?",
+      "answer": "The Dark Side of the Moon",
+      "answerType": "recording",
+      "wikiTitle": "The Dark Side of the Moon",
+      "difficulty": 2
+    },
+    {
+      "id": "cul-044",
+      "title": "The concept album that changed pop",
+      "statement": "Sgt. Pepper's Lonely Hearts Club Band was the first rock album to win the Grammy for Album of the Year.",
+      "question": "Which 1967 Beatles album was the first rock record to win Album of the Year?",
+      "answer": "Sgt. Pepper's Lonely Hearts Club Band",
+      "answerType": "recording",
+      "wikiTitle": "Sgt. Pepper's Lonely Hearts Club Band",
+      "difficulty": 2
+    },
+    {
+      "id": "cul-045",
+      "title": "The song about a girl named Jude",
+      "statement": "Hey Jude was written by Paul McCartney to comfort John Lennon's son Julian during his parents' divorce.",
+      "question": "Which Beatles song was written to comfort John Lennon's young son?",
+      "answer": "Hey Jude",
+      "answerType": "recording",
+      "wikiTitle": "Hey Jude",
+      "difficulty": 2
+    },
+    {
+      "id": "cul-046",
+      "title": "The most covered song",
+      "statement": "Yesterday by the Beatles is among the most covered songs in history, with thousands of recorded versions.",
+      "question": "Which Beatles ballad is one of the most covered songs ever recorded?",
+      "answer": "Yesterday",
+      "answerType": "recording",
+      "wikiTitle": "Yesterday (Beatles song)",
+      "difficulty": 2
+    },
+    {
+      "id": "cul-047",
+      "title": "The show about nothing",
+      "statement": "Seinfeld ran for nine seasons and was famously pitched as 'a show about nothing', built on the rule of no hugging and no learning.",
+      "question": "Which sitcom was pitched as 'a show about nothing'?",
+      "answer": "Seinfeld",
+      "answerType": "tv-show",
+      "wikiTitle": "Seinfeld",
+      "difficulty": 1
+    },
+    {
+      "id": "cul-048",
+      "title": "The longest-running scripted show",
+      "statement": "The Simpsons is the longest-running American scripted primetime television series, on air since 1989.",
+      "question": "Which animated series is the longest-running American scripted primetime show?",
+      "answer": "The Simpsons",
+      "answerType": "tv-show",
+      "wikiTitle": "The Simpsons",
+      "difficulty": 1
+    },
+    {
+      "id": "cul-049",
+      "title": "The chemistry teacher",
+      "statement": "Breaking Bad follows a high-school chemistry teacher who becomes a drug manufacturer, and is among the most acclaimed dramas ever made.",
+      "question": "Which series follows a chemistry teacher turned drug manufacturer?",
+      "answer": "Breaking Bad",
+      "answerType": "tv-show",
+      "wikiTitle": "Breaking Bad",
+      "difficulty": 1
+    },
+    {
+      "id": "cul-050",
+      "title": "The show with the Iron Throne",
+      "statement": "Game of Thrones, adapted from George R. R. Martin's novels, won more Emmy Awards than any other scripted series.",
+      "question": "Which fantasy series centres on the fight for the Iron Throne?",
+      "answer": "Game of Thrones",
+      "answerType": "tv-show",
+      "wikiTitle": "Game of Thrones",
+      "difficulty": 1
+    },
+    {
+      "id": "cul-051",
+      "title": "The New Jersey mob drama",
+      "statement": "The Sopranos is widely credited with beginning the era of prestige television when it premiered in 1999.",
+      "question": "Which HBO drama about a New Jersey mob boss began prestige television?",
+      "answer": "The Sopranos",
+      "answerType": "tv-show",
+      "wikiTitle": "The Sopranos",
+      "difficulty": 2
+    },
+    {
+      "id": "cul-052",
+      "title": "The six friends",
+      "statement": "Friends ran for ten seasons from 1994 to 2004 and remains one of the most-streamed shows in the world.",
+      "question": "Which sitcom followed six friends in New York from 1994 to 2004?",
+      "answer": "Friends",
+      "answerType": "tv-show",
+      "wikiTitle": "Friends",
+      "difficulty": 1
+    },
+    {
+      "id": "cul-053",
+      "title": "The Baltimore drama",
+      "statement": "The Wire examined a different institution of a single city each season and is frequently called the greatest television series ever made.",
+      "question": "Which HBO series examined the institutions of Baltimore, one per season?",
+      "answer": "The Wire",
+      "answerType": "tv-show",
+      "wikiTitle": "The Wire",
+      "difficulty": 2
+    },
+    {
+      "id": "cul-054",
+      "title": "The Korean survival game",
+      "statement": "Squid Game became Netflix's most-watched series debut, and made a Korean-language show a global phenomenon.",
+      "question": "Which Korean series about deadly children's games became a global Netflix hit?",
+      "answer": "Squid Game",
+      "answerType": "tv-show",
+      "wikiTitle": "Squid Game",
+      "difficulty": 1
+    },
+    {
+      "id": "cul-055",
+      "title": "The boy who lived",
+      "statement": "Harry Potter, created by J. K. Rowling, appears in seven novels that have sold over 500 million copies.",
+      "question": "Which fictional character is 'the boy who lived' and attends Hogwarts?",
+      "answer": "Harry Potter",
+      "answerType": "character",
+      "wikiTitle": "Harry Potter (character)",
+      "difficulty": 1
+    },
+    {
+      "id": "cul-056",
+      "title": "The detective of Baker Street",
+      "statement": "Sherlock Holmes, created by Arthur Conan Doyle, is the most portrayed literary human character in film and television.",
+      "question": "Which detective lives at 221B Baker Street?",
+      "answer": "Sherlock Holmes",
+      "answerType": "character",
+      "wikiTitle": "Sherlock Holmes",
+      "difficulty": 1
+    },
+    {
+      "id": "cul-057",
+      "title": "Agent 007",
+      "statement": "James Bond, created by Ian Fleming, has been played by several actors across one of the longest-running film franchises in history.",
+      "question": "Which fictional spy has the code number 007?",
+      "answer": "James Bond",
+      "answerType": "character",
+      "wikiTitle": "James Bond",
+      "difficulty": 1
+    },
+    {
+      "id": "cul-058",
+      "title": "The hobbit with the Ring",
+      "statement": "Frodo Baggins carries the One Ring to Mount Doom in J. R. R. Tolkien's The Lord of the Rings.",
+      "question": "Which hobbit carries the One Ring to Mount Doom?",
+      "answer": "Frodo Baggins",
+      "answerType": "character",
+      "wikiTitle": "Frodo Baggins",
+      "difficulty": 1
+    },
+    {
+      "id": "cul-059",
+      "title": "The Dark Knight",
+      "statement": "Batman, created by Bob Kane and Bill Finger in 1939, is the most prominent superhero with no superpowers.",
+      "question": "Which superhero, created in 1939, protects Gotham City without any superpowers?",
+      "answer": "Batman",
+      "answerType": "character",
+      "wikiTitle": "Batman",
+      "difficulty": 1
+    },
+    {
+      "id": "cul-060",
+      "title": "The mouse who started a studio",
+      "statement": "Mickey Mouse debuted in Steamboat Willie in 1928, one of the first cartoons with synchronised sound.",
+      "question": "Which character debuted in the 1928 cartoon Steamboat Willie?",
+      "answer": "Mickey Mouse",
+      "answerType": "character",
+      "wikiTitle": "Mickey Mouse",
+      "difficulty": 1
+    },
+    {
+      "id": "cul-061",
+      "title": "The Jedi master in green",
+      "statement": "Yoda, the small green Jedi master of the Star Wars films, speaks in a distinctive inverted word order.",
+      "question": "Which small green Jedi master trains Luke Skywalker?",
+      "answer": "Yoda",
+      "answerType": "character",
+      "wikiTitle": "Yoda",
+      "difficulty": 1
+    },
+    {
+      "id": "cul-062",
+      "title": "The plumber of the Mushroom Kingdom",
+      "statement": "Mario first appeared in 1981's Donkey Kong as a carpenter called Jumpman, and became gaming's most recognisable character.",
+      "question": "Which Nintendo character first appeared as 'Jumpman' in Donkey Kong?",
+      "answer": "Mario",
+      "answerType": "character",
+      "hook": "He started as a carpenter with a different name.",
+      "wikiTitle": "Mario",
+      "difficulty": 2
+    },
+    {
+      "id": "cul-063",
+      "title": "The film Oscars",
+      "statement": "The Academy Awards, first held in 1929, are the oldest entertainment awards ceremony in the world.",
+      "question": "What are the Academy Awards commonly known as?",
+      "answer": "The Oscars",
+      "answerType": "award",
+      "wikiTitle": "Academy Awards",
+      "difficulty": 1
+    },
+    {
+      "id": "cul-064",
+      "title": "The television awards",
+      "statement": "The Emmy Awards honour excellence in television, with separate ceremonies for primetime, daytime and news programming.",
+      "question": "Which awards honour excellence in television?",
+      "answer": "The Emmy Awards",
+      "answerType": "award",
+      "wikiTitle": "Emmy Awards",
+      "difficulty": 1
+    },
+    {
+      "id": "cul-065",
+      "title": "The theatre awards",
+      "statement": "The Tony Awards recognise achievement in Broadway theatre, and are named after producer Antoinette Perry.",
+      "question": "Which awards recognise achievement in Broadway theatre?",
+      "answer": "The Tony Awards",
+      "answerType": "award",
+      "wikiTitle": "Tony Awards",
+      "difficulty": 2
+    },
+    {
+      "id": "cul-066",
+      "title": "The music awards",
+      "statement": "The Grammy Awards honour achievement in the recording industry, awarded by the Recording Academy since 1959.",
+      "question": "Which awards honour achievement in the recording industry?",
+      "answer": "The Grammy Awards",
+      "answerType": "award",
+      "wikiTitle": "Grammy Awards",
+      "difficulty": 1
+    },
+    {
+      "id": "cul-067",
+      "title": "EGOT",
+      "statement": "An EGOT is achieved by winning an Emmy, a Grammy, an Oscar and a Tony — a feat completed by only around twenty people.",
+      "question": "What acronym describes winning an Emmy, Grammy, Oscar and Tony?",
+      "answer": "EGOT",
+      "answerType": "award",
+      "wikiTitle": "EGOT",
+      "difficulty": 2
+    },
+    {
+      "id": "cul-068",
+      "title": "The Cannes top prize",
+      "statement": "The Palme d'Or is the highest prize at the Cannes Film Festival, awarded to the best film in competition.",
+      "question": "What is the top prize at the Cannes Film Festival?",
+      "answer": "Palme d'Or",
+      "answerType": "award",
+      "wikiTitle": "Palme d'Or",
+      "difficulty": 2
+    },
+    {
+      "id": "cul-069",
+      "title": "The best-selling video game",
+      "statement": "Minecraft is the best-selling video game of all time, with over 300 million copies sold.",
+      "question": "What is the best-selling video game of all time?",
+      "answer": "Minecraft",
+      "answerType": "franchise",
+      "wikiTitle": "Minecraft",
+      "difficulty": 1
+    },
+    {
+      "id": "cul-070",
+      "title": "The highest-grossing media franchise",
+      "statement": "Pokémon is the highest-grossing media franchise in history, ahead of Star Wars and Marvel, counting games, cards, toys and film.",
+      "question": "What is the highest-grossing media franchise of all time?",
+      "answer": "Pokémon",
+      "answerType": "franchise",
+      "hook": "It out-earns Star Wars and Marvel — mostly on trading cards and toys.",
+      "wikiTitle": "Pokémon",
+      "difficulty": 2
+    },
+    {
+      "id": "cul-071",
+      "title": "The best-selling book series",
+      "statement": "Harry Potter is the best-selling book series in history, translated into more than 80 languages.",
+      "question": "What is the best-selling book series of all time?",
+      "answer": "Harry Potter",
+      "answerType": "franchise",
+      "wikiTitle": "Harry Potter",
+      "difficulty": 1
+    },
+    {
+      "id": "cul-072",
+      "title": "The highest-grossing film series",
+      "statement": "The Marvel Cinematic Universe is the highest-grossing film franchise in history, spanning more than thirty interconnected films.",
+      "question": "Which is the highest-grossing film franchise of all time?",
+      "answer": "Marvel Cinematic Universe",
+      "answerType": "franchise",
+      "wikiTitle": "Marvel Cinematic Universe",
+      "difficulty": 1
+    },
+    {
+      "id": "cul-073",
+      "title": "The streaming pioneer",
+      "statement": "Netflix began as a DVD-by-post rental service in 1997 and moved to streaming in 2007, reshaping how television is made and watched.",
+      "question": "Which company began as a DVD rental service before pioneering streaming?",
+      "answer": "Netflix",
+      "answerType": "franchise",
+      "wikiTitle": "Netflix",
+      "difficulty": 1
+    },
+    {
+      "id": "cul-074",
+      "title": "The most-watched sporting broadcast",
+      "statement": "The FIFA World Cup final is the most watched sporting event on Earth, drawing over a billion viewers.",
+      "question": "Which single sporting event draws the largest global television audience?",
+      "answer": "The FIFA World Cup final",
+      "answerType": "franchise",
+      "wikiTitle": "FIFA World Cup",
+      "difficulty": 2
+    },
+    {
+      "id": "cul-075",
+      "title": "The Eurovision Song Contest",
+      "statement": "Eurovision, held annually since 1956, is the longest-running international televised music competition, and launched ABBA and Céline Dion.",
+      "question": "Which annual competition is the longest-running international televised music contest?",
+      "answer": "Eurovision Song Contest",
+      "answerType": "franchise",
+      "wikiTitle": "Eurovision Song Contest",
+      "difficulty": 2
+    }
+  ]
+}

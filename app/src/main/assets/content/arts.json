@@ -1,0 +1,931 @@
+{
+  "category": "arts",
+  "facts": [
+    {
+      "id": "art-001",
+      "title": "The most famous painting in the world",
+      "statement": "Leonardo da Vinci's Mona Lisa hangs in the Louvre. Its global fame dates largely from its theft in 1911, which put it on front pages worldwide.",
+      "question": "Which painting by Leonardo da Vinci hangs in the Louvre and is the world's most famous portrait?",
+      "answer": "Mona Lisa",
+      "answerType": "painting",
+      "hook": "It became the most famous painting on Earth because somebody stole it.",
+      "wikiTitle": "Mona Lisa",
+      "difficulty": 1
+    },
+    {
+      "id": "art-002",
+      "title": "The swirling night sky",
+      "statement": "Vincent van Gogh painted The Starry Night in 1889 from his room at an asylum in Saint-Rémy, working from memory and imagination.",
+      "question": "Which Van Gogh painting shows a swirling night sky over a village?",
+      "answer": "The Starry Night",
+      "answerType": "painting",
+      "wikiTitle": "The Starry Night",
+      "difficulty": 1
+    },
+    {
+      "id": "art-003",
+      "title": "The face of anxiety",
+      "statement": "Edvard Munch's The Scream exists in four versions and depicts a figure under a blood-red sky that Munch said he saw over Oslo.",
+      "question": "Which Edvard Munch work shows a figure holding its face under a red sky?",
+      "answer": "The Scream",
+      "answerType": "painting",
+      "wikiTitle": "The Scream",
+      "difficulty": 1
+    },
+    {
+      "id": "art-004",
+      "title": "The painting against war",
+      "statement": "Picasso's Guernica, painted in 1937, depicts the bombing of a Basque town during the Spanish Civil War and became the definitive anti-war painting.",
+      "question": "Which Picasso mural depicts the bombing of a Basque town in 1937?",
+      "answer": "Guernica",
+      "answerType": "painting",
+      "wikiTitle": "Guernica (Picasso)",
+      "difficulty": 2
+    },
+    {
+      "id": "art-005",
+      "title": "The melting clocks",
+      "statement": "Salvador Dalí's The Persistence of Memory, with its drooping pocket watches, is the best-known image of Surrealism.",
+      "question": "Which Dalí painting features melting clocks?",
+      "answer": "The Persistence of Memory",
+      "answerType": "painting",
+      "wikiTitle": "The Persistence of Memory",
+      "difficulty": 2
+    },
+    {
+      "id": "art-006",
+      "title": "Venus on a shell",
+      "statement": "Botticelli's The Birth of Venus shows the goddess arriving on a scallop shell, and hangs in the Uffizi in Florence.",
+      "question": "Which Botticelli painting shows Venus arriving on a scallop shell?",
+      "answer": "The Birth of Venus",
+      "answerType": "painting",
+      "wikiTitle": "The Birth of Venus",
+      "difficulty": 2
+    },
+    {
+      "id": "art-007",
+      "title": "The Dutch Mona Lisa",
+      "statement": "Vermeer's Girl with a Pearl Earring is not a portrait of a specific person but a tronie — a study of a type or expression.",
+      "question": "Which Vermeer painting is nicknamed 'the Dutch Mona Lisa'?",
+      "answer": "Girl with a Pearl Earring",
+      "answerType": "painting",
+      "wikiTitle": "Girl with a Pearl Earring",
+      "difficulty": 2
+    },
+    {
+      "id": "art-008",
+      "title": "The mural in Milan",
+      "statement": "Leonardo's The Last Supper is painted on a refectory wall in Milan. He used an experimental technique that began deteriorating within his lifetime.",
+      "question": "Which Leonardo mural in Milan shows Christ's final meal with the apostles?",
+      "answer": "The Last Supper",
+      "answerType": "painting",
+      "wikiTitle": "The Last Supper (Leonardo)",
+      "difficulty": 1
+    },
+    {
+      "id": "art-009",
+      "title": "The farmer and the pitchfork",
+      "statement": "Grant Wood's American Gothic shows a farmer and his daughter — not his wife — in front of a Iowa farmhouse, and became an icon of rural America.",
+      "question": "Which painting shows a stern farmer holding a pitchfork beside a woman?",
+      "answer": "American Gothic",
+      "answerType": "painting",
+      "wikiTitle": "American Gothic",
+      "difficulty": 2
+    },
+    {
+      "id": "art-010",
+      "title": "The Spanish royal puzzle",
+      "statement": "Velázquez's Las Meninas plays games with perspective and the viewer's position, and is often called the greatest painting in the Prado.",
+      "question": "Which Velázquez painting depicts the Spanish royal household and the artist himself at work?",
+      "answer": "Las Meninas",
+      "answerType": "painting",
+      "wikiTitle": "Las Meninas",
+      "difficulty": 3
+    },
+    {
+      "id": "art-011",
+      "title": "Rembrandt's militia",
+      "statement": "Rembrandt's The Night Watch is not actually a night scene — centuries of darkened varnish gave it the name.",
+      "question": "Which Rembrandt group portrait of a militia company is misleadingly named for the night?",
+      "answer": "The Night Watch",
+      "answerType": "painting",
+      "hook": "It was only 'night' because the varnish went brown.",
+      "wikiTitle": "The Night Watch",
+      "difficulty": 2
+    },
+    {
+      "id": "art-012",
+      "title": "The ceiling in Rome",
+      "statement": "Michelangelo painted the Sistine Chapel ceiling between 1508 and 1512, standing on scaffolding rather than lying down as legend has it.",
+      "question": "Which ceiling did Michelangelo paint between 1508 and 1512?",
+      "answer": "The Sistine Chapel ceiling",
+      "answerType": "painting",
+      "wikiTitle": "Sistine Chapel ceiling",
+      "difficulty": 1
+    },
+    {
+      "id": "art-013",
+      "title": "The polymath of Vinci",
+      "statement": "Leonardo da Vinci was a painter, anatomist, engineer and inventor whose notebooks sketched flying machines centuries before flight.",
+      "question": "Who painted the Mona Lisa?",
+      "answer": "Leonardo da Vinci",
+      "answerType": "painter",
+      "wikiTitle": "Leonardo da Vinci",
+      "difficulty": 1
+    },
+    {
+      "id": "art-014",
+      "title": "The painter who sold almost nothing",
+      "statement": "Vincent van Gogh produced around 2,100 artworks and sold very few in his lifetime; he died at 37 in relative obscurity.",
+      "question": "Who painted Sunflowers and The Starry Night?",
+      "answer": "Vincent van Gogh",
+      "answerType": "painter",
+      "wikiTitle": "Vincent van Gogh",
+      "difficulty": 1
+    },
+    {
+      "id": "art-015",
+      "title": "The co-founder of Cubism",
+      "statement": "Pablo Picasso co-founded Cubism with Georges Braque and produced an estimated 50,000 works across painting, sculpture and ceramics.",
+      "question": "Who co-founded Cubism and painted Guernica?",
+      "answer": "Pablo Picasso",
+      "answerType": "painter",
+      "wikiTitle": "Pablo Picasso",
+      "difficulty": 1
+    },
+    {
+      "id": "art-016",
+      "title": "The founder of Impressionism",
+      "statement": "Claude Monet gave Impressionism its name with his painting Impression, Sunrise, and painted his water-lily pond hundreds of times.",
+      "question": "Which painter's work Impression, Sunrise gave Impressionism its name?",
+      "answer": "Claude Monet",
+      "answerType": "painter",
+      "wikiTitle": "Claude Monet",
+      "difficulty": 1
+    },
+    {
+      "id": "art-017",
+      "title": "The Dutch master of light",
+      "statement": "Rembrandt van Rijn was the greatest painter of the Dutch Golden Age, famous for dramatic light and around 80 unflinching self-portraits.",
+      "question": "Which Dutch Golden Age painter produced around 80 self-portraits?",
+      "answer": "Rembrandt",
+      "answerType": "painter",
+      "wikiTitle": "Rembrandt",
+      "difficulty": 1
+    },
+    {
+      "id": "art-018",
+      "title": "Sculptor, painter, architect",
+      "statement": "Michelangelo considered himself primarily a sculptor, yet painted the Sistine Chapel and designed the dome of St Peter's Basilica.",
+      "question": "Who sculpted David and painted the Sistine Chapel ceiling?",
+      "answer": "Michelangelo",
+      "answerType": "painter",
+      "wikiTitle": "Michelangelo",
+      "difficulty": 1
+    },
+    {
+      "id": "art-019",
+      "title": "The Mexican self-portraitist",
+      "statement": "Frida Kahlo painted intensely personal self-portraits after a streetcar accident left her with lifelong pain.",
+      "question": "Which Mexican artist is known for intensely personal self-portraits?",
+      "answer": "Frida Kahlo",
+      "answerType": "painter",
+      "wikiTitle": "Frida Kahlo",
+      "difficulty": 1
+    },
+    {
+      "id": "art-020",
+      "title": "The Vienna gold period",
+      "statement": "Gustav Klimt's The Kiss, covered in gold leaf, is the defining work of his golden phase and of Viennese Art Nouveau.",
+      "question": "Which Austrian painter created The Kiss, covered in gold leaf?",
+      "answer": "Gustav Klimt",
+      "answerType": "painter",
+      "wikiTitle": "Gustav Klimt",
+      "difficulty": 2
+    },
+    {
+      "id": "art-021",
+      "title": "The drip painter",
+      "statement": "Jackson Pollock laid canvases on the floor and poured paint across them, making him the central figure of Abstract Expressionism.",
+      "question": "Which American painter created works by dripping and pouring paint onto canvases on the floor?",
+      "answer": "Jackson Pollock",
+      "answerType": "painter",
+      "wikiTitle": "Jackson Pollock",
+      "difficulty": 2
+    },
+    {
+      "id": "art-022",
+      "title": "The soup cans",
+      "statement": "Andy Warhol made Pop Art the dominant movement of the 1960s with silkscreens of Campbell's soup cans and Marilyn Monroe.",
+      "question": "Which artist made silkscreen prints of Campbell's soup cans?",
+      "answer": "Andy Warhol",
+      "answerType": "painter",
+      "wikiTitle": "Andy Warhol",
+      "difficulty": 1
+    },
+    {
+      "id": "art-023",
+      "title": "The Spanish surrealist",
+      "statement": "Salvador Dalí cultivated an eccentric public persona to match his meticulously rendered dream imagery.",
+      "question": "Which Spanish surrealist painted The Persistence of Memory?",
+      "answer": "Salvador Dalí",
+      "answerType": "painter",
+      "wikiTitle": "Salvador Dalí",
+      "difficulty": 1
+    },
+    {
+      "id": "art-024",
+      "title": "The Delft master",
+      "statement": "Johannes Vermeer produced only about 35 known paintings, most of them quiet domestic interiors lit from a window on the left.",
+      "question": "Which Dutch painter of quiet interiors left only about 35 known works?",
+      "answer": "Johannes Vermeer",
+      "answerType": "painter",
+      "wikiTitle": "Johannes Vermeer",
+      "difficulty": 2
+    },
+    {
+      "id": "art-025",
+      "title": "The English playwright",
+      "statement": "William Shakespeare wrote about 39 plays and 154 sonnets, and coined or popularised hundreds of English words still in use.",
+      "question": "Who wrote Hamlet, Macbeth and King Lear?",
+      "answer": "William Shakespeare",
+      "answerType": "author",
+      "wikiTitle": "William Shakespeare",
+      "difficulty": 1
+    },
+    {
+      "id": "art-026",
+      "title": "The Russian epic novelist",
+      "statement": "Leo Tolstoy wrote War and Peace and Anna Karenina, then renounced his own novels in favour of moral philosophy.",
+      "question": "Who wrote War and Peace?",
+      "answer": "Leo Tolstoy",
+      "answerType": "author",
+      "wikiTitle": "Leo Tolstoy",
+      "difficulty": 1
+    },
+    {
+      "id": "art-027",
+      "title": "The Victorian serialist",
+      "statement": "Charles Dickens published most of his novels in monthly instalments, which is why they end so many chapters on a cliffhanger.",
+      "question": "Who wrote Oliver Twist and Great Expectations?",
+      "answer": "Charles Dickens",
+      "answerType": "author",
+      "wikiTitle": "Charles Dickens",
+      "difficulty": 1
+    },
+    {
+      "id": "art-028",
+      "title": "The novelist of manners",
+      "statement": "Jane Austen published her novels anonymously, credited only as 'A Lady', and was not widely known as their author in her lifetime.",
+      "question": "Who wrote Pride and Prejudice?",
+      "answer": "Jane Austen",
+      "answerType": "author",
+      "wikiTitle": "Jane Austen",
+      "difficulty": 1
+    },
+    {
+      "id": "art-029",
+      "title": "The author of Big Brother",
+      "statement": "George Orwell wrote Nineteen Eighty-Four and Animal Farm; his real name was Eric Arthur Blair.",
+      "question": "Who wrote Nineteen Eighty-Four?",
+      "answer": "George Orwell",
+      "answerType": "author",
+      "wikiTitle": "George Orwell",
+      "difficulty": 1
+    },
+    {
+      "id": "art-030",
+      "title": "The Greek epic poet",
+      "statement": "Homer is credited with the Iliad and the Odyssey, the founding epics of Western literature, composed around the 8th century BC.",
+      "question": "Who is credited with composing the Iliad and the Odyssey?",
+      "answer": "Homer",
+      "answerType": "author",
+      "wikiTitle": "Homer",
+      "difficulty": 1
+    },
+    {
+      "id": "art-031",
+      "title": "The first modern novel",
+      "statement": "Miguel de Cervantes wrote Don Quixote, published in two parts in 1605 and 1615 and widely called the first modern novel.",
+      "question": "Who wrote Don Quixote?",
+      "answer": "Miguel de Cervantes",
+      "answerType": "author",
+      "wikiTitle": "Miguel de Cervantes",
+      "difficulty": 2
+    },
+    {
+      "id": "art-032",
+      "title": "The writer who asked for his work to be burned",
+      "statement": "Franz Kafka instructed his friend Max Brod to destroy his unpublished manuscripts. Brod published them instead, giving us The Trial and The Castle.",
+      "question": "Which writer asked for his manuscripts to be burned, only for his friend to publish them?",
+      "answer": "Franz Kafka",
+      "answerType": "author",
+      "hook": "We have The Trial only because someone ignored a dying man's instructions.",
+      "wikiTitle": "Franz Kafka",
+      "difficulty": 2
+    },
+    {
+      "id": "art-033",
+      "title": "The iceberg theory",
+      "statement": "Ernest Hemingway wrote in a spare, declarative style he called the iceberg theory, leaving most meaning beneath the surface.",
+      "question": "Who wrote The Old Man and the Sea?",
+      "answer": "Ernest Hemingway",
+      "answerType": "author",
+      "wikiTitle": "Ernest Hemingway",
+      "difficulty": 1
+    },
+    {
+      "id": "art-034",
+      "title": "Magical realism",
+      "statement": "Gabriel García Márquez's One Hundred Years of Solitude brought magical realism to a world audience and won him the Nobel Prize.",
+      "question": "Who wrote One Hundred Years of Solitude?",
+      "answer": "Gabriel García Márquez",
+      "answerType": "author",
+      "wikiTitle": "Gabriel García Márquez",
+      "difficulty": 2
+    },
+    {
+      "id": "art-035",
+      "title": "The psychologist of the novel",
+      "statement": "Fyodor Dostoevsky wrote Crime and Punishment and The Brothers Karamazov after surviving a mock execution and four years in a Siberian prison camp.",
+      "question": "Who wrote Crime and Punishment?",
+      "answer": "Fyodor Dostoevsky",
+      "answerType": "author",
+      "wikiTitle": "Fyodor Dostoevsky",
+      "difficulty": 1
+    },
+    {
+      "id": "art-036",
+      "title": "The stream of consciousness",
+      "statement": "Virginia Woolf pioneered stream-of-consciousness narration in Mrs Dalloway and To the Lighthouse.",
+      "question": "Who wrote Mrs Dalloway and To the Lighthouse?",
+      "answer": "Virginia Woolf",
+      "answerType": "author",
+      "wikiTitle": "Virginia Woolf",
+      "difficulty": 2
+    },
+    {
+      "id": "art-037",
+      "title": "The Mississippi novelist",
+      "statement": "Mark Twain, born Samuel Clemens, wrote The Adventures of Huckleberry Finn, which Hemingway called the source of all modern American literature.",
+      "question": "Who wrote The Adventures of Huckleberry Finn?",
+      "answer": "Mark Twain",
+      "answerType": "author",
+      "wikiTitle": "Mark Twain",
+      "difficulty": 1
+    },
+    {
+      "id": "art-038",
+      "title": "The whale",
+      "statement": "Herman Melville's Moby-Dick sold poorly in his lifetime and was only recognised as a masterpiece decades after his death.",
+      "question": "Who wrote Moby-Dick?",
+      "answer": "Herman Melville",
+      "answerType": "author",
+      "wikiTitle": "Herman Melville",
+      "difficulty": 1
+    },
+    {
+      "id": "art-039",
+      "title": "The Jazz Age novel",
+      "statement": "F. Scott Fitzgerald's The Great Gatsby sold modestly on release in 1925 and became a classic only after his death.",
+      "question": "Who wrote The Great Gatsby?",
+      "answer": "F. Scott Fitzgerald",
+      "answerType": "author",
+      "wikiTitle": "F. Scott Fitzgerald",
+      "difficulty": 1
+    },
+    {
+      "id": "art-040",
+      "title": "The Napoleonic epic",
+      "statement": "War and Peace follows five aristocratic families through Napoleon's invasion of Russia across roughly 1,200 pages.",
+      "question": "Which Tolstoy novel follows Russian families through Napoleon's invasion?",
+      "answer": "War and Peace",
+      "answerType": "novel",
+      "wikiTitle": "War and Peace",
+      "difficulty": 1
+    },
+    {
+      "id": "art-041",
+      "title": "It is a truth universally acknowledged",
+      "statement": "Pride and Prejudice, published in 1813, follows Elizabeth Bennet and Mr Darcy and opens with one of the most quoted lines in English.",
+      "question": "Which Jane Austen novel features Elizabeth Bennet and Mr Darcy?",
+      "answer": "Pride and Prejudice",
+      "answerType": "novel",
+      "wikiTitle": "Pride and Prejudice",
+      "difficulty": 1
+    },
+    {
+      "id": "art-042",
+      "title": "The dystopia of surveillance",
+      "statement": "Nineteen Eighty-Four gave English the words doublethink, thoughtcrime and Big Brother.",
+      "question": "Which Orwell novel introduced Big Brother and doublethink?",
+      "answer": "Nineteen Eighty-Four",
+      "answerType": "novel",
+      "wikiTitle": "Nineteen Eighty-Four",
+      "difficulty": 1
+    },
+    {
+      "id": "art-043",
+      "title": "Tilting at windmills",
+      "statement": "Don Quixote follows an elderly gentleman who reads too many chivalric romances and sets out as a knight, mistaking windmills for giants.",
+      "question": "In which novel does the hero mistake windmills for giants?",
+      "answer": "Don Quixote",
+      "answerType": "novel",
+      "wikiTitle": "Don Quixote",
+      "difficulty": 1
+    },
+    {
+      "id": "art-044",
+      "title": "Call me Ishmael",
+      "statement": "Moby-Dick opens with the line 'Call me Ishmael' and follows Captain Ahab's obsessive hunt for a white whale.",
+      "question": "Which novel opens with the line 'Call me Ishmael'?",
+      "answer": "Moby-Dick",
+      "answerType": "novel",
+      "wikiTitle": "Moby-Dick",
+      "difficulty": 1
+    },
+    {
+      "id": "art-045",
+      "title": "The Buendía family",
+      "statement": "One Hundred Years of Solitude tells seven generations of the Buendía family in the fictional town of Macondo.",
+      "question": "Which novel chronicles seven generations of the Buendía family in Macondo?",
+      "answer": "One Hundred Years of Solitude",
+      "answerType": "novel",
+      "wikiTitle": "One Hundred Years of Solitude",
+      "difficulty": 2
+    },
+    {
+      "id": "art-046",
+      "title": "The murder and the conscience",
+      "statement": "Crime and Punishment follows the student Raskolnikov, who murders a pawnbroker and is destroyed by his own guilt rather than by the police.",
+      "question": "Which novel follows the student Raskolnikov after he murders a pawnbroker?",
+      "answer": "Crime and Punishment",
+      "answerType": "novel",
+      "wikiTitle": "Crime and Punishment",
+      "difficulty": 2
+    },
+    {
+      "id": "art-047",
+      "title": "The green light across the bay",
+      "statement": "The Great Gatsby is set on Long Island in 1922 and follows Jay Gatsby's pursuit of Daisy Buchanan.",
+      "question": "Which novel follows Jay Gatsby and the green light across the bay?",
+      "answer": "The Great Gatsby",
+      "answerType": "novel",
+      "wikiTitle": "The Great Gatsby",
+      "difficulty": 1
+    },
+    {
+      "id": "art-048",
+      "title": "One day in Dublin",
+      "statement": "James Joyce's Ulysses takes place over a single day, 16 June 1904, now celebrated annually as Bloomsday.",
+      "question": "Which novel takes place over a single day in Dublin, celebrated as Bloomsday?",
+      "answer": "Ulysses",
+      "answerType": "novel",
+      "wikiTitle": "Ulysses (novel)",
+      "difficulty": 2
+    },
+    {
+      "id": "art-049",
+      "title": "Atticus Finch",
+      "statement": "Harper Lee's To Kill a Mockingbird, published in 1960, won the Pulitzer Prize and was her only novel for 55 years.",
+      "question": "Which novel features the lawyer Atticus Finch defending Tom Robinson?",
+      "answer": "To Kill a Mockingbird",
+      "answerType": "novel",
+      "wikiTitle": "To Kill a Mockingbird",
+      "difficulty": 1
+    },
+    {
+      "id": "art-050",
+      "title": "The deaf composer",
+      "statement": "Ludwig van Beethoven continued composing after going deaf, writing the Ninth Symphony when he could no longer hear it performed.",
+      "question": "Which composer wrote his Ninth Symphony while completely deaf?",
+      "answer": "Ludwig van Beethoven",
+      "answerType": "composer",
+      "hook": "He had to be turned around at the premiere to see the audience applauding.",
+      "wikiTitle": "Ludwig van Beethoven",
+      "difficulty": 1
+    },
+    {
+      "id": "art-051",
+      "title": "The child prodigy",
+      "statement": "Wolfgang Amadeus Mozart was composing by five and toured Europe as a child, writing over 600 works before dying at 35.",
+      "question": "Which composer wrote The Magic Flute and died at 35?",
+      "answer": "Wolfgang Amadeus Mozart",
+      "answerType": "composer",
+      "wikiTitle": "Wolfgang Amadeus Mozart",
+      "difficulty": 1
+    },
+    {
+      "id": "art-052",
+      "title": "The Baroque master",
+      "statement": "Johann Sebastian Bach wrote the Brandenburg Concertos and the Mass in B minor, and was better known in his lifetime as an organist than a composer.",
+      "question": "Which Baroque composer wrote the Brandenburg Concertos?",
+      "answer": "Johann Sebastian Bach",
+      "answerType": "composer",
+      "wikiTitle": "Johann Sebastian Bach",
+      "difficulty": 1
+    },
+    {
+      "id": "art-053",
+      "title": "The ballet composer",
+      "statement": "Pyotr Ilyich Tchaikovsky wrote Swan Lake, The Nutcracker and The Sleeping Beauty — the three pillars of classical ballet.",
+      "question": "Which composer wrote Swan Lake and The Nutcracker?",
+      "answer": "Pyotr Ilyich Tchaikovsky",
+      "answerType": "composer",
+      "wikiTitle": "Pyotr Ilyich Tchaikovsky",
+      "difficulty": 1
+    },
+    {
+      "id": "art-054",
+      "title": "The poet of the piano",
+      "statement": "Frédéric Chopin wrote almost exclusively for solo piano, and his heart is buried in Warsaw while his body lies in Paris.",
+      "question": "Which composer wrote almost exclusively for solo piano?",
+      "answer": "Frédéric Chopin",
+      "answerType": "composer",
+      "wikiTitle": "Frédéric Chopin",
+      "difficulty": 2
+    },
+    {
+      "id": "art-055",
+      "title": "The Red Priest",
+      "statement": "Antonio Vivaldi, an ordained priest nicknamed the Red Priest for his hair, wrote The Four Seasons and taught at a Venetian orphanage for girls.",
+      "question": "Which composer wrote The Four Seasons?",
+      "answer": "Antonio Vivaldi",
+      "answerType": "composer",
+      "wikiTitle": "Antonio Vivaldi",
+      "difficulty": 1
+    },
+    {
+      "id": "art-056",
+      "title": "The opera revolutionary",
+      "statement": "Richard Wagner wrote his own librettos and built his own theatre at Bayreuth to stage the four-opera Ring cycle.",
+      "question": "Which composer wrote the four-opera Ring cycle and built his own theatre?",
+      "answer": "Richard Wagner",
+      "answerType": "composer",
+      "wikiTitle": "Richard Wagner",
+      "difficulty": 2
+    },
+    {
+      "id": "art-057",
+      "title": "The Italian opera giant",
+      "statement": "Giuseppe Verdi wrote La traviata, Rigoletto and Aida, and became a symbol of Italian unification.",
+      "question": "Which composer wrote La traviata and Aida?",
+      "answer": "Giuseppe Verdi",
+      "answerType": "composer",
+      "wikiTitle": "Giuseppe Verdi",
+      "difficulty": 2
+    },
+    {
+      "id": "art-058",
+      "title": "The riot at the ballet",
+      "statement": "Igor Stravinsky's The Rite of Spring caused a near-riot at its 1913 Paris premiere with its violent rhythms and dissonance.",
+      "question": "Which composer's Rite of Spring caused a riot at its 1913 premiere?",
+      "answer": "Igor Stravinsky",
+      "answerType": "composer",
+      "wikiTitle": "Igor Stravinsky",
+      "difficulty": 2
+    },
+    {
+      "id": "art-059",
+      "title": "The Messiah",
+      "statement": "George Frideric Handel composed Messiah in just 24 days; its Hallelujah chorus is among the most performed works in Western music.",
+      "question": "Which composer wrote Messiah in about 24 days?",
+      "answer": "George Frideric Handel",
+      "answerType": "composer",
+      "wikiTitle": "George Frideric Handel",
+      "difficulty": 2
+    },
+    {
+      "id": "art-060",
+      "title": "Four violin concertos",
+      "statement": "The Four Seasons is a set of four violin concertos, each accompanied by a sonnet describing the season it depicts.",
+      "question": "Which Vivaldi work consists of four violin concertos, one per season?",
+      "answer": "The Four Seasons",
+      "answerType": "musical-work",
+      "wikiTitle": "The Four Seasons (Vivaldi)",
+      "difficulty": 1
+    },
+    {
+      "id": "art-061",
+      "title": "The Christmas ballet",
+      "statement": "The Nutcracker premiered in 1892 to lukewarm reviews and only became a Christmas institution decades later.",
+      "question": "Which Tchaikovsky ballet is a Christmas tradition worldwide?",
+      "answer": "The Nutcracker",
+      "answerType": "musical-work",
+      "wikiTitle": "The Nutcracker",
+      "difficulty": 1
+    },
+    {
+      "id": "art-062",
+      "title": "Fifteen hours of opera",
+      "statement": "Wagner's Der Ring des Nibelungen is a cycle of four operas lasting about fifteen hours, usually staged over four evenings.",
+      "question": "Which Wagner opera cycle lasts about fifteen hours across four evenings?",
+      "answer": "The Ring Cycle",
+      "answerType": "musical-work",
+      "wikiTitle": "Der Ring des Nibelungen",
+      "difficulty": 3
+    },
+    {
+      "id": "art-063",
+      "title": "Ode to Joy",
+      "statement": "Beethoven's Ninth Symphony was the first major symphony to use voices, setting Schiller's Ode to Joy — now the anthem of Europe.",
+      "question": "Which symphony sets Schiller's Ode to Joy and became the anthem of Europe?",
+      "answer": "Beethoven's Ninth Symphony",
+      "answerType": "musical-work",
+      "wikiTitle": "Symphony No. 9 (Beethoven)",
+      "difficulty": 2
+    },
+    {
+      "id": "art-064",
+      "title": "The ballet that caused a riot",
+      "statement": "The Rite of Spring depicts a pagan sacrificial ritual, and its 1913 premiere provoked shouting and fights in the audience.",
+      "question": "Which Stravinsky ballet depicts a pagan sacrificial rite?",
+      "answer": "The Rite of Spring",
+      "answerType": "musical-work",
+      "wikiTitle": "The Rite of Spring",
+      "difficulty": 2
+    },
+    {
+      "id": "art-065",
+      "title": "The Divine Comedy",
+      "statement": "Dante Alighieri wrote The Divine Comedy in Italian rather than Latin, helping establish Tuscan as the basis of modern Italian.",
+      "question": "Who wrote The Divine Comedy?",
+      "answer": "Dante Alighieri",
+      "answerType": "poet",
+      "wikiTitle": "Dante Alighieri",
+      "difficulty": 1
+    },
+    {
+      "id": "art-066",
+      "title": "The recluse of Amherst",
+      "statement": "Emily Dickinson wrote nearly 1,800 poems but published fewer than a dozen in her lifetime; the rest were found after her death.",
+      "question": "Which American poet wrote 1,800 poems but published almost none in her lifetime?",
+      "answer": "Emily Dickinson",
+      "answerType": "poet",
+      "wikiTitle": "Emily Dickinson",
+      "difficulty": 2
+    },
+    {
+      "id": "art-067",
+      "title": "Leaves of Grass",
+      "statement": "Walt Whitman self-published Leaves of Grass in 1855 and kept revising and expanding it for the rest of his life.",
+      "question": "Which American poet wrote and continually revised Leaves of Grass?",
+      "answer": "Walt Whitman",
+      "answerType": "poet",
+      "wikiTitle": "Walt Whitman",
+      "difficulty": 2
+    },
+    {
+      "id": "art-068",
+      "title": "The Waste Land",
+      "statement": "T. S. Eliot's The Waste Land, published in 1922, became the defining poem of literary modernism.",
+      "question": "Who wrote The Waste Land?",
+      "answer": "T. S. Eliot",
+      "answerType": "poet",
+      "wikiTitle": "T. S. Eliot",
+      "difficulty": 2
+    },
+    {
+      "id": "art-069",
+      "title": "The Persian mystic",
+      "statement": "Rumi, a 13th-century Persian poet and Sufi mystic, is among the most widely read poets in the world today.",
+      "question": "Which 13th-century Persian mystic is one of the world's most-read poets?",
+      "answer": "Rumi",
+      "answerType": "poet",
+      "wikiTitle": "Rumi",
+      "difficulty": 2
+    },
+    {
+      "id": "art-070",
+      "title": "The daffodils",
+      "statement": "William Wordsworth helped launch English Romanticism with Lyrical Ballads and wrote 'I Wandered Lonely as a Cloud'.",
+      "question": "Which Romantic poet wrote 'I Wandered Lonely as a Cloud'?",
+      "answer": "William Wordsworth",
+      "answerType": "poet",
+      "wikiTitle": "William Wordsworth",
+      "difficulty": 2
+    },
+    {
+      "id": "art-071",
+      "title": "The Cherry Orchard",
+      "statement": "Anton Chekhov wrote The Seagull, Uncle Vanya and The Cherry Orchard, and practised as a doctor throughout his writing life.",
+      "question": "Which Russian playwright wrote The Cherry Orchard and The Seagull?",
+      "answer": "Anton Chekhov",
+      "answerType": "playwright",
+      "wikiTitle": "Anton Chekhov",
+      "difficulty": 2
+    },
+    {
+      "id": "art-072",
+      "title": "A Doll's House",
+      "statement": "Henrik Ibsen's A Doll's House ended with a slammed door that scandalised 19th-century Europe and helped create modern drama.",
+      "question": "Which Norwegian playwright wrote A Doll's House?",
+      "answer": "Henrik Ibsen",
+      "answerType": "playwright",
+      "wikiTitle": "Henrik Ibsen",
+      "difficulty": 2
+    },
+    {
+      "id": "art-073",
+      "title": "Waiting for Godot",
+      "statement": "Samuel Beckett's Waiting for Godot, in which nothing much happens twice, defined the Theatre of the Absurd.",
+      "question": "Who wrote Waiting for Godot?",
+      "answer": "Samuel Beckett",
+      "answerType": "playwright",
+      "wikiTitle": "Samuel Beckett",
+      "difficulty": 2
+    },
+    {
+      "id": "art-074",
+      "title": "Oedipus Rex",
+      "statement": "Sophocles wrote Oedipus Rex and Antigone, and is said to have reduced the size of the Greek chorus while adding a third actor.",
+      "question": "Which ancient Greek playwright wrote Oedipus Rex?",
+      "answer": "Sophocles",
+      "answerType": "playwright",
+      "wikiTitle": "Sophocles",
+      "difficulty": 2
+    },
+    {
+      "id": "art-075",
+      "title": "The Importance of Being Earnest",
+      "statement": "Oscar Wilde wrote one novel, several plays and a great many aphorisms, and was imprisoned at the height of his fame.",
+      "question": "Who wrote The Importance of Being Earnest?",
+      "answer": "Oscar Wilde",
+      "answerType": "playwright",
+      "wikiTitle": "Oscar Wilde",
+      "difficulty": 1
+    },
+    {
+      "id": "art-076",
+      "title": "Tartuffe",
+      "statement": "Molière wrote Tartuffe and The Misanthrope, and collapsed on stage while performing in his own play about a hypochondriac.",
+      "question": "Which French playwright wrote Tartuffe?",
+      "answer": "Molière",
+      "answerType": "playwright",
+      "wikiTitle": "Molière",
+      "difficulty": 2
+    },
+    {
+      "id": "art-077",
+      "title": "The marble giant in Florence",
+      "statement": "Michelangelo's David stands 5.17 m tall and was carved from a single block of marble that other sculptors had abandoned as flawed.",
+      "question": "Which Michelangelo sculpture depicts a biblical hero carved from a single marble block?",
+      "answer": "David",
+      "answerType": "sculpture",
+      "wikiTitle": "David (Michelangelo)",
+      "difficulty": 1
+    },
+    {
+      "id": "art-078",
+      "title": "The seated figure",
+      "statement": "Auguste Rodin's The Thinker was originally conceived as part of a larger work, The Gates of Hell, representing Dante.",
+      "question": "Which Rodin sculpture shows a seated man resting his chin on his hand?",
+      "answer": "The Thinker",
+      "answerType": "sculpture",
+      "wikiTitle": "The Thinker",
+      "difficulty": 1
+    },
+    {
+      "id": "art-079",
+      "title": "The armless goddess",
+      "statement": "The Venus de Milo, carved around 100 BC and now in the Louvre, was discovered on the Greek island of Milos in 1820.",
+      "question": "Which armless ancient Greek statue is displayed in the Louvre?",
+      "answer": "Venus de Milo",
+      "answerType": "sculpture",
+      "wikiTitle": "Venus de Milo",
+      "difficulty": 2
+    },
+    {
+      "id": "art-080",
+      "title": "The winged figure on the stairs",
+      "statement": "The Winged Victory of Samothrace, a Hellenistic statue of Nike, stands at the top of the Louvre's Daru staircase.",
+      "question": "Which headless winged statue stands atop a grand staircase in the Louvre?",
+      "answer": "Winged Victory of Samothrace",
+      "answerType": "sculpture",
+      "wikiTitle": "Winged Victory of Samothrace",
+      "difficulty": 3
+    },
+    {
+      "id": "art-081",
+      "title": "The statue above Rio",
+      "statement": "Christ the Redeemer, completed in 1931, stands 30 m tall atop Corcovado mountain overlooking Rio de Janeiro.",
+      "question": "Which statue overlooks Rio de Janeiro from Corcovado mountain?",
+      "answer": "Christ the Redeemer",
+      "answerType": "sculpture",
+      "wikiTitle": "Christ the Redeemer (statue)",
+      "difficulty": 1
+    },
+    {
+      "id": "art-082",
+      "title": "The house over a waterfall",
+      "statement": "Frank Lloyd Wright designed Fallingwater, cantilevered directly over a waterfall in Pennsylvania, and the spiral Guggenheim Museum.",
+      "question": "Which architect designed Fallingwater and the Guggenheim Museum in New York?",
+      "answer": "Frank Lloyd Wright",
+      "answerType": "architect",
+      "wikiTitle": "Frank Lloyd Wright",
+      "difficulty": 2
+    },
+    {
+      "id": "art-083",
+      "title": "The unfinished basilica",
+      "statement": "Antoni Gaudí designed the Sagrada Família in Barcelona, begun in 1882 and still unfinished today.",
+      "question": "Which architect designed the Sagrada Família in Barcelona?",
+      "answer": "Antoni Gaudí",
+      "answerType": "architect",
+      "hook": "Under construction for over 140 years and counting.",
+      "wikiTitle": "Antoni Gaudí",
+      "difficulty": 2
+    },
+    {
+      "id": "art-084",
+      "title": "The machine for living in",
+      "statement": "Le Corbusier defined a house as 'a machine for living in' and shaped 20th-century modernist architecture and urban planning.",
+      "question": "Which architect called a house 'a machine for living in'?",
+      "answer": "Le Corbusier",
+      "answerType": "architect",
+      "wikiTitle": "Le Corbusier",
+      "difficulty": 3
+    },
+    {
+      "id": "art-085",
+      "title": "The queen of the curve",
+      "statement": "Zaha Hadid was the first woman to win the Pritzker Prize, known for sweeping, curvilinear buildings.",
+      "question": "Who was the first woman to win the Pritzker Architecture Prize?",
+      "answer": "Zaha Hadid",
+      "answerType": "architect",
+      "wikiTitle": "Zaha Hadid",
+      "difficulty": 2
+    },
+    {
+      "id": "art-086",
+      "title": "The iron tower",
+      "statement": "Gustave Eiffel's tower was built for the 1889 World's Fair and was meant to be dismantled after twenty years.",
+      "question": "Which engineer designed the tower built for the 1889 Paris World's Fair?",
+      "answer": "Gustave Eiffel",
+      "answerType": "architect",
+      "hook": "Paris nearly tore it down — it survived because it made a good radio mast.",
+      "wikiTitle": "Gustave Eiffel",
+      "difficulty": 2
+    },
+    {
+      "id": "art-087",
+      "title": "Painting the light",
+      "statement": "Impressionism emerged in 1870s France, using visible brushstrokes and outdoor painting to capture changing light rather than precise detail.",
+      "question": "Which art movement sought to capture fleeting light with visible brushstrokes in 1870s France?",
+      "answer": "Impressionism",
+      "answerType": "art-movement",
+      "wikiTitle": "Impressionism",
+      "difficulty": 1
+    },
+    {
+      "id": "art-088",
+      "title": "Objects from every angle at once",
+      "statement": "Cubism, developed by Picasso and Braque around 1907, fractured objects into geometric planes shown from several viewpoints simultaneously.",
+      "question": "Which movement broke objects into geometric planes seen from multiple viewpoints at once?",
+      "answer": "Cubism",
+      "answerType": "art-movement",
+      "wikiTitle": "Cubism",
+      "difficulty": 1
+    },
+    {
+      "id": "art-089",
+      "title": "The art of dreams",
+      "statement": "Surrealism, launched by André Breton's 1924 manifesto, drew on dreams and the unconscious to produce irrational imagery.",
+      "question": "Which movement drew on dreams and the unconscious, launched by a 1924 manifesto?",
+      "answer": "Surrealism",
+      "answerType": "art-movement",
+      "wikiTitle": "Surrealism",
+      "difficulty": 1
+    },
+    {
+      "id": "art-090",
+      "title": "The rebirth",
+      "statement": "The Renaissance began in 14th-century Italy, reviving classical learning and producing Leonardo, Michelangelo and Raphael.",
+      "question": "Which cultural movement began in 14th-century Italy and revived classical learning?",
+      "answer": "Renaissance",
+      "answerType": "art-movement",
+      "wikiTitle": "Renaissance",
+      "difficulty": 1
+    },
+    {
+      "id": "art-091",
+      "title": "Drama and grandeur",
+      "statement": "Baroque art of the 17th century used dramatic light, movement and emotional intensity, in painters like Caravaggio and Rubens.",
+      "question": "Which 17th-century movement used dramatic light and emotional intensity?",
+      "answer": "Baroque",
+      "answerType": "art-movement",
+      "wikiTitle": "Baroque",
+      "difficulty": 2
+    },
+    {
+      "id": "art-092",
+      "title": "Feeling over accuracy",
+      "statement": "Expressionism distorted form and colour to convey emotional experience rather than physical reality, centred in early 20th-century Germany.",
+      "question": "Which movement distorted colour and form to convey emotion over physical reality?",
+      "answer": "Expressionism",
+      "answerType": "art-movement",
+      "wikiTitle": "Expressionism",
+      "difficulty": 2
+    }
+  ]
+}

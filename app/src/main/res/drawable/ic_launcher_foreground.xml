@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="utf-8"?>
+<vector xmlns:android="http://schemas.android.com/apk/res/android"
+    android:width="108dp"
+    android:height="108dp"
+    android:viewportWidth="108"
+    android:viewportHeight="108">
+
+    <!-- Primary spark: the "insight" mark. Kept inside the 66dp adaptive safe zone. -->
+    <path
+        android:pathData="M58,26 C61,46 71,56 91,59 C71,62 61,72 58,92 C55,72 45,62 25,59 C45,56 55,46 58,26 Z"
+        android:fillColor="#FFFFFF" />
+
+    <!-- Secondary spark, offset for depth. -->
+    <path
+        android:pathData="M34,22 C35.4,30 39,33.6 47,35 C39,36.4 35.4,40 34,48 C32.6,40 29,36.4 21,35 C29,33.6 32.6,30 34,22 Z"
+        android:fillColor="#FFFFFF"
+        android:fillAlpha="0.75" />
+</vector>

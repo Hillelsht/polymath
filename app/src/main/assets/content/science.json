@@ -1,0 +1,945 @@
+{
+  "category": "science",
+  "facts": [
+    {
+      "id": "sci-001",
+      "title": "The symbol Au",
+      "statement": "Gold has the chemical symbol Au, from the Latin aurum, meaning 'shining dawn'.",
+      "question": "Which element has the chemical symbol Au?",
+      "answer": "Gold",
+      "answerType": "element",
+      "hook": "Odd symbols like Au, Ag, Fe and Pb all come from Latin names, not English ones.",
+      "wikiTitle": "Gold",
+      "difficulty": 1
+    },
+    {
+      "id": "sci-002",
+      "title": "The symbol Ag",
+      "statement": "Silver has the chemical symbol Ag, from the Latin argentum. Argentina is named after it.",
+      "question": "Which element has the chemical symbol Ag?",
+      "answer": "Silver",
+      "answerType": "element",
+      "wikiTitle": "Silver",
+      "difficulty": 1
+    },
+    {
+      "id": "sci-003",
+      "title": "The symbol Fe",
+      "statement": "Iron has the chemical symbol Fe, from the Latin ferrum, and makes up most of the Earth's core.",
+      "question": "Which element has the chemical symbol Fe?",
+      "answer": "Iron",
+      "answerType": "element",
+      "wikiTitle": "Iron",
+      "difficulty": 1
+    },
+    {
+      "id": "sci-004",
+      "title": "The symbol Pb",
+      "statement": "Lead has the chemical symbol Pb, from the Latin plumbum — the same root as 'plumbing', because Roman pipes were made of it.",
+      "question": "Which element has the chemical symbol Pb?",
+      "answer": "Lead",
+      "answerType": "element",
+      "hook": "Plumbum gave us both 'Pb' and 'plumber'.",
+      "wikiTitle": "Lead",
+      "difficulty": 2
+    },
+    {
+      "id": "sci-005",
+      "title": "The symbol Na",
+      "statement": "Sodium has the chemical symbol Na, from the Latin natrium. It is so reactive it is stored under oil.",
+      "question": "Which element has the chemical symbol Na?",
+      "answer": "Sodium",
+      "answerType": "element",
+      "wikiTitle": "Sodium",
+      "difficulty": 2
+    },
+    {
+      "id": "sci-006",
+      "title": "The symbol K",
+      "statement": "Potassium has the chemical symbol K, from the Latin kalium. It is essential for nerve and muscle function.",
+      "question": "Which element has the chemical symbol K?",
+      "answer": "Potassium",
+      "answerType": "element",
+      "wikiTitle": "Potassium",
+      "difficulty": 2
+    },
+    {
+      "id": "sci-007",
+      "title": "The symbol Hg",
+      "statement": "Mercury has the chemical symbol Hg, from hydrargyrum meaning 'water-silver'. It is the only metal that is liquid at room temperature.",
+      "question": "Which element has the chemical symbol Hg?",
+      "answer": "Mercury",
+      "answerType": "element",
+      "wikiTitle": "Mercury (element)",
+      "difficulty": 2
+    },
+    {
+      "id": "sci-008",
+      "title": "The highest melting point",
+      "statement": "Tungsten has the highest melting point of any metal, 3,422°C, which is why it was used for light-bulb filaments.",
+      "question": "Which metal has the highest melting point?",
+      "answer": "Tungsten",
+      "answerType": "element",
+      "wikiTitle": "Tungsten",
+      "difficulty": 2
+    },
+    {
+      "id": "sci-009",
+      "title": "Most abundant element in the universe",
+      "statement": "Hydrogen is the most abundant element in the universe, making up about 75% of all normal matter.",
+      "question": "What is the most abundant element in the universe?",
+      "answer": "Hydrogen",
+      "answerType": "element",
+      "wikiTitle": "Hydrogen",
+      "difficulty": 1
+    },
+    {
+      "id": "sci-010",
+      "title": "Most abundant element in the Earth's crust",
+      "statement": "Oxygen is the most abundant element in the Earth's crust by mass — about 46% — mostly locked up in silicate rocks.",
+      "question": "What is the most abundant element in the Earth's crust?",
+      "answer": "Oxygen",
+      "answerType": "element",
+      "hook": "Most of the planet's oxygen is in rock, not air.",
+      "wikiTitle": "Oxygen",
+      "difficulty": 2
+    },
+    {
+      "id": "sci-011",
+      "title": "The main gas in air",
+      "statement": "Nitrogen makes up about 78% of the Earth's atmosphere — far more than oxygen's 21%.",
+      "question": "Which gas makes up most of the Earth's atmosphere?",
+      "answer": "Nitrogen",
+      "answerType": "element",
+      "hook": "Air is mostly the gas you do not breathe for.",
+      "wikiTitle": "Nitrogen",
+      "difficulty": 1
+    },
+    {
+      "id": "sci-012",
+      "title": "The second-lightest element",
+      "statement": "Helium is the second-lightest and second most abundant element, and the only one first discovered in space — in the Sun's spectrum — before being found on Earth.",
+      "question": "Which element was first discovered in the Sun before being found on Earth?",
+      "answer": "Helium",
+      "answerType": "element",
+      "hook": "Named after Helios, the Greek sun god.",
+      "wikiTitle": "Helium",
+      "difficulty": 2
+    },
+    {
+      "id": "sci-013",
+      "title": "The element of life",
+      "statement": "Carbon forms the backbone of all known life because it can form four stable bonds, building chains and rings of almost unlimited complexity.",
+      "question": "Which element forms the chemical backbone of all known life?",
+      "answer": "Carbon",
+      "answerType": "element",
+      "wikiTitle": "Carbon",
+      "difficulty": 1
+    },
+    {
+      "id": "sci-014",
+      "title": "Largest planet",
+      "statement": "Jupiter is the largest planet in the Solar System — more massive than all the others combined — and its Great Red Spot is a storm that has raged for centuries.",
+      "question": "What is the largest planet in the Solar System?",
+      "answer": "Jupiter",
+      "answerType": "planet",
+      "wikiTitle": "Jupiter",
+      "difficulty": 1
+    },
+    {
+      "id": "sci-015",
+      "title": "Hottest planet",
+      "statement": "Venus is the hottest planet, at about 465°C, because a runaway carbon dioxide greenhouse traps heat — even though Mercury is closer to the Sun.",
+      "question": "Which is the hottest planet in the Solar System?",
+      "answer": "Venus",
+      "answerType": "planet",
+      "hook": "Closest to the Sun does not mean hottest — the atmosphere decides.",
+      "wikiTitle": "Venus",
+      "difficulty": 2
+    },
+    {
+      "id": "sci-016",
+      "title": "The red planet",
+      "statement": "Mars looks red because its surface is covered in iron oxide — rust. It hosts Olympus Mons, the tallest volcano in the Solar System.",
+      "question": "Which planet is known as the Red Planet?",
+      "answer": "Mars",
+      "answerType": "planet",
+      "wikiTitle": "Mars",
+      "difficulty": 1
+    },
+    {
+      "id": "sci-017",
+      "title": "The ringed planet",
+      "statement": "Saturn's rings are made mostly of water ice and are only tens of metres thick despite spanning hundreds of thousands of kilometres.",
+      "question": "Which planet is famous for its extensive ring system?",
+      "answer": "Saturn",
+      "answerType": "planet",
+      "wikiTitle": "Saturn",
+      "difficulty": 1
+    },
+    {
+      "id": "sci-018",
+      "title": "Closest planet to the Sun",
+      "statement": "Mercury is the closest planet to the Sun and the smallest in the Solar System, with a year lasting just 88 Earth days.",
+      "question": "Which planet is closest to the Sun?",
+      "answer": "Mercury",
+      "answerType": "planet",
+      "wikiTitle": "Mercury (planet)",
+      "difficulty": 1
+    },
+    {
+      "id": "sci-019",
+      "title": "The farthest planet",
+      "statement": "Neptune is the farthest planet from the Sun and has the fastest winds in the Solar System, over 2,000 km/h.",
+      "question": "Which is the farthest planet from the Sun?",
+      "answer": "Neptune",
+      "answerType": "planet",
+      "hook": "Pluto was reclassified as a dwarf planet in 2006.",
+      "wikiTitle": "Neptune",
+      "difficulty": 1
+    },
+    {
+      "id": "sci-020",
+      "title": "The planet on its side",
+      "statement": "Uranus rotates on its side, tilted about 98 degrees, probably after an ancient collision — so its poles take turns facing the Sun for 42 years each.",
+      "question": "Which planet rotates on its side, tilted about 98 degrees?",
+      "answer": "Uranus",
+      "answerType": "planet",
+      "wikiTitle": "Uranus",
+      "difficulty": 2
+    },
+    {
+      "id": "sci-021",
+      "title": "The densest planet",
+      "statement": "Earth is the densest planet in the Solar System, thanks to its large iron core.",
+      "question": "Which is the densest planet in the Solar System?",
+      "answer": "Earth",
+      "answerType": "planet",
+      "wikiTitle": "Earth",
+      "difficulty": 2
+    },
+    {
+      "id": "sci-022",
+      "title": "Theory of relativity",
+      "statement": "Albert Einstein published special relativity in 1905 and general relativity in 1915, redefining gravity as the curvature of spacetime.",
+      "question": "Who developed the theory of relativity?",
+      "answer": "Albert Einstein",
+      "answerType": "scientist",
+      "wikiTitle": "Albert Einstein",
+      "difficulty": 1
+    },
+    {
+      "id": "sci-023",
+      "title": "Laws of motion and gravitation",
+      "statement": "Isaac Newton formulated the three laws of motion and universal gravitation, and co-invented calculus.",
+      "question": "Who formulated the three laws of motion?",
+      "answer": "Isaac Newton",
+      "answerType": "scientist",
+      "wikiTitle": "Isaac Newton",
+      "difficulty": 1
+    },
+    {
+      "id": "sci-024",
+      "title": "Evolution by natural selection",
+      "statement": "Charles Darwin published On the Origin of Species in 1859, explaining how species change through natural selection.",
+      "question": "Who proposed the theory of evolution by natural selection?",
+      "answer": "Charles Darwin",
+      "answerType": "scientist",
+      "wikiTitle": "Charles Darwin",
+      "difficulty": 1
+    },
+    {
+      "id": "sci-025",
+      "title": "Two Nobel Prizes in two sciences",
+      "statement": "Marie Curie discovered polonium and radium, and remains the only person to win Nobel Prizes in two different sciences — Physics and Chemistry.",
+      "question": "Who is the only person to win Nobel Prizes in two different sciences?",
+      "answer": "Marie Curie",
+      "answerType": "scientist",
+      "wikiTitle": "Marie Curie",
+      "difficulty": 1
+    },
+    {
+      "id": "sci-026",
+      "title": "The discovery of penicillin",
+      "statement": "Alexander Fleming discovered penicillin in 1928 after noticing mould killing bacteria on a contaminated culture plate he had left out.",
+      "question": "Who discovered penicillin?",
+      "answer": "Alexander Fleming",
+      "answerType": "scientist",
+      "hook": "An untidy laboratory produced the most important drug of the 20th century.",
+      "wikiTitle": "Alexander Fleming",
+      "difficulty": 1
+    },
+    {
+      "id": "sci-027",
+      "title": "Photo 51",
+      "statement": "Rosalind Franklin's X-ray diffraction image, Photo 51, provided the crucial evidence for the double-helix structure of DNA.",
+      "question": "Whose X-ray image, Photo 51, revealed the structure of DNA?",
+      "answer": "Rosalind Franklin",
+      "answerType": "scientist",
+      "wikiTitle": "Rosalind Franklin",
+      "difficulty": 2
+    },
+    {
+      "id": "sci-028",
+      "title": "The periodic table",
+      "statement": "Dmitri Mendeleev published the periodic table in 1869 and left gaps for elements not yet discovered — then correctly predicted their properties.",
+      "question": "Who created the periodic table of elements?",
+      "answer": "Dmitri Mendeleev",
+      "answerType": "scientist",
+      "hook": "He predicted elements that had not been found yet, and was right.",
+      "wikiTitle": "Dmitri Mendeleev",
+      "difficulty": 2
+    },
+    {
+      "id": "sci-029",
+      "title": "The Sun at the centre",
+      "statement": "Nicolaus Copernicus proposed that the Earth orbits the Sun, published in 1543, displacing the Earth-centred model.",
+      "question": "Who proposed that the Earth orbits the Sun?",
+      "answer": "Nicolaus Copernicus",
+      "answerType": "scientist",
+      "wikiTitle": "Nicolaus Copernicus",
+      "difficulty": 2
+    },
+    {
+      "id": "sci-030",
+      "title": "Laws of planetary motion",
+      "statement": "Johannes Kepler showed that planets move in ellipses, not circles, and derived three laws governing their orbits.",
+      "question": "Who discovered that planetary orbits are ellipses?",
+      "answer": "Johannes Kepler",
+      "answerType": "scientist",
+      "wikiTitle": "Johannes Kepler",
+      "difficulty": 2
+    },
+    {
+      "id": "sci-031",
+      "title": "The father of genetics",
+      "statement": "Gregor Mendel, a monk breeding pea plants, worked out the basic laws of inheritance in the 1860s — work ignored for 35 years.",
+      "question": "Who discovered the basic laws of inheritance using pea plants?",
+      "answer": "Gregor Mendel",
+      "answerType": "scientist",
+      "wikiTitle": "Gregor Mendel",
+      "difficulty": 2
+    },
+    {
+      "id": "sci-032",
+      "title": "Germ theory",
+      "statement": "Louis Pasteur established that microbes cause disease and spoilage, and gave his name to pasteurisation.",
+      "question": "Who established germ theory and gave his name to pasteurisation?",
+      "answer": "Louis Pasteur",
+      "answerType": "scientist",
+      "wikiTitle": "Louis Pasteur",
+      "difficulty": 1
+    },
+    {
+      "id": "sci-033",
+      "title": "Alternating current",
+      "statement": "Nikola Tesla developed the alternating-current system that won the 'war of the currents' and powers the world's electricity grids.",
+      "question": "Who developed the alternating-current electrical system?",
+      "answer": "Nikola Tesla",
+      "answerType": "scientist",
+      "wikiTitle": "Nikola Tesla",
+      "difficulty": 1
+    },
+    {
+      "id": "sci-034",
+      "title": "Black hole radiation",
+      "statement": "Stephen Hawking showed that black holes emit radiation and slowly evaporate — now called Hawking radiation.",
+      "question": "Who showed that black holes emit radiation and slowly evaporate?",
+      "answer": "Stephen Hawking",
+      "answerType": "scientist",
+      "wikiTitle": "Stephen Hawking",
+      "difficulty": 1
+    },
+    {
+      "id": "sci-035",
+      "title": "The first computer programmer",
+      "statement": "Ada Lovelace wrote what is considered the first algorithm intended for a machine, for Babbage's Analytical Engine in the 1840s.",
+      "question": "Who wrote the first published algorithm intended for a machine?",
+      "answer": "Ada Lovelace",
+      "answerType": "scientist",
+      "hook": "She saw that a calculating machine could manipulate symbols, not just numbers — a century early.",
+      "wikiTitle": "Ada Lovelace",
+      "difficulty": 2
+    },
+    {
+      "id": "sci-036",
+      "title": "The first vaccine",
+      "statement": "Edward Jenner created the first vaccine in 1796, using cowpox to protect against smallpox — the only human disease ever eradicated.",
+      "question": "Who developed the first vaccine, against smallpox?",
+      "answer": "Edward Jenner",
+      "answerType": "scientist",
+      "hook": "'Vaccine' comes from vacca, Latin for cow.",
+      "wikiTitle": "Edward Jenner",
+      "difficulty": 2
+    },
+    {
+      "id": "sci-037",
+      "title": "The largest organ",
+      "statement": "The skin is the body's largest organ, covering roughly two square metres in an adult and renewing itself about every four weeks.",
+      "question": "What is the largest organ of the human body?",
+      "answer": "Skin",
+      "answerType": "body-part",
+      "wikiTitle": "Human skin",
+      "difficulty": 1
+    },
+    {
+      "id": "sci-038",
+      "title": "The largest internal organ",
+      "statement": "The liver is the largest internal organ, performs over 500 functions, and is the only human organ that can regenerate substantially.",
+      "question": "What is the largest internal organ in the human body?",
+      "answer": "Liver",
+      "answerType": "body-part",
+      "wikiTitle": "Liver",
+      "difficulty": 1
+    },
+    {
+      "id": "sci-039",
+      "title": "The smallest bone",
+      "statement": "The stapes, in the middle ear, is the smallest bone in the human body at about 3 mm.",
+      "question": "What is the smallest bone in the human body?",
+      "answer": "Stapes",
+      "answerType": "body-part",
+      "hook": "One of three tiny ear bones: hammer, anvil and stirrup.",
+      "wikiTitle": "Stapes",
+      "difficulty": 2
+    },
+    {
+      "id": "sci-040",
+      "title": "The longest bone",
+      "statement": "The femur, or thigh bone, is the longest and strongest bone in the human body.",
+      "question": "What is the longest bone in the human body?",
+      "answer": "Femur",
+      "answerType": "body-part",
+      "wikiTitle": "Femur",
+      "difficulty": 1
+    },
+    {
+      "id": "sci-041",
+      "title": "Where insulin is made",
+      "statement": "The pancreas produces insulin, the hormone that lets cells absorb glucose from the blood.",
+      "question": "Which organ produces insulin?",
+      "answer": "Pancreas",
+      "answerType": "body-part",
+      "wikiTitle": "Pancreas",
+      "difficulty": 2
+    },
+    {
+      "id": "sci-042",
+      "title": "The blood filters",
+      "statement": "The kidneys filter about 180 litres of blood every day, returning almost all of it and excreting the rest as urine.",
+      "question": "Which pair of organs filters waste from the blood?",
+      "answer": "Kidneys",
+      "answerType": "body-part",
+      "wikiTitle": "Kidney",
+      "difficulty": 1
+    },
+    {
+      "id": "sci-043",
+      "title": "The oxygen carrier",
+      "statement": "Haemoglobin is the iron-containing protein in red blood cells that binds oxygen and gives blood its red colour.",
+      "question": "Which protein in red blood cells carries oxygen?",
+      "answer": "Haemoglobin",
+      "answerType": "body-part",
+      "wikiTitle": "Hemoglobin",
+      "difficulty": 2
+    },
+    {
+      "id": "sci-044",
+      "title": "The body's control centre",
+      "statement": "The brain uses about 20% of the body's energy despite being only about 2% of its mass.",
+      "question": "Which organ uses roughly 20% of the body's energy?",
+      "answer": "Brain",
+      "answerType": "body-part",
+      "wikiTitle": "Human brain",
+      "difficulty": 1
+    },
+    {
+      "id": "sci-045",
+      "title": "Bones in the adult body",
+      "statement": "An adult human has 206 bones. Babies are born with around 300, many of which fuse as they grow.",
+      "question": "How many bones are there in the adult human body?",
+      "answer": "206",
+      "answerType": "count",
+      "hook": "You lose bones as you grow up, not gain them.",
+      "wikiTitle": "Human skeleton",
+      "difficulty": 1
+    },
+    {
+      "id": "sci-046",
+      "title": "Chambers of the heart",
+      "statement": "The human heart has four chambers: two atria that receive blood and two ventricles that pump it out.",
+      "question": "How many chambers does the human heart have?",
+      "answer": "4",
+      "answerType": "count",
+      "wikiTitle": "Heart",
+      "difficulty": 1
+    },
+    {
+      "id": "sci-047",
+      "title": "Planets in the Solar System",
+      "statement": "There are eight planets in the Solar System since Pluto was reclassified as a dwarf planet in 2006.",
+      "question": "How many planets are in the Solar System?",
+      "answer": "8",
+      "answerType": "count",
+      "wikiTitle": "Solar System",
+      "difficulty": 1
+    },
+    {
+      "id": "sci-048",
+      "title": "Human chromosomes",
+      "statement": "Human cells normally contain 46 chromosomes, arranged in 23 pairs.",
+      "question": "How many chromosomes are in a typical human cell?",
+      "answer": "46",
+      "answerType": "count",
+      "wikiTitle": "Chromosome",
+      "difficulty": 2
+    },
+    {
+      "id": "sci-049",
+      "title": "Elements in the periodic table",
+      "statement": "The periodic table currently contains 118 confirmed elements, the heaviest of which exist only briefly in laboratories.",
+      "question": "How many elements are in the periodic table?",
+      "answer": "118",
+      "answerType": "count",
+      "wikiTitle": "Periodic table",
+      "difficulty": 2
+    },
+    {
+      "id": "sci-050",
+      "title": "The force that holds orbits",
+      "statement": "Gravity is the weakest of the four fundamental forces, yet it shapes the universe because it acts across unlimited distance and never cancels out.",
+      "question": "Which fundamental force keeps planets in orbit around the Sun?",
+      "answer": "Gravity",
+      "answerType": "physics-concept",
+      "hook": "The weakest force wins at large scales because it only ever attracts.",
+      "wikiTitle": "Gravity",
+      "difficulty": 1
+    },
+    {
+      "id": "sci-051",
+      "title": "The measure of disorder",
+      "statement": "Entropy measures disorder in a system. The second law of thermodynamics says total entropy always increases, which is why time has a direction.",
+      "question": "What is the physical measure of disorder in a system?",
+      "answer": "Entropy",
+      "answerType": "physics-concept",
+      "wikiTitle": "Entropy",
+      "difficulty": 2
+    },
+    {
+      "id": "sci-052",
+      "title": "Resistance to change in motion",
+      "statement": "Inertia is an object's resistance to any change in its motion — the essence of Newton's first law.",
+      "question": "What is an object's resistance to a change in its motion called?",
+      "answer": "Inertia",
+      "answerType": "physics-concept",
+      "wikiTitle": "Inertia",
+      "difficulty": 1
+    },
+    {
+      "id": "sci-053",
+      "title": "Why ships float",
+      "statement": "Buoyancy is the upward force on an object in a fluid, equal to the weight of fluid it displaces — Archimedes' principle.",
+      "question": "Which principle explains why a steel ship floats?",
+      "answer": "Buoyancy",
+      "answerType": "physics-concept",
+      "wikiTitle": "Buoyancy",
+      "difficulty": 1
+    },
+    {
+      "id": "sci-054",
+      "title": "Why a straw looks bent",
+      "statement": "Refraction is the bending of light as it passes between materials of different density, which makes a straw look broken in a glass of water.",
+      "question": "What is the bending of light as it passes between materials called?",
+      "answer": "Refraction",
+      "answerType": "physics-concept",
+      "wikiTitle": "Refraction",
+      "difficulty": 1
+    },
+    {
+      "id": "sci-055",
+      "title": "The cosmic speed limit",
+      "statement": "Nothing carrying information can travel faster than light in a vacuum, about 299,792 km per second — a fixed limit for every observer.",
+      "question": "What is the universal speed limit for anything carrying information?",
+      "answer": "The speed of light",
+      "answerType": "physics-concept",
+      "wikiTitle": "Speed of light",
+      "difficulty": 1
+    },
+    {
+      "id": "sci-056",
+      "title": "Splitting the nucleus",
+      "statement": "Nuclear fission splits a heavy nucleus into lighter ones, releasing energy — the process behind nuclear power stations and the first atomic bombs.",
+      "question": "What is the splitting of a heavy atomic nucleus called?",
+      "answer": "Nuclear fission",
+      "answerType": "physics-concept",
+      "hook": "Fission splits, fusion joins — the Sun does the second one.",
+      "wikiTitle": "Nuclear fission",
+      "difficulty": 2
+    },
+    {
+      "id": "sci-057",
+      "title": "Unit of force",
+      "statement": "The newton is the SI unit of force — the force needed to accelerate one kilogram at one metre per second squared.",
+      "question": "What is the SI unit of force?",
+      "answer": "Newton",
+      "answerType": "unit",
+      "wikiTitle": "Newton (unit)",
+      "difficulty": 1
+    },
+    {
+      "id": "sci-058",
+      "title": "Unit of power",
+      "statement": "The watt is the SI unit of power, equal to one joule per second, named after steam-engine pioneer James Watt.",
+      "question": "What is the SI unit of power?",
+      "answer": "Watt",
+      "answerType": "unit",
+      "wikiTitle": "Watt",
+      "difficulty": 1
+    },
+    {
+      "id": "sci-059",
+      "title": "Unit of frequency",
+      "statement": "The hertz is the SI unit of frequency, meaning one cycle per second.",
+      "question": "What is the SI unit of frequency?",
+      "answer": "Hertz",
+      "answerType": "unit",
+      "wikiTitle": "Hertz",
+      "difficulty": 1
+    },
+    {
+      "id": "sci-060",
+      "title": "Unit of electrical resistance",
+      "statement": "The ohm is the SI unit of electrical resistance, symbolised by the Greek letter omega.",
+      "question": "What is the SI unit of electrical resistance?",
+      "answer": "Ohm",
+      "answerType": "unit",
+      "wikiTitle": "Ohm",
+      "difficulty": 2
+    },
+    {
+      "id": "sci-061",
+      "title": "Unit of energy",
+      "statement": "The joule is the SI unit of energy — roughly the energy needed to lift a small apple one metre.",
+      "question": "What is the SI unit of energy?",
+      "answer": "Joule",
+      "answerType": "unit",
+      "wikiTitle": "Joule",
+      "difficulty": 1
+    },
+    {
+      "id": "sci-062",
+      "title": "Unit of pressure",
+      "statement": "The pascal is the SI unit of pressure, equal to one newton per square metre.",
+      "question": "What is the SI unit of pressure?",
+      "answer": "Pascal",
+      "answerType": "unit",
+      "wikiTitle": "Pascal (unit)",
+      "difficulty": 2
+    },
+    {
+      "id": "sci-063",
+      "title": "The largest animal ever",
+      "statement": "The blue whale is the largest animal known to have existed, reaching 30 metres and 150 tonnes — its heart alone weighs as much as a small car.",
+      "question": "What is the largest animal that has ever lived?",
+      "answer": "Blue whale",
+      "answerType": "animal",
+      "wikiTitle": "Blue whale",
+      "difficulty": 1
+    },
+    {
+      "id": "sci-064",
+      "title": "Fastest land animal",
+      "statement": "The cheetah is the fastest land animal, reaching about 110 km/h in short bursts.",
+      "question": "What is the fastest land animal?",
+      "answer": "Cheetah",
+      "answerType": "animal",
+      "wikiTitle": "Cheetah",
+      "difficulty": 1
+    },
+    {
+      "id": "sci-065",
+      "title": "Fastest animal of all",
+      "statement": "The peregrine falcon is the fastest animal on Earth, exceeding 320 km/h in its hunting dive.",
+      "question": "What is the fastest animal in the world?",
+      "answer": "Peregrine falcon",
+      "answerType": "animal",
+      "hook": "The cheetah wins on land; the falcon wins outright.",
+      "wikiTitle": "Peregrine falcon",
+      "difficulty": 2
+    },
+    {
+      "id": "sci-066",
+      "title": "Largest land animal",
+      "statement": "The African bush elephant is the largest living land animal, weighing up to about 6 tonnes.",
+      "question": "What is the largest land animal alive today?",
+      "answer": "African elephant",
+      "answerType": "animal",
+      "wikiTitle": "African bush elephant",
+      "difficulty": 1
+    },
+    {
+      "id": "sci-067",
+      "title": "The only flying mammal",
+      "statement": "Bats are the only mammals capable of true sustained flight; flying squirrels merely glide.",
+      "question": "Which is the only mammal capable of true sustained flight?",
+      "answer": "Bat",
+      "answerType": "animal",
+      "wikiTitle": "Bat",
+      "difficulty": 1
+    },
+    {
+      "id": "sci-068",
+      "title": "Three hearts and blue blood",
+      "statement": "An octopus has three hearts and blue blood, because it uses copper-based haemocyanin rather than iron-based haemoglobin.",
+      "question": "Which animal has three hearts and blue blood?",
+      "answer": "Octopus",
+      "answerType": "animal",
+      "wikiTitle": "Octopus",
+      "difficulty": 2
+    },
+    {
+      "id": "sci-069",
+      "title": "The tallest animal",
+      "statement": "The giraffe is the tallest living animal, up to about 5.5 m, yet has the same number of neck vertebrae as a human: seven.",
+      "question": "What is the tallest living animal?",
+      "answer": "Giraffe",
+      "answerType": "animal",
+      "hook": "Seven neck bones — the same as yours, just much longer.",
+      "wikiTitle": "Giraffe",
+      "difficulty": 1
+    },
+    {
+      "id": "sci-070",
+      "title": "The largest reptile",
+      "statement": "The saltwater crocodile is the largest living reptile, reaching over 6 metres, and has the strongest measured bite of any animal.",
+      "question": "What is the largest living reptile?",
+      "answer": "Saltwater crocodile",
+      "answerType": "animal",
+      "wikiTitle": "Saltwater crocodile",
+      "difficulty": 2
+    },
+    {
+      "id": "sci-071",
+      "title": "The particle with positive charge",
+      "statement": "Protons carry a positive charge and sit in the nucleus. The number of protons defines which element an atom is.",
+      "question": "Which subatomic particle carries a positive charge?",
+      "answer": "Proton",
+      "answerType": "particle",
+      "wikiTitle": "Proton",
+      "difficulty": 1
+    },
+    {
+      "id": "sci-072",
+      "title": "The particle of light",
+      "statement": "The photon is the quantum of light — massless, always travelling at light speed, and carrying the electromagnetic force.",
+      "question": "What is the particle of light called?",
+      "answer": "Photon",
+      "answerType": "particle",
+      "wikiTitle": "Photon",
+      "difficulty": 1
+    },
+    {
+      "id": "sci-073",
+      "title": "The negatively charged particle",
+      "statement": "Electrons carry a negative charge and orbit the nucleus. Their movement is what we call electricity.",
+      "question": "Which subatomic particle carries a negative charge?",
+      "answer": "Electron",
+      "answerType": "particle",
+      "wikiTitle": "Electron",
+      "difficulty": 1
+    },
+    {
+      "id": "sci-074",
+      "title": "What protons are made of",
+      "statement": "Quarks are the fundamental particles that combine in threes to form protons and neutrons. They are never found alone.",
+      "question": "Which fundamental particles combine to form protons and neutrons?",
+      "answer": "Quark",
+      "answerType": "particle",
+      "wikiTitle": "Quark",
+      "difficulty": 2
+    },
+    {
+      "id": "sci-075",
+      "title": "The ghost particle",
+      "statement": "Neutrinos barely interact with matter — trillions pass through your body every second — which is why they are nicknamed ghost particles.",
+      "question": "Which nearly massless particle passes through matter almost without interacting?",
+      "answer": "Neutrino",
+      "answerType": "particle",
+      "wikiTitle": "Neutrino",
+      "difficulty": 2
+    },
+    {
+      "id": "sci-076",
+      "title": "The formula H2O",
+      "statement": "Water is H2O — two hydrogen atoms bonded to one oxygen. Its unusual property of expanding when it freezes is why ice floats.",
+      "question": "Which compound has the chemical formula H2O?",
+      "answer": "Water",
+      "answerType": "compound",
+      "hook": "Almost everything contracts when it freezes; water does the opposite, which is why lakes freeze from the top.",
+      "wikiTitle": "Water",
+      "difficulty": 1
+    },
+    {
+      "id": "sci-077",
+      "title": "The formula NaCl",
+      "statement": "Sodium chloride, common table salt, is formed from a violently reactive metal and a poisonous gas.",
+      "question": "What is the chemical name for common table salt, NaCl?",
+      "answer": "Sodium chloride",
+      "answerType": "compound",
+      "wikiTitle": "Sodium chloride",
+      "difficulty": 1
+    },
+    {
+      "id": "sci-078",
+      "title": "The formula CO2",
+      "statement": "Carbon dioxide is what animals exhale and plants absorb, and the principal greenhouse gas driving climate change.",
+      "question": "Which gas has the chemical formula CO2?",
+      "answer": "Carbon dioxide",
+      "answerType": "compound",
+      "wikiTitle": "Carbon dioxide",
+      "difficulty": 1
+    },
+    {
+      "id": "sci-079",
+      "title": "The formula CH4",
+      "statement": "Methane is the main component of natural gas and a greenhouse gas far more potent than CO2 over the short term.",
+      "question": "Which gas has the chemical formula CH4?",
+      "answer": "Methane",
+      "answerType": "compound",
+      "wikiTitle": "Methane",
+      "difficulty": 2
+    },
+    {
+      "id": "sci-080",
+      "title": "The formula NH3",
+      "statement": "Ammonia, NH3, is central to fertiliser production; the Haber process that makes it feeds roughly half the world's population.",
+      "question": "Which compound has the chemical formula NH3?",
+      "answer": "Ammonia",
+      "answerType": "compound",
+      "wikiTitle": "Ammonia",
+      "difficulty": 2
+    },
+    {
+      "id": "sci-081",
+      "title": "The molecule of heredity",
+      "statement": "DNA carries genetic instructions in a double helix, with the bases adenine, thymine, cytosine and guanine pairing across the strands.",
+      "question": "Which molecule carries genetic instructions in a double helix?",
+      "answer": "DNA",
+      "answerType": "compound",
+      "wikiTitle": "DNA",
+      "difficulty": 1
+    },
+    {
+      "id": "sci-082",
+      "title": "The study of earthquakes",
+      "statement": "Seismology is the study of earthquakes and the propagation of elastic waves through the Earth.",
+      "question": "What is the study of earthquakes called?",
+      "answer": "Seismology",
+      "answerType": "field",
+      "wikiTitle": "Seismology",
+      "difficulty": 2
+    },
+    {
+      "id": "sci-083",
+      "title": "The study of birds",
+      "statement": "Ornithology is the branch of zoology devoted to birds.",
+      "question": "What is the study of birds called?",
+      "answer": "Ornithology",
+      "answerType": "field",
+      "wikiTitle": "Ornithology",
+      "difficulty": 2
+    },
+    {
+      "id": "sci-084",
+      "title": "The study of fossils",
+      "statement": "Palaeontology is the study of ancient life through fossils, spanning everything from microbes to dinosaurs.",
+      "question": "What is the study of fossils called?",
+      "answer": "Palaeontology",
+      "answerType": "field",
+      "wikiTitle": "Paleontology",
+      "difficulty": 2
+    },
+    {
+      "id": "sci-085",
+      "title": "The study of fungi",
+      "statement": "Mycology is the study of fungi — a kingdom more closely related to animals than to plants.",
+      "question": "What is the study of fungi called?",
+      "answer": "Mycology",
+      "answerType": "field",
+      "hook": "Fungi are genetically closer to you than to a tree.",
+      "wikiTitle": "Mycology",
+      "difficulty": 3
+    },
+    {
+      "id": "sci-086",
+      "title": "The study of weather",
+      "statement": "Meteorology is the science of the atmosphere and weather forecasting.",
+      "question": "What is the scientific study of weather called?",
+      "answer": "Meteorology",
+      "answerType": "field",
+      "wikiTitle": "Meteorology",
+      "difficulty": 1
+    },
+    {
+      "id": "sci-087",
+      "title": "The mosquito-borne parasite",
+      "statement": "Malaria is caused by Plasmodium parasites transmitted by female Anopheles mosquitoes, and still kills hundreds of thousands of people a year.",
+      "question": "Which disease is caused by a parasite spread by Anopheles mosquitoes?",
+      "answer": "Malaria",
+      "answerType": "disease",
+      "wikiTitle": "Malaria",
+      "difficulty": 1
+    },
+    {
+      "id": "sci-088",
+      "title": "The sailors' disease",
+      "statement": "Scurvy is caused by vitamin C deficiency and devastated long sea voyages until citrus rations were introduced.",
+      "question": "Which disease is caused by a deficiency of vitamin C?",
+      "answer": "Scurvy",
+      "answerType": "disease",
+      "wikiTitle": "Scurvy",
+      "difficulty": 2
+    },
+    {
+      "id": "sci-089",
+      "title": "The Black Death",
+      "statement": "The bubonic plague, caused by the bacterium Yersinia pestis, killed perhaps a third of Europe's population in the 1340s.",
+      "question": "Which disease caused the Black Death of the 1340s?",
+      "answer": "Bubonic plague",
+      "answerType": "disease",
+      "wikiTitle": "Black Death",
+      "difficulty": 1
+    },
+    {
+      "id": "sci-090",
+      "title": "The vitamin D deficiency",
+      "statement": "Rickets softens and weakens children's bones and is caused by a lack of vitamin D, calcium or phosphate.",
+      "question": "Which childhood bone disease is caused by vitamin D deficiency?",
+      "answer": "Rickets",
+      "answerType": "disease",
+      "wikiTitle": "Rickets",
+      "difficulty": 2
+    },
+    {
+      "id": "sci-091",
+      "title": "How plants make food",
+      "statement": "Photosynthesis converts light, water and carbon dioxide into sugars and oxygen — the process that put oxygen into Earth's atmosphere.",
+      "question": "What is the process by which plants convert light into chemical energy?",
+      "answer": "Photosynthesis",
+      "answerType": "physics-concept",
+      "wikiTitle": "Photosynthesis",
+      "difficulty": 1
+    },
+    {
+      "id": "sci-092",
+      "title": "The powerhouse of the cell",
+      "statement": "Mitochondria generate most of a cell's energy and carry their own DNA, a remnant of the bacteria they descend from.",
+      "question": "Which cell structure generates most of the cell's energy?",
+      "answer": "Mitochondria",
+      "answerType": "body-part",
+      "hook": "They were once free-living bacteria, and still keep their own genome.",
+      "wikiTitle": "Mitochondrion",
+      "difficulty": 1
+    }
+  ]
+}
