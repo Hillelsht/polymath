@@ -46,6 +46,17 @@ MIN_SECONDS = 120
 MIN_CHANNELS = 12
 MIN_VIDEOS = 60
 
+# Recent uploads include community posts, livestreams and Shorts. None of them teach.
+JUNK_TITLE = re.compile(
+    r"live ?stream|\blive\b|#shorts|\bshorts?\b|\bchat\b|q&a|podcast|announce|"
+    r"subscribe|merch|schedule|trailer|teaser|behind the scenes|patreon|giveaway|"
+    r"update|vlog|reacts?\b|unboxing",
+    re.I,
+)
+
+# Keep each channel's strongest recent uploads rather than simply its newest.
+TOP_PER_CHANNEL = 8
+
 STOPWORDS = {
     "what", "why", "how", "the", "and", "for", "with", "from", "that", "this", "your", "you",
     "are", "was", "were", "his", "her", "its", "into", "about", "explained", "history",
@@ -55,7 +66,17 @@ STOPWORDS = {
 
 
 def fetch(url, timeout=25):
-    request = urllib.request.Request(url, headers={"User-Agent": UA, "Accept-Language": "en-US,en"})
+    request = urllib.request.Request(
+        url,
+        headers={
+            "User-Agent": UA,
+            "Accept-Language": "en-US,en",
+            # Without this YouTube answers a datacenter IP with a consent interstitial that
+            # contains none of the page data — the reason the first run resolved 1 duration
+            # out of 455.
+            "Cookie": "CONSENT=YES+cb; SOCS=CAI",
+        },
+    )
     try:
         with urllib.request.urlopen(request, timeout=timeout) as response:
             return response.read().decode("utf-8", "replace")
@@ -89,15 +110,21 @@ def channel_uploads(channel_id):
         if not video_id or not title:
             continue
         group = entry.find(f"{MEDIA}group")
-        thumb = None
+        thumb, views = None, 0
         if group is not None:
             node = group.find(f"{MEDIA}thumbnail")
             if node is not None:
                 thumb = node.get("url")
+            community = group.find(f"{MEDIA}community")
+            if community is not None:
+                stats = community.find(f"{MEDIA}statistics")
+                if stats is not None:
+                    views = int(stats.get("views") or 0)
         videos.append(
             {
                 "youtubeId": video_id,
                 "title": html.unescape(title).strip(),
+                "views": views,
                 "thumbnailUrl": thumb or f"https://img.youtube.com/vi/{video_id}/hqdefault.jpg",
             }
         )
@@ -106,11 +133,18 @@ def channel_uploads(channel_id):
 
 def duration_seconds(video_id):
     """Best effort: the watch page carries lengthSeconds. Unknown length is not fatal."""
-    page = fetch(f"https://www.youtube.com/watch?v={video_id}", timeout=20)
+    page = fetch(
+        f"https://www.youtube.com/watch?v={video_id}&bpctr=9999999999&has_verified=1",
+        timeout=20,
+    )
     if not page:
         return None
-    match = re.search(r'"lengthSeconds"\s*:\s*"(\d+)"', page)
-    return int(match.group(1)) if match else None
+    match = re.search(r'"(?:lengthSeconds|approxDurationMs)"\s*:\s*"(\d+)"', page)
+    if not match:
+        return None
+    value = int(match.group(1))
+    # approxDurationMs is milliseconds; lengthSeconds is seconds. Tell them apart by scale.
+    return value // 1000 if value > 100_000 else value
 
 
 def load_facts():
@@ -181,6 +215,13 @@ def main():
             continue
 
         resolved_channels += 1
+
+        # Rank by views, then take the best few: a channel's most-watched recent uploads are
+        # reliably its real lessons, while its livestreams and filler sit at the bottom.
+        uploads = [u for u in uploads if not JUNK_TITLE.search(u["title"]) and len(u["title"]) > 15]
+        uploads.sort(key=lambda u: u["views"], reverse=True)
+        uploads = uploads[:TOP_PER_CHANNEL]
+
         kept = 0
         for upload in uploads:
             seconds = duration_seconds(upload["youtubeId"])

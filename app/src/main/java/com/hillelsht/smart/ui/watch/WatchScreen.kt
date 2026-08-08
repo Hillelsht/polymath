@@ -62,6 +62,13 @@ data class WatchUiState(
     val length: LengthClass? = null,
     val loaded: Boolean = false,
 ) {
+    /**
+     * YouTube does not always expose a duration, so the length filter is only meaningful when
+     * at least some of the shelf has one. Offering a filter that filters nothing is worse than
+     * offering none.
+     */
+    val lengthFilterUseful: Boolean get() = videos.any { it.lengthClass != null }
+
     /** The catalog after the two filter chips are applied. */
     val visible: List<Video>
         get() = videos.filter { video ->
@@ -158,15 +165,17 @@ fun WatchScreen(repository: SmartRepository, onPlay: (Video) -> Unit) {
             }
         }
 
-        item {
-            Row(horizontalArrangement = Arrangement.spacedBy(8.dp)) {
-                LengthClass.entries.forEach { length ->
-                    FilterChip(
-                        label = length.label,
-                        selected = state.length == length,
-                        accent = MaterialTheme.colorScheme.primary,
-                        onClick = { viewModel.selectLength(length) },
-                    )
+        if (state.lengthFilterUseful) {
+            item {
+                Row(horizontalArrangement = Arrangement.spacedBy(8.dp)) {
+                    LengthClass.entries.forEach { length ->
+                        FilterChip(
+                            label = length.label,
+                            selected = state.length == length,
+                            accent = MaterialTheme.colorScheme.primary,
+                            onClick = { viewModel.selectLength(length) },
+                        )
+                    }
                 }
             }
         }
