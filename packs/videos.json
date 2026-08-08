@@ -2,26 +2,6 @@
  "packId": "videos",
  "videos": [
   {
-   "id": "vid-S2WWPkkgl7M",
-   "youtubeId": "S2WWPkkgl7M",
-   "category": "geography",
-   "title": "Livestream featuring ART!",
-   "channel": "GeographyNow",
-   "minutes": null,
-   "thumbnailUrl": "https://i4.ytimg.com/vi/S2WWPkkgl7M/hqdefault.jpg",
-   "relatedFactIds": []
-  },
-  {
-   "id": "vid-eW981PMHprc",
-   "youtubeId": "eW981PMHprc",
-   "category": "geography",
-   "title": "Quick Paraguay break 🇵🇾",
-   "channel": "GeographyNow",
-   "minutes": null,
-   "thumbnailUrl": "https://i2.ytimg.com/vi/eW981PMHprc/hqdefault.jpg",
-   "relatedFactIds": []
-  },
-  {
    "id": "vid-bAGNWz1tUOo",
    "youtubeId": "bAGNWz1tUOo",
    "category": "geography",
@@ -29,6 +9,16 @@
    "channel": "GeographyNow",
    "minutes": null,
    "thumbnailUrl": "https://i3.ytimg.com/vi/bAGNWz1tUOo/hqdefault.jpg",
+   "relatedFactIds": []
+  },
+  {
+   "id": "vid-DRRqHnPglJw",
+   "youtubeId": "DRRqHnPglJw",
+   "category": "geography",
+   "title": "Countries with more tourists than people",
+   "channel": "GeographyNow",
+   "minutes": null,
+   "thumbnailUrl": "https://i1.ytimg.com/vi/DRRqHnPglJw/hqdefault.jpg",
    "relatedFactIds": []
   },
   {
@@ -42,16 +32,6 @@
    "relatedFactIds": []
   },
   {
-   "id": "vid-JmDBgpSiG4c",
-   "youtubeId": "JmDBgpSiG4c",
-   "category": "geography",
-   "title": "Content creators when the rent is due, and they have to \"Care\"",
-   "channel": "GeographyNow",
-   "minutes": null,
-   "thumbnailUrl": "https://i3.ytimg.com/vi/JmDBgpSiG4c/hqdefault.jpg",
-   "relatedFactIds": []
-  },
-  {
    "id": "vid-R03HmEuNmgM",
    "youtubeId": "R03HmEuNmgM",
    "category": "geography",
@@ -62,13 +42,23 @@
    "relatedFactIds": []
   },
   {
-   "id": "vid-nYa1zK1Dq08",
-   "youtubeId": "nYa1zK1Dq08",
+   "id": "vid-eemTEROvA-w",
+   "youtubeId": "eemTEROvA-w",
    "category": "geography",
-   "title": "Geogra-chat 2!!",
+   "title": "The AMAZON TRIPOINT explained",
    "channel": "GeographyNow",
    "minutes": null,
-   "thumbnailUrl": "https://i3.ytimg.com/vi/nYa1zK1Dq08/hqdefault.jpg",
+   "thumbnailUrl": "https://i2.ytimg.com/vi/eemTEROvA-w/hqdefault.jpg",
+   "relatedFactIds": []
+  },
+  {
+   "id": "vid-6CSWNyBhe8o",
+   "youtubeId": "6CSWNyBhe8o",
+   "category": "geography",
+   "title": "The most dangerous roads on earth ￼",
+   "channel": "GeographyNow",
+   "minutes": null,
+   "thumbnailUrl": "https://i3.ytimg.com/vi/6CSWNyBhe8o/hqdefault.jpg",
    "relatedFactIds": []
   },
   {
@@ -92,106 +82,6 @@
    "relatedFactIds": []
   },
   {
-   "id": "vid-RTktjwJg6Ac",
-   "youtubeId": "RTktjwJg6Ac",
-   "category": "geography",
-   "title": "LIVE STREAM SCHEDULE",
-   "channel": "GeographyNow",
-   "minutes": null,
-   "thumbnailUrl": "https://i3.ytimg.com/vi/RTktjwJg6Ac/hqdefault.jpg",
-   "relatedFactIds": []
-  },
-  {
-   "id": "vid-SDkvFaHr8og",
-   "youtubeId": "SDkvFaHr8og",
-   "category": "geography",
-   "title": "How Cameroon is \"Africa in miniature\"",
-   "channel": "GeographyNow",
-   "minutes": null,
-   "thumbnailUrl": "https://i4.ytimg.com/vi/SDkvFaHr8og/hqdefault.jpg",
-   "relatedFactIds": []
-  },
-  {
-   "id": "vid-6CSWNyBhe8o",
-   "youtubeId": "6CSWNyBhe8o",
-   "category": "geography",
-   "title": "The most dangerous roads on earth ￼",
-   "channel": "GeographyNow",
-   "minutes": null,
-   "thumbnailUrl": "https://i3.ytimg.com/vi/6CSWNyBhe8o/hqdefault.jpg",
-   "relatedFactIds": []
-  },
-  {
-   "id": "vid-eemTEROvA-w",
-   "youtubeId": "eemTEROvA-w",
-   "category": "geography",
-   "title": "The AMAZON TRIPOINT explained",
-   "channel": "GeographyNow",
-   "minutes": null,
-   "thumbnailUrl": "https://i2.ytimg.com/vi/eemTEROvA-w/hqdefault.jpg",
-   "relatedFactIds": []
-  },
-  {
-   "id": "vid-mEISjwLZe5U",
-   "youtubeId": "mEISjwLZe5U",
-   "category": "geography",
-   "title": "Let's Geogra-chat NOW",
-   "channel": "GeographyNow",
-   "minutes": null,
-   "thumbnailUrl": "https://i2.ytimg.com/vi/mEISjwLZe5U/hqdefault.jpg",
-   "relatedFactIds": []
-  },
-  {
-   "id": "vid-DRRqHnPglJw",
-   "youtubeId": "DRRqHnPglJw",
-   "category": "geography",
-   "title": "Countries with more tourists than people",
-   "channel": "GeographyNow",
-   "minutes": null,
-   "thumbnailUrl": "https://i1.ytimg.com/vi/DRRqHnPglJw/hqdefault.jpg",
-   "relatedFactIds": []
-  },
-  {
-   "id": "vid-a37D1jNHyUw",
-   "youtubeId": "a37D1jNHyUw",
-   "category": "geography",
-   "title": "IMG 2526",
-   "channel": "AtlasPro",
-   "minutes": null,
-   "thumbnailUrl": "https://i2.ytimg.com/vi/a37D1jNHyUw/hqdefault.jpg",
-   "relatedFactIds": []
-  },
-  {
-   "id": "vid-u7vx3Ii7KJs",
-   "youtubeId": "u7vx3Ii7KJs",
-   "category": "geography",
-   "title": "IMG 2525",
-   "channel": "AtlasPro",
-   "minutes": null,
-   "thumbnailUrl": "https://i2.ytimg.com/vi/u7vx3Ii7KJs/hqdefault.jpg",
-   "relatedFactIds": []
-  },
-  {
-   "id": "vid-QoiRyc_jr8Y",
-   "youtubeId": "QoiRyc_jr8Y",
-   "category": "geography",
-   "title": "IMG 2524",
-   "channel": "AtlasPro",
-   "minutes": null,
-   "thumbnailUrl": "https://i2.ytimg.com/vi/QoiRyc_jr8Y/hqdefault.jpg",
-   "relatedFactIds": []
-  },
-  {
-   "id": "vid-qK1vUgWjSg0",
-   "youtubeId": "qK1vUgWjSg0",
-   "category": "geography",
-   "title": "Dingo bone time",
-   "channel": "AtlasPro",
-   "minutes": null,
-   "thumbnailUrl": "https://i2.ytimg.com/vi/qK1vUgWjSg0/hqdefault.jpg",
-   "relatedFactIds": []
-  },
-  {
    "id": "vid-cVmvdYN_-2Y",
    "youtubeId": "cVmvdYN_-2Y",
    "category": "geography",
@@ -199,58 +89,6 @@
    "channel": "AtlasPro",
    "minutes": null,
    "thumbnailUrl": "https://i4.ytimg.com/vi/cVmvdYN_-2Y/hqdefault.jpg",
-   "relatedFactIds": []
-  },
-  {
-   "id": "vid-zkbgLhBmzGo",
-   "youtubeId": "zkbgLhBmzGo",
-   "category": "geography",
-   "title": "What's Hidden Under the Sands of the Sahara Desert?",
-   "channel": "RealLifeLore",
-   "minutes": null,
-   "thumbnailUrl": "https://i3.ytimg.com/vi/zkbgLhBmzGo/hqdefault.jpg",
-   "relatedFactIds": [
-    "geo-053"
-   ]
-  },
-  {
-   "id": "vid-ZPu3kezlC08",
-   "youtubeId": "ZPu3kezlC08",
-   "category": "geography",
-   "title": "The Hormuz Situation Keeps Getting More Insane",
-   "channel": "RealLifeLore",
-   "minutes": null,
-   "thumbnailUrl": "https://i3.ytimg.com/vi/ZPu3kezlC08/hqdefault.jpg",
-   "relatedFactIds": []
-  },
-  {
-   "id": "vid-QjhqB3tC1Ko",
-   "youtubeId": "QjhqB3tC1Ko",
-   "category": "geography",
-   "title": "Crimea Situation Is Insane",
-   "channel": "RealLifeLore",
-   "minutes": null,
-   "thumbnailUrl": "https://i2.ytimg.com/vi/QjhqB3tC1Ko/hqdefault.jpg",
-   "relatedFactIds": []
-  },
-  {
-   "id": "vid-nEBcD6sFDpY",
-   "youtubeId": "nEBcD6sFDpY",
-   "category": "geography",
-   "title": "Caspian Sea Situation Is Insane",
-   "channel": "RealLifeLore",
-   "minutes": null,
-   "thumbnailUrl": "https://i3.ytimg.com/vi/nEBcD6sFDpY/hqdefault.jpg",
-   "relatedFactIds": []
-  },
-  {
-   "id": "vid-V14RCK_QiG0",
-   "youtubeId": "V14RCK_QiG0",
-   "category": "geography",
-   "title": "The Incredible Logistics Behind the World's Longest Flight",
-   "channel": "RealLifeLore",
-   "minutes": null,
-   "thumbnailUrl": "https://i3.ytimg.com/vi/V14RCK_QiG0/hqdefault.jpg",
    "relatedFactIds": []
   },
   {
@@ -264,63 +102,13 @@
    "relatedFactIds": []
   },
   {
-   "id": "vid-VkYWW95eSLs",
-   "youtubeId": "VkYWW95eSLs",
+   "id": "vid-QjhqB3tC1Ko",
+   "youtubeId": "QjhqB3tC1Ko",
    "category": "geography",
-   "title": "A European Ice Age is Coming Sooner Than We Thought...",
+   "title": "Crimea Situation Is Insane",
    "channel": "RealLifeLore",
    "minutes": null,
-   "thumbnailUrl": "https://i3.ytimg.com/vi/VkYWW95eSLs/hqdefault.jpg",
-   "relatedFactIds": []
-  },
-  {
-   "id": "vid-O3dSjY4j7Ak",
-   "youtubeId": "O3dSjY4j7Ak",
-   "category": "geography",
-   "title": "Why Life in Louisiana has Become Impossible",
-   "channel": "RealLifeLore",
-   "minutes": null,
-   "thumbnailUrl": "https://i4.ytimg.com/vi/O3dSjY4j7Ak/hqdefault.jpg",
-   "relatedFactIds": []
-  },
-  {
-   "id": "vid-Km2A-9DwzeM",
-   "youtubeId": "Km2A-9DwzeM",
-   "category": "geography",
-   "title": "Why Britain Pays So Much to Defend the Falklands",
-   "channel": "RealLifeLore",
-   "minutes": null,
-   "thumbnailUrl": "https://i4.ytimg.com/vi/Km2A-9DwzeM/hqdefault.jpg",
-   "relatedFactIds": []
-  },
-  {
-   "id": "vid-To8rpgqvtSc",
-   "youtubeId": "To8rpgqvtSc",
-   "category": "geography",
-   "title": "What's Hidden Under the World's Most Mysterious Places?",
-   "channel": "RealLifeLore",
-   "minutes": null,
-   "thumbnailUrl": "https://i1.ytimg.com/vi/To8rpgqvtSc/hqdefault.jpg",
-   "relatedFactIds": []
-  },
-  {
-   "id": "vid-2o4IUPNYAK0",
-   "youtubeId": "2o4IUPNYAK0",
-   "category": "geography",
-   "title": "How Iran Will Kill 80+ Years of US Global Hegemony",
-   "channel": "RealLifeLore",
-   "minutes": null,
-   "thumbnailUrl": "https://i3.ytimg.com/vi/2o4IUPNYAK0/hqdefault.jpg",
-   "relatedFactIds": []
-  },
-  {
-   "id": "vid-LwdSfdEkXPA",
-   "youtubeId": "LwdSfdEkXPA",
-   "category": "geography",
-   "title": "Why Israel is Trying to Conquer 10% of Lebanon",
-   "channel": "RealLifeLore",
-   "minutes": null,
-   "thumbnailUrl": "https://i1.ytimg.com/vi/LwdSfdEkXPA/hqdefault.jpg",
+   "thumbnailUrl": "https://i2.ytimg.com/vi/QjhqB3tC1Ko/hqdefault.jpg",
    "relatedFactIds": []
   },
   {
@@ -334,73 +122,63 @@
    "relatedFactIds": []
   },
   {
-   "id": "vid-UCpEozv3pRY",
-   "youtubeId": "UCpEozv3pRY",
+   "id": "vid-VkYWW95eSLs",
+   "youtubeId": "VkYWW95eSLs",
    "category": "geography",
-   "title": "The Making of the Modern Middle East",
+   "title": "A European Ice Age is Coming Sooner Than We Thought...",
    "channel": "RealLifeLore",
    "minutes": null,
-   "thumbnailUrl": "https://i2.ytimg.com/vi/UCpEozv3pRY/hqdefault.jpg",
+   "thumbnailUrl": "https://i3.ytimg.com/vi/VkYWW95eSLs/hqdefault.jpg",
    "relatedFactIds": []
   },
   {
-   "id": "vid-eX0WfHpKmqY",
-   "youtubeId": "eX0WfHpKmqY",
+   "id": "vid-LwdSfdEkXPA",
+   "youtubeId": "LwdSfdEkXPA",
    "category": "geography",
-   "title": "Why 400,000 People Live in Earth's Coldest City",
+   "title": "Why Israel is Trying to Conquer 10% of Lebanon",
    "channel": "RealLifeLore",
    "minutes": null,
-   "thumbnailUrl": "https://i2.ytimg.com/vi/eX0WfHpKmqY/hqdefault.jpg",
+   "thumbnailUrl": "https://i1.ytimg.com/vi/LwdSfdEkXPA/hqdefault.jpg",
    "relatedFactIds": []
   },
   {
-   "id": "vid-2iHPVsyv4GU",
-   "youtubeId": "2iHPVsyv4GU",
+   "id": "vid-2o4IUPNYAK0",
+   "youtubeId": "2o4IUPNYAK0",
    "category": "geography",
-   "title": "How Taiwan is Preparing to Get Invaded",
-   "channel": "Wendoverproductions",
+   "title": "How Iran Will Kill 80+ Years of US Global Hegemony",
+   "channel": "RealLifeLore",
    "minutes": null,
-   "thumbnailUrl": "https://i3.ytimg.com/vi/2iHPVsyv4GU/hqdefault.jpg",
+   "thumbnailUrl": "https://i3.ytimg.com/vi/2o4IUPNYAK0/hqdefault.jpg",
    "relatedFactIds": []
   },
   {
-   "id": "vid-dzmoALgtB1Q",
-   "youtubeId": "dzmoALgtB1Q",
+   "id": "vid-O3dSjY4j7Ak",
+   "youtubeId": "O3dSjY4j7Ak",
    "category": "geography",
-   "title": "Why Texas Wins",
-   "channel": "Wendoverproductions",
+   "title": "Why Life in Louisiana has Become Impossible",
+   "channel": "RealLifeLore",
    "minutes": null,
-   "thumbnailUrl": "https://i1.ytimg.com/vi/dzmoALgtB1Q/hqdefault.jpg",
+   "thumbnailUrl": "https://i4.ytimg.com/vi/O3dSjY4j7Ak/hqdefault.jpg",
    "relatedFactIds": []
   },
   {
-   "id": "vid-VuliaG_-uao",
-   "youtubeId": "VuliaG_-uao",
+   "id": "vid-ZPu3kezlC08",
+   "youtubeId": "ZPu3kezlC08",
    "category": "geography",
-   "title": "Why American Houses Are So Flimsy",
-   "channel": "Wendoverproductions",
+   "title": "The Hormuz Situation Keeps Getting More Insane",
+   "channel": "RealLifeLore",
    "minutes": null,
-   "thumbnailUrl": "https://i3.ytimg.com/vi/VuliaG_-uao/hqdefault.jpg",
+   "thumbnailUrl": "https://i3.ytimg.com/vi/ZPu3kezlC08/hqdefault.jpg",
    "relatedFactIds": []
   },
   {
-   "id": "vid-DPeRd48YfqY",
-   "youtubeId": "DPeRd48YfqY",
+   "id": "vid-gokC5fXEM00",
+   "youtubeId": "gokC5fXEM00",
    "category": "geography",
-   "title": "How Private Equity Ruined American Youth Sports",
+   "title": "How Red Bull Built Its Empire",
    "channel": "Wendoverproductions",
    "minutes": null,
-   "thumbnailUrl": "https://i1.ytimg.com/vi/DPeRd48YfqY/hqdefault.jpg",
-   "relatedFactIds": []
-  },
-  {
-   "id": "vid-ABRjwGo6Usg",
-   "youtubeId": "ABRjwGo6Usg",
-   "category": "geography",
-   "title": "The Problem With Spirit Airlines’ Business Model",
-   "channel": "Wendoverproductions",
-   "minutes": null,
-   "thumbnailUrl": "https://i2.ytimg.com/vi/ABRjwGo6Usg/hqdefault.jpg",
+   "thumbnailUrl": "https://i4.ytimg.com/vi/gokC5fXEM00/hqdefault.jpg",
    "relatedFactIds": []
   },
   {
@@ -414,26 +192,6 @@
    "relatedFactIds": []
   },
   {
-   "id": "vid-2NK0wBBZZ24",
-   "youtubeId": "2NK0wBBZZ24",
-   "category": "geography",
-   "title": "What Went Wrong With California High Speed Rail",
-   "channel": "Wendoverproductions",
-   "minutes": null,
-   "thumbnailUrl": "https://i3.ytimg.com/vi/2NK0wBBZZ24/hqdefault.jpg",
-   "relatedFactIds": []
-  },
-  {
-   "id": "vid-GREaEG_0Xcw",
-   "youtubeId": "GREaEG_0Xcw",
-   "category": "geography",
-   "title": "How Car Dealerships Scam America",
-   "channel": "Wendoverproductions",
-   "minutes": null,
-   "thumbnailUrl": "https://i4.ytimg.com/vi/GREaEG_0Xcw/hqdefault.jpg",
-   "relatedFactIds": []
-  },
-  {
    "id": "vid-5qjvluMnyAw",
    "youtubeId": "5qjvluMnyAw",
    "category": "geography",
@@ -444,43 +202,13 @@
    "relatedFactIds": []
   },
   {
-   "id": "vid-WGhy62UZnbg",
-   "youtubeId": "WGhy62UZnbg",
+   "id": "vid-GREaEG_0Xcw",
+   "youtubeId": "GREaEG_0Xcw",
    "category": "geography",
-   "title": "How Nike Lost Its Way",
+   "title": "How Car Dealerships Scam America",
    "channel": "Wendoverproductions",
    "minutes": null,
-   "thumbnailUrl": "https://i4.ytimg.com/vi/WGhy62UZnbg/hqdefault.jpg",
-   "relatedFactIds": []
-  },
-  {
-   "id": "vid-aRUhgrqnpGY",
-   "youtubeId": "aRUhgrqnpGY",
-   "category": "geography",
-   "title": "How ICE's Surveillance System Works",
-   "channel": "Wendoverproductions",
-   "minutes": null,
-   "thumbnailUrl": "https://i2.ytimg.com/vi/aRUhgrqnpGY/hqdefault.jpg",
-   "relatedFactIds": []
-  },
-  {
-   "id": "vid-GeYvNkaLAqA",
-   "youtubeId": "GeYvNkaLAqA",
-   "category": "geography",
-   "title": "California's Water Problem",
-   "channel": "Wendoverproductions",
-   "minutes": null,
-   "thumbnailUrl": "https://i4.ytimg.com/vi/GeYvNkaLAqA/hqdefault.jpg",
-   "relatedFactIds": []
-  },
-  {
-   "id": "vid-gokC5fXEM00",
-   "youtubeId": "gokC5fXEM00",
-   "category": "geography",
-   "title": "How Red Bull Built Its Empire",
-   "channel": "Wendoverproductions",
-   "minutes": null,
-   "thumbnailUrl": "https://i4.ytimg.com/vi/gokC5fXEM00/hqdefault.jpg",
+   "thumbnailUrl": "https://i4.ytimg.com/vi/GREaEG_0Xcw/hqdefault.jpg",
    "relatedFactIds": []
   },
   {
@@ -504,73 +232,43 @@
    "relatedFactIds": []
   },
   {
-   "id": "vid-_i_flbeNv0s",
-   "youtubeId": "_i_flbeNv0s",
+   "id": "vid-WGhy62UZnbg",
+   "youtubeId": "WGhy62UZnbg",
    "category": "geography",
-   "title": "European Replica Towns in the U.S. Do Any of Them Look Authentic?",
-   "channel": "GeographyKing",
+   "title": "How Nike Lost Its Way",
+   "channel": "Wendoverproductions",
    "minutes": null,
-   "thumbnailUrl": "https://i4.ytimg.com/vi/_i_flbeNv0s/hqdefault.jpg",
+   "thumbnailUrl": "https://i4.ytimg.com/vi/WGhy62UZnbg/hqdefault.jpg",
    "relatedFactIds": []
   },
   {
-   "id": "vid-OTD6Ei2RklA",
-   "youtubeId": "OTD6Ei2RklA",
+   "id": "vid-GeYvNkaLAqA",
+   "youtubeId": "GeYvNkaLAqA",
    "category": "geography",
-   "title": "Top 75 U.S. City Flags Ranked",
-   "channel": "GeographyKing",
+   "title": "California's Water Problem",
+   "channel": "Wendoverproductions",
    "minutes": null,
-   "thumbnailUrl": "https://i4.ytimg.com/vi/OTD6Ei2RklA/hqdefault.jpg",
+   "thumbnailUrl": "https://i4.ytimg.com/vi/GeYvNkaLAqA/hqdefault.jpg",
    "relatedFactIds": []
   },
   {
-   "id": "vid-lP4gx5vvwIM",
-   "youtubeId": "lP4gx5vvwIM",
+   "id": "vid-T8CqEvaGhUs",
+   "youtubeId": "T8CqEvaGhUs",
    "category": "geography",
-   "title": "Racial Homogeneity/Diversity vs. Poverty in the U.S. (non-political)",
+   "title": "The 6 Most Disappointing Cities in the U.S.",
    "channel": "GeographyKing",
    "minutes": null,
-   "thumbnailUrl": "https://i1.ytimg.com/vi/lP4gx5vvwIM/hqdefault.jpg",
+   "thumbnailUrl": "https://i1.ytimg.com/vi/T8CqEvaGhUs/hqdefault.jpg",
    "relatedFactIds": []
   },
   {
-   "id": "vid-_e1q8mfrx5g",
-   "youtubeId": "_e1q8mfrx5g",
+   "id": "vid-cXL7vIUFgyQ",
+   "youtubeId": "cXL7vIUFgyQ",
    "category": "geography",
-   "title": "State Population Midpoints. Where is the Median Point for Each State's Population?",
+   "title": "Ranking the States by the Size of Their Largest Lakes (with #1 Being Smallest)",
    "channel": "GeographyKing",
    "minutes": null,
-   "thumbnailUrl": "https://i4.ytimg.com/vi/_e1q8mfrx5g/hqdefault.jpg",
-   "relatedFactIds": []
-  },
-  {
-   "id": "vid-PsahC79eEog",
-   "youtubeId": "PsahC79eEog",
-   "category": "geography",
-   "title": "Ranking the Top 50 US Skyscrapers from the Past 50 Years",
-   "channel": "GeographyKing",
-   "minutes": null,
-   "thumbnailUrl": "https://i1.ytimg.com/vi/PsahC79eEog/hqdefault.jpg",
-   "relatedFactIds": []
-  },
-  {
-   "id": "vid-OTmb6E-k3Bw",
-   "youtubeId": "OTmb6E-k3Bw",
-   "category": "geography",
-   "title": "Is Oklahoma America's Secret Skyscraper Superstar?",
-   "channel": "GeographyKing",
-   "minutes": null,
-   "thumbnailUrl": "https://i4.ytimg.com/vi/OTmb6E-k3Bw/hqdefault.jpg",
-   "relatedFactIds": []
-  },
-  {
-   "id": "vid-jNNSQXNDWZA",
-   "youtubeId": "jNNSQXNDWZA",
-   "category": "geography",
-   "title": "Roasting the Countries of Europe",
-   "channel": "GeographyKing",
-   "minutes": null,
-   "thumbnailUrl": "https://i3.ytimg.com/vi/jNNSQXNDWZA/hqdefault.jpg",
+   "thumbnailUrl": "https://i4.ytimg.com/vi/cXL7vIUFgyQ/hqdefault.jpg",
    "relatedFactIds": []
   },
   {
@@ -594,146 +292,58 @@
    "relatedFactIds": []
   },
   {
-   "id": "vid-T8CqEvaGhUs",
-   "youtubeId": "T8CqEvaGhUs",
+   "id": "vid-OTmb6E-k3Bw",
+   "youtubeId": "OTmb6E-k3Bw",
    "category": "geography",
-   "title": "The 6 Most Disappointing Cities in the U.S.",
+   "title": "Is Oklahoma America's Secret Skyscraper Superstar?",
    "channel": "GeographyKing",
    "minutes": null,
-   "thumbnailUrl": "https://i1.ytimg.com/vi/T8CqEvaGhUs/hqdefault.jpg",
+   "thumbnailUrl": "https://i4.ytimg.com/vi/OTmb6E-k3Bw/hqdefault.jpg",
    "relatedFactIds": []
   },
   {
-   "id": "vid-gGMZU3mUWSI",
-   "youtubeId": "gGMZU3mUWSI",
+   "id": "vid-PsahC79eEog",
+   "youtubeId": "PsahC79eEog",
    "category": "geography",
-   "title": "USA vs Europe: A Different Perspective on Cities, Small Towns, Driving Around, & More",
+   "title": "Ranking the Top 50 US Skyscrapers from the Past 50 Years",
    "channel": "GeographyKing",
    "minutes": null,
-   "thumbnailUrl": "https://i4.ytimg.com/vi/gGMZU3mUWSI/hqdefault.jpg",
+   "thumbnailUrl": "https://i1.ytimg.com/vi/PsahC79eEog/hqdefault.jpg",
    "relatedFactIds": []
   },
   {
-   "id": "vid-g7I5PYqZyRs",
-   "youtubeId": "g7I5PYqZyRs",
+   "id": "vid-_e1q8mfrx5g",
+   "youtubeId": "_e1q8mfrx5g",
    "category": "geography",
-   "title": "Basque Country in Spain & France: Geography, Cities, Small Towns, Culture, & More",
+   "title": "State Population Midpoints. Where is the Median Point for Each State's Population?",
    "channel": "GeographyKing",
    "minutes": null,
-   "thumbnailUrl": "https://i4.ytimg.com/vi/g7I5PYqZyRs/hqdefault.jpg",
+   "thumbnailUrl": "https://i4.ytimg.com/vi/_e1q8mfrx5g/hqdefault.jpg",
+   "relatedFactIds": []
+  },
+  {
+   "id": "vid-lP4gx5vvwIM",
+   "youtubeId": "lP4gx5vvwIM",
+   "category": "geography",
+   "title": "Racial Homogeneity/Diversity vs. Poverty in the U.S. (non-political)",
+   "channel": "GeographyKing",
+   "minutes": null,
+   "thumbnailUrl": "https://i1.ytimg.com/vi/lP4gx5vvwIM/hqdefault.jpg",
+   "relatedFactIds": []
+  },
+  {
+   "id": "vid-tsxmyL7TUJg",
+   "youtubeId": "tsxmyL7TUJg",
+   "category": "history",
+   "title": "The American Civil War - OverSimplified (Part 1)",
+   "channel": "OverSimplified",
+   "minutes": null,
+   "thumbnailUrl": "https://i1.ytimg.com/vi/tsxmyL7TUJg/hqdefault.jpg",
    "relatedFactIds": [
-    "geo-031"
+    "hist-082",
+    "hist-037",
+    "hist-017"
    ]
-  },
-  {
-   "id": "vid-cXL7vIUFgyQ",
-   "youtubeId": "cXL7vIUFgyQ",
-   "category": "geography",
-   "title": "Ranking the States by the Size of Their Largest Lakes (with #1 Being Smallest)",
-   "channel": "GeographyKing",
-   "minutes": null,
-   "thumbnailUrl": "https://i4.ytimg.com/vi/cXL7vIUFgyQ/hqdefault.jpg",
-   "relatedFactIds": []
-  },
-  {
-   "id": "vid-ILO-nJ15FvQ",
-   "youtubeId": "ILO-nJ15FvQ",
-   "category": "geography",
-   "title": "States Ranked by Viewer Popularity. Where Did You Choose to Live?",
-   "channel": "GeographyKing",
-   "minutes": null,
-   "thumbnailUrl": "https://i2.ytimg.com/vi/ILO-nJ15FvQ/hqdefault.jpg",
-   "relatedFactIds": []
-  },
-  {
-   "id": "vid-GFWP0KuQ7bE",
-   "youtubeId": "GFWP0KuQ7bE",
-   "category": "geography",
-   "title": "Reaction to Geography by Geoff's video on San Joaquin Valley",
-   "channel": "GeographyKing",
-   "minutes": null,
-   "thumbnailUrl": "https://i4.ytimg.com/vi/GFWP0KuQ7bE/hqdefault.jpg",
-   "relatedFactIds": []
-  },
-  {
-   "id": "vid-1BVJzaXv3rk",
-   "youtubeId": "1BVJzaXv3rk",
-   "category": "history",
-   "title": "The Second Punic War  - OverSimplified (Part 3)",
-   "channel": "OverSimplified",
-   "minutes": null,
-   "thumbnailUrl": "https://i2.ytimg.com/vi/1BVJzaXv3rk/hqdefault.jpg",
-   "relatedFactIds": []
-  },
-  {
-   "id": "vid-Q-nWA0WeF98",
-   "youtubeId": "Q-nWA0WeF98",
-   "category": "history",
-   "title": "The Second Punic War - OverSimplified (Part 2)",
-   "channel": "OverSimplified",
-   "minutes": null,
-   "thumbnailUrl": "https://i2.ytimg.com/vi/Q-nWA0WeF98/hqdefault.jpg",
-   "relatedFactIds": []
-  },
-  {
-   "id": "vid-lsbcN9-jU1Y",
-   "youtubeId": "lsbcN9-jU1Y",
-   "category": "history",
-   "title": "The Second Punic War - OverSimplified (Part 1)",
-   "channel": "OverSimplified",
-   "minutes": null,
-   "thumbnailUrl": "https://i1.ytimg.com/vi/lsbcN9-jU1Y/hqdefault.jpg",
-   "relatedFactIds": []
-  },
-  {
-   "id": "vid-805SIqgDZIE",
-   "youtubeId": "805SIqgDZIE",
-   "category": "history",
-   "title": "RECAP: First Punic War",
-   "channel": "OverSimplified",
-   "minutes": null,
-   "thumbnailUrl": "https://i1.ytimg.com/vi/805SIqgDZIE/hqdefault.jpg",
-   "relatedFactIds": []
-  },
-  {
-   "id": "vid-hRSGxw2AQnk",
-   "youtubeId": "hRSGxw2AQnk",
-   "category": "history",
-   "title": "The First Punic War - OverSimplified (Part 2)",
-   "channel": "OverSimplified",
-   "minutes": null,
-   "thumbnailUrl": "https://i1.ytimg.com/vi/hRSGxw2AQnk/hqdefault.jpg",
-   "relatedFactIds": []
-  },
-  {
-   "id": "vid-yRmOWcWdQAo",
-   "youtubeId": "yRmOWcWdQAo",
-   "category": "history",
-   "title": "The First Punic War - OverSimplified (Part 1)",
-   "channel": "OverSimplified",
-   "minutes": null,
-   "thumbnailUrl": "https://i2.ytimg.com/vi/yRmOWcWdQAo/hqdefault.jpg",
-   "relatedFactIds": []
-  },
-  {
-   "id": "vid-QLq6GEiHqR8",
-   "youtubeId": "QLq6GEiHqR8",
-   "category": "history",
-   "title": "The Pig War - OverSimplified",
-   "channel": "OverSimplified",
-   "minutes": null,
-   "thumbnailUrl": "https://i2.ytimg.com/vi/QLq6GEiHqR8/hqdefault.jpg",
-   "relatedFactIds": []
-  },
-  {
-   "id": "vid-mY3SEMTROas",
-   "youtubeId": "mY3SEMTROas",
-   "category": "history",
-   "title": "The Napoleonic Wars - OverSimplified (Part 2)",
-   "channel": "OverSimplified",
-   "minutes": null,
-   "thumbnailUrl": "https://i2.ytimg.com/vi/mY3SEMTROas/hqdefault.jpg",
-   "relatedFactIds": []
   },
   {
    "id": "vid-zqllxbPWKNI",
@@ -756,15 +366,15 @@
    "relatedFactIds": []
   },
   {
-   "id": "vid-b1reY72ktEc",
-   "youtubeId": "b1reY72ktEc",
+   "id": "vid-ewLpXw6uN28",
+   "youtubeId": "ewLpXw6uN28",
    "category": "history",
-   "title": "The Russian Revolution - OverSimplified (Part 2)",
+   "title": "Henry VIII - OverSimplified",
    "channel": "OverSimplified",
    "minutes": null,
-   "thumbnailUrl": "https://i3.ytimg.com/vi/b1reY72ktEc/hqdefault.jpg",
+   "thumbnailUrl": "https://i2.ytimg.com/vi/ewLpXw6uN28/hqdefault.jpg",
    "relatedFactIds": [
-    "hist-089"
+    "hist-043"
    ]
   },
   {
@@ -780,16 +390,24 @@
    ]
   },
   {
-   "id": "vid-ewLpXw6uN28",
-   "youtubeId": "ewLpXw6uN28",
+   "id": "vid-mY3SEMTROas",
+   "youtubeId": "mY3SEMTROas",
    "category": "history",
-   "title": "Henry VIII - OverSimplified",
+   "title": "The Napoleonic Wars - OverSimplified (Part 2)",
    "channel": "OverSimplified",
    "minutes": null,
-   "thumbnailUrl": "https://i2.ytimg.com/vi/ewLpXw6uN28/hqdefault.jpg",
-   "relatedFactIds": [
-    "hist-043"
-   ]
+   "thumbnailUrl": "https://i2.ytimg.com/vi/mY3SEMTROas/hqdefault.jpg",
+   "relatedFactIds": []
+  },
+  {
+   "id": "vid-QLq6GEiHqR8",
+   "youtubeId": "QLq6GEiHqR8",
+   "category": "history",
+   "title": "The Pig War - OverSimplified",
+   "channel": "OverSimplified",
+   "minutes": null,
+   "thumbnailUrl": "https://i2.ytimg.com/vi/QLq6GEiHqR8/hqdefault.jpg",
+   "relatedFactIds": []
   },
   {
    "id": "vid-sV6uuMAnJUE",
@@ -806,27 +424,23 @@
    ]
   },
   {
-   "id": "vid-tsxmyL7TUJg",
-   "youtubeId": "tsxmyL7TUJg",
+   "id": "vid-KGHoiU7JG-0",
+   "youtubeId": "KGHoiU7JG-0",
    "category": "history",
-   "title": "The American Civil War - OverSimplified (Part 1)",
-   "channel": "OverSimplified",
-   "minutes": null,
-   "thumbnailUrl": "https://i1.ytimg.com/vi/tsxmyL7TUJg/hqdefault.jpg",
-   "relatedFactIds": [
-    "hist-082",
-    "hist-037",
-    "hist-017"
-   ]
-  },
-  {
-   "id": "vid-m3kUyQfbqzw",
-   "youtubeId": "m3kUyQfbqzw",
-   "category": "history",
-   "title": "1066: The Brutal Forced March That Doomed King Harold",
+   "title": "Pontiac’s War: The Native Rebellion That Shook Britain",
    "channel": "KingsandGenerals",
    "minutes": null,
-   "thumbnailUrl": "https://i2.ytimg.com/vi/m3kUyQfbqzw/hqdefault.jpg",
+   "thumbnailUrl": "https://i4.ytimg.com/vi/KGHoiU7JG-0/hqdefault.jpg",
+   "relatedFactIds": []
+  },
+  {
+   "id": "vid-uNGOAur7OR0",
+   "youtubeId": "uNGOAur7OR0",
+   "category": "history",
+   "title": "Why Roman Britain Kept Creating Emperors",
+   "channel": "KingsandGenerals",
+   "minutes": null,
+   "thumbnailUrl": "https://i2.ytimg.com/vi/uNGOAur7OR0/hqdefault.jpg",
    "relatedFactIds": []
   },
   {
@@ -840,6 +454,18 @@
    "relatedFactIds": [
     "hist-054",
     "hist-010"
+   ]
+  },
+  {
+   "id": "vid-OTWmv2qHP-s",
+   "youtubeId": "OTWmv2qHP-s",
+   "category": "history",
+   "title": "Gaza Disaster - Ottoman Empire History DOCUMENTARY",
+   "channel": "KingsandGenerals",
+   "minutes": null,
+   "thumbnailUrl": "https://i4.ytimg.com/vi/OTWmv2qHP-s/hqdefault.jpg",
+   "relatedFactIds": [
+    "hist-055"
    ]
   },
   {
@@ -863,63 +489,13 @@
    "relatedFactIds": []
   },
   {
-   "id": "vid-O3ydWj-yYa4",
-   "youtubeId": "O3ydWj-yYa4",
+   "id": "vid-A_iJrs3FbUA",
+   "youtubeId": "A_iJrs3FbUA",
    "category": "history",
-   "title": "The Shallow Water Secret That Won Viking Wars #history #military #shorts",
+   "title": "How Private Investors Bought an Entire Empire",
    "channel": "KingsandGenerals",
    "minutes": null,
-   "thumbnailUrl": "https://i4.ytimg.com/vi/O3ydWj-yYa4/hqdefault.jpg",
-   "relatedFactIds": []
-  },
-  {
-   "id": "vid-eoOrlxiOFEU",
-   "youtubeId": "eoOrlxiOFEU",
-   "category": "history",
-   "title": "How the Allies Broke Japan’s Front - Pacific War DOCUMENTARY",
-   "channel": "KingsandGenerals",
-   "minutes": null,
-   "thumbnailUrl": "https://i2.ytimg.com/vi/eoOrlxiOFEU/hqdefault.jpg",
-   "relatedFactIds": []
-  },
-  {
-   "id": "vid-sV2ddX7sHXw",
-   "youtubeId": "sV2ddX7sHXw",
-   "category": "history",
-   "title": "Slow News Meant Fast Revolutions in Roman Britain #AncientRome #RomanBritain #History",
-   "channel": "KingsandGenerals",
-   "minutes": null,
-   "thumbnailUrl": "https://i4.ytimg.com/vi/sV2ddX7sHXw/hqdefault.jpg",
-   "relatedFactIds": []
-  },
-  {
-   "id": "vid-89WmcZfMrFQ",
-   "youtubeId": "89WmcZfMrFQ",
-   "category": "history",
-   "title": "Did Cyrus the Great Create Human Rights?",
-   "channel": "KingsandGenerals",
-   "minutes": null,
-   "thumbnailUrl": "https://i1.ytimg.com/vi/89WmcZfMrFQ/hqdefault.jpg",
-   "relatedFactIds": []
-  },
-  {
-   "id": "vid-x3sT5X9MqWM",
-   "youtubeId": "x3sT5X9MqWM",
-   "category": "history",
-   "title": "Timur vs Bayezid: When the Underdog Wins Spectacularly #History #Ottoman #Shorts",
-   "channel": "KingsandGenerals",
-   "minutes": null,
-   "thumbnailUrl": "https://i1.ytimg.com/vi/x3sT5X9MqWM/hqdefault.jpg",
-   "relatedFactIds": []
-  },
-  {
-   "id": "vid-KGHoiU7JG-0",
-   "youtubeId": "KGHoiU7JG-0",
-   "category": "history",
-   "title": "Pontiac’s War: The Native Rebellion That Shook Britain",
-   "channel": "KingsandGenerals",
-   "minutes": null,
-   "thumbnailUrl": "https://i4.ytimg.com/vi/KGHoiU7JG-0/hqdefault.jpg",
+   "thumbnailUrl": "https://i2.ytimg.com/vi/A_iJrs3FbUA/hqdefault.jpg",
    "relatedFactIds": []
   },
   {
@@ -933,135 +509,13 @@
    "relatedFactIds": []
   },
   {
-   "id": "vid-OTWmv2qHP-s",
-   "youtubeId": "OTWmv2qHP-s",
+   "id": "vid-aq4G-7v-_xI",
+   "youtubeId": "aq4G-7v-_xI",
    "category": "history",
-   "title": "Gaza Disaster - Ottoman Empire History DOCUMENTARY",
-   "channel": "KingsandGenerals",
-   "minutes": null,
-   "thumbnailUrl": "https://i4.ytimg.com/vi/OTWmv2qHP-s/hqdefault.jpg",
-   "relatedFactIds": [
-    "hist-055"
-   ]
-  },
-  {
-   "id": "vid-A_iJrs3FbUA",
-   "youtubeId": "A_iJrs3FbUA",
-   "category": "history",
-   "title": "How Private Investors Bought an Entire Empire",
-   "channel": "KingsandGenerals",
-   "minutes": null,
-   "thumbnailUrl": "https://i2.ytimg.com/vi/A_iJrs3FbUA/hqdefault.jpg",
-   "relatedFactIds": []
-  },
-  {
-   "id": "vid-uNGOAur7OR0",
-   "youtubeId": "uNGOAur7OR0",
-   "category": "history",
-   "title": "Why Roman Britain Kept Creating Emperors",
-   "channel": "KingsandGenerals",
-   "minutes": null,
-   "thumbnailUrl": "https://i2.ytimg.com/vi/uNGOAur7OR0/hqdefault.jpg",
-   "relatedFactIds": []
-  },
-  {
-   "id": "vid-Tb1PZMjlj9w",
-   "youtubeId": "Tb1PZMjlj9w",
-   "category": "history",
-   "title": "Did Celtic Warriors Really Fight Naked?",
-   "channel": "KingsandGenerals",
-   "minutes": null,
-   "thumbnailUrl": "https://i1.ytimg.com/vi/Tb1PZMjlj9w/hqdefault.jpg",
-   "relatedFactIds": []
-  },
-  {
-   "id": "vid-872JcpP3FEM",
-   "youtubeId": "872JcpP3FEM",
-   "category": "history",
-   "title": "The City.",
+   "title": "The Bronze Age Collapse (approximately 1200 B.C.E.)",
    "channel": "HistoriaCivilis",
    "minutes": null,
-   "thumbnailUrl": "https://i1.ytimg.com/vi/872JcpP3FEM/hqdefault.jpg",
-   "relatedFactIds": []
-  },
-  {
-   "id": "vid-h6E4_Bcmscg",
-   "youtubeId": "h6E4_Bcmscg",
-   "category": "history",
-   "title": "Reform or Revolution? (1830 to 1832)",
-   "channel": "HistoriaCivilis",
-   "minutes": null,
-   "thumbnailUrl": "https://i1.ytimg.com/vi/h6E4_Bcmscg/hqdefault.jpg",
-   "relatedFactIds": []
-  },
-  {
-   "id": "vid-Qw7xXYypFQ0",
-   "youtubeId": "Qw7xXYypFQ0",
-   "category": "history",
-   "title": "The July Revolution (1820 to 1830)",
-   "channel": "HistoriaCivilis",
-   "minutes": null,
-   "thumbnailUrl": "https://i2.ytimg.com/vi/Qw7xXYypFQ0/hqdefault.jpg",
-   "relatedFactIds": []
-  },
-  {
-   "id": "vid-R0wwuj0sTyY",
-   "youtubeId": "R0wwuj0sTyY",
-   "category": "history",
-   "title": "The Year Without a Summer (1816 to 1824)",
-   "channel": "HistoriaCivilis",
-   "minutes": null,
-   "thumbnailUrl": "https://i3.ytimg.com/vi/R0wwuj0sTyY/hqdefault.jpg",
-   "relatedFactIds": []
-  },
-  {
-   "id": "vid-hvk_XylEmLo",
-   "youtubeId": "hvk_XylEmLo",
-   "category": "history",
-   "title": "Work.",
-   "channel": "HistoriaCivilis",
-   "minutes": null,
-   "thumbnailUrl": "https://i1.ytimg.com/vi/hvk_XylEmLo/hqdefault.jpg",
-   "relatedFactIds": []
-  },
-  {
-   "id": "vid-EezHXh-UG-c",
-   "youtubeId": "EezHXh-UG-c",
-   "category": "history",
-   "title": "The Death of Antony & Cleopatra (30 B.C.E.)",
-   "channel": "HistoriaCivilis",
-   "minutes": null,
-   "thumbnailUrl": "https://i2.ytimg.com/vi/EezHXh-UG-c/hqdefault.jpg",
-   "relatedFactIds": []
-  },
-  {
-   "id": "vid-t7Y-1qMKY_0",
-   "youtubeId": "t7Y-1qMKY_0",
-   "category": "history",
-   "title": "The Battle of Actium (31 B.C.E.)",
-   "channel": "HistoriaCivilis",
-   "minutes": null,
-   "thumbnailUrl": "https://i1.ytimg.com/vi/t7Y-1qMKY_0/hqdefault.jpg",
-   "relatedFactIds": []
-  },
-  {
-   "id": "vid-HURI6EHXybc",
-   "youtubeId": "HURI6EHXybc",
-   "category": "history",
-   "title": "War and Peace ...and War (35 to 32 B.C.E.)",
-   "channel": "HistoriaCivilis",
-   "minutes": null,
-   "thumbnailUrl": "https://i1.ytimg.com/vi/HURI6EHXybc/hqdefault.jpg",
-   "relatedFactIds": []
-  },
-  {
-   "id": "vid-OGJHE6O7Mhk",
-   "youtubeId": "OGJHE6O7Mhk",
-   "category": "history",
-   "title": "The Congress of Vienna (Part 2) (1814 to 1815)",
-   "channel": "HistoriaCivilis",
-   "minutes": null,
-   "thumbnailUrl": "https://i4.ytimg.com/vi/OGJHE6O7Mhk/hqdefault.jpg",
+   "thumbnailUrl": "https://i2.ytimg.com/vi/aq4G-7v-_xI/hqdefault.jpg",
    "relatedFactIds": []
   },
   {
@@ -1075,23 +529,13 @@
    "relatedFactIds": []
   },
   {
-   "id": "vid-CH1oYhTigyA",
-   "youtubeId": "CH1oYhTigyA",
+   "id": "vid-R0wwuj0sTyY",
+   "youtubeId": "R0wwuj0sTyY",
    "category": "history",
-   "title": "Peace...? (1814)",
+   "title": "The Year Without a Summer (1816 to 1824)",
    "channel": "HistoriaCivilis",
    "minutes": null,
-   "thumbnailUrl": "https://i4.ytimg.com/vi/CH1oYhTigyA/hqdefault.jpg",
-   "relatedFactIds": []
-  },
-  {
-   "id": "vid-POHNhn3WcCc",
-   "youtubeId": "POHNhn3WcCc",
-   "category": "history",
-   "title": "Antony's Invasion of Parthia (42 to 33 B.C.E.)",
-   "channel": "HistoriaCivilis",
-   "minutes": null,
-   "thumbnailUrl": "https://i1.ytimg.com/vi/POHNhn3WcCc/hqdefault.jpg",
+   "thumbnailUrl": "https://i3.ytimg.com/vi/R0wwuj0sTyY/hqdefault.jpg",
    "relatedFactIds": []
   },
   {
@@ -1105,6 +549,26 @@
    "relatedFactIds": []
   },
   {
+   "id": "vid-OGJHE6O7Mhk",
+   "youtubeId": "OGJHE6O7Mhk",
+   "category": "history",
+   "title": "The Congress of Vienna (Part 2) (1814 to 1815)",
+   "channel": "HistoriaCivilis",
+   "minutes": null,
+   "thumbnailUrl": "https://i4.ytimg.com/vi/OGJHE6O7Mhk/hqdefault.jpg",
+   "relatedFactIds": []
+  },
+  {
+   "id": "vid-POHNhn3WcCc",
+   "youtubeId": "POHNhn3WcCc",
+   "category": "history",
+   "title": "Antony's Invasion of Parthia (42 to 33 B.C.E.)",
+   "channel": "HistoriaCivilis",
+   "minutes": null,
+   "thumbnailUrl": "https://i1.ytimg.com/vi/POHNhn3WcCc/hqdefault.jpg",
+   "relatedFactIds": []
+  },
+  {
    "id": "vid-gdavaK3d4Pc",
    "youtubeId": "gdavaK3d4Pc",
    "category": "history",
@@ -1115,131 +579,13 @@
    "relatedFactIds": []
   },
   {
-   "id": "vid-aq4G-7v-_xI",
-   "youtubeId": "aq4G-7v-_xI",
+   "id": "vid-HURI6EHXybc",
+   "youtubeId": "HURI6EHXybc",
    "category": "history",
-   "title": "The Bronze Age Collapse (approximately 1200 B.C.E.)",
+   "title": "War and Peace ...and War (35 to 32 B.C.E.)",
    "channel": "HistoriaCivilis",
    "minutes": null,
-   "thumbnailUrl": "https://i2.ytimg.com/vi/aq4G-7v-_xI/hqdefault.jpg",
-   "relatedFactIds": []
-  },
-  {
-   "id": "vid-aSMhgeHSLrQ",
-   "youtubeId": "aSMhgeHSLrQ",
-   "category": "history",
-   "title": "Big Bertha: Germany’s Giant Gun That Terrorized Verdun",
-   "channel": "EpicHistoryTV",
-   "minutes": null,
-   "thumbnailUrl": "https://i2.ytimg.com/vi/aSMhgeHSLrQ/hqdefault.jpg",
-   "relatedFactIds": []
-  },
-  {
-   "id": "vid-cYQ1jegNXLA",
-   "youtubeId": "cYQ1jegNXLA",
-   "category": "history",
-   "title": "HMS Victory Sailors Food: What Admiral Nelson’s Crew Actually Ate",
-   "channel": "EpicHistoryTV",
-   "minutes": null,
-   "thumbnailUrl": "https://i4.ytimg.com/vi/cYQ1jegNXLA/hqdefault.jpg",
-   "relatedFactIds": [
-    "hist-080"
-   ]
-  },
-  {
-   "id": "vid-UvFEvVaP-HI",
-   "youtubeId": "UvFEvVaP-HI",
-   "category": "history",
-   "title": "Peninsular War Atrocities: French Soldiers Crucified and Burned Alive",
-   "channel": "EpicHistoryTV",
-   "minutes": null,
-   "thumbnailUrl": "https://i2.ytimg.com/vi/UvFEvVaP-HI/hqdefault.jpg",
-   "relatedFactIds": []
-  },
-  {
-   "id": "vid--jF5w6ndVeY",
-   "youtubeId": "-jF5w6ndVeY",
-   "category": "history",
-   "title": "Lost Books and the Ancient Mysteries They Would Solve",
-   "channel": "EpicHistoryTV",
-   "minutes": null,
-   "thumbnailUrl": "https://i2.ytimg.com/vi/-jF5w6ndVeY/hqdefault.jpg",
-   "relatedFactIds": []
-  },
-  {
-   "id": "vid-AUEgu3BjTEU",
-   "youtubeId": "AUEgu3BjTEU",
-   "category": "history",
-   "title": "Admiral Nelsons' HMS Victory Crew: Foreigners, Volunteers and Forced Recruits",
-   "channel": "EpicHistoryTV",
-   "minutes": null,
-   "thumbnailUrl": "https://i2.ytimg.com/vi/AUEgu3BjTEU/hqdefault.jpg",
-   "relatedFactIds": []
-  },
-  {
-   "id": "vid-BqBBKf69rSk",
-   "youtubeId": "BqBBKf69rSk",
-   "category": "history",
-   "title": "The Siege of Zaragoza: True Stories from the Trenches",
-   "channel": "EpicHistoryTV",
-   "minutes": null,
-   "thumbnailUrl": "https://i3.ytimg.com/vi/BqBBKf69rSk/hqdefault.jpg",
-   "relatedFactIds": []
-  },
-  {
-   "id": "vid-85XNGNu2uzk",
-   "youtubeId": "85XNGNu2uzk",
-   "category": "history",
-   "title": "How Alexander the Great Fooled Darius at Gaugamela",
-   "channel": "EpicHistoryTV",
-   "minutes": null,
-   "thumbnailUrl": "https://i1.ytimg.com/vi/85XNGNu2uzk/hqdefault.jpg",
-   "relatedFactIds": [
-    "hist-026"
-   ]
-  },
-  {
-   "id": "vid-xvShJC-YjVE",
-   "youtubeId": "xvShJC-YjVE",
-   "category": "history",
-   "title": "The Army of Alexander the Great: The War Machine That Never Lost a Battle",
-   "channel": "EpicHistoryTV",
-   "minutes": null,
-   "thumbnailUrl": "https://i1.ytimg.com/vi/xvShJC-YjVE/hqdefault.jpg",
-   "relatedFactIds": [
-    "hist-026"
-   ]
-  },
-  {
-   "id": "vid--YvMyh1VmTg",
-   "youtubeId": "-YvMyh1VmTg",
-   "category": "history",
-   "title": "The Siege of Boston: America's First Power Play",
-   "channel": "EpicHistoryTV",
-   "minutes": null,
-   "thumbnailUrl": "https://i2.ytimg.com/vi/-YvMyh1VmTg/hqdefault.jpg",
-   "relatedFactIds": []
-  },
-  {
-   "id": "vid-9DzRXMjIQ6g",
-   "youtubeId": "9DzRXMjIQ6g",
-   "category": "history",
-   "title": "Napoleon's Empire Didn't Fall on the Battlefield — It Fell in Paris",
-   "channel": "EpicHistoryTV",
-   "minutes": null,
-   "thumbnailUrl": "https://i2.ytimg.com/vi/9DzRXMjIQ6g/hqdefault.jpg",
-   "relatedFactIds": [
-    "hist-010"
-   ]
-  },
-  {
-   "id": "vid-USEjthmBWIY",
-   "youtubeId": "USEjthmBWIY",
-   "category": "history",
-   "title": "How Rome Began: The Legend of Romulus and Remus",
-   "channel": "EpicHistoryTV",
-   "minutes": null,
-   "thumbnailUrl": "https://i2.ytimg.com/vi/USEjthmBWIY/hqdefault.jpg",
+   "thumbnailUrl": "https://i1.ytimg.com/vi/HURI6EHXybc/hqdefault.jpg",
    "relatedFactIds": []
   },
   {
@@ -1256,28 +602,6 @@
    ]
   },
   {
-   "id": "vid-hcgqTrwv-lw",
-   "youtubeId": "hcgqTrwv-lw",
-   "category": "history",
-   "title": "Verdun's Fort Douaumont: The Paper Tiger of WWI",
-   "channel": "EpicHistoryTV",
-   "minutes": null,
-   "thumbnailUrl": "https://i1.ytimg.com/vi/hcgqTrwv-lw/hqdefault.jpg",
-   "relatedFactIds": []
-  },
-  {
-   "id": "vid-6HCN3PmRp1I",
-   "youtubeId": "6HCN3PmRp1I",
-   "category": "history",
-   "title": "Was Alexander The Great Murdered?",
-   "channel": "EpicHistoryTV",
-   "minutes": null,
-   "thumbnailUrl": "https://i3.ytimg.com/vi/6HCN3PmRp1I/hqdefault.jpg",
-   "relatedFactIds": [
-    "hist-026"
-   ]
-  },
-  {
    "id": "vid-1WkYFiNUaN8",
    "youtubeId": "1WkYFiNUaN8",
    "category": "history",
@@ -1290,97 +614,69 @@
    ]
   },
   {
-   "id": "vid-bHvdzGQSX2I",
-   "youtubeId": "bHvdzGQSX2I",
+   "id": "vid-9DzRXMjIQ6g",
+   "youtubeId": "9DzRXMjIQ6g",
    "category": "history",
-   "title": "Italy's Disastrous Start of WW1 (Documentary)",
-   "channel": "TheGreatWar",
+   "title": "Napoleon's Empire Didn't Fall on the Battlefield — It Fell in Paris",
+   "channel": "EpicHistoryTV",
    "minutes": null,
-   "thumbnailUrl": "https://i3.ytimg.com/vi/bHvdzGQSX2I/hqdefault.jpg",
-   "relatedFactIds": []
-  },
-  {
-   "id": "vid-L6F1c3qLpEE",
-   "youtubeId": "L6F1c3qLpEE",
-   "category": "history",
-   "title": "Why Did The Russian Civil War Break Out? (Documentary)",
-   "channel": "TheGreatWar",
-   "minutes": null,
-   "thumbnailUrl": "https://i1.ytimg.com/vi/L6F1c3qLpEE/hqdefault.jpg",
-   "relatedFactIds": []
-  },
-  {
-   "id": "vid-c7ANy_reF5s",
-   "youtubeId": "c7ANy_reF5s",
-   "category": "history",
-   "title": "Why the Allies Lost the Battle of Gallipoli 1915 (Documentary)",
-   "channel": "TheGreatWar",
-   "minutes": null,
-   "thumbnailUrl": "https://i4.ytimg.com/vi/c7ANy_reF5s/hqdefault.jpg",
-   "relatedFactIds": []
-  },
-  {
-   "id": "vid-41kYH51XYGw",
-   "youtubeId": "41kYH51XYGw",
-   "category": "history",
-   "title": "Harsher than Versailles: The Treaty of Brest-Litovsk 1918 (Documentary)",
-   "channel": "TheGreatWar",
-   "minutes": null,
-   "thumbnailUrl": "https://i1.ytimg.com/vi/41kYH51XYGw/hqdefault.jpg",
+   "thumbnailUrl": "https://i2.ytimg.com/vi/9DzRXMjIQ6g/hqdefault.jpg",
    "relatedFactIds": [
-    "hist-066"
+    "hist-010"
    ]
   },
   {
-   "id": "vid-SB9v1C9yTh0",
-   "youtubeId": "SB9v1C9yTh0",
+   "id": "vid--jF5w6ndVeY",
+   "youtubeId": "-jF5w6ndVeY",
    "category": "history",
-   "title": "Why The Allied Western Front Offensives in 1915 Failed (WW1 Documentary)",
-   "channel": "TheGreatWar",
+   "title": "Lost Books and the Ancient Mysteries They Would Solve",
+   "channel": "EpicHistoryTV",
    "minutes": null,
-   "thumbnailUrl": "https://i4.ytimg.com/vi/SB9v1C9yTh0/hqdefault.jpg",
+   "thumbnailUrl": "https://i2.ytimg.com/vi/-jF5w6ndVeY/hqdefault.jpg",
    "relatedFactIds": []
   },
   {
-   "id": "vid-TBArdS4XVek",
-   "youtubeId": "TBArdS4XVek",
+   "id": "vid-xvShJC-YjVE",
+   "youtubeId": "xvShJC-YjVE",
    "category": "history",
-   "title": "US Empire: American Expansionism In the WW1 Era (Documentary)",
-   "channel": "TheGreatWar",
+   "title": "The Army of Alexander the Great: The War Machine That Never Lost a Battle",
+   "channel": "EpicHistoryTV",
    "minutes": null,
-   "thumbnailUrl": "https://i1.ytimg.com/vi/TBArdS4XVek/hqdefault.jpg",
-   "relatedFactIds": []
-  },
-  {
-   "id": "vid-DBpUcS-of-E",
-   "youtubeId": "DBpUcS-of-E",
-   "category": "history",
-   "title": "Bloodier Than Verdun? Winter Battles on the Eastern Front 1915 (WW1 Documentary)",
-   "channel": "TheGreatWar",
-   "minutes": null,
-   "thumbnailUrl": "https://i1.ytimg.com/vi/DBpUcS-of-E/hqdefault.jpg",
+   "thumbnailUrl": "https://i1.ytimg.com/vi/xvShJC-YjVE/hqdefault.jpg",
    "relatedFactIds": [
-    "hist-079"
+    "hist-026"
    ]
   },
   {
-   "id": "vid-_Dt8FOYyDjE",
-   "youtubeId": "_Dt8FOYyDjE",
+   "id": "vid-USEjthmBWIY",
+   "youtubeId": "USEjthmBWIY",
    "category": "history",
-   "title": "How one German soldier Survived WW1 (Documentary)",
-   "channel": "TheGreatWar",
+   "title": "How Rome Began: The Legend of Romulus and Remus",
+   "channel": "EpicHistoryTV",
    "minutes": null,
-   "thumbnailUrl": "https://i4.ytimg.com/vi/_Dt8FOYyDjE/hqdefault.jpg",
+   "thumbnailUrl": "https://i2.ytimg.com/vi/USEjthmBWIY/hqdefault.jpg",
    "relatedFactIds": []
   },
   {
-   "id": "vid-n4jLQMDlKNc",
-   "youtubeId": "n4jLQMDlKNc",
+   "id": "vid-85XNGNu2uzk",
+   "youtubeId": "85XNGNu2uzk",
    "category": "history",
-   "title": "4 Wars Directly After WW1 (Documentary)",
-   "channel": "TheGreatWar",
+   "title": "How Alexander the Great Fooled Darius at Gaugamela",
+   "channel": "EpicHistoryTV",
    "minutes": null,
-   "thumbnailUrl": "https://i3.ytimg.com/vi/n4jLQMDlKNc/hqdefault.jpg",
+   "thumbnailUrl": "https://i1.ytimg.com/vi/85XNGNu2uzk/hqdefault.jpg",
+   "relatedFactIds": [
+    "hist-026"
+   ]
+  },
+  {
+   "id": "vid-aSMhgeHSLrQ",
+   "youtubeId": "aSMhgeHSLrQ",
+   "category": "history",
+   "title": "Big Bertha: Germany’s Giant Gun That Terrorized Verdun",
+   "channel": "EpicHistoryTV",
+   "minutes": null,
+   "thumbnailUrl": "https://i2.ytimg.com/vi/aSMhgeHSLrQ/hqdefault.jpg",
    "relatedFactIds": []
   },
   {
@@ -1407,23 +703,13 @@
    "relatedFactIds": []
   },
   {
-   "id": "vid-m7OstPrdkZg",
-   "youtubeId": "m7OstPrdkZg",
+   "id": "vid-n4jLQMDlKNc",
+   "youtubeId": "n4jLQMDlKNc",
    "category": "history",
-   "title": "First Poison Gas Attack of WW1: 2nd Battle of Ypres 1915 (Documentary)",
+   "title": "4 Wars Directly After WW1 (Documentary)",
    "channel": "TheGreatWar",
    "minutes": null,
-   "thumbnailUrl": "https://i2.ytimg.com/vi/m7OstPrdkZg/hqdefault.jpg",
-   "relatedFactIds": []
-  },
-  {
-   "id": "vid-zAmwrI7-8kc",
-   "youtubeId": "zAmwrI7-8kc",
-   "category": "history",
-   "title": "Why did the US Enter WW1? (Documentary)",
-   "channel": "TheGreatWar",
-   "minutes": null,
-   "thumbnailUrl": "https://i3.ytimg.com/vi/zAmwrI7-8kc/hqdefault.jpg",
+   "thumbnailUrl": "https://i3.ytimg.com/vi/n4jLQMDlKNc/hqdefault.jpg",
    "relatedFactIds": []
   },
   {
@@ -1447,97 +733,33 @@
    "relatedFactIds": []
   },
   {
-   "id": "vid-QFrzGhlRAkw",
-   "youtubeId": "QFrzGhlRAkw",
+   "id": "vid-m7OstPrdkZg",
+   "youtubeId": "m7OstPrdkZg",
    "category": "history",
-   "title": "Why did the Treaty of Versailles Fail? (Short Animated Documentary)",
-   "channel": "historymatters",
+   "title": "First Poison Gas Attack of WW1: 2nd Battle of Ypres 1915 (Documentary)",
+   "channel": "TheGreatWar",
    "minutes": null,
-   "thumbnailUrl": "https://i2.ytimg.com/vi/QFrzGhlRAkw/hqdefault.jpg",
-   "relatedFactIds": [
-    "hist-066"
-   ]
-  },
-  {
-   "id": "vid-49s1EHBzmFQ",
-   "youtubeId": "49s1EHBzmFQ",
-   "category": "history",
-   "title": "When did the Cold War actually start? (Short Animated Documentary)",
-   "channel": "historymatters",
-   "minutes": null,
-   "thumbnailUrl": "https://i1.ytimg.com/vi/49s1EHBzmFQ/hqdefault.jpg",
+   "thumbnailUrl": "https://i2.ytimg.com/vi/m7OstPrdkZg/hqdefault.jpg",
    "relatedFactIds": []
   },
   {
-   "id": "vid-0cxMrCykadY",
-   "youtubeId": "0cxMrCykadY",
+   "id": "vid-TBArdS4XVek",
+   "youtubeId": "TBArdS4XVek",
    "category": "history",
-   "title": "Why wasn't Japan allowed to keep Taiwan after WW2? (Short Animated Documentary)",
-   "channel": "historymatters",
+   "title": "US Empire: American Expansionism In the WW1 Era (Documentary)",
+   "channel": "TheGreatWar",
    "minutes": null,
-   "thumbnailUrl": "https://i1.ytimg.com/vi/0cxMrCykadY/hqdefault.jpg",
+   "thumbnailUrl": "https://i1.ytimg.com/vi/TBArdS4XVek/hqdefault.jpg",
    "relatedFactIds": []
   },
   {
-   "id": "vid-zIknCgPbRyc",
-   "youtubeId": "zIknCgPbRyc",
+   "id": "vid-zAmwrI7-8kc",
+   "youtubeId": "zAmwrI7-8kc",
    "category": "history",
-   "title": "Why did the Spanish choose to fight the USA in 1898? (Short Animated Documentary)",
-   "channel": "historymatters",
+   "title": "Why did the US Enter WW1? (Documentary)",
+   "channel": "TheGreatWar",
    "minutes": null,
-   "thumbnailUrl": "https://i3.ytimg.com/vi/zIknCgPbRyc/hqdefault.jpg",
-   "relatedFactIds": []
-  },
-  {
-   "id": "vid-YuYDi5dh_70",
-   "youtubeId": "YuYDi5dh_70",
-   "category": "history",
-   "title": "Why didn't Germany stop expanding in 1939? (Short Animated Documentary)",
-   "channel": "historymatters",
-   "minutes": null,
-   "thumbnailUrl": "https://i2.ytimg.com/vi/YuYDi5dh_70/hqdefault.jpg",
-   "relatedFactIds": []
-  },
-  {
-   "id": "vid-_W91vYZETPM",
-   "youtubeId": "_W91vYZETPM",
-   "category": "history",
-   "title": "Why didn't the other Central Powers have to pay reparations too? (Short Animated Documentary)",
-   "channel": "historymatters",
-   "minutes": null,
-   "thumbnailUrl": "https://i4.ytimg.com/vi/_W91vYZETPM/hqdefault.jpg",
-   "relatedFactIds": []
-  },
-  {
-   "id": "vid-ynhI5fZ_Uhk",
-   "youtubeId": "ynhI5fZ_Uhk",
-   "category": "history",
-   "title": "Why didn't the Boers ever unite against the British? (Short Animated Documentary)",
-   "channel": "historymatters",
-   "minutes": null,
-   "thumbnailUrl": "https://i2.ytimg.com/vi/ynhI5fZ_Uhk/hqdefault.jpg",
-   "relatedFactIds": [
-    "hist-051"
-   ]
-  },
-  {
-   "id": "vid-HZpyTTsx0xw",
-   "youtubeId": "HZpyTTsx0xw",
-   "category": "history",
-   "title": "Why wasn't Teddy Roosevelt allowed to fight in World War One? (Short Animated Documentary)",
-   "channel": "historymatters",
-   "minutes": null,
-   "thumbnailUrl": "https://i1.ytimg.com/vi/HZpyTTsx0xw/hqdefault.jpg",
-   "relatedFactIds": []
-  },
-  {
-   "id": "vid-uw8sjn7z0Ls",
-   "youtubeId": "uw8sjn7z0Ls",
-   "category": "history",
-   "title": "Why couldn't the Mongols conquer Japan? (Short Animated Documentary)",
-   "channel": "historymatters",
-   "minutes": null,
-   "thumbnailUrl": "https://i2.ytimg.com/vi/uw8sjn7z0Ls/hqdefault.jpg",
+   "thumbnailUrl": "https://i3.ytimg.com/vi/zAmwrI7-8kc/hqdefault.jpg",
    "relatedFactIds": []
   },
   {
@@ -1548,178 +770,6 @@
    "channel": "historymatters",
    "minutes": null,
    "thumbnailUrl": "https://i1.ytimg.com/vi/T_OqU3ONq3w/hqdefault.jpg",
-   "relatedFactIds": []
-  },
-  {
-   "id": "vid-nVFqq1a1r_s",
-   "youtubeId": "nVFqq1a1r_s",
-   "category": "history",
-   "title": "Why did Austria-Hungary do so poorly in World War One? (Short Animated Documentary)",
-   "channel": "historymatters",
-   "minutes": null,
-   "thumbnailUrl": "https://i3.ytimg.com/vi/nVFqq1a1r_s/hqdefault.jpg",
-   "relatedFactIds": []
-  },
-  {
-   "id": "vid-DvVqcgBiddc",
-   "youtubeId": "DvVqcgBiddc",
-   "category": "history",
-   "title": "Why didn't the US focus on Japan first in WW2? (Short Animated Documentary)",
-   "channel": "historymatters",
-   "minutes": null,
-   "thumbnailUrl": "https://i1.ytimg.com/vi/DvVqcgBiddc/hqdefault.jpg",
-   "relatedFactIds": []
-  },
-  {
-   "id": "vid-0n7N5HjH12Q",
-   "youtubeId": "0n7N5HjH12Q",
-   "category": "history",
-   "title": "Why didn't the border states join the confederacy? (Short Animated Documentary)",
-   "channel": "historymatters",
-   "minutes": null,
-   "thumbnailUrl": "https://i1.ytimg.com/vi/0n7N5HjH12Q/hqdefault.jpg",
-   "relatedFactIds": []
-  },
-  {
-   "id": "vid-RgI-hR82Jss",
-   "youtubeId": "RgI-hR82Jss",
-   "category": "history",
-   "title": "Why did the 1945 Japanese Army coup against the Emperor fail? (Short Animated Documentary)",
-   "channel": "historymatters",
-   "minutes": null,
-   "thumbnailUrl": "https://i3.ytimg.com/vi/RgI-hR82Jss/hqdefault.jpg",
-   "relatedFactIds": []
-  },
-  {
-   "id": "vid-KKgpIukWJdM",
-   "youtubeId": "KKgpIukWJdM",
-   "category": "history",
-   "title": "Why did France get so much of Africa? (Short Animated Documentary)",
-   "channel": "historymatters",
-   "minutes": null,
-   "thumbnailUrl": "https://i4.ytimg.com/vi/KKgpIukWJdM/hqdefault.jpg",
-   "relatedFactIds": []
-  },
-  {
-   "id": "vid-Cyl3X88KEgg",
-   "youtubeId": "Cyl3X88KEgg",
-   "category": "science",
-   "title": "Why Humanity Will Never Leave The Solar System",
-   "channel": "kurzgesagt",
-   "minutes": null,
-   "thumbnailUrl": "https://i4.ytimg.com/vi/Cyl3X88KEgg/hqdefault.jpg",
-   "relatedFactIds": [
-    "sci-047"
-   ]
-  },
-  {
-   "id": "vid-AWUYE6eJO3k",
-   "youtubeId": "AWUYE6eJO3k",
-   "category": "science",
-   "title": "Building a Secret Moon Base",
-   "channel": "kurzgesagt",
-   "minutes": null,
-   "thumbnailUrl": "https://i2.ytimg.com/vi/AWUYE6eJO3k/hqdefault.jpg",
-   "relatedFactIds": []
-  },
-  {
-   "id": "vid-2cK8l5Yg5w8",
-   "youtubeId": "2cK8l5Yg5w8",
-   "category": "science",
-   "title": "The Deadliest Thing in Your Kitchen",
-   "channel": "kurzgesagt",
-   "minutes": null,
-   "thumbnailUrl": "https://i3.ytimg.com/vi/2cK8l5Yg5w8/hqdefault.jpg",
-   "relatedFactIds": []
-  },
-  {
-   "id": "vid-uVlMWVP5GJk",
-   "youtubeId": "uVlMWVP5GJk",
-   "category": "science",
-   "title": "The True Cost of War",
-   "channel": "kurzgesagt",
-   "minutes": null,
-   "thumbnailUrl": "https://i2.ytimg.com/vi/uVlMWVP5GJk/hqdefault.jpg",
-   "relatedFactIds": []
-  },
-  {
-   "id": "vid-N2FOxjtv5ns",
-   "youtubeId": "N2FOxjtv5ns",
-   "category": "science",
-   "title": "What is El Niño?",
-   "channel": "kurzgesagt",
-   "minutes": null,
-   "thumbnailUrl": "https://i3.ytimg.com/vi/N2FOxjtv5ns/hqdefault.jpg",
-   "relatedFactIds": []
-  },
-  {
-   "id": "vid-Gn-KqiRv0XI",
-   "youtubeId": "Gn-KqiRv0XI",
-   "category": "science",
-   "title": "The World’s Most Average Person",
-   "channel": "kurzgesagt",
-   "minutes": null,
-   "thumbnailUrl": "https://i4.ytimg.com/vi/Gn-KqiRv0XI/hqdefault.jpg",
-   "relatedFactIds": []
-  },
-  {
-   "id": "vid-bo7QgxhrGnw",
-   "youtubeId": "bo7QgxhrGnw",
-   "category": "science",
-   "title": "Processed Food Won’t Kill You",
-   "channel": "kurzgesagt",
-   "minutes": null,
-   "thumbnailUrl": "https://i3.ytimg.com/vi/bo7QgxhrGnw/hqdefault.jpg",
-   "relatedFactIds": []
-  },
-  {
-   "id": "vid-PqtggjVAi8M",
-   "youtubeId": "PqtggjVAi8M",
-   "category": "science",
-   "title": "How Are Memories Stored Inside Your Brain?",
-   "channel": "kurzgesagt",
-   "minutes": null,
-   "thumbnailUrl": "https://i1.ytimg.com/vi/PqtggjVAi8M/hqdefault.jpg",
-   "relatedFactIds": []
-  },
-  {
-   "id": "vid-XUStGNx45wQ",
-   "youtubeId": "XUStGNx45wQ",
-   "category": "science",
-   "title": "The Power of 1%",
-   "channel": "kurzgesagt",
-   "minutes": null,
-   "thumbnailUrl": "https://i1.ytimg.com/vi/XUStGNx45wQ/hqdefault.jpg",
-   "relatedFactIds": []
-  },
-  {
-   "id": "vid-2acc7oyXIZI",
-   "youtubeId": "2acc7oyXIZI",
-   "category": "science",
-   "title": "Let’s Steal a New Moon",
-   "channel": "kurzgesagt",
-   "minutes": null,
-   "thumbnailUrl": "https://i3.ytimg.com/vi/2acc7oyXIZI/hqdefault.jpg",
-   "relatedFactIds": []
-  },
-  {
-   "id": "vid-xfyKqOmr7Wk",
-   "youtubeId": "xfyKqOmr7Wk",
-   "category": "science",
-   "title": "Your Brain Peaked at Birth",
-   "channel": "kurzgesagt",
-   "minutes": null,
-   "thumbnailUrl": "https://i1.ytimg.com/vi/xfyKqOmr7Wk/hqdefault.jpg",
-   "relatedFactIds": []
-  },
-  {
-   "id": "vid-EIJhxr2wl64",
-   "youtubeId": "EIJhxr2wl64",
-   "category": "science",
-   "title": "The Deadliest Year of Your Life",
-   "channel": "kurzgesagt",
-   "minutes": null,
-   "thumbnailUrl": "https://i2.ytimg.com/vi/EIJhxr2wl64/hqdefault.jpg",
    "relatedFactIds": []
   },
   {
@@ -1735,93 +785,75 @@
    ]
   },
   {
-   "id": "vid-TYhNHX372ek",
-   "youtubeId": "TYhNHX372ek",
+   "id": "vid-Cyl3X88KEgg",
+   "youtubeId": "Cyl3X88KEgg",
    "category": "science",
-   "title": "The Uncomfortable Truth About Ozempic (Updated Version)",
+   "title": "Why Humanity Will Never Leave The Solar System",
    "channel": "kurzgesagt",
    "minutes": null,
-   "thumbnailUrl": "https://i1.ytimg.com/vi/TYhNHX372ek/hqdefault.jpg",
-   "relatedFactIds": []
+   "thumbnailUrl": "https://i4.ytimg.com/vi/Cyl3X88KEgg/hqdefault.jpg",
+   "relatedFactIds": [
+    "sci-047"
+   ]
   },
   {
-   "id": "vid-DfB2qYJqAkA",
-   "youtubeId": "DfB2qYJqAkA",
+   "id": "vid-2cK8l5Yg5w8",
+   "youtubeId": "2cK8l5Yg5w8",
    "category": "science",
-   "title": "Where Did the Antimatter Go?",
+   "title": "The Deadliest Thing in Your Kitchen",
    "channel": "kurzgesagt",
    "minutes": null,
-   "thumbnailUrl": "https://i1.ytimg.com/vi/DfB2qYJqAkA/hqdefault.jpg",
+   "thumbnailUrl": "https://i3.ytimg.com/vi/2cK8l5Yg5w8/hqdefault.jpg",
    "relatedFactIds": []
   },
   {
-   "id": "vid-_1G8nrmBKeY",
-   "youtubeId": "_1G8nrmBKeY",
+   "id": "vid-Gn-KqiRv0XI",
+   "youtubeId": "Gn-KqiRv0XI",
    "category": "science",
-   "title": "How do submarines know where they are?",
-   "channel": "veritasium",
+   "title": "The World’s Most Average Person",
+   "channel": "kurzgesagt",
    "minutes": null,
-   "thumbnailUrl": "https://i4.ytimg.com/vi/_1G8nrmBKeY/hqdefault.jpg",
+   "thumbnailUrl": "https://i4.ytimg.com/vi/Gn-KqiRv0XI/hqdefault.jpg",
    "relatedFactIds": []
   },
   {
-   "id": "vid-wt4p2oalmRY",
-   "youtubeId": "wt4p2oalmRY",
+   "id": "vid-PqtggjVAi8M",
+   "youtubeId": "PqtggjVAi8M",
    "category": "science",
-   "title": "Is spider web really stronger than steel?",
-   "channel": "veritasium",
+   "title": "How Are Memories Stored Inside Your Brain?",
+   "channel": "kurzgesagt",
    "minutes": null,
-   "thumbnailUrl": "https://i4.ytimg.com/vi/wt4p2oalmRY/hqdefault.jpg",
+   "thumbnailUrl": "https://i1.ytimg.com/vi/PqtggjVAi8M/hqdefault.jpg",
    "relatedFactIds": []
   },
   {
-   "id": "vid-3HQkVfZ4DNY",
-   "youtubeId": "3HQkVfZ4DNY",
+   "id": "vid-bo7QgxhrGnw",
+   "youtubeId": "bo7QgxhrGnw",
    "category": "science",
-   "title": "The World's Heaviest Weight",
-   "channel": "veritasium",
+   "title": "Processed Food Won’t Kill You",
+   "channel": "kurzgesagt",
    "minutes": null,
-   "thumbnailUrl": "https://i4.ytimg.com/vi/3HQkVfZ4DNY/hqdefault.jpg",
+   "thumbnailUrl": "https://i3.ytimg.com/vi/bo7QgxhrGnw/hqdefault.jpg",
    "relatedFactIds": []
   },
   {
-   "id": "vid-tL9Lw250spc",
-   "youtubeId": "tL9Lw250spc",
+   "id": "vid-N2FOxjtv5ns",
+   "youtubeId": "N2FOxjtv5ns",
    "category": "science",
-   "title": "Why does every mammal get 1 billion heartbeats in their life?",
-   "channel": "veritasium",
+   "title": "What is El Niño?",
+   "channel": "kurzgesagt",
    "minutes": null,
-   "thumbnailUrl": "https://i1.ytimg.com/vi/tL9Lw250spc/hqdefault.jpg",
+   "thumbnailUrl": "https://i3.ytimg.com/vi/N2FOxjtv5ns/hqdefault.jpg",
    "relatedFactIds": []
   },
   {
-   "id": "vid-2_VB-oc_pmk",
-   "youtubeId": "2_VB-oc_pmk",
+   "id": "vid-xfyKqOmr7Wk",
+   "youtubeId": "xfyKqOmr7Wk",
    "category": "science",
-   "title": "The Most Controversial Thought Experiment In Physics",
-   "channel": "veritasium",
+   "title": "Your Brain Peaked at Birth",
+   "channel": "kurzgesagt",
    "minutes": null,
-   "thumbnailUrl": "https://i3.ytimg.com/vi/2_VB-oc_pmk/hqdefault.jpg",
-   "relatedFactIds": []
-  },
-  {
-   "id": "vid-RmHcX5oVzvs",
-   "youtubeId": "RmHcX5oVzvs",
-   "category": "science",
-   "title": "Why Waves Travel Faster At The Top",
-   "channel": "veritasium",
-   "minutes": null,
-   "thumbnailUrl": "https://i3.ytimg.com/vi/RmHcX5oVzvs/hqdefault.jpg",
-   "relatedFactIds": []
-  },
-  {
-   "id": "vid-GK2pZ_oVU1o",
-   "youtubeId": "GK2pZ_oVU1o",
-   "category": "science",
-   "title": "The Scariest Chart in Electrical Engineering",
-   "channel": "veritasium",
-   "minutes": null,
-   "thumbnailUrl": "https://i4.ytimg.com/vi/GK2pZ_oVU1o/hqdefault.jpg",
+   "thumbnailUrl": "https://i1.ytimg.com/vi/xfyKqOmr7Wk/hqdefault.jpg",
    "relatedFactIds": []
   },
   {
@@ -1832,56 +864,6 @@
    "channel": "veritasium",
    "minutes": null,
    "thumbnailUrl": "https://i4.ytimg.com/vi/kP7l1agsTzQ/hqdefault.jpg",
-   "relatedFactIds": []
-  },
-  {
-   "id": "vid-h1YeIE0vEIs",
-   "youtubeId": "h1YeIE0vEIs",
-   "category": "science",
-   "title": "How does light 'know' the shortest path?",
-   "channel": "veritasium",
-   "minutes": null,
-   "thumbnailUrl": "https://i1.ytimg.com/vi/h1YeIE0vEIs/hqdefault.jpg",
-   "relatedFactIds": []
-  },
-  {
-   "id": "vid-Xhl5TzKZbpw",
-   "youtubeId": "Xhl5TzKZbpw",
-   "category": "science",
-   "title": "AD - Why are plants colder than their surroundings?",
-   "channel": "veritasium",
-   "minutes": null,
-   "thumbnailUrl": "https://i1.ytimg.com/vi/Xhl5TzKZbpw/hqdefault.jpg",
-   "relatedFactIds": []
-  },
-  {
-   "id": "vid-dquI8khH1Zk",
-   "youtubeId": "dquI8khH1Zk",
-   "category": "science",
-   "title": "AD - Why do I get this spark when I unplug my hair dryer?",
-   "channel": "veritasium",
-   "minutes": null,
-   "thumbnailUrl": "https://i1.ytimg.com/vi/dquI8khH1Zk/hqdefault.jpg",
-   "relatedFactIds": []
-  },
-  {
-   "id": "vid-uPGBcVCrdg8",
-   "youtubeId": "uPGBcVCrdg8",
-   "category": "science",
-   "title": "Why do these metronomes sync up?",
-   "channel": "veritasium",
-   "minutes": null,
-   "thumbnailUrl": "https://i2.ytimg.com/vi/uPGBcVCrdg8/hqdefault.jpg",
-   "relatedFactIds": []
-  },
-  {
-   "id": "vid-mvcesPWvUIc",
-   "youtubeId": "mvcesPWvUIc",
-   "category": "science",
-   "title": "We've Been Using The Wrong Science In Court For 50 years",
-   "channel": "veritasium",
-   "minutes": null,
-   "thumbnailUrl": "https://i2.ytimg.com/vi/mvcesPWvUIc/hqdefault.jpg",
    "relatedFactIds": []
   },
   {
@@ -1905,53 +887,53 @@
    "relatedFactIds": []
   },
   {
-   "id": "vid-PNG9nRO7XZ8",
-   "youtubeId": "PNG9nRO7XZ8",
+   "id": "vid-tL9Lw250spc",
+   "youtubeId": "tL9Lw250spc",
    "category": "science",
-   "title": "Scientists Finally Figured Out Why This River Flows Uphill",
-   "channel": "SciShow",
+   "title": "Why does every mammal get 1 billion heartbeats in their life?",
+   "channel": "veritasium",
    "minutes": null,
-   "thumbnailUrl": "https://i1.ytimg.com/vi/PNG9nRO7XZ8/hqdefault.jpg",
+   "thumbnailUrl": "https://i1.ytimg.com/vi/tL9Lw250spc/hqdefault.jpg",
    "relatedFactIds": []
   },
   {
-   "id": "vid-A8XPsYH5Jb4",
-   "youtubeId": "A8XPsYH5Jb4",
+   "id": "vid-GK2pZ_oVU1o",
+   "youtubeId": "GK2pZ_oVU1o",
    "category": "science",
-   "title": "Why It's So Hard to Make Artificial Cork",
-   "channel": "SciShow",
+   "title": "The Scariest Chart in Electrical Engineering",
+   "channel": "veritasium",
    "minutes": null,
-   "thumbnailUrl": "https://i2.ytimg.com/vi/A8XPsYH5Jb4/hqdefault.jpg",
+   "thumbnailUrl": "https://i4.ytimg.com/vi/GK2pZ_oVU1o/hqdefault.jpg",
    "relatedFactIds": []
   },
   {
-   "id": "vid-h2wnaBny4Ig",
-   "youtubeId": "h2wnaBny4Ig",
+   "id": "vid-RmHcX5oVzvs",
+   "youtubeId": "RmHcX5oVzvs",
    "category": "science",
-   "title": "Where Is Love Stored in the Body?",
-   "channel": "SciShow",
+   "title": "Why Waves Travel Faster At The Top",
+   "channel": "veritasium",
    "minutes": null,
-   "thumbnailUrl": "https://i1.ytimg.com/vi/h2wnaBny4Ig/hqdefault.jpg",
+   "thumbnailUrl": "https://i3.ytimg.com/vi/RmHcX5oVzvs/hqdefault.jpg",
    "relatedFactIds": []
   },
   {
-   "id": "vid-JGN6po7Zcsg",
-   "youtubeId": "JGN6po7Zcsg",
+   "id": "vid-wt4p2oalmRY",
+   "youtubeId": "wt4p2oalmRY",
    "category": "science",
-   "title": "Why People Thought \"Aliens\" Made These Rocks",
-   "channel": "SciShow",
+   "title": "Is spider web really stronger than steel?",
+   "channel": "veritasium",
    "minutes": null,
-   "thumbnailUrl": "https://i3.ytimg.com/vi/JGN6po7Zcsg/hqdefault.jpg",
+   "thumbnailUrl": "https://i4.ytimg.com/vi/wt4p2oalmRY/hqdefault.jpg",
    "relatedFactIds": []
   },
   {
-   "id": "vid-OqkSn_38gpc",
-   "youtubeId": "OqkSn_38gpc",
+   "id": "vid-dquI8khH1Zk",
+   "youtubeId": "dquI8khH1Zk",
    "category": "science",
-   "title": "Why We Can’t Find a Legal Limit for Weed",
-   "channel": "SciShow",
+   "title": "AD - Why do I get this spark when I unplug my hair dryer?",
+   "channel": "veritasium",
    "minutes": null,
-   "thumbnailUrl": "https://i4.ytimg.com/vi/OqkSn_38gpc/hqdefault.jpg",
+   "thumbnailUrl": "https://i1.ytimg.com/vi/dquI8khH1Zk/hqdefault.jpg",
    "relatedFactIds": []
   },
   {
@@ -1965,16 +947,6 @@
    "relatedFactIds": []
   },
   {
-   "id": "vid-F0_xwHMbPCA",
-   "youtubeId": "F0_xwHMbPCA",
-   "category": "science",
-   "title": "Axolotls Are In Danger. Here's Why That's Bad For YOU.",
-   "channel": "SciShow",
-   "minutes": null,
-   "thumbnailUrl": "https://i3.ytimg.com/vi/F0_xwHMbPCA/hqdefault.jpg",
-   "relatedFactIds": []
-  },
-  {
    "id": "vid-tqnBeuWoOEk",
    "youtubeId": "tqnBeuWoOEk",
    "category": "science",
@@ -1982,46 +954,6 @@
    "channel": "SciShow",
    "minutes": null,
    "thumbnailUrl": "https://i1.ytimg.com/vi/tqnBeuWoOEk/hqdefault.jpg",
-   "relatedFactIds": []
-  },
-  {
-   "id": "vid-ZPoKkl4dvZo",
-   "youtubeId": "ZPoKkl4dvZo",
-   "category": "science",
-   "title": "You Actually Can Get Rid of Forever Chemicals",
-   "channel": "SciShow",
-   "minutes": null,
-   "thumbnailUrl": "https://i3.ytimg.com/vi/ZPoKkl4dvZo/hqdefault.jpg",
-   "relatedFactIds": []
-  },
-  {
-   "id": "vid-yi90GFBgQ60",
-   "youtubeId": "yi90GFBgQ60",
-   "category": "science",
-   "title": "5 Weird Windows of the Future.",
-   "channel": "SciShow",
-   "minutes": null,
-   "thumbnailUrl": "https://i2.ytimg.com/vi/yi90GFBgQ60/hqdefault.jpg",
-   "relatedFactIds": []
-  },
-  {
-   "id": "vid-_8Lk9YeovbE",
-   "youtubeId": "_8Lk9YeovbE",
-   "category": "science",
-   "title": "Ontario is Getting Taller",
-   "channel": "SciShow",
-   "minutes": null,
-   "thumbnailUrl": "https://i4.ytimg.com/vi/_8Lk9YeovbE/hqdefault.jpg",
-   "relatedFactIds": []
-  },
-  {
-   "id": "vid-ZjU6wDiZZ1A",
-   "youtubeId": "ZjU6wDiZZ1A",
-   "category": "science",
-   "title": "What Science Says About the Sequels to Ozempic",
-   "channel": "SciShow",
-   "minutes": null,
-   "thumbnailUrl": "https://i3.ytimg.com/vi/ZjU6wDiZZ1A/hqdefault.jpg",
    "relatedFactIds": []
   },
   {
@@ -2035,6 +967,36 @@
    "relatedFactIds": []
   },
   {
+   "id": "vid-ZPoKkl4dvZo",
+   "youtubeId": "ZPoKkl4dvZo",
+   "category": "science",
+   "title": "You Actually Can Get Rid of Forever Chemicals",
+   "channel": "SciShow",
+   "minutes": null,
+   "thumbnailUrl": "https://i3.ytimg.com/vi/ZPoKkl4dvZo/hqdefault.jpg",
+   "relatedFactIds": []
+  },
+  {
+   "id": "vid-ZjU6wDiZZ1A",
+   "youtubeId": "ZjU6wDiZZ1A",
+   "category": "science",
+   "title": "What Science Says About the Sequels to Ozempic",
+   "channel": "SciShow",
+   "minutes": null,
+   "thumbnailUrl": "https://i3.ytimg.com/vi/ZjU6wDiZZ1A/hqdefault.jpg",
+   "relatedFactIds": []
+  },
+  {
+   "id": "vid-OqkSn_38gpc",
+   "youtubeId": "OqkSn_38gpc",
+   "category": "science",
+   "title": "Why We Can’t Find a Legal Limit for Weed",
+   "channel": "SciShow",
+   "minutes": null,
+   "thumbnailUrl": "https://i4.ytimg.com/vi/OqkSn_38gpc/hqdefault.jpg",
+   "relatedFactIds": []
+  },
+  {
    "id": "vid-jPlrwA4sNZ8",
    "youtubeId": "jPlrwA4sNZ8",
    "category": "science",
@@ -2045,113 +1007,13 @@
    "relatedFactIds": []
   },
   {
-   "id": "vid-vkswVI5veJ0",
-   "youtubeId": "vkswVI5veJ0",
+   "id": "vid-PNG9nRO7XZ8",
+   "youtubeId": "PNG9nRO7XZ8",
    "category": "science",
-   "title": "5 Space Stations You've Never Heard Of",
+   "title": "Scientists Finally Figured Out Why This River Flows Uphill",
    "channel": "SciShow",
    "minutes": null,
-   "thumbnailUrl": "https://i3.ytimg.com/vi/vkswVI5veJ0/hqdefault.jpg",
-   "relatedFactIds": []
-  },
-  {
-   "id": "vid-6XPlmCDNLNc",
-   "youtubeId": "6XPlmCDNLNc",
-   "category": "science",
-   "title": "The 64 sugar cubes puzzle",
-   "channel": "3blue1brown",
-   "minutes": null,
-   "thumbnailUrl": "https://i3.ytimg.com/vi/6XPlmCDNLNc/hqdefault.jpg",
-   "relatedFactIds": []
-  },
-  {
-   "id": "vid-GlYgs6v2YfU",
-   "youtubeId": "GlYgs6v2YfU",
-   "category": "science",
-   "title": "But what is cross-entropy? | Compression is Intelligence Part 2",
-   "channel": "3blue1brown",
-   "minutes": null,
-   "thumbnailUrl": "https://i4.ytimg.com/vi/GlYgs6v2YfU/hqdefault.jpg",
-   "relatedFactIds": []
-  },
-  {
-   "id": "vid-wGffBCfrAsE",
-   "youtubeId": "wGffBCfrAsE",
-   "category": "science",
-   "title": "100 random chords, how many intersections?",
-   "channel": "3blue1brown",
-   "minutes": null,
-   "thumbnailUrl": "https://i4.ytimg.com/vi/wGffBCfrAsE/hqdefault.jpg",
-   "relatedFactIds": []
-  },
-  {
-   "id": "vid--7etvZSBxlk",
-   "youtubeId": "-7etvZSBxlk",
-   "category": "science",
-   "title": "Measuring the entropy of English",
-   "channel": "3blue1brown",
-   "minutes": null,
-   "thumbnailUrl": "https://i2.ytimg.com/vi/-7etvZSBxlk/hqdefault.jpg",
-   "relatedFactIds": []
-  },
-  {
-   "id": "vid-7L_eTem1SQ4",
-   "youtubeId": "7L_eTem1SQ4",
-   "category": "science",
-   "title": "What's the perfect encoding? How do you know?",
-   "channel": "3blue1brown",
-   "minutes": null,
-   "thumbnailUrl": "https://i4.ytimg.com/vi/7L_eTem1SQ4/hqdefault.jpg",
-   "relatedFactIds": []
-  },
-  {
-   "id": "vid-l6DKRf-fAAM",
-   "youtubeId": "l6DKRf-fAAM",
-   "category": "science",
-   "title": "Reinventing Entropy | Compression is Intelligence Part 1",
-   "channel": "3blue1brown",
-   "minutes": null,
-   "thumbnailUrl": "https://i1.ytimg.com/vi/l6DKRf-fAAM/hqdefault.jpg",
-   "relatedFactIds": []
-  },
-  {
-   "id": "vid-ZHXt0-_gSj4",
-   "youtubeId": "ZHXt0-_gSj4",
-   "category": "science",
-   "title": "Tie random ends: How many loops?",
-   "channel": "3blue1brown",
-   "minutes": null,
-   "thumbnailUrl": "https://i3.ytimg.com/vi/ZHXt0-_gSj4/hqdefault.jpg",
-   "relatedFactIds": []
-  },
-  {
-   "id": "vid-QLu_ZsRc_G0",
-   "youtubeId": "QLu_ZsRc_G0",
-   "category": "science",
-   "title": "Covering 10 points, a surprisingly tricky puzzle.",
-   "channel": "3blue1brown",
-   "minutes": null,
-   "thumbnailUrl": "https://i2.ytimg.com/vi/QLu_ZsRc_G0/hqdefault.jpg",
-   "relatedFactIds": []
-  },
-  {
-   "id": "vid-Y7ImxZ_YhJk",
-   "youtubeId": "Y7ImxZ_YhJk",
-   "category": "science",
-   "title": "Escher's most mind-bending piece",
-   "channel": "3blue1brown",
-   "minutes": null,
-   "thumbnailUrl": "https://i2.ytimg.com/vi/Y7ImxZ_YhJk/hqdefault.jpg",
-   "relatedFactIds": []
-  },
-  {
-   "id": "vid-4h5BEALuh44",
-   "youtubeId": "4h5BEALuh44",
-   "category": "science",
-   "title": "The subset sum puzzle",
-   "channel": "3blue1brown",
-   "minutes": null,
-   "thumbnailUrl": "https://i1.ytimg.com/vi/4h5BEALuh44/hqdefault.jpg",
+   "thumbnailUrl": "https://i1.ytimg.com/vi/PNG9nRO7XZ8/hqdefault.jpg",
    "relatedFactIds": []
   },
   {
@@ -2165,13 +1027,13 @@
    "relatedFactIds": []
   },
   {
-   "id": "vid-Qoes9bTJtn0",
-   "youtubeId": "Qoes9bTJtn0",
+   "id": "vid-l6DKRf-fAAM",
+   "youtubeId": "l6DKRf-fAAM",
    "category": "science",
-   "title": "Bacteria Grid Puzzle Solution",
+   "title": "Reinventing Entropy | Compression is Intelligence Part 1",
    "channel": "3blue1brown",
    "minutes": null,
-   "thumbnailUrl": "https://i2.ytimg.com/vi/Qoes9bTJtn0/hqdefault.jpg",
+   "thumbnailUrl": "https://i1.ytimg.com/vi/l6DKRf-fAAM/hqdefault.jpg",
    "relatedFactIds": []
   },
   {
@@ -2185,13 +1047,13 @@
    "relatedFactIds": []
   },
   {
-   "id": "vid-d0ai33oqqDE",
-   "youtubeId": "d0ai33oqqDE",
+   "id": "vid-Qoes9bTJtn0",
+   "youtubeId": "Qoes9bTJtn0",
    "category": "science",
-   "title": "The lattice bacteria puzzle",
+   "title": "Bacteria Grid Puzzle Solution",
    "channel": "3blue1brown",
    "minutes": null,
-   "thumbnailUrl": "https://i1.ytimg.com/vi/d0ai33oqqDE/hqdefault.jpg",
+   "thumbnailUrl": "https://i2.ytimg.com/vi/Qoes9bTJtn0/hqdefault.jpg",
    "relatedFactIds": []
   },
   {
@@ -2205,113 +1067,33 @@
    "relatedFactIds": []
   },
   {
-   "id": "vid-sYdXa_yp0fc",
-   "youtubeId": "sYdXa_yp0fc",
+   "id": "vid-d0ai33oqqDE",
+   "youtubeId": "d0ai33oqqDE",
    "category": "science",
-   "title": "Strings Don't Vibrate The Way You Think",
-   "channel": "MinutePhysics",
+   "title": "The lattice bacteria puzzle",
+   "channel": "3blue1brown",
    "minutes": null,
-   "thumbnailUrl": "https://i4.ytimg.com/vi/sYdXa_yp0fc/hqdefault.jpg",
+   "thumbnailUrl": "https://i1.ytimg.com/vi/d0ai33oqqDE/hqdefault.jpg",
    "relatedFactIds": []
   },
   {
-   "id": "vid-XYfv0T2k4h8",
-   "youtubeId": "XYfv0T2k4h8",
+   "id": "vid-QLu_ZsRc_G0",
+   "youtubeId": "QLu_ZsRc_G0",
    "category": "science",
-   "title": "Why some flames are blue and others are red?",
-   "channel": "MinutePhysics",
+   "title": "Covering 10 points, a surprisingly tricky puzzle.",
+   "channel": "3blue1brown",
    "minutes": null,
-   "thumbnailUrl": "https://i1.ytimg.com/vi/XYfv0T2k4h8/hqdefault.jpg",
+   "thumbnailUrl": "https://i2.ytimg.com/vi/QLu_ZsRc_G0/hqdefault.jpg",
    "relatedFactIds": []
   },
   {
-   "id": "vid-R2G8Xy6hiyg",
-   "youtubeId": "R2G8Xy6hiyg",
+   "id": "vid-wGffBCfrAsE",
+   "youtubeId": "wGffBCfrAsE",
    "category": "science",
-   "title": "This Orbit is the WORST",
-   "channel": "MinutePhysics",
+   "title": "100 random chords, how many intersections?",
+   "channel": "3blue1brown",
    "minutes": null,
-   "thumbnailUrl": "https://i3.ytimg.com/vi/R2G8Xy6hiyg/hqdefault.jpg",
-   "relatedFactIds": []
-  },
-  {
-   "id": "vid-TM8JhXsPYTo",
-   "youtubeId": "TM8JhXsPYTo",
-   "category": "science",
-   "title": "There Is No 4th Dimension",
-   "channel": "MinutePhysics",
-   "minutes": null,
-   "thumbnailUrl": "https://i1.ytimg.com/vi/TM8JhXsPYTo/hqdefault.jpg",
-   "relatedFactIds": []
-  },
-  {
-   "id": "vid-dLtRtdg67PU",
-   "youtubeId": "dLtRtdg67PU",
-   "category": "science",
-   "title": "Two Paradoxes of Space Navigation",
-   "channel": "MinutePhysics",
-   "minutes": null,
-   "thumbnailUrl": "https://i1.ytimg.com/vi/dLtRtdg67PU/hqdefault.jpg",
-   "relatedFactIds": []
-  },
-  {
-   "id": "vid-sEQvDbyFNbo",
-   "youtubeId": "sEQvDbyFNbo",
-   "category": "science",
-   "title": "Why Driving Backwards Is So Hard",
-   "channel": "MinutePhysics",
-   "minutes": null,
-   "thumbnailUrl": "https://i4.ytimg.com/vi/sEQvDbyFNbo/hqdefault.jpg",
-   "relatedFactIds": []
-  },
-  {
-   "id": "vid-PTO0s8YQ49o",
-   "youtubeId": "PTO0s8YQ49o",
-   "category": "science",
-   "title": "The Magic of Thorium Nuclear Reactors",
-   "channel": "MinutePhysics",
-   "minutes": null,
-   "thumbnailUrl": "https://i1.ytimg.com/vi/PTO0s8YQ49o/hqdefault.jpg",
-   "relatedFactIds": []
-  },
-  {
-   "id": "vid-8wDha-G35KA",
-   "youtubeId": "8wDha-G35KA",
-   "category": "science",
-   "title": "Is Perfect Prediction Possible?",
-   "channel": "MinutePhysics",
-   "minutes": null,
-   "thumbnailUrl": "https://i1.ytimg.com/vi/8wDha-G35KA/hqdefault.jpg",
-   "relatedFactIds": []
-  },
-  {
-   "id": "vid-qKMVnR4U33U",
-   "youtubeId": "qKMVnR4U33U",
-   "category": "science",
-   "title": "What is the farthest on earth you can get from ANYTHING",
-   "channel": "MinutePhysics",
-   "minutes": null,
-   "thumbnailUrl": "https://i2.ytimg.com/vi/qKMVnR4U33U/hqdefault.jpg",
-   "relatedFactIds": []
-  },
-  {
-   "id": "vid-i45dfK7wYvA",
-   "youtubeId": "i45dfK7wYvA",
-   "category": "science",
-   "title": "Schrödinger’s Cat (from the cat's perspective)",
-   "channel": "MinutePhysics",
-   "minutes": null,
-   "thumbnailUrl": "https://i2.ytimg.com/vi/i45dfK7wYvA/hqdefault.jpg",
-   "relatedFactIds": []
-  },
-  {
-   "id": "vid-ZWSvHBG7X0w",
-   "youtubeId": "ZWSvHBG7X0w",
-   "category": "science",
-   "title": "Do *you* understand ISO?",
-   "channel": "MinutePhysics",
-   "minutes": null,
-   "thumbnailUrl": "https://i3.ytimg.com/vi/ZWSvHBG7X0w/hqdefault.jpg",
+   "thumbnailUrl": "https://i4.ytimg.com/vi/wGffBCfrAsE/hqdefault.jpg",
    "relatedFactIds": []
   },
   {
@@ -2325,65 +1107,83 @@
    "relatedFactIds": []
   },
   {
-   "id": "vid-qqWZg4sZNjk",
-   "youtubeId": "qqWZg4sZNjk",
+   "id": "vid-ZWSvHBG7X0w",
+   "youtubeId": "ZWSvHBG7X0w",
    "category": "science",
-   "title": "Breaking the speed of light from your backyard",
+   "title": "Do *you* understand ISO?",
    "channel": "MinutePhysics",
    "minutes": null,
-   "thumbnailUrl": "https://i2.ytimg.com/vi/qqWZg4sZNjk/hqdefault.jpg",
-   "relatedFactIds": [
-    "sci-055"
-   ]
+   "thumbnailUrl": "https://i3.ytimg.com/vi/ZWSvHBG7X0w/hqdefault.jpg",
+   "relatedFactIds": []
   },
   {
-   "id": "vid-lZGyjR6Y9vw",
-   "youtubeId": "lZGyjR6Y9vw",
+   "id": "vid-sYdXa_yp0fc",
+   "youtubeId": "sYdXa_yp0fc",
    "category": "science",
-   "title": "Is Quantum Mechanics Stopping Aliens From Contacting Us?",
+   "title": "Strings Don't Vibrate The Way You Think",
    "channel": "MinutePhysics",
    "minutes": null,
-   "thumbnailUrl": "https://i1.ytimg.com/vi/lZGyjR6Y9vw/hqdefault.jpg",
+   "thumbnailUrl": "https://i4.ytimg.com/vi/sYdXa_yp0fc/hqdefault.jpg",
    "relatedFactIds": []
   },
   {
-   "id": "vid--kwF6M4juiU",
-   "youtubeId": "-kwF6M4juiU",
+   "id": "vid-sEQvDbyFNbo",
+   "youtubeId": "sEQvDbyFNbo",
    "category": "science",
-   "title": "Not a rainbow!",
+   "title": "Why Driving Backwards Is So Hard",
    "channel": "MinutePhysics",
    "minutes": null,
-   "thumbnailUrl": "https://i2.ytimg.com/vi/-kwF6M4juiU/hqdefault.jpg",
+   "thumbnailUrl": "https://i4.ytimg.com/vi/sEQvDbyFNbo/hqdefault.jpg",
    "relatedFactIds": []
   },
   {
-   "id": "vid--61qDRPG3to",
-   "youtubeId": "-61qDRPG3to",
+   "id": "vid-R2G8Xy6hiyg",
+   "youtubeId": "R2G8Xy6hiyg",
    "category": "science",
-   "title": "The fastest way to board a plane, according to mathematics - Rachel Yang",
-   "channel": "TEDEd",
+   "title": "This Orbit is the WORST",
+   "channel": "MinutePhysics",
    "minutes": null,
-   "thumbnailUrl": "https://i2.ytimg.com/vi/-61qDRPG3to/hqdefault.jpg",
+   "thumbnailUrl": "https://i3.ytimg.com/vi/R2G8Xy6hiyg/hqdefault.jpg",
    "relatedFactIds": []
   },
   {
-   "id": "vid-krNP8RlDsbw",
-   "youtubeId": "krNP8RlDsbw",
+   "id": "vid-dLtRtdg67PU",
+   "youtubeId": "dLtRtdg67PU",
    "category": "science",
-   "title": "Red gold: The world's most expensive spice - Carolyn Beans",
-   "channel": "TEDEd",
+   "title": "Two Paradoxes of Space Navigation",
+   "channel": "MinutePhysics",
    "minutes": null,
-   "thumbnailUrl": "https://i4.ytimg.com/vi/krNP8RlDsbw/hqdefault.jpg",
+   "thumbnailUrl": "https://i1.ytimg.com/vi/dLtRtdg67PU/hqdefault.jpg",
    "relatedFactIds": []
   },
   {
-   "id": "vid-5jPCAlE0z7I",
-   "youtubeId": "5jPCAlE0z7I",
+   "id": "vid-8wDha-G35KA",
+   "youtubeId": "8wDha-G35KA",
    "category": "science",
-   "title": "The mystery of the giant kelp forest - Luka Seamus Wright and Salomé Buglass",
+   "title": "Is Perfect Prediction Possible?",
+   "channel": "MinutePhysics",
+   "minutes": null,
+   "thumbnailUrl": "https://i1.ytimg.com/vi/8wDha-G35KA/hqdefault.jpg",
+   "relatedFactIds": []
+  },
+  {
+   "id": "vid-TM8JhXsPYTo",
+   "youtubeId": "TM8JhXsPYTo",
+   "category": "science",
+   "title": "There Is No 4th Dimension",
+   "channel": "MinutePhysics",
+   "minutes": null,
+   "thumbnailUrl": "https://i1.ytimg.com/vi/TM8JhXsPYTo/hqdefault.jpg",
+   "relatedFactIds": []
+  },
+  {
+   "id": "vid-pyDZpDkU46Y",
+   "youtubeId": "pyDZpDkU46Y",
+   "category": "science",
+   "title": "The dark origins of Disney fairy tales - Claudia Schwabe",
    "channel": "TEDEd",
    "minutes": null,
-   "thumbnailUrl": "https://i2.ytimg.com/vi/5jPCAlE0z7I/hqdefault.jpg",
+   "thumbnailUrl": "https://i1.ytimg.com/vi/pyDZpDkU46Y/hqdefault.jpg",
    "relatedFactIds": []
   },
   {
@@ -2417,6 +1217,16 @@
    "relatedFactIds": []
   },
   {
+   "id": "vid-HDt_rTPPh70",
+   "youtubeId": "HDt_rTPPh70",
+   "category": "science",
+   "title": "Why does catnip make cats go crazy? - Jaap de Roode",
+   "channel": "TEDEd",
+   "minutes": null,
+   "thumbnailUrl": "https://i1.ytimg.com/vi/HDt_rTPPh70/hqdefault.jpg",
+   "relatedFactIds": []
+  },
+  {
    "id": "vid-DbEZmLoGDbk",
    "youtubeId": "DbEZmLoGDbk",
    "category": "science",
@@ -2424,16 +1234,6 @@
    "channel": "TEDEd",
    "minutes": null,
    "thumbnailUrl": "https://i1.ytimg.com/vi/DbEZmLoGDbk/hqdefault.jpg",
-   "relatedFactIds": []
-  },
-  {
-   "id": "vid-6hCo4S_1Fhw",
-   "youtubeId": "6hCo4S_1Fhw",
-   "category": "science",
-   "title": "Why avalanches are most deadly when they stop - Simon Trautman",
-   "channel": "TEDEd",
-   "minutes": null,
-   "thumbnailUrl": "https://i3.ytimg.com/vi/6hCo4S_1Fhw/hqdefault.jpg",
    "relatedFactIds": []
   },
   {
@@ -2457,53 +1257,43 @@
    "relatedFactIds": []
   },
   {
-   "id": "vid-JDqpcHGfJ2I",
-   "youtubeId": "JDqpcHGfJ2I",
+   "id": "vid-v0afQ6w3Bjw",
+   "youtubeId": "v0afQ6w3Bjw",
    "category": "science",
-   "title": "Meet the slow loris, the only venomous primate in existence - Stephanie A. Poindexter",
-   "channel": "TEDEd",
+   "title": "Refueling a NUCLEAR REACTOR - Smarter Every Day 311",
+   "channel": "SmarterEveryDay",
    "minutes": null,
-   "thumbnailUrl": "https://i3.ytimg.com/vi/JDqpcHGfJ2I/hqdefault.jpg",
+   "thumbnailUrl": "https://i3.ytimg.com/vi/v0afQ6w3Bjw/hqdefault.jpg",
    "relatedFactIds": []
   },
   {
-   "id": "vid-Q9Vt6NGBVBc",
-   "youtubeId": "Q9Vt6NGBVBc",
+   "id": "vid-3ZTGwcHQfLY",
+   "youtubeId": "3ZTGwcHQfLY",
    "category": "science",
-   "title": "What is sumo, and why is it so popular? - Lee Thompson",
-   "channel": "TEDEd",
+   "title": "I Tried To Make Something In America (The Smarter Scrubber Experiment) - Smarter Every Day 308",
+   "channel": "SmarterEveryDay",
    "minutes": null,
-   "thumbnailUrl": "https://i2.ytimg.com/vi/Q9Vt6NGBVBc/hqdefault.jpg",
+   "thumbnailUrl": "https://i4.ytimg.com/vi/3ZTGwcHQfLY/hqdefault.jpg",
    "relatedFactIds": []
   },
   {
-   "id": "vid-HDt_rTPPh70",
-   "youtubeId": "HDt_rTPPh70",
+   "id": "vid-JVROsxtjoCw",
+   "youtubeId": "JVROsxtjoCw",
    "category": "science",
-   "title": "Why does catnip make cats go crazy? - Jaap de Roode",
-   "channel": "TEDEd",
+   "title": "I Explored the World's First Nuclear Power Plant (and How It Works) - Smarter Every Day 306",
+   "channel": "SmarterEveryDay",
    "minutes": null,
-   "thumbnailUrl": "https://i1.ytimg.com/vi/HDt_rTPPh70/hqdefault.jpg",
+   "thumbnailUrl": "https://i3.ytimg.com/vi/JVROsxtjoCw/hqdefault.jpg",
    "relatedFactIds": []
   },
   {
-   "id": "vid-pyDZpDkU46Y",
-   "youtubeId": "pyDZpDkU46Y",
+   "id": "vid-8nilP--GFLY",
+   "youtubeId": "8nilP--GFLY",
    "category": "science",
-   "title": "The dark origins of Disney fairy tales - Claudia Schwabe",
-   "channel": "TEDEd",
+   "title": "The Unsolved Mystery of Impact Flashes - Smarter Every Day 307",
+   "channel": "SmarterEveryDay",
    "minutes": null,
-   "thumbnailUrl": "https://i1.ytimg.com/vi/pyDZpDkU46Y/hqdefault.jpg",
-   "relatedFactIds": []
-  },
-  {
-   "id": "vid-BlK23YzqXOM",
-   "youtubeId": "BlK23YzqXOM",
-   "category": "science",
-   "title": "Why your best ideas usually start as bad ones | Think Like A Musician",
-   "channel": "TEDEd",
-   "minutes": null,
-   "thumbnailUrl": "https://i3.ytimg.com/vi/BlK23YzqXOM/hqdefault.jpg",
+   "thumbnailUrl": "https://i1.ytimg.com/vi/8nilP--GFLY/hqdefault.jpg",
    "relatedFactIds": []
   },
   {
@@ -2514,56 +1304,6 @@
    "channel": "SmarterEveryDay",
    "minutes": null,
    "thumbnailUrl": "https://i3.ytimg.com/vi/vS6HEes8daw/hqdefault.jpg",
-   "relatedFactIds": []
-  },
-  {
-   "id": "vid-5lCWqEFVzbY",
-   "youtubeId": "5lCWqEFVzbY",
-   "category": "science",
-   "title": "They Call it \"The Taco Turn\" and it's Genius - Smarter Every Day 315",
-   "channel": "SmarterEveryDay",
-   "minutes": null,
-   "thumbnailUrl": "https://i2.ytimg.com/vi/5lCWqEFVzbY/hqdefault.jpg",
-   "relatedFactIds": []
-  },
-  {
-   "id": "vid-WtQ64nSbdY4",
-   "youtubeId": "WtQ64nSbdY4",
-   "category": "science",
-   "title": "What Everyone Sees... But I Don't (The Johari Window) - Smarter Every Day 314",
-   "channel": "SmarterEveryDay",
-   "minutes": null,
-   "thumbnailUrl": "https://i4.ytimg.com/vi/WtQ64nSbdY4/hqdefault.jpg",
-   "relatedFactIds": []
-  },
-  {
-   "id": "vid--0JKHuzJ67A",
-   "youtubeId": "-0JKHuzJ67A",
-   "category": "science",
-   "title": "Everything About Disc Golf Aerodynamics - Smarter Every Day 313",
-   "channel": "SmarterEveryDay",
-   "minutes": null,
-   "thumbnailUrl": "https://i2.ytimg.com/vi/-0JKHuzJ67A/hqdefault.jpg",
-   "relatedFactIds": []
-  },
-  {
-   "id": "vid-XwBZx1cXEdM",
-   "youtubeId": "XwBZx1cXEdM",
-   "category": "science",
-   "title": "Why Do Spinning Things Do This? - Smarter Every Day 312",
-   "channel": "SmarterEveryDay",
-   "minutes": null,
-   "thumbnailUrl": "https://i1.ytimg.com/vi/XwBZx1cXEdM/hqdefault.jpg",
-   "relatedFactIds": []
-  },
-  {
-   "id": "vid-v0afQ6w3Bjw",
-   "youtubeId": "v0afQ6w3Bjw",
-   "category": "science",
-   "title": "Refueling a NUCLEAR REACTOR - Smarter Every Day 311",
-   "channel": "SmarterEveryDay",
-   "minutes": null,
-   "thumbnailUrl": "https://i3.ytimg.com/vi/v0afQ6w3Bjw/hqdefault.jpg",
    "relatedFactIds": []
   },
   {
@@ -2587,193 +1327,13 @@
    "relatedFactIds": []
   },
   {
-   "id": "vid-3ZTGwcHQfLY",
-   "youtubeId": "3ZTGwcHQfLY",
+   "id": "vid-XwBZx1cXEdM",
+   "youtubeId": "XwBZx1cXEdM",
    "category": "science",
-   "title": "I Tried To Make Something In America (The Smarter Scrubber Experiment) - Smarter Every Day 308",
+   "title": "Why Do Spinning Things Do This? - Smarter Every Day 312",
    "channel": "SmarterEveryDay",
    "minutes": null,
-   "thumbnailUrl": "https://i4.ytimg.com/vi/3ZTGwcHQfLY/hqdefault.jpg",
-   "relatedFactIds": []
-  },
-  {
-   "id": "vid-8nilP--GFLY",
-   "youtubeId": "8nilP--GFLY",
-   "category": "science",
-   "title": "The Unsolved Mystery of Impact Flashes - Smarter Every Day 307",
-   "channel": "SmarterEveryDay",
-   "minutes": null,
-   "thumbnailUrl": "https://i1.ytimg.com/vi/8nilP--GFLY/hqdefault.jpg",
-   "relatedFactIds": []
-  },
-  {
-   "id": "vid-JVROsxtjoCw",
-   "youtubeId": "JVROsxtjoCw",
-   "category": "science",
-   "title": "I Explored the World's First Nuclear Power Plant (and How It Works) - Smarter Every Day 306",
-   "channel": "SmarterEveryDay",
-   "minutes": null,
-   "thumbnailUrl": "https://i3.ytimg.com/vi/JVROsxtjoCw/hqdefault.jpg",
-   "relatedFactIds": []
-  },
-  {
-   "id": "vid-lylCYkgC63Q",
-   "youtubeId": "lylCYkgC63Q",
-   "category": "science",
-   "title": "The Backwards Brain Tractor - Smarter Every Day 305",
-   "channel": "SmarterEveryDay",
-   "minutes": null,
-   "thumbnailUrl": "https://i1.ytimg.com/vi/lylCYkgC63Q/hqdefault.jpg",
-   "relatedFactIds": []
-  },
-  {
-   "id": "vid-jDusS--bZZA",
-   "youtubeId": "jDusS--bZZA",
-   "category": "science",
-   "title": "The Incredibly Unique Triple Barreled Pistol...  - Smarter Every Day 304",
-   "channel": "SmarterEveryDay",
-   "minutes": null,
-   "thumbnailUrl": "https://i3.ytimg.com/vi/jDusS--bZZA/hqdefault.jpg",
-   "relatedFactIds": []
-  },
-  {
-   "id": "vid-JJofuF2zcTE",
-   "youtubeId": "JJofuF2zcTE",
-   "category": "science",
-   "title": "Live From Space - Smarter Every Day 303",
-   "channel": "SmarterEveryDay",
-   "minutes": null,
-   "thumbnailUrl": "https://i3.ytimg.com/vi/JJofuF2zcTE/hqdefault.jpg",
-   "relatedFactIds": []
-  },
-  {
-   "id": "vid-sEK6wZWMbCY",
-   "youtubeId": "sEK6wZWMbCY",
-   "category": "science",
-   "title": "Climbing Kilimanjaro - Smarter Every Day 302",
-   "channel": "SmarterEveryDay",
-   "minutes": null,
-   "thumbnailUrl": "https://i4.ytimg.com/vi/sEK6wZWMbCY/hqdefault.jpg",
-   "relatedFactIds": []
-  },
-  {
-   "id": "vid-dAOAj82eJJE",
-   "youtubeId": "dAOAj82eJJE",
-   "category": "science",
-   "title": "What You're Seeing Is 100% Real | Strange Evidence | Science Channel",
-   "channel": "sciencechannel",
-   "minutes": null,
-   "thumbnailUrl": "https://i1.ytimg.com/vi/dAOAj82eJJE/hqdefault.jpg",
-   "relatedFactIds": []
-  },
-  {
-   "id": "vid-7Emc8_8TjcE",
-   "youtubeId": "7Emc8_8TjcE",
-   "category": "science",
-   "title": "Do These Monstrous Land Creatures Exist?! | Strange Evidence | Science Channel",
-   "channel": "sciencechannel",
-   "minutes": null,
-   "thumbnailUrl": "https://i4.ytimg.com/vi/7Emc8_8TjcE/hqdefault.jpg",
-   "relatedFactIds": []
-  },
-  {
-   "id": "vid-TSkID4_DC_Q",
-   "youtubeId": "TSkID4_DC_Q",
-   "category": "science",
-   "title": "An Unexplained Sound Echoed From Earth's Deepest Abyss | Strange Evidence | Science Channel",
-   "channel": "sciencechannel",
-   "minutes": null,
-   "thumbnailUrl": "https://i1.ytimg.com/vi/TSkID4_DC_Q/hqdefault.jpg",
-   "relatedFactIds": []
-  },
-  {
-   "id": "vid-JUENrfsuwU8",
-   "youtubeId": "JUENrfsuwU8",
-   "category": "science",
-   "title": "The Shocking Process Behind a Simple Fig Pastry | How It's Made | Science Channel",
-   "channel": "sciencechannel",
-   "minutes": null,
-   "thumbnailUrl": "https://i3.ytimg.com/vi/JUENrfsuwU8/hqdefault.jpg",
-   "relatedFactIds": []
-  },
-  {
-   "id": "vid-qw7vVb2KXWU",
-   "youtubeId": "qw7vVb2KXWU",
-   "category": "science",
-   "title": "An Underwater GRAVEYARD!? | Strange Evidence | Science Channel",
-   "channel": "sciencechannel",
-   "minutes": null,
-   "thumbnailUrl": "https://i2.ytimg.com/vi/qw7vVb2KXWU/hqdefault.jpg",
-   "relatedFactIds": []
-  },
-  {
-   "id": "vid-1QRDBKy7dBI",
-   "youtubeId": "1QRDBKy7dBI",
-   "category": "science",
-   "title": "This UFO Was Visible... But Not on Radar | Strange Evidence | Science Channel",
-   "channel": "sciencechannel",
-   "minutes": null,
-   "thumbnailUrl": "https://i2.ytimg.com/vi/1QRDBKy7dBI/hqdefault.jpg",
-   "relatedFactIds": []
-  },
-  {
-   "id": "vid-6aGDVXFiZ8I",
-   "youtubeId": "6aGDVXFiZ8I",
-   "category": "science",
-   "title": "How Do They Make Frying Pans So Perfect? | How It's Made | Science Channel",
-   "channel": "sciencechannel",
-   "minutes": null,
-   "thumbnailUrl": "https://i3.ytimg.com/vi/6aGDVXFiZ8I/hqdefault.jpg",
-   "relatedFactIds": []
-  },
-  {
-   "id": "vid-ArJPtJl7j84",
-   "youtubeId": "ArJPtJl7j84",
-   "category": "science",
-   "title": "Squishy, Stretchy & Oddly Satisfying 🫟 How It’s Made | Science Channel",
-   "channel": "sciencechannel",
-   "minutes": null,
-   "thumbnailUrl": "https://i2.ytimg.com/vi/ArJPtJl7j84/hqdefault.jpg",
-   "relatedFactIds": []
-  },
-  {
-   "id": "vid-g5M3TMYW1dY",
-   "youtubeId": "g5M3TMYW1dY",
-   "category": "science",
-   "title": "Did Einstein Predict a Cosmic Portal? | Spaces Deepest Secrets | Science Channel",
-   "channel": "sciencechannel",
-   "minutes": null,
-   "thumbnailUrl": "https://i4.ytimg.com/vi/g5M3TMYW1dY/hqdefault.jpg",
-   "relatedFactIds": []
-  },
-  {
-   "id": "vid-V_I6VvRPOEQ",
-   "youtubeId": "V_I6VvRPOEQ",
-   "category": "science",
-   "title": "Was This the Beginning of the Apocalypse?! | Strange Evidence | Science Channel",
-   "channel": "sciencechannel",
-   "minutes": null,
-   "thumbnailUrl": "https://i3.ytimg.com/vi/V_I6VvRPOEQ/hqdefault.jpg",
-   "relatedFactIds": []
-  },
-  {
-   "id": "vid-GcbqPuCOTrE",
-   "youtubeId": "GcbqPuCOTrE",
-   "category": "science",
-   "title": "Everything About The Sun ☀️ Science Channel",
-   "channel": "sciencechannel",
-   "minutes": null,
-   "thumbnailUrl": "https://i4.ytimg.com/vi/GcbqPuCOTrE/hqdefault.jpg",
-   "relatedFactIds": []
-  },
-  {
-   "id": "vid-_N1bGe9CwKY",
-   "youtubeId": "_N1bGe9CwKY",
-   "category": "science",
-   "title": "Superhuman Toddler!? The Video That Stunned Scientists | Strange Evidence | Science Channel",
-   "channel": "sciencechannel",
-   "minutes": null,
-   "thumbnailUrl": "https://i4.ytimg.com/vi/_N1bGe9CwKY/hqdefault.jpg",
+   "thumbnailUrl": "https://i1.ytimg.com/vi/XwBZx1cXEdM/hqdefault.jpg",
    "relatedFactIds": []
   },
   {
@@ -2787,6 +1347,36 @@
    "relatedFactIds": []
   },
   {
+   "id": "vid-ArJPtJl7j84",
+   "youtubeId": "ArJPtJl7j84",
+   "category": "science",
+   "title": "Squishy, Stretchy & Oddly Satisfying 🫟 How It’s Made | Science Channel",
+   "channel": "sciencechannel",
+   "minutes": null,
+   "thumbnailUrl": "https://i2.ytimg.com/vi/ArJPtJl7j84/hqdefault.jpg",
+   "relatedFactIds": []
+  },
+  {
+   "id": "vid-GcbqPuCOTrE",
+   "youtubeId": "GcbqPuCOTrE",
+   "category": "science",
+   "title": "Everything About The Sun ☀️ Science Channel",
+   "channel": "sciencechannel",
+   "minutes": null,
+   "thumbnailUrl": "https://i4.ytimg.com/vi/GcbqPuCOTrE/hqdefault.jpg",
+   "relatedFactIds": []
+  },
+  {
+   "id": "vid-6aGDVXFiZ8I",
+   "youtubeId": "6aGDVXFiZ8I",
+   "category": "science",
+   "title": "How Do They Make Frying Pans So Perfect? | How It's Made | Science Channel",
+   "channel": "sciencechannel",
+   "minutes": null,
+   "thumbnailUrl": "https://i3.ytimg.com/vi/6aGDVXFiZ8I/hqdefault.jpg",
+   "relatedFactIds": []
+  },
+  {
    "id": "vid-UX2vhADBVT4",
    "youtubeId": "UX2vhADBVT4",
    "category": "science",
@@ -2797,26 +1387,77 @@
    "relatedFactIds": []
   },
   {
-   "id": "vid-LdKHYSjy8w0",
-   "youtubeId": "LdKHYSjy8w0",
+   "id": "vid-qw7vVb2KXWU",
+   "youtubeId": "qw7vVb2KXWU",
    "category": "science",
-   "title": "Crocodile Mummies, Lost Cities & Mystery Stones | Secrets in the Sand | Science Channel",
+   "title": "An Underwater GRAVEYARD!? | Strange Evidence | Science Channel",
    "channel": "sciencechannel",
    "minutes": null,
-   "thumbnailUrl": "https://i1.ytimg.com/vi/LdKHYSjy8w0/hqdefault.jpg",
+   "thumbnailUrl": "https://i2.ytimg.com/vi/qw7vVb2KXWU/hqdefault.jpg",
    "relatedFactIds": []
   },
   {
-   "id": "vid-crCPVoPsTtk",
-   "youtubeId": "crCPVoPsTtk",
+   "id": "vid-TSkID4_DC_Q",
+   "youtubeId": "TSkID4_DC_Q",
+   "category": "science",
+   "title": "An Unexplained Sound Echoed From Earth's Deepest Abyss | Strange Evidence | Science Channel",
+   "channel": "sciencechannel",
+   "minutes": null,
+   "thumbnailUrl": "https://i1.ytimg.com/vi/TSkID4_DC_Q/hqdefault.jpg",
+   "relatedFactIds": []
+  },
+  {
+   "id": "vid-V_I6VvRPOEQ",
+   "youtubeId": "V_I6VvRPOEQ",
+   "category": "science",
+   "title": "Was This the Beginning of the Apocalypse?! | Strange Evidence | Science Channel",
+   "channel": "sciencechannel",
+   "minutes": null,
+   "thumbnailUrl": "https://i3.ytimg.com/vi/V_I6VvRPOEQ/hqdefault.jpg",
+   "relatedFactIds": []
+  },
+  {
+   "id": "vid-m-KLY4rmZlM",
+   "youtubeId": "m-KLY4rmZlM",
    "category": "arts",
-   "title": "UPDATED VERSION: Vincent Van Gogh's The Starry Night: Great Art Explained",
+   "title": "Hunters in the Snow: Pieter Bruegel: Great art Explained",
    "channel": "GreatArtExplained",
    "minutes": null,
-   "thumbnailUrl": "https://i4.ytimg.com/vi/crCPVoPsTtk/hqdefault.jpg",
+   "thumbnailUrl": "https://i2.ytimg.com/vi/m-KLY4rmZlM/hqdefault.jpg",
+   "relatedFactIds": []
+  },
+  {
+   "id": "vid-2zfjf4uD94s",
+   "youtubeId": "2zfjf4uD94s",
+   "category": "arts",
+   "title": "Vincent van Gogh's Potato Eaters: Great Art Explained",
+   "channel": "GreatArtExplained",
+   "minutes": null,
+   "thumbnailUrl": "https://i3.ytimg.com/vi/2zfjf4uD94s/hqdefault.jpg",
    "relatedFactIds": [
-    "art-014",
-    "art-002"
+    "art-014"
+   ]
+  },
+  {
+   "id": "vid-Bgo6H0tzszA",
+   "youtubeId": "Bgo6H0tzszA",
+   "category": "arts",
+   "title": "Art as Propaganda: Great Art Explained: Napoleon Crossing the Alps by Jacques-Louis David",
+   "channel": "GreatArtExplained",
+   "minutes": null,
+   "thumbnailUrl": "https://i3.ytimg.com/vi/Bgo6H0tzszA/hqdefault.jpg",
+   "relatedFactIds": []
+  },
+  {
+   "id": "vid-DKTMkLZ_rr0",
+   "youtubeId": "DKTMkLZ_rr0",
+   "category": "arts",
+   "title": "Tamara de Lempicka: Tamara in the Green Bugatti: Great Art Explained",
+   "channel": "GreatArtExplained",
+   "minutes": null,
+   "thumbnailUrl": "https://i1.ytimg.com/vi/DKTMkLZ_rr0/hqdefault.jpg",
+   "relatedFactIds": [
+    "art-047"
    ]
   },
   {
@@ -2840,50 +1481,6 @@
    "relatedFactIds": []
   },
   {
-   "id": "vid-DKTMkLZ_rr0",
-   "youtubeId": "DKTMkLZ_rr0",
-   "category": "arts",
-   "title": "Tamara de Lempicka: Tamara in the Green Bugatti: Great Art Explained",
-   "channel": "GreatArtExplained",
-   "minutes": null,
-   "thumbnailUrl": "https://i1.ytimg.com/vi/DKTMkLZ_rr0/hqdefault.jpg",
-   "relatedFactIds": [
-    "art-047"
-   ]
-  },
-  {
-   "id": "vid-tEEq5DTRXr0",
-   "youtubeId": "tEEq5DTRXr0",
-   "category": "arts",
-   "title": "Great Art Explained Talk: Bangalore 8 Feb 2026",
-   "channel": "GreatArtExplained",
-   "minutes": null,
-   "thumbnailUrl": "https://i1.ytimg.com/vi/tEEq5DTRXr0/hqdefault.jpg",
-   "relatedFactIds": []
-  },
-  {
-   "id": "vid-gLBi9GtGXpg",
-   "youtubeId": "gLBi9GtGXpg",
-   "category": "arts",
-   "title": "Venus, Cupid, Folly and Time by Agnolo Bronzino",
-   "channel": "GreatArtExplained",
-   "minutes": null,
-   "thumbnailUrl": "https://i4.ytimg.com/vi/gLBi9GtGXpg/hqdefault.jpg",
-   "relatedFactIds": []
-  },
-  {
-   "id": "vid-2zfjf4uD94s",
-   "youtubeId": "2zfjf4uD94s",
-   "category": "arts",
-   "title": "Vincent van Gogh's Potato Eaters: Great Art Explained",
-   "channel": "GreatArtExplained",
-   "minutes": null,
-   "thumbnailUrl": "https://i3.ytimg.com/vi/2zfjf4uD94s/hqdefault.jpg",
-   "relatedFactIds": [
-    "art-014"
-   ]
-  },
-  {
    "id": "vid-3TMs2PwdV1E",
    "youtubeId": "3TMs2PwdV1E",
    "category": "arts",
@@ -2904,116 +1501,6 @@
    "relatedFactIds": []
   },
   {
-   "id": "vid-1ldE2ZjfxkE",
-   "youtubeId": "1ldE2ZjfxkE",
-   "category": "arts",
-   "title": "Great Art Explained: Gabriele Münter",
-   "channel": "GreatArtExplained",
-   "minutes": null,
-   "thumbnailUrl": "https://i2.ytimg.com/vi/1ldE2ZjfxkE/hqdefault.jpg",
-   "relatedFactIds": []
-  },
-  {
-   "id": "vid-y4raWGPCWpk",
-   "youtubeId": "y4raWGPCWpk",
-   "category": "arts",
-   "title": "Happy Thanksgiving. Here’s a little reel I made today about Jasper Johns’ “Flag” from 1954-55.",
-   "channel": "GreatArtExplained",
-   "minutes": null,
-   "thumbnailUrl": "https://i2.ytimg.com/vi/y4raWGPCWpk/hqdefault.jpg",
-   "relatedFactIds": []
-  },
-  {
-   "id": "vid-m-KLY4rmZlM",
-   "youtubeId": "m-KLY4rmZlM",
-   "category": "arts",
-   "title": "Hunters in the Snow: Pieter Bruegel: Great art Explained",
-   "channel": "GreatArtExplained",
-   "minutes": null,
-   "thumbnailUrl": "https://i2.ytimg.com/vi/m-KLY4rmZlM/hqdefault.jpg",
-   "relatedFactIds": []
-  },
-  {
-   "id": "vid-YPpMNzdH19o",
-   "youtubeId": "YPpMNzdH19o",
-   "category": "arts",
-   "title": "NEW MERCHANDISE",
-   "channel": "GreatArtExplained",
-   "minutes": null,
-   "thumbnailUrl": "https://i2.ytimg.com/vi/YPpMNzdH19o/hqdefault.jpg",
-   "relatedFactIds": []
-  },
-  {
-   "id": "vid-Bgo6H0tzszA",
-   "youtubeId": "Bgo6H0tzszA",
-   "category": "arts",
-   "title": "Art as Propaganda: Great Art Explained: Napoleon Crossing the Alps by Jacques-Louis David",
-   "channel": "GreatArtExplained",
-   "minutes": null,
-   "thumbnailUrl": "https://i3.ytimg.com/vi/Bgo6H0tzszA/hqdefault.jpg",
-   "relatedFactIds": []
-  },
-  {
-   "id": "vid-TXYDSDmW1WE",
-   "youtubeId": "TXYDSDmW1WE",
-   "category": "arts",
-   "title": "Book",
-   "channel": "GreatArtExplained",
-   "minutes": null,
-   "thumbnailUrl": "https://i1.ytimg.com/vi/TXYDSDmW1WE/hqdefault.jpg",
-   "relatedFactIds": []
-  },
-  {
-   "id": "vid-FuinzbekY2I",
-   "youtubeId": "FuinzbekY2I",
-   "category": "arts",
-   "title": "New course now available! How to Appreciate Art, for newbies as well as pros.",
-   "channel": "TheArtAssignment",
-   "minutes": null,
-   "thumbnailUrl": "https://i3.ytimg.com/vi/FuinzbekY2I/hqdefault.jpg",
-   "relatedFactIds": []
-  },
-  {
-   "id": "vid-rXdZXRZb2GY",
-   "youtubeId": "rXdZXRZb2GY",
-   "category": "arts",
-   "title": "What Have I Been Doing?",
-   "channel": "TheArtAssignment",
-   "minutes": null,
-   "thumbnailUrl": "https://i3.ytimg.com/vi/rXdZXRZb2GY/hqdefault.jpg",
-   "relatedFactIds": []
-  },
-  {
-   "id": "vid-0wuTi87mCyc",
-   "youtubeId": "0wuTi87mCyc",
-   "category": "arts",
-   "title": "Let’s see William Kentridge at London’s Royal Academy of Arts. #art #arthistory #london",
-   "channel": "TheArtAssignment",
-   "minutes": null,
-   "thumbnailUrl": "https://i1.ytimg.com/vi/0wuTi87mCyc/hqdefault.jpg",
-   "relatedFactIds": []
-  },
-  {
-   "id": "vid-p9mkU_8Wqgg",
-   "youtubeId": "p9mkU_8Wqgg",
-   "category": "arts",
-   "title": "Let’s go to the Louvre. #art #arthistory #louvremuseum #paris",
-   "channel": "TheArtAssignment",
-   "minutes": null,
-   "thumbnailUrl": "https://i1.ytimg.com/vi/p9mkU_8Wqgg/hqdefault.jpg",
-   "relatedFactIds": []
-  },
-  {
-   "id": "vid-42dvTa9Mlq0",
-   "youtubeId": "42dvTa9Mlq0",
-   "category": "arts",
-   "title": "Make a Book with Meat (or other atypical materials) ft. Ben Denzer",
-   "channel": "TheArtAssignment",
-   "minutes": null,
-   "thumbnailUrl": "https://i1.ytimg.com/vi/42dvTa9Mlq0/hqdefault.jpg",
-   "relatedFactIds": []
-  },
-  {
    "id": "vid-b2VpNx5ZxSA",
    "youtubeId": "b2VpNx5ZxSA",
    "category": "arts",
@@ -3021,16 +1508,6 @@
    "channel": "TheArtAssignment",
    "minutes": null,
    "thumbnailUrl": "https://i3.ytimg.com/vi/b2VpNx5ZxSA/hqdefault.jpg",
-   "relatedFactIds": []
-  },
-  {
-   "id": "vid-T6IyOUWPg4I",
-   "youtubeId": "T6IyOUWPg4I",
-   "category": "arts",
-   "title": "Why I'm Slowing Down",
-   "channel": "TheArtAssignment",
-   "minutes": null,
-   "thumbnailUrl": "https://i1.ytimg.com/vi/T6IyOUWPg4I/hqdefault.jpg",
    "relatedFactIds": []
   },
   {
@@ -3044,53 +1521,13 @@
    "relatedFactIds": []
   },
   {
-   "id": "vid-QEZRKFZzUVk",
-   "youtubeId": "QEZRKFZzUVk",
+   "id": "vid-T6IyOUWPg4I",
+   "youtubeId": "T6IyOUWPg4I",
    "category": "arts",
-   "title": "Make a Cut-Out with Cécile McLorin Salvant",
+   "title": "Why I'm Slowing Down",
    "channel": "TheArtAssignment",
    "minutes": null,
-   "thumbnailUrl": "https://i2.ytimg.com/vi/QEZRKFZzUVk/hqdefault.jpg",
-   "relatedFactIds": []
-  },
-  {
-   "id": "vid-moJtX5kZQig",
-   "youtubeId": "moJtX5kZQig",
-   "category": "arts",
-   "title": "Art Made in Adversity",
-   "channel": "TheArtAssignment",
-   "minutes": null,
-   "thumbnailUrl": "https://i2.ytimg.com/vi/moJtX5kZQig/hqdefault.jpg",
-   "relatedFactIds": []
-  },
-  {
-   "id": "vid-UNYcC4WvqO4",
-   "youtubeId": "UNYcC4WvqO4",
-   "category": "arts",
-   "title": "Art that brings me comfort",
-   "channel": "TheArtAssignment",
-   "minutes": null,
-   "thumbnailUrl": "https://i2.ytimg.com/vi/UNYcC4WvqO4/hqdefault.jpg",
-   "relatedFactIds": []
-  },
-  {
-   "id": "vid-b0uyssCf3Ao",
-   "youtubeId": "b0uyssCf3Ao",
-   "category": "arts",
-   "title": "You Are an Artist Friday Night Livestream",
-   "channel": "TheArtAssignment",
-   "minutes": null,
-   "thumbnailUrl": "https://i3.ytimg.com/vi/b0uyssCf3Ao/hqdefault.jpg",
-   "relatedFactIds": []
-  },
-  {
-   "id": "vid-n3HN6X8NDhE",
-   "youtubeId": "n3HN6X8NDhE",
-   "category": "arts",
-   "title": "You Are an Artist Launch Livestream",
-   "channel": "TheArtAssignment",
-   "minutes": null,
-   "thumbnailUrl": "https://i3.ytimg.com/vi/n3HN6X8NDhE/hqdefault.jpg",
+   "thumbnailUrl": "https://i1.ytimg.com/vi/T6IyOUWPg4I/hqdefault.jpg",
    "relatedFactIds": []
   },
   {
@@ -3104,93 +1541,43 @@
    "relatedFactIds": []
   },
   {
-   "id": "vid-r7bBNAhYh7w",
-   "youtubeId": "r7bBNAhYh7w",
+   "id": "vid-UNYcC4WvqO4",
+   "youtubeId": "UNYcC4WvqO4",
    "category": "arts",
-   "title": "FRIDAY NIGHT SORTED BOOKS LIVE STREAM",
+   "title": "Art that brings me comfort",
    "channel": "TheArtAssignment",
    "minutes": null,
-   "thumbnailUrl": "https://i3.ytimg.com/vi/r7bBNAhYh7w/hqdefault.jpg",
+   "thumbnailUrl": "https://i2.ytimg.com/vi/UNYcC4WvqO4/hqdefault.jpg",
    "relatedFactIds": []
   },
   {
-   "id": "vid-XUmgIQIpg-E",
-   "youtubeId": "XUmgIQIpg-E",
+   "id": "vid-rXdZXRZb2GY",
+   "youtubeId": "rXdZXRZb2GY",
    "category": "arts",
-   "title": "The Art World Couldn't Understand William Blake",
-   "channel": "Nerdwriter1",
+   "title": "What Have I Been Doing?",
+   "channel": "TheArtAssignment",
    "minutes": null,
-   "thumbnailUrl": "https://i1.ytimg.com/vi/XUmgIQIpg-E/hqdefault.jpg",
+   "thumbnailUrl": "https://i3.ytimg.com/vi/rXdZXRZb2GY/hqdefault.jpg",
    "relatedFactIds": []
   },
   {
-   "id": "vid-KWtfuHNaF8Q",
-   "youtubeId": "KWtfuHNaF8Q",
+   "id": "vid-42dvTa9Mlq0",
+   "youtubeId": "42dvTa9Mlq0",
    "category": "arts",
-   "title": "Andor Gave Us One Of TV's Best Monologues",
-   "channel": "Nerdwriter1",
+   "title": "Make a Book with Meat (or other atypical materials) ft. Ben Denzer",
+   "channel": "TheArtAssignment",
    "minutes": null,
-   "thumbnailUrl": "https://i4.ytimg.com/vi/KWtfuHNaF8Q/hqdefault.jpg",
+   "thumbnailUrl": "https://i1.ytimg.com/vi/42dvTa9Mlq0/hqdefault.jpg",
    "relatedFactIds": []
   },
   {
-   "id": "vid-sj1y9FDJKCM",
-   "youtubeId": "sj1y9FDJKCM",
+   "id": "vid-moJtX5kZQig",
+   "youtubeId": "moJtX5kZQig",
    "category": "arts",
-   "title": "The Film That Attacks You",
-   "channel": "Nerdwriter1",
+   "title": "Art Made in Adversity",
+   "channel": "TheArtAssignment",
    "minutes": null,
-   "thumbnailUrl": "https://i4.ytimg.com/vi/sj1y9FDJKCM/hqdefault.jpg",
-   "relatedFactIds": []
-  },
-  {
-   "id": "vid-RjkoCg0Yd4w",
-   "youtubeId": "RjkoCg0Yd4w",
-   "category": "arts",
-   "title": "How Shakespeare Manipulates An Audience",
-   "channel": "Nerdwriter1",
-   "minutes": null,
-   "thumbnailUrl": "https://i3.ytimg.com/vi/RjkoCg0Yd4w/hqdefault.jpg",
-   "relatedFactIds": []
-  },
-  {
-   "id": "vid-fqVm6mr5b-w",
-   "youtubeId": "fqVm6mr5b-w",
-   "category": "arts",
-   "title": "What's Jazz Doing In A Knight Of The Seven Kingdoms?",
-   "channel": "Nerdwriter1",
-   "minutes": null,
-   "thumbnailUrl": "https://i3.ytimg.com/vi/fqVm6mr5b-w/hqdefault.jpg",
-   "relatedFactIds": []
-  },
-  {
-   "id": "vid-9TsfaBwDwEI",
-   "youtubeId": "9TsfaBwDwEI",
-   "category": "arts",
-   "title": "The Samurai Who Became A Roman Citizen",
-   "channel": "Nerdwriter1",
-   "minutes": null,
-   "thumbnailUrl": "https://i2.ytimg.com/vi/9TsfaBwDwEI/hqdefault.jpg",
-   "relatedFactIds": []
-  },
-  {
-   "id": "vid-8pkX2fLFy4E",
-   "youtubeId": "8pkX2fLFy4E",
-   "category": "arts",
-   "title": "The Mystery Of The Samurai In Venice",
-   "channel": "Nerdwriter1",
-   "minutes": null,
-   "thumbnailUrl": "https://i1.ytimg.com/vi/8pkX2fLFy4E/hqdefault.jpg",
-   "relatedFactIds": []
-  },
-  {
-   "id": "vid-S7FCb6v45Io",
-   "youtubeId": "S7FCb6v45Io",
-   "category": "arts",
-   "title": "Why Is Everyone Running In Rom-Coms?",
-   "channel": "Nerdwriter1",
-   "minutes": null,
-   "thumbnailUrl": "https://i4.ytimg.com/vi/S7FCb6v45Io/hqdefault.jpg",
+   "thumbnailUrl": "https://i2.ytimg.com/vi/moJtX5kZQig/hqdefault.jpg",
    "relatedFactIds": []
   },
   {
@@ -3204,53 +1591,23 @@
    "relatedFactIds": []
   },
   {
-   "id": "vid-lTIvg7-RNUw",
-   "youtubeId": "lTIvg7-RNUw",
+   "id": "vid-KWtfuHNaF8Q",
+   "youtubeId": "KWtfuHNaF8Q",
    "category": "arts",
-   "title": "The Age Of Innocence: Adaptation Done Right",
+   "title": "Andor Gave Us One Of TV's Best Monologues",
    "channel": "Nerdwriter1",
    "minutes": null,
-   "thumbnailUrl": "https://i1.ytimg.com/vi/lTIvg7-RNUw/hqdefault.jpg",
+   "thumbnailUrl": "https://i4.ytimg.com/vi/KWtfuHNaF8Q/hqdefault.jpg",
    "relatedFactIds": []
   },
   {
-   "id": "vid-7izh06YBxHY",
-   "youtubeId": "7izh06YBxHY",
+   "id": "vid-RjkoCg0Yd4w",
+   "youtubeId": "RjkoCg0Yd4w",
    "category": "arts",
-   "title": "How Raphael Became A Master",
+   "title": "How Shakespeare Manipulates An Audience",
    "channel": "Nerdwriter1",
    "minutes": null,
-   "thumbnailUrl": "https://i4.ytimg.com/vi/7izh06YBxHY/hqdefault.jpg",
-   "relatedFactIds": []
-  },
-  {
-   "id": "vid-WIenAw1_-F4",
-   "youtubeId": "WIenAw1_-F4",
-   "category": "arts",
-   "title": "Two Ways To Film The Same Scene (#2)",
-   "channel": "Nerdwriter1",
-   "minutes": null,
-   "thumbnailUrl": "https://i4.ytimg.com/vi/WIenAw1_-F4/hqdefault.jpg",
-   "relatedFactIds": []
-  },
-  {
-   "id": "vid-2Tn6xnOnBFI",
-   "youtubeId": "2Tn6xnOnBFI",
-   "category": "arts",
-   "title": "He Painted Bugs Like Jewels — And Changed Science Forever",
-   "channel": "Nerdwriter1",
-   "minutes": null,
-   "thumbnailUrl": "https://i3.ytimg.com/vi/2Tn6xnOnBFI/hqdefault.jpg",
-   "relatedFactIds": []
-  },
-  {
-   "id": "vid-RB4_ygW9owg",
-   "youtubeId": "RB4_ygW9owg",
-   "category": "arts",
-   "title": "How John Lennon Wrote \"A Day In The Life\"",
-   "channel": "Nerdwriter1",
-   "minutes": 8,
-   "thumbnailUrl": "https://i3.ytimg.com/vi/RB4_ygW9owg/hqdefault.jpg",
+   "thumbnailUrl": "https://i3.ytimg.com/vi/RjkoCg0Yd4w/hqdefault.jpg",
    "relatedFactIds": []
   },
   {
@@ -3264,73 +1621,43 @@
    "relatedFactIds": []
   },
   {
-   "id": "vid-9RGxpahhsdI",
-   "youtubeId": "9RGxpahhsdI",
+   "id": "vid-WIenAw1_-F4",
+   "youtubeId": "WIenAw1_-F4",
    "category": "arts",
-   "title": "How to Stretch a Climax (Like John Williams)",
-   "channel": "InsidetheScore",
+   "title": "Two Ways To Film The Same Scene (#2)",
+   "channel": "Nerdwriter1",
    "minutes": null,
-   "thumbnailUrl": "https://i2.ytimg.com/vi/9RGxpahhsdI/hqdefault.jpg",
+   "thumbnailUrl": "https://i4.ytimg.com/vi/WIenAw1_-F4/hqdefault.jpg",
    "relatedFactIds": []
   },
   {
-   "id": "vid-FPjzZ1zvkaI",
-   "youtubeId": "FPjzZ1zvkaI",
+   "id": "vid-fqVm6mr5b-w",
+   "youtubeId": "fqVm6mr5b-w",
    "category": "arts",
-   "title": "Tchaikovsky’s Formula for Explosive Climaxes",
-   "channel": "InsidetheScore",
+   "title": "What's Jazz Doing In A Knight Of The Seven Kingdoms?",
+   "channel": "Nerdwriter1",
    "minutes": null,
-   "thumbnailUrl": "https://i3.ytimg.com/vi/FPjzZ1zvkaI/hqdefault.jpg",
+   "thumbnailUrl": "https://i3.ytimg.com/vi/fqVm6mr5b-w/hqdefault.jpg",
    "relatedFactIds": []
   },
   {
-   "id": "vid-1E1EjqIrZD4",
-   "youtubeId": "1E1EjqIrZD4",
+   "id": "vid-2Tn6xnOnBFI",
+   "youtubeId": "2Tn6xnOnBFI",
    "category": "arts",
-   "title": "The Composer Roadmap I Wish I Had at 18",
-   "channel": "InsidetheScore",
+   "title": "He Painted Bugs Like Jewels — And Changed Science Forever",
+   "channel": "Nerdwriter1",
    "minutes": null,
-   "thumbnailUrl": "https://i2.ytimg.com/vi/1E1EjqIrZD4/hqdefault.jpg",
+   "thumbnailUrl": "https://i3.ytimg.com/vi/2Tn6xnOnBFI/hqdefault.jpg",
    "relatedFactIds": []
   },
   {
-   "id": "vid-13D5gTqRiLQ",
-   "youtubeId": "13D5gTqRiLQ",
+   "id": "vid-7izh06YBxHY",
+   "youtubeId": "7izh06YBxHY",
    "category": "arts",
-   "title": "How to Change Key Like John Williams",
-   "channel": "InsidetheScore",
+   "title": "How Raphael Became A Master",
+   "channel": "Nerdwriter1",
    "minutes": null,
-   "thumbnailUrl": "https://i2.ytimg.com/vi/13D5gTqRiLQ/hqdefault.jpg",
-   "relatedFactIds": []
-  },
-  {
-   "id": "vid-UabpM4ZM_Zw",
-   "youtubeId": "UabpM4ZM_Zw",
-   "category": "arts",
-   "title": "What if Rachmaninoff Scored This?",
-   "channel": "InsidetheScore",
-   "minutes": null,
-   "thumbnailUrl": "https://i2.ytimg.com/vi/UabpM4ZM_Zw/hqdefault.jpg",
-   "relatedFactIds": []
-  },
-  {
-   "id": "vid-992q1UHTHV4",
-   "youtubeId": "992q1UHTHV4",
-   "category": "arts",
-   "title": "If your music feels flat, this is why.",
-   "channel": "InsidetheScore",
-   "minutes": null,
-   "thumbnailUrl": "https://i2.ytimg.com/vi/992q1UHTHV4/hqdefault.jpg",
-   "relatedFactIds": []
-  },
-  {
-   "id": "vid-PPO9ko-K4hE",
-   "youtubeId": "PPO9ko-K4hE",
-   "category": "arts",
-   "title": "How John Williams Composed the Perfect Finale",
-   "channel": "InsidetheScore",
-   "minutes": null,
-   "thumbnailUrl": "https://i1.ytimg.com/vi/PPO9ko-K4hE/hqdefault.jpg",
+   "thumbnailUrl": "https://i4.ytimg.com/vi/7izh06YBxHY/hqdefault.jpg",
    "relatedFactIds": []
   },
   {
@@ -3344,23 +1671,13 @@
    "relatedFactIds": []
   },
   {
-   "id": "vid-KFkJPYnlOD0",
-   "youtubeId": "KFkJPYnlOD0",
+   "id": "vid-1E1EjqIrZD4",
+   "youtubeId": "1E1EjqIrZD4",
    "category": "arts",
-   "title": "I Quit This Channel… But Now I Know Why",
+   "title": "The Composer Roadmap I Wish I Had at 18",
    "channel": "InsidetheScore",
    "minutes": null,
-   "thumbnailUrl": "https://i4.ytimg.com/vi/KFkJPYnlOD0/hqdefault.jpg",
-   "relatedFactIds": []
-  },
-  {
-   "id": "vid-WHxnyzKnxcI",
-   "youtubeId": "WHxnyzKnxcI",
-   "category": "arts",
-   "title": "How She Fills Concert Halls Around the World - Aubrey Bergauer",
-   "channel": "InsidetheScore",
-   "minutes": null,
-   "thumbnailUrl": "https://i4.ytimg.com/vi/WHxnyzKnxcI/hqdefault.jpg",
+   "thumbnailUrl": "https://i2.ytimg.com/vi/1E1EjqIrZD4/hqdefault.jpg",
    "relatedFactIds": []
   },
   {
@@ -3374,36 +1691,6 @@
    "relatedFactIds": []
   },
   {
-   "id": "vid-L0NtJqVKBKg",
-   "youtubeId": "L0NtJqVKBKg",
-   "category": "arts",
-   "title": "How Epic Can a Christmas Carol Be?                        #shorts",
-   "channel": "InsidetheScore",
-   "minutes": null,
-   "thumbnailUrl": "https://i1.ytimg.com/vi/L0NtJqVKBKg/hqdefault.jpg",
-   "relatedFactIds": []
-  },
-  {
-   "id": "vid-fnm4USGW9ck",
-   "youtubeId": "fnm4USGW9ck",
-   "category": "arts",
-   "title": "How Long Can Cameron Last...?",
-   "channel": "InsidetheScore",
-   "minutes": null,
-   "thumbnailUrl": "https://i3.ytimg.com/vi/fnm4USGW9ck/hqdefault.jpg",
-   "relatedFactIds": []
-  },
-  {
-   "id": "vid-btKVOVWBrE4",
-   "youtubeId": "btKVOVWBrE4",
-   "category": "arts",
-   "title": "We Tried to Create the Most Epic Christmas Song Possible...",
-   "channel": "InsidetheScore",
-   "minutes": null,
-   "thumbnailUrl": "https://i3.ytimg.com/vi/btKVOVWBrE4/hqdefault.jpg",
-   "relatedFactIds": []
-  },
-  {
    "id": "vid-qARmrXfWMbc",
    "youtubeId": "qARmrXfWMbc",
    "category": "arts",
@@ -3414,113 +1701,53 @@
    "relatedFactIds": []
   },
   {
-   "id": "vid-h6SpJiT_n5s",
-   "youtubeId": "h6SpJiT_n5s",
+   "id": "vid-13D5gTqRiLQ",
+   "youtubeId": "13D5gTqRiLQ",
    "category": "arts",
-   "title": "Aftersun's ending explains the whole movie",
-   "channel": "ListeningIn",
+   "title": "How to Change Key Like John Williams",
+   "channel": "InsidetheScore",
    "minutes": null,
-   "thumbnailUrl": "https://i1.ytimg.com/vi/h6SpJiT_n5s/hqdefault.jpg",
+   "thumbnailUrl": "https://i2.ytimg.com/vi/13D5gTqRiLQ/hqdefault.jpg",
    "relatedFactIds": []
   },
   {
-   "id": "vid-8V0LjhRu24I",
-   "youtubeId": "8V0LjhRu24I",
+   "id": "vid-992q1UHTHV4",
+   "youtubeId": "992q1UHTHV4",
    "category": "arts",
-   "title": "Why you hear Succession’s theme a million times",
-   "channel": "ListeningIn",
+   "title": "If your music feels flat, this is why.",
+   "channel": "InsidetheScore",
    "minutes": null,
-   "thumbnailUrl": "https://i1.ytimg.com/vi/8V0LjhRu24I/hqdefault.jpg",
+   "thumbnailUrl": "https://i2.ytimg.com/vi/992q1UHTHV4/hqdefault.jpg",
    "relatedFactIds": []
   },
   {
-   "id": "vid-iDzhg_Uo17w",
-   "youtubeId": "iDzhg_Uo17w",
+   "id": "vid-FPjzZ1zvkaI",
+   "youtubeId": "FPjzZ1zvkaI",
    "category": "arts",
-   "title": "Titanic’s music is completely over the top, and it’s perfect",
-   "channel": "ListeningIn",
+   "title": "Tchaikovsky’s Formula for Explosive Climaxes",
+   "channel": "InsidetheScore",
    "minutes": null,
-   "thumbnailUrl": "https://i2.ytimg.com/vi/iDzhg_Uo17w/hqdefault.jpg",
+   "thumbnailUrl": "https://i3.ytimg.com/vi/FPjzZ1zvkaI/hqdefault.jpg",
    "relatedFactIds": []
   },
   {
-   "id": "vid-UO2xxInK-TM",
-   "youtubeId": "UO2xxInK-TM",
+   "id": "vid-PPO9ko-K4hE",
+   "youtubeId": "PPO9ko-K4hE",
    "category": "arts",
-   "title": "Star Wars - The Genius of John Williams (Bonus episode)",
-   "channel": "ListeningIn",
+   "title": "How John Williams Composed the Perfect Finale",
+   "channel": "InsidetheScore",
    "minutes": null,
-   "thumbnailUrl": "https://i2.ytimg.com/vi/UO2xxInK-TM/hqdefault.jpg",
+   "thumbnailUrl": "https://i1.ytimg.com/vi/PPO9ko-K4hE/hqdefault.jpg",
    "relatedFactIds": []
   },
   {
-   "id": "vid-35StkYRHz04",
-   "youtubeId": "35StkYRHz04",
+   "id": "vid-HDEAYJcenI8",
+   "youtubeId": "HDEAYJcenI8",
    "category": "arts",
-   "title": "When a normal match cut isn’t enough",
+   "title": "Why Sondheim's Music is So Addictive",
    "channel": "ListeningIn",
    "minutes": null,
-   "thumbnailUrl": "https://i4.ytimg.com/vi/35StkYRHz04/hqdefault.jpg",
-   "relatedFactIds": []
-  },
-  {
-   "id": "vid-dG3LsIGznnY",
-   "youtubeId": "dG3LsIGznnY",
-   "category": "arts",
-   "title": "John Cage’s 4’33” isn’t what you think",
-   "channel": "ListeningIn",
-   "minutes": null,
-   "thumbnailUrl": "https://i1.ytimg.com/vi/dG3LsIGznnY/hqdefault.jpg",
-   "relatedFactIds": []
-  },
-  {
-   "id": "vid-gU-COXJfiAc",
-   "youtubeId": "gU-COXJfiAc",
-   "category": "arts",
-   "title": "The Secret Message in Trinity’s Music",
-   "channel": "ListeningIn",
-   "minutes": null,
-   "thumbnailUrl": "https://i4.ytimg.com/vi/gU-COXJfiAc/hqdefault.jpg",
-   "relatedFactIds": []
-  },
-  {
-   "id": "vid-JgZqtjlJ8wI",
-   "youtubeId": "JgZqtjlJ8wI",
-   "category": "arts",
-   "title": "Over-analysing Children of Men's music",
-   "channel": "ListeningIn",
-   "minutes": null,
-   "thumbnailUrl": "https://i3.ytimg.com/vi/JgZqtjlJ8wI/hqdefault.jpg",
-   "relatedFactIds": []
-  },
-  {
-   "id": "vid-yqNdL1iRTqY",
-   "youtubeId": "yqNdL1iRTqY",
-   "category": "arts",
-   "title": "When the music is in the characters' heads",
-   "channel": "ListeningIn",
-   "minutes": null,
-   "thumbnailUrl": "https://i2.ytimg.com/vi/yqNdL1iRTqY/hqdefault.jpg",
-   "relatedFactIds": []
-  },
-  {
-   "id": "vid-lyTrTiiWvk8",
-   "youtubeId": "lyTrTiiWvk8",
-   "category": "arts",
-   "title": "I have a huge announcement",
-   "channel": "ListeningIn",
-   "minutes": null,
-   "thumbnailUrl": "https://i1.ytimg.com/vi/lyTrTiiWvk8/hqdefault.jpg",
-   "relatedFactIds": []
-  },
-  {
-   "id": "vid-Qk1n7vlYo0Y",
-   "youtubeId": "Qk1n7vlYo0Y",
-   "category": "arts",
-   "title": "Why Hannibal Lecter Murders to Bach",
-   "channel": "ListeningIn",
-   "minutes": null,
-   "thumbnailUrl": "https://i2.ytimg.com/vi/Qk1n7vlYo0Y/hqdefault.jpg",
+   "thumbnailUrl": "https://i1.ytimg.com/vi/HDEAYJcenI8/hqdefault.jpg",
    "relatedFactIds": []
   },
   {
@@ -3534,13 +1761,13 @@
    "relatedFactIds": []
   },
   {
-   "id": "vid-HDEAYJcenI8",
-   "youtubeId": "HDEAYJcenI8",
+   "id": "vid-Qk1n7vlYo0Y",
+   "youtubeId": "Qk1n7vlYo0Y",
    "category": "arts",
-   "title": "Why Sondheim's Music is So Addictive",
+   "title": "Why Hannibal Lecter Murders to Bach",
    "channel": "ListeningIn",
    "minutes": null,
-   "thumbnailUrl": "https://i1.ytimg.com/vi/HDEAYJcenI8/hqdefault.jpg",
+   "thumbnailUrl": "https://i2.ytimg.com/vi/Qk1n7vlYo0Y/hqdefault.jpg",
    "relatedFactIds": []
   },
   {
@@ -3564,95 +1791,43 @@
    "relatedFactIds": []
   },
   {
-   "id": "vid-dQpvde0jWXQ",
-   "youtubeId": "dQpvde0jWXQ",
-   "category": "sports",
-   "title": "Eyes on the orange. 👀🧡When Femke Bol gets the baton, you know what's coming.",
-   "channel": "olympics",
+   "id": "vid-UO2xxInK-TM",
+   "youtubeId": "UO2xxInK-TM",
+   "category": "arts",
+   "title": "Star Wars - The Genius of John Williams (Bonus episode)",
+   "channel": "ListeningIn",
    "minutes": null,
-   "thumbnailUrl": "https://i1.ytimg.com/vi/dQpvde0jWXQ/hqdefault.jpg",
+   "thumbnailUrl": "https://i2.ytimg.com/vi/UO2xxInK-TM/hqdefault.jpg",
    "relatedFactIds": []
   },
   {
-   "id": "vid-cjxzAr9yX5w",
-   "youtubeId": "cjxzAr9yX5w",
-   "category": "sports",
-   "title": "The moment of pride, watching your partner compete 😍",
-   "channel": "olympics",
+   "id": "vid-35StkYRHz04",
+   "youtubeId": "35StkYRHz04",
+   "category": "arts",
+   "title": "When a normal match cut isn’t enough",
+   "channel": "ListeningIn",
    "minutes": null,
-   "thumbnailUrl": "https://i4.ytimg.com/vi/cjxzAr9yX5w/hqdefault.jpg",
+   "thumbnailUrl": "https://i4.ytimg.com/vi/35StkYRHz04/hqdefault.jpg",
    "relatedFactIds": []
   },
   {
-   "id": "vid-VwTuOm-HBd4",
-   "youtubeId": "VwTuOm-HBd4",
-   "category": "sports",
-   "title": "A leap of faith and a comeback for the ages. 💪",
-   "channel": "olympics",
+   "id": "vid-8V0LjhRu24I",
+   "youtubeId": "8V0LjhRu24I",
+   "category": "arts",
+   "title": "Why you hear Succession’s theme a million times",
+   "channel": "ListeningIn",
    "minutes": null,
-   "thumbnailUrl": "https://i3.ytimg.com/vi/VwTuOm-HBd4/hqdefault.jpg",
+   "thumbnailUrl": "https://i1.ytimg.com/vi/8V0LjhRu24I/hqdefault.jpg",
    "relatedFactIds": []
   },
   {
-   "id": "vid-WZz-yW_6LWA",
-   "youtubeId": "WZz-yW_6LWA",
+   "id": "vid-eZ01G17GtsM",
+   "youtubeId": "eZ01G17GtsM",
    "category": "sports",
-   "title": "A medal for Ngamba. A win for all the refugees.",
+   "title": "Two years ago, we were reminded that the Olympic spirit goes far beyond winning. ❤️",
    "channel": "olympics",
    "minutes": null,
-   "thumbnailUrl": "https://i4.ytimg.com/vi/WZz-yW_6LWA/hqdefault.jpg",
-   "relatedFactIds": []
-  },
-  {
-   "id": "vid-baamZhpIulw",
-   "youtubeId": "baamZhpIulw",
-   "category": "sports",
-   "title": "🇩🇪 Germany vs. Slovakia 🇸🇰 | #MilanoCortina2026 Men's Ice Hockey Highlights",
-   "channel": "olympics",
-   "minutes": null,
-   "thumbnailUrl": "https://i3.ytimg.com/vi/baamZhpIulw/hqdefault.jpg",
-   "relatedFactIds": []
-  },
-  {
-   "id": "vid-ecYQwRm9Vdg",
-   "youtubeId": "ecYQwRm9Vdg",
-   "category": "sports",
-   "title": "Relive THAT London 2012 Super Saturday moment from an alternative angle. 🤩",
-   "channel": "olympics",
-   "minutes": null,
-   "thumbnailUrl": "https://i2.ytimg.com/vi/ecYQwRm9Vdg/hqdefault.jpg",
-   "relatedFactIds": []
-  },
-  {
-   "id": "vid-ILHTmcuG_os",
-   "youtubeId": "ILHTmcuG_os",
-   "category": "sports",
-   "title": "Consider this your Olympic tennis ASMR. 🎧🎾 #Olympics #Tennis",
-   "channel": "olympics",
-   "minutes": null,
-   "thumbnailUrl": "https://i2.ytimg.com/vi/ILHTmcuG_os/hqdefault.jpg",
-   "relatedFactIds": [
-    "spo-026"
-   ]
-  },
-  {
-   "id": "vid-y4OuWD7fzho",
-   "youtubeId": "y4OuWD7fzho",
-   "category": "sports",
-   "title": "Penny Heyns etched her name into Olympic history at #Atlanta1996! #Olmpics",
-   "channel": "olympics",
-   "minutes": null,
-   "thumbnailUrl": "https://i2.ytimg.com/vi/y4OuWD7fzho/hqdefault.jpg",
-   "relatedFactIds": []
-  },
-  {
-   "id": "vid-qDSpKLqmylM",
-   "youtubeId": "qDSpKLqmylM",
-   "category": "sports",
-   "title": "Alysa Liu Takes Gold With MacArthur Park Suite by Donna Summer 🥇🌟 | Milano Cortina 2026",
-   "channel": "olympics",
-   "minutes": null,
-   "thumbnailUrl": "https://i2.ytimg.com/vi/qDSpKLqmylM/hqdefault.jpg",
+   "thumbnailUrl": "https://i2.ytimg.com/vi/eZ01G17GtsM/hqdefault.jpg",
    "relatedFactIds": []
   },
   {
@@ -3663,6 +1838,16 @@
    "channel": "olympics",
    "minutes": null,
    "thumbnailUrl": "https://i1.ytimg.com/vi/p-BEb3dvp0w/hqdefault.jpg",
+   "relatedFactIds": []
+  },
+  {
+   "id": "vid-qDSpKLqmylM",
+   "youtubeId": "qDSpKLqmylM",
+   "category": "sports",
+   "title": "Alysa Liu Takes Gold With MacArthur Park Suite by Donna Summer 🥇🌟 | Milano Cortina 2026",
+   "channel": "olympics",
+   "minutes": null,
+   "thumbnailUrl": "https://i2.ytimg.com/vi/qDSpKLqmylM/hqdefault.jpg",
    "relatedFactIds": []
   },
   {
@@ -3678,14 +1863,16 @@
    ]
   },
   {
-   "id": "vid-eZ01G17GtsM",
-   "youtubeId": "eZ01G17GtsM",
+   "id": "vid-ILHTmcuG_os",
+   "youtubeId": "ILHTmcuG_os",
    "category": "sports",
-   "title": "Two years ago, we were reminded that the Olympic spirit goes far beyond winning. ❤️",
+   "title": "Consider this your Olympic tennis ASMR. 🎧🎾 #Olympics #Tennis",
    "channel": "olympics",
    "minutes": null,
-   "thumbnailUrl": "https://i2.ytimg.com/vi/eZ01G17GtsM/hqdefault.jpg",
-   "relatedFactIds": []
+   "thumbnailUrl": "https://i2.ytimg.com/vi/ILHTmcuG_os/hqdefault.jpg",
+   "relatedFactIds": [
+    "spo-026"
+   ]
   },
   {
    "id": "vid-k4IHxL1fM5M",
@@ -3698,73 +1885,23 @@
    "relatedFactIds": []
   },
   {
-   "id": "vid-R9cj8N9DR9A",
-   "youtubeId": "R9cj8N9DR9A",
+   "id": "vid-VwTuOm-HBd4",
+   "youtubeId": "VwTuOm-HBd4",
    "category": "sports",
-   "title": "Rewind Gymnastics - Watching Emilie's Sydney 2000 Performance with Emilie & Jeff Goldblum 🤸‍♀️📺",
+   "title": "A leap of faith and a comeback for the ages. 💪",
    "channel": "olympics",
    "minutes": null,
-   "thumbnailUrl": "https://i3.ytimg.com/vi/R9cj8N9DR9A/hqdefault.jpg",
+   "thumbnailUrl": "https://i3.ytimg.com/vi/VwTuOm-HBd4/hqdefault.jpg",
    "relatedFactIds": []
   },
   {
-   "id": "vid-DroQ3shJduQ",
-   "youtubeId": "DroQ3shJduQ",
+   "id": "vid-ecYQwRm9Vdg",
+   "youtubeId": "ecYQwRm9Vdg",
    "category": "sports",
-   "title": "Seeing a perfect score through the scope. 🎯",
+   "title": "Relive THAT London 2012 Super Saturday moment from an alternative angle. 🤩",
    "channel": "olympics",
    "minutes": null,
-   "thumbnailUrl": "https://i1.ytimg.com/vi/DroQ3shJduQ/hqdefault.jpg",
-   "relatedFactIds": []
-  },
-  {
-   "id": "vid-xv1SxOeblOg",
-   "youtubeId": "xv1SxOeblOg",
-   "category": "culture",
-   "title": "Will gas prices decide the midterms? | America, Actually",
-   "channel": "Vox",
-   "minutes": null,
-   "thumbnailUrl": "https://i1.ytimg.com/vi/xv1SxOeblOg/hqdefault.jpg",
-   "relatedFactIds": []
-  },
-  {
-   "id": "vid-VspUre0PfNg",
-   "youtubeId": "VspUre0PfNg",
-   "category": "culture",
-   "title": "Why gas prices hit differently",
-   "channel": "Vox",
-   "minutes": null,
-   "thumbnailUrl": "https://i3.ytimg.com/vi/VspUre0PfNg/hqdefault.jpg",
-   "relatedFactIds": []
-  },
-  {
-   "id": "vid-Pabu_pZRcfs",
-   "youtubeId": "Pabu_pZRcfs",
-   "category": "culture",
-   "title": "What does a parent owe their child? | The Gray Area",
-   "channel": "Vox",
-   "minutes": null,
-   "thumbnailUrl": "https://i1.ytimg.com/vi/Pabu_pZRcfs/hqdefault.jpg",
-   "relatedFactIds": []
-  },
-  {
-   "id": "vid-KknXhXa97IQ",
-   "youtubeId": "KknXhXa97IQ",
-   "category": "culture",
-   "title": "A look into the Lindsay Clancy trial and postpartum psychosis",
-   "channel": "Vox",
-   "minutes": null,
-   "thumbnailUrl": "https://i4.ytimg.com/vi/KknXhXa97IQ/hqdefault.jpg",
-   "relatedFactIds": []
-  },
-  {
-   "id": "vid-t3cyZ0n24ho",
-   "youtubeId": "t3cyZ0n24ho",
-   "category": "culture",
-   "title": "Will India’s Cockroach Janta Party lead to more censorship?",
-   "channel": "Vox",
-   "minutes": null,
-   "thumbnailUrl": "https://i1.ytimg.com/vi/t3cyZ0n24ho/hqdefault.jpg",
+   "thumbnailUrl": "https://i2.ytimg.com/vi/ecYQwRm9Vdg/hqdefault.jpg",
    "relatedFactIds": []
   },
   {
@@ -3778,56 +1915,6 @@
    "relatedFactIds": []
   },
   {
-   "id": "vid-Hhi5Ti2Twdc",
-   "youtubeId": "Hhi5Ti2Twdc",
-   "category": "culture",
-   "title": "Abdul El-Sayed’s win in Michigan is historic, but new challenges lie ahead",
-   "channel": "Vox",
-   "minutes": null,
-   "thumbnailUrl": "https://i1.ytimg.com/vi/Hhi5Ti2Twdc/hqdefault.jpg",
-   "relatedFactIds": []
-  },
-  {
-   "id": "vid-Ixl6wMV5gMw",
-   "youtubeId": "Ixl6wMV5gMw",
-   "category": "culture",
-   "title": "Why isn’t everything rent-controlled?",
-   "channel": "Vox",
-   "minutes": null,
-   "thumbnailUrl": "https://i2.ytimg.com/vi/Ixl6wMV5gMw/hqdefault.jpg",
-   "relatedFactIds": []
-  },
-  {
-   "id": "vid-DL_7Kvj7-Q4",
-   "youtubeId": "DL_7Kvj7-Q4",
-   "category": "culture",
-   "title": "What happens if we stop documenting animal cruelty?",
-   "channel": "Vox",
-   "minutes": null,
-   "thumbnailUrl": "https://i1.ytimg.com/vi/DL_7Kvj7-Q4/hqdefault.jpg",
-   "relatedFactIds": []
-  },
-  {
-   "id": "vid-rPuYCJLzNMY",
-   "youtubeId": "rPuYCJLzNMY",
-   "category": "culture",
-   "title": "Young voters in Michigan have affordability on their minds",
-   "channel": "Vox",
-   "minutes": null,
-   "thumbnailUrl": "https://i3.ytimg.com/vi/rPuYCJLzNMY/hqdefault.jpg",
-   "relatedFactIds": []
-  },
-  {
-   "id": "vid-_0p955V6_D4",
-   "youtubeId": "_0p955V6_D4",
-   "category": "culture",
-   "title": "Are Blue Zones real? #shorts",
-   "channel": "Vox",
-   "minutes": null,
-   "thumbnailUrl": "https://i4.ytimg.com/vi/_0p955V6_D4/hqdefault.jpg",
-   "relatedFactIds": []
-  },
-  {
    "id": "vid-VVuSzKpmByo",
    "youtubeId": "VVuSzKpmByo",
    "category": "culture",
@@ -3838,13 +1925,23 @@
    "relatedFactIds": []
   },
   {
-   "id": "vid-insxQD3F848",
-   "youtubeId": "insxQD3F848",
+   "id": "vid-Hhi5Ti2Twdc",
+   "youtubeId": "Hhi5Ti2Twdc",
    "category": "culture",
-   "title": "Why magnetic field sensors can be anywhere",
+   "title": "Abdul El-Sayed’s win in Michigan is historic, but new challenges lie ahead",
    "channel": "Vox",
    "minutes": null,
-   "thumbnailUrl": "https://i2.ytimg.com/vi/insxQD3F848/hqdefault.jpg",
+   "thumbnailUrl": "https://i1.ytimg.com/vi/Hhi5Ti2Twdc/hqdefault.jpg",
+   "relatedFactIds": []
+  },
+  {
+   "id": "vid-KknXhXa97IQ",
+   "youtubeId": "KknXhXa97IQ",
+   "category": "culture",
+   "title": "A look into the Lindsay Clancy trial and postpartum psychosis",
+   "channel": "Vox",
+   "minutes": null,
+   "thumbnailUrl": "https://i4.ytimg.com/vi/KknXhXa97IQ/hqdefault.jpg",
    "relatedFactIds": []
   },
   {
@@ -3858,155 +1955,33 @@
    "relatedFactIds": []
   },
   {
-   "id": "vid-P5HmGWl47mw",
-   "youtubeId": "P5HmGWl47mw",
+   "id": "vid-Ixl6wMV5gMw",
+   "youtubeId": "Ixl6wMV5gMw",
    "category": "culture",
-   "title": "What is an umwelt?",
+   "title": "Why isn’t everything rent-controlled?",
    "channel": "Vox",
    "minutes": null,
-   "thumbnailUrl": "https://i1.ytimg.com/vi/P5HmGWl47mw/hqdefault.jpg",
+   "thumbnailUrl": "https://i2.ytimg.com/vi/Ixl6wMV5gMw/hqdefault.jpg",
    "relatedFactIds": []
   },
   {
-   "id": "vid-O2JUhpPpn0Y",
-   "youtubeId": "O2JUhpPpn0Y",
+   "id": "vid-insxQD3F848",
+   "youtubeId": "insxQD3F848",
    "category": "culture",
-   "title": "Why Horror Is The Last Real Genre Left",
-   "channel": "ThomasFlight",
+   "title": "Why magnetic field sensors can be anywhere",
+   "channel": "Vox",
    "minutes": null,
-   "thumbnailUrl": "https://i4.ytimg.com/vi/O2JUhpPpn0Y/hqdefault.jpg",
+   "thumbnailUrl": "https://i2.ytimg.com/vi/insxQD3F848/hqdefault.jpg",
    "relatedFactIds": []
   },
   {
-   "id": "vid-dluP9Lo5uos",
-   "youtubeId": "dluP9Lo5uos",
+   "id": "vid-rPuYCJLzNMY",
+   "youtubeId": "rPuYCJLzNMY",
    "category": "culture",
-   "title": "In Praise of Brilliant Voiceover",
-   "channel": "ThomasFlight",
+   "title": "Young voters in Michigan have affordability on their minds",
+   "channel": "Vox",
    "minutes": null,
-   "thumbnailUrl": "https://i1.ytimg.com/vi/dluP9Lo5uos/hqdefault.jpg",
-   "relatedFactIds": []
-  },
-  {
-   "id": "vid-kQBWPGYGJkk",
-   "youtubeId": "kQBWPGYGJkk",
-   "category": "culture",
-   "title": "What Movies Lose When They Use \"Blender Cutting\"",
-   "channel": "ThomasFlight",
-   "minutes": null,
-   "thumbnailUrl": "https://i4.ytimg.com/vi/kQBWPGYGJkk/hqdefault.jpg",
-   "relatedFactIds": []
-  },
-  {
-   "id": "vid-1mfysuwfKUE",
-   "youtubeId": "1mfysuwfKUE",
-   "category": "culture",
-   "title": "Why Does \"Most\" Acting Win All The Awards?",
-   "channel": "ThomasFlight",
-   "minutes": null,
-   "thumbnailUrl": "https://i2.ytimg.com/vi/1mfysuwfKUE/hqdefault.jpg",
-   "relatedFactIds": []
-  },
-  {
-   "id": "vid-7IA0H1-PH-M",
-   "youtubeId": "7IA0H1-PH-M",
-   "category": "culture",
-   "title": "How Nope Tricks Your Ears",
-   "channel": "ThomasFlight",
-   "minutes": null,
-   "thumbnailUrl": "https://i4.ytimg.com/vi/7IA0H1-PH-M/hqdefault.jpg",
-   "relatedFactIds": []
-  },
-  {
-   "id": "vid-ChuBKwsS7XM",
-   "youtubeId": "ChuBKwsS7XM",
-   "category": "culture",
-   "title": "It is REQUIRED that you watch Project Hail Mary from the very beginning.",
-   "channel": "ThomasFlight",
-   "minutes": null,
-   "thumbnailUrl": "https://i4.ytimg.com/vi/ChuBKwsS7XM/hqdefault.jpg",
-   "relatedFactIds": []
-  },
-  {
-   "id": "vid-kCQlCOn-YTs",
-   "youtubeId": "kCQlCOn-YTs",
-   "category": "culture",
-   "title": "When the Style Falls Away #thomasflight #videoessay #movie #film",
-   "channel": "ThomasFlight",
-   "minutes": null,
-   "thumbnailUrl": "https://i4.ytimg.com/vi/kCQlCOn-YTs/hqdefault.jpg",
-   "relatedFactIds": [
-    "cul-007"
-   ]
-  },
-  {
-   "id": "vid-XoRm09Ynx2U",
-   "youtubeId": "XoRm09Ynx2U",
-   "category": "culture",
-   "title": "He Went To Prison For Directing, Then Kept Making Movies",
-   "channel": "ThomasFlight",
-   "minutes": null,
-   "thumbnailUrl": "https://i1.ytimg.com/vi/XoRm09Ynx2U/hqdefault.jpg",
-   "relatedFactIds": []
-  },
-  {
-   "id": "vid-vwUrzKaXyT4",
-   "youtubeId": "vwUrzKaXyT4",
-   "category": "culture",
-   "title": "Why Some Movies Feel More Alive",
-   "channel": "ThomasFlight",
-   "minutes": null,
-   "thumbnailUrl": "https://i3.ytimg.com/vi/vwUrzKaXyT4/hqdefault.jpg",
-   "relatedFactIds": []
-  },
-  {
-   "id": "vid-LrEjwlph20M",
-   "youtubeId": "LrEjwlph20M",
-   "category": "culture",
-   "title": "Top 10 Films of 2025",
-   "channel": "ThomasFlight",
-   "minutes": null,
-   "thumbnailUrl": "https://i1.ytimg.com/vi/LrEjwlph20M/hqdefault.jpg",
-   "relatedFactIds": []
-  },
-  {
-   "id": "vid-1W5VZoFxtM0",
-   "youtubeId": "1W5VZoFxtM0",
-   "category": "culture",
-   "title": "Why PTA Didn't Know How His Own Movie Would End",
-   "channel": "ThomasFlight",
-   "minutes": null,
-   "thumbnailUrl": "https://i2.ytimg.com/vi/1W5VZoFxtM0/hqdefault.jpg",
-   "relatedFactIds": []
-  },
-  {
-   "id": "vid-ZFitkz5VJvI",
-   "youtubeId": "ZFitkz5VJvI",
-   "category": "culture",
-   "title": "Why AI \"Art\" Feels So Wrong",
-   "channel": "ThomasFlight",
-   "minutes": null,
-   "thumbnailUrl": "https://i3.ytimg.com/vi/ZFitkz5VJvI/hqdefault.jpg",
-   "relatedFactIds": []
-  },
-  {
-   "id": "vid-2tMzUwPINyY",
-   "youtubeId": "2tMzUwPINyY",
-   "category": "culture",
-   "title": "In Praise of Comfort Films",
-   "channel": "ThomasFlight",
-   "minutes": null,
-   "thumbnailUrl": "https://i3.ytimg.com/vi/2tMzUwPINyY/hqdefault.jpg",
-   "relatedFactIds": []
-  },
-  {
-   "id": "vid-iiH6p6MORbY",
-   "youtubeId": "iiH6p6MORbY",
-   "category": "culture",
-   "title": "Why Sinners' Cinematography is So Brilliant",
-   "channel": "ThomasFlight",
-   "minutes": null,
-   "thumbnailUrl": "https://i2.ytimg.com/vi/iiH6p6MORbY/hqdefault.jpg",
+   "thumbnailUrl": "https://i3.ytimg.com/vi/rPuYCJLzNMY/hqdefault.jpg",
    "relatedFactIds": []
   },
   {
@@ -4020,133 +1995,73 @@
    "relatedFactIds": []
   },
   {
-   "id": "vid-wMgwhFIEpIc",
-   "youtubeId": "wMgwhFIEpIc",
+   "id": "vid-kQBWPGYGJkk",
+   "youtubeId": "kQBWPGYGJkk",
    "category": "culture",
-   "title": "Songs that Lie to You",
-   "channel": "Polyphonic",
+   "title": "What Movies Lose When They Use \"Blender Cutting\"",
+   "channel": "ThomasFlight",
    "minutes": null,
-   "thumbnailUrl": "https://i4.ytimg.com/vi/wMgwhFIEpIc/hqdefault.jpg",
+   "thumbnailUrl": "https://i4.ytimg.com/vi/kQBWPGYGJkk/hqdefault.jpg",
    "relatedFactIds": []
   },
   {
-   "id": "vid-xALlAUqDUkM",
-   "youtubeId": "xALlAUqDUkM",
+   "id": "vid-LrEjwlph20M",
+   "youtubeId": "LrEjwlph20M",
    "category": "culture",
-   "title": "Classic Songs that Didn't Make the Record",
-   "channel": "Polyphonic",
+   "title": "Top 10 Films of 2025",
+   "channel": "ThomasFlight",
    "minutes": null,
-   "thumbnailUrl": "https://i1.ytimg.com/vi/xALlAUqDUkM/hqdefault.jpg",
+   "thumbnailUrl": "https://i1.ytimg.com/vi/LrEjwlph20M/hqdefault.jpg",
    "relatedFactIds": []
   },
   {
-   "id": "vid-PfKHEJ-_TvA",
-   "youtubeId": "PfKHEJ-_TvA",
+   "id": "vid-1mfysuwfKUE",
+   "youtubeId": "1mfysuwfKUE",
    "category": "culture",
-   "title": "This Giant Synth Changed Stevie Wonder's Life",
-   "channel": "Polyphonic",
+   "title": "Why Does \"Most\" Acting Win All The Awards?",
+   "channel": "ThomasFlight",
    "minutes": null,
-   "thumbnailUrl": "https://i1.ytimg.com/vi/PfKHEJ-_TvA/hqdefault.jpg",
+   "thumbnailUrl": "https://i2.ytimg.com/vi/1mfysuwfKUE/hqdefault.jpg",
    "relatedFactIds": []
   },
   {
-   "id": "vid-ZF-QLUhss-Q",
-   "youtubeId": "ZF-QLUhss-Q",
+   "id": "vid-iiH6p6MORbY",
+   "youtubeId": "iiH6p6MORbY",
    "category": "culture",
-   "title": "Afroman's Hilarious Second Act",
-   "channel": "Polyphonic",
+   "title": "Why Sinners' Cinematography is So Brilliant",
+   "channel": "ThomasFlight",
    "minutes": null,
-   "thumbnailUrl": "https://i3.ytimg.com/vi/ZF-QLUhss-Q/hqdefault.jpg",
+   "thumbnailUrl": "https://i2.ytimg.com/vi/iiH6p6MORbY/hqdefault.jpg",
    "relatedFactIds": []
   },
   {
-   "id": "vid-NaW-gbVj2iE",
-   "youtubeId": "NaW-gbVj2iE",
+   "id": "vid-vwUrzKaXyT4",
+   "youtubeId": "vwUrzKaXyT4",
    "category": "culture",
-   "title": "Introducing: Drugs",
-   "channel": "Polyphonic",
+   "title": "Why Some Movies Feel More Alive",
+   "channel": "ThomasFlight",
    "minutes": null,
-   "thumbnailUrl": "https://i3.ytimg.com/vi/NaW-gbVj2iE/hqdefault.jpg",
+   "thumbnailUrl": "https://i3.ytimg.com/vi/vwUrzKaXyT4/hqdefault.jpg",
    "relatedFactIds": []
   },
   {
-   "id": "vid-EgWesYq5kSo",
-   "youtubeId": "EgWesYq5kSo",
+   "id": "vid-O2JUhpPpn0Y",
+   "youtubeId": "O2JUhpPpn0Y",
    "category": "culture",
-   "title": "When Mistakes Improve the Song",
-   "channel": "Polyphonic",
+   "title": "Why Horror Is The Last Real Genre Left",
+   "channel": "ThomasFlight",
    "minutes": null,
-   "thumbnailUrl": "https://i2.ytimg.com/vi/EgWesYq5kSo/hqdefault.jpg",
+   "thumbnailUrl": "https://i4.ytimg.com/vi/O2JUhpPpn0Y/hqdefault.jpg",
    "relatedFactIds": []
   },
   {
-   "id": "vid-6QJx8Y7O4Qo",
-   "youtubeId": "6QJx8Y7O4Qo",
+   "id": "vid-ZFitkz5VJvI",
+   "youtubeId": "ZFitkz5VJvI",
    "category": "culture",
-   "title": "How Al Green Changed Soul Forever",
-   "channel": "Polyphonic",
+   "title": "Why AI \"Art\" Feels So Wrong",
+   "channel": "ThomasFlight",
    "minutes": null,
-   "thumbnailUrl": "https://i3.ytimg.com/vi/6QJx8Y7O4Qo/hqdefault.jpg",
-   "relatedFactIds": []
-  },
-  {
-   "id": "vid-WnkmNlxRgzc",
-   "youtubeId": "WnkmNlxRgzc",
-   "category": "culture",
-   "title": "The Incredible Life of Jorma Kaukonen",
-   "channel": "Polyphonic",
-   "minutes": null,
-   "thumbnailUrl": "https://i4.ytimg.com/vi/WnkmNlxRgzc/hqdefault.jpg",
-   "relatedFactIds": []
-  },
-  {
-   "id": "vid-az_RRsJ3UWU",
-   "youtubeId": "az_RRsJ3UWU",
-   "category": "culture",
-   "title": "The Music I Loved in 2025",
-   "channel": "Polyphonic",
-   "minutes": null,
-   "thumbnailUrl": "https://i2.ytimg.com/vi/az_RRsJ3UWU/hqdefault.jpg",
-   "relatedFactIds": []
-  },
-  {
-   "id": "vid-6l9GL12VDIk",
-   "youtubeId": "6l9GL12VDIk",
-   "category": "culture",
-   "title": "An Incomplete History of the Concert Film",
-   "channel": "Polyphonic",
-   "minutes": null,
-   "thumbnailUrl": "https://i3.ytimg.com/vi/6l9GL12VDIk/hqdefault.jpg",
-   "relatedFactIds": []
-  },
-  {
-   "id": "vid-w7h8lcd4vCQ",
-   "youtubeId": "w7h8lcd4vCQ",
-   "category": "culture",
-   "title": "The Weird World of Teenage Tragedy Songs",
-   "channel": "Polyphonic",
-   "minutes": null,
-   "thumbnailUrl": "https://i4.ytimg.com/vi/w7h8lcd4vCQ/hqdefault.jpg",
-   "relatedFactIds": []
-  },
-  {
-   "id": "vid-H7oJ7s1sLQ8",
-   "youtubeId": "H7oJ7s1sLQ8",
-   "category": "culture",
-   "title": "How Do You Tell the Story of Fela Kuti? (feat. Jad Abumrad)",
-   "channel": "Polyphonic",
-   "minutes": null,
-   "thumbnailUrl": "https://i1.ytimg.com/vi/H7oJ7s1sLQ8/hqdefault.jpg",
-   "relatedFactIds": []
-  },
-  {
-   "id": "vid-CGwjbC0C-6o",
-   "youtubeId": "CGwjbC0C-6o",
-   "category": "culture",
-   "title": "Understanding \"The Wreck of the Edmund Fitzgerald\"",
-   "channel": "Polyphonic",
-   "minutes": null,
-   "thumbnailUrl": "https://i4.ytimg.com/vi/CGwjbC0C-6o/hqdefault.jpg",
+   "thumbnailUrl": "https://i3.ytimg.com/vi/ZFitkz5VJvI/hqdefault.jpg",
    "relatedFactIds": []
   },
   {
@@ -4160,6 +2075,16 @@
    "relatedFactIds": []
   },
   {
+   "id": "vid-w7h8lcd4vCQ",
+   "youtubeId": "w7h8lcd4vCQ",
+   "category": "culture",
+   "title": "The Weird World of Teenage Tragedy Songs",
+   "channel": "Polyphonic",
+   "minutes": null,
+   "thumbnailUrl": "https://i4.ytimg.com/vi/w7h8lcd4vCQ/hqdefault.jpg",
+   "relatedFactIds": []
+  },
+  {
    "id": "vid-3H0nYCBO-DE",
    "youtubeId": "3H0nYCBO-DE",
    "category": "culture",
@@ -4170,53 +2095,53 @@
    "relatedFactIds": []
   },
   {
-   "id": "vid-awegilW3DTc",
-   "youtubeId": "awegilW3DTc",
+   "id": "vid-EgWesYq5kSo",
+   "youtubeId": "EgWesYq5kSo",
    "category": "culture",
-   "title": "My Favourite Games From GMTK Game Jam 2026",
-   "channel": "GMTK",
+   "title": "When Mistakes Improve the Song",
+   "channel": "Polyphonic",
    "minutes": null,
-   "thumbnailUrl": "https://i2.ytimg.com/vi/awegilW3DTc/hqdefault.jpg",
+   "thumbnailUrl": "https://i2.ytimg.com/vi/EgWesYq5kSo/hqdefault.jpg",
    "relatedFactIds": []
   },
   {
-   "id": "vid-JFG0GMCMLgs",
-   "youtubeId": "JFG0GMCMLgs",
+   "id": "vid-CGwjbC0C-6o",
+   "youtubeId": "CGwjbC0C-6o",
    "category": "culture",
-   "title": "Word Play is now available on iOS!",
-   "channel": "GMTK",
+   "title": "Understanding \"The Wreck of the Edmund Fitzgerald\"",
+   "channel": "Polyphonic",
    "minutes": null,
-   "thumbnailUrl": "https://i3.ytimg.com/vi/JFG0GMCMLgs/hqdefault.jpg",
+   "thumbnailUrl": "https://i4.ytimg.com/vi/CGwjbC0C-6o/hqdefault.jpg",
    "relatedFactIds": []
   },
   {
-   "id": "vid-usF4cpcxbZc",
-   "youtubeId": "usF4cpcxbZc",
+   "id": "vid-wMgwhFIEpIc",
+   "youtubeId": "wMgwhFIEpIc",
    "category": "culture",
-   "title": "100 Steam Games that started life during GMTK Game Jam",
-   "channel": "GMTK",
+   "title": "Songs that Lie to You",
+   "channel": "Polyphonic",
    "minutes": null,
-   "thumbnailUrl": "https://i2.ytimg.com/vi/usF4cpcxbZc/hqdefault.jpg",
+   "thumbnailUrl": "https://i4.ytimg.com/vi/wMgwhFIEpIc/hqdefault.jpg",
    "relatedFactIds": []
   },
   {
-   "id": "vid-n1cd1FhVAWY",
-   "youtubeId": "n1cd1FhVAWY",
+   "id": "vid-PfKHEJ-_TvA",
+   "youtubeId": "PfKHEJ-_TvA",
    "category": "culture",
-   "title": "How I Coded the Perks in my Roguelike",
-   "channel": "GMTK",
+   "title": "This Giant Synth Changed Stevie Wonder's Life",
+   "channel": "Polyphonic",
    "minutes": null,
-   "thumbnailUrl": "https://i3.ytimg.com/vi/n1cd1FhVAWY/hqdefault.jpg",
+   "thumbnailUrl": "https://i1.ytimg.com/vi/PfKHEJ-_TvA/hqdefault.jpg",
    "relatedFactIds": []
   },
   {
-   "id": "vid-NlAFWaa9UQo",
-   "youtubeId": "NlAFWaa9UQo",
+   "id": "vid-6l9GL12VDIk",
+   "youtubeId": "6l9GL12VDIk",
    "category": "culture",
-   "title": "The Secrets Behind THAT Cyberpunk 2077 Montage",
-   "channel": "GMTK",
+   "title": "An Incomplete History of the Concert Film",
+   "channel": "Polyphonic",
    "minutes": null,
-   "thumbnailUrl": "https://i3.ytimg.com/vi/NlAFWaa9UQo/hqdefault.jpg",
+   "thumbnailUrl": "https://i3.ytimg.com/vi/6l9GL12VDIk/hqdefault.jpg",
    "relatedFactIds": []
   },
   {
@@ -4230,13 +2155,13 @@
    "relatedFactIds": []
   },
   {
-   "id": "vid-MILJzR0x3IY",
-   "youtubeId": "MILJzR0x3IY",
+   "id": "vid-Ip5pYl-MuYs",
+   "youtubeId": "Ip5pYl-MuYs",
    "category": "culture",
-   "title": "Has Zelda Changed Forever?",
+   "title": "What's The Point Of Hard Games, Anyway?",
    "channel": "GMTK",
    "minutes": null,
-   "thumbnailUrl": "https://i2.ytimg.com/vi/MILJzR0x3IY/hqdefault.jpg",
+   "thumbnailUrl": "https://i2.ytimg.com/vi/Ip5pYl-MuYs/hqdefault.jpg",
    "relatedFactIds": []
   },
   {
@@ -4250,13 +2175,13 @@
    "relatedFactIds": []
   },
   {
-   "id": "vid-8tHJgtbj6rs",
-   "youtubeId": "8tHJgtbj6rs",
+   "id": "vid-kG3LWpuiLqg",
+   "youtubeId": "kG3LWpuiLqg",
    "category": "culture",
-   "title": "What's the Point of Prototyping?",
+   "title": "My Favourite Games from GMTK Game Jam 2025",
    "channel": "GMTK",
    "minutes": null,
-   "thumbnailUrl": "https://i1.ytimg.com/vi/8tHJgtbj6rs/hqdefault.jpg",
+   "thumbnailUrl": "https://i4.ytimg.com/vi/kG3LWpuiLqg/hqdefault.jpg",
    "relatedFactIds": []
   },
   {
@@ -4270,133 +2195,43 @@
    "relatedFactIds": []
   },
   {
-   "id": "vid-Ip5pYl-MuYs",
-   "youtubeId": "Ip5pYl-MuYs",
+   "id": "vid-MILJzR0x3IY",
+   "youtubeId": "MILJzR0x3IY",
    "category": "culture",
-   "title": "What's The Point Of Hard Games, Anyway?",
+   "title": "Has Zelda Changed Forever?",
    "channel": "GMTK",
    "minutes": null,
-   "thumbnailUrl": "https://i2.ytimg.com/vi/Ip5pYl-MuYs/hqdefault.jpg",
+   "thumbnailUrl": "https://i2.ytimg.com/vi/MILJzR0x3IY/hqdefault.jpg",
    "relatedFactIds": []
   },
   {
-   "id": "vid-kG3LWpuiLqg",
-   "youtubeId": "kG3LWpuiLqg",
+   "id": "vid-8tHJgtbj6rs",
+   "youtubeId": "8tHJgtbj6rs",
    "category": "culture",
-   "title": "My Favourite Games from GMTK Game Jam 2025",
+   "title": "What's the Point of Prototyping?",
    "channel": "GMTK",
    "minutes": null,
-   "thumbnailUrl": "https://i4.ytimg.com/vi/kG3LWpuiLqg/hqdefault.jpg",
+   "thumbnailUrl": "https://i1.ytimg.com/vi/8tHJgtbj6rs/hqdefault.jpg",
    "relatedFactIds": []
   },
   {
-   "id": "vid-lgG_vfbDPeo",
-   "youtubeId": "lgG_vfbDPeo",
+   "id": "vid-NlAFWaa9UQo",
+   "youtubeId": "NlAFWaa9UQo",
    "category": "culture",
-   "title": "I've waited my whole life for this",
+   "title": "The Secrets Behind THAT Cyberpunk 2077 Montage",
    "channel": "GMTK",
    "minutes": null,
-   "thumbnailUrl": "https://i1.ytimg.com/vi/lgG_vfbDPeo/hqdefault.jpg",
+   "thumbnailUrl": "https://i3.ytimg.com/vi/NlAFWaa9UQo/hqdefault.jpg",
    "relatedFactIds": []
   },
   {
-   "id": "vid-uuXrwA9nzM8",
-   "youtubeId": "uuXrwA9nzM8",
+   "id": "vid-UWEjxkkB8Xs",
+   "youtubeId": "UWEjxkkB8Xs",
    "category": "culture",
-   "title": "How I Made Word Play",
-   "channel": "GMTK",
-   "minutes": null,
-   "thumbnailUrl": "https://i2.ytimg.com/vi/uuXrwA9nzM8/hqdefault.jpg",
-   "relatedFactIds": []
-  },
-  {
-   "id": "vid-chWr87u3Gdc",
-   "youtubeId": "chWr87u3Gdc",
-   "category": "culture",
-   "title": "Word Play Trailer - Out Now!",
-   "channel": "GMTK",
-   "minutes": null,
-   "thumbnailUrl": "https://i4.ytimg.com/vi/chWr87u3Gdc/hqdefault.jpg",
-   "relatedFactIds": []
-  },
-  {
-   "id": "vid-ZXUBoI9eHfQ",
-   "youtubeId": "ZXUBoI9eHfQ",
-   "category": "culture",
-   "title": "Every Frame x Lackadaisy - Interview with Tracy J. Butler & Fable Siegel",
+   "title": "Buster Keaton - The Art of the Gag",
    "channel": "everyframeapainting",
    "minutes": null,
-   "thumbnailUrl": "https://i3.ytimg.com/vi/ZXUBoI9eHfQ/hqdefault.jpg",
-   "relatedFactIds": []
-  },
-  {
-   "id": "vid-CahiJhFxrTE",
-   "youtubeId": "CahiJhFxrTE",
-   "category": "culture",
-   "title": "THE SECOND | Animatic vs. Final (Bonus Video)",
-   "channel": "everyframeapainting",
-   "minutes": null,
-   "thumbnailUrl": "https://i4.ytimg.com/vi/CahiJhFxrTE/hqdefault.jpg",
-   "relatedFactIds": []
-  },
-  {
-   "id": "vid-Mfz6tj_Ep1E",
-   "youtubeId": "Mfz6tj_Ep1E",
-   "category": "culture",
-   "title": "THE SECOND | Short Film",
-   "channel": "everyframeapainting",
-   "minutes": null,
-   "thumbnailUrl": "https://i2.ytimg.com/vi/Mfz6tj_Ep1E/hqdefault.jpg",
-   "relatedFactIds": []
-  },
-  {
-   "id": "vid-wa1O3nqW5hQ",
-   "youtubeId": "wa1O3nqW5hQ",
-   "category": "culture",
-   "title": "Where Do You Put the Camera?",
-   "channel": "everyframeapainting",
-   "minutes": null,
-   "thumbnailUrl": "https://i4.ytimg.com/vi/wa1O3nqW5hQ/hqdefault.jpg",
-   "relatedFactIds": []
-  },
-  {
-   "id": "vid-X_aYXYUT5l8",
-   "youtubeId": "X_aYXYUT5l8",
-   "category": "culture",
-   "title": "What Would Billy Wilder Do?",
-   "channel": "everyframeapainting",
-   "minutes": null,
-   "thumbnailUrl": "https://i1.ytimg.com/vi/X_aYXYUT5l8/hqdefault.jpg",
-   "relatedFactIds": []
-  },
-  {
-   "id": "vid-mn2Dcy-NDTw",
-   "youtubeId": "mn2Dcy-NDTw",
-   "category": "culture",
-   "title": "The Sustained Two-Shot",
-   "channel": "everyframeapainting",
-   "minutes": null,
-   "thumbnailUrl": "https://i2.ytimg.com/vi/mn2Dcy-NDTw/hqdefault.jpg",
-   "relatedFactIds": []
-  },
-  {
-   "id": "vid-mSlZKdApob0",
-   "youtubeId": "mSlZKdApob0",
-   "category": "culture",
-   "title": "The Second (2024) — A Limited Series Trailer",
-   "channel": "everyframeapainting",
-   "minutes": null,
-   "thumbnailUrl": "https://i2.ytimg.com/vi/mSlZKdApob0/hqdefault.jpg",
-   "relatedFactIds": []
-  },
-  {
-   "id": "vid-IEfQ_9DIItI",
-   "youtubeId": "IEfQ_9DIItI",
-   "category": "culture",
-   "title": "Hollywood Scores & Soundtracks: What Do They Sound Like? Do They Sound Like Things?? Let's Find Out!",
-   "channel": "everyframeapainting",
-   "minutes": null,
-   "thumbnailUrl": "https://i2.ytimg.com/vi/IEfQ_9DIItI/hqdefault.jpg",
+   "thumbnailUrl": "https://i2.ytimg.com/vi/UWEjxkkB8Xs/hqdefault.jpg",
    "relatedFactIds": []
   },
   {
@@ -4412,13 +2247,13 @@
    ]
   },
   {
-   "id": "vid-3Q3eITC01Fg",
-   "youtubeId": "3Q3eITC01Fg",
+   "id": "vid-kHpXle4NqWI",
+   "youtubeId": "kHpXle4NqWI",
    "category": "culture",
-   "title": "How Does an Editor Think and Feel?",
+   "title": "Chuck Jones - The Evolution of an Artist",
    "channel": "everyframeapainting",
    "minutes": null,
-   "thumbnailUrl": "https://i4.ytimg.com/vi/3Q3eITC01Fg/hqdefault.jpg",
+   "thumbnailUrl": "https://i4.ytimg.com/vi/kHpXle4NqWI/hqdefault.jpg",
    "relatedFactIds": []
   },
   {
@@ -4432,23 +2267,13 @@
    "relatedFactIds": []
   },
   {
-   "id": "vid-v4seDVfgwOg",
-   "youtubeId": "v4seDVfgwOg",
+   "id": "vid-3Q3eITC01Fg",
+   "youtubeId": "3Q3eITC01Fg",
    "category": "culture",
-   "title": "Memories of Murder (2003) - Ensemble Staging",
+   "title": "How Does an Editor Think and Feel?",
    "channel": "everyframeapainting",
    "minutes": null,
-   "thumbnailUrl": "https://i3.ytimg.com/vi/v4seDVfgwOg/hqdefault.jpg",
-   "relatedFactIds": []
-  },
-  {
-   "id": "vid-UWEjxkkB8Xs",
-   "youtubeId": "UWEjxkkB8Xs",
-   "category": "culture",
-   "title": "Buster Keaton - The Art of the Gag",
-   "channel": "everyframeapainting",
-   "minutes": null,
-   "thumbnailUrl": "https://i2.ytimg.com/vi/UWEjxkkB8Xs/hqdefault.jpg",
+   "thumbnailUrl": "https://i4.ytimg.com/vi/3Q3eITC01Fg/hqdefault.jpg",
    "relatedFactIds": []
   },
   {
@@ -4462,123 +2287,23 @@
    "relatedFactIds": []
   },
   {
-   "id": "vid-kHpXle4NqWI",
-   "youtubeId": "kHpXle4NqWI",
+   "id": "vid-v4seDVfgwOg",
+   "youtubeId": "v4seDVfgwOg",
    "category": "culture",
-   "title": "Chuck Jones - The Evolution of an Artist",
+   "title": "Memories of Murder (2003) - Ensemble Staging",
    "channel": "everyframeapainting",
    "minutes": null,
-   "thumbnailUrl": "https://i4.ytimg.com/vi/kHpXle4NqWI/hqdefault.jpg",
+   "thumbnailUrl": "https://i3.ytimg.com/vi/v4seDVfgwOg/hqdefault.jpg",
    "relatedFactIds": []
   },
   {
-   "id": "vid-mOrljLeKLVs",
-   "youtubeId": "mOrljLeKLVs",
+   "id": "vid-IEfQ_9DIItI",
+   "youtubeId": "IEfQ_9DIItI",
    "category": "culture",
-   "title": "Why does this movie look like a bunch of time travelers made it?",
-   "channel": "CinemaStix",
+   "title": "Hollywood Scores & Soundtracks: What Do They Sound Like? Do They Sound Like Things?? Let's Find Out!",
+   "channel": "everyframeapainting",
    "minutes": null,
-   "thumbnailUrl": "https://i2.ytimg.com/vi/mOrljLeKLVs/hqdefault.jpg",
-   "relatedFactIds": []
-  },
-  {
-   "id": "vid-ujH-6k218Kc",
-   "youtubeId": "ujH-6k218Kc",
-   "category": "culture",
-   "title": "Why does this movie never get old despite the ending?",
-   "channel": "CinemaStix",
-   "minutes": null,
-   "thumbnailUrl": "https://i2.ytimg.com/vi/ujH-6k218Kc/hqdefault.jpg",
-   "relatedFactIds": []
-  },
-  {
-   "id": "vid-2UCvGd7znvc",
-   "youtubeId": "2UCvGd7znvc",
-   "category": "culture",
-   "title": "Did they seriously make a perfect movie trilogy across 40 years and no one realized?",
-   "channel": "CinemaStix",
-   "minutes": null,
-   "thumbnailUrl": "https://i3.ytimg.com/vi/2UCvGd7znvc/hqdefault.jpg",
-   "relatedFactIds": []
-  },
-  {
-   "id": "vid-l-4635Wb_60",
-   "youtubeId": "l-4635Wb_60",
-   "category": "culture",
-   "title": "How gaslighting the audience for two hours made this a masterpiece",
-   "channel": "CinemaStix",
-   "minutes": null,
-   "thumbnailUrl": "https://i1.ytimg.com/vi/l-4635Wb_60/hqdefault.jpg",
-   "relatedFactIds": []
-  },
-  {
-   "id": "vid-GvO1Sep15Xk",
-   "youtubeId": "GvO1Sep15Xk",
-   "category": "culture",
-   "title": "The worst man in Hollywood bought the rights to a movie he had no intention of letting people see",
-   "channel": "CinemaStix",
-   "minutes": null,
-   "thumbnailUrl": "https://i4.ytimg.com/vi/GvO1Sep15Xk/hqdefault.jpg",
-   "relatedFactIds": []
-  },
-  {
-   "id": "vid-ikfHXCioqCo",
-   "youtubeId": "ikfHXCioqCo",
-   "category": "culture",
-   "title": "How a random coincidence in 1996 almost ruined movie history forever",
-   "channel": "CinemaStix",
-   "minutes": null,
-   "thumbnailUrl": "https://i2.ytimg.com/vi/ikfHXCioqCo/hqdefault.jpg",
-   "relatedFactIds": []
-  },
-  {
-   "id": "vid-YDzSjRKUXuA",
-   "youtubeId": "YDzSjRKUXuA",
-   "category": "culture",
-   "title": "How DELETING 80% of a bad movie magically makes it a masterpiece",
-   "channel": "CinemaStix",
-   "minutes": null,
-   "thumbnailUrl": "https://i2.ytimg.com/vi/YDzSjRKUXuA/hqdefault.jpg",
-   "relatedFactIds": []
-  },
-  {
-   "id": "vid-RTPEkg1XwrE",
-   "youtubeId": "RTPEkg1XwrE",
-   "category": "culture",
-   "title": "The moment you realize actual adults made this ￼",
-   "channel": "CinemaStix",
-   "minutes": null,
-   "thumbnailUrl": "https://i3.ytimg.com/vi/RTPEkg1XwrE/hqdefault.jpg",
-   "relatedFactIds": []
-  },
-  {
-   "id": "vid-Y4mh1PKQm_o",
-   "youtubeId": "Y4mh1PKQm_o",
-   "category": "culture",
-   "title": "This is the most UNHINGED acting performance ever",
-   "channel": "CinemaStix",
-   "minutes": null,
-   "thumbnailUrl": "https://i2.ytimg.com/vi/Y4mh1PKQm_o/hqdefault.jpg",
-   "relatedFactIds": []
-  },
-  {
-   "id": "vid-elxTRnYiuUY",
-   "youtubeId": "elxTRnYiuUY",
-   "category": "culture",
-   "title": "The moment you realize it’s 1999 and the movie ain’t a parody",
-   "channel": "CinemaStix",
-   "minutes": null,
-   "thumbnailUrl": "https://i2.ytimg.com/vi/elxTRnYiuUY/hqdefault.jpg",
-   "relatedFactIds": []
-  },
-  {
-   "id": "vid-eQUOTm50tUk",
-   "youtubeId": "eQUOTm50tUk",
-   "category": "culture",
-   "title": "The moment you realize it’s 2006 and your camera guy’s a magician",
-   "channel": "CinemaStix",
-   "minutes": null,
-   "thumbnailUrl": "https://i2.ytimg.com/vi/eQUOTm50tUk/hqdefault.jpg",
+   "thumbnailUrl": "https://i2.ytimg.com/vi/IEfQ_9DIItI/hqdefault.jpg",
    "relatedFactIds": []
   },
   {
@@ -4592,6 +2317,16 @@
    "relatedFactIds": []
   },
   {
+   "id": "vid-elxTRnYiuUY",
+   "youtubeId": "elxTRnYiuUY",
+   "category": "culture",
+   "title": "The moment you realize it’s 1999 and the movie ain’t a parody",
+   "channel": "CinemaStix",
+   "minutes": null,
+   "thumbnailUrl": "https://i2.ytimg.com/vi/elxTRnYiuUY/hqdefault.jpg",
+   "relatedFactIds": []
+  },
+  {
    "id": "vid-5IBTnDvBwCY",
    "youtubeId": "5IBTnDvBwCY",
    "category": "culture",
@@ -4602,25 +2337,55 @@
    "relatedFactIds": []
   },
   {
-   "id": "vid-IMlw74Cr5Fk",
-   "youtubeId": "IMlw74Cr5Fk",
+   "id": "vid-YDzSjRKUXuA",
+   "youtubeId": "YDzSjRKUXuA",
    "category": "culture",
-   "title": "when you stop casting your actors off the street￼",
+   "title": "How DELETING 80% of a bad movie magically makes it a masterpiece",
    "channel": "CinemaStix",
    "minutes": null,
-   "thumbnailUrl": "https://i2.ytimg.com/vi/IMlw74Cr5Fk/hqdefault.jpg",
+   "thumbnailUrl": "https://i2.ytimg.com/vi/YDzSjRKUXuA/hqdefault.jpg",
    "relatedFactIds": []
   },
   {
-   "id": "vid-H-cZLil6Sak",
-   "youtubeId": "H-cZLil6Sak",
+   "id": "vid-mOrljLeKLVs",
+   "youtubeId": "mOrljLeKLVs",
    "category": "culture",
-   "title": "they KNEW audiences would guess The Killer halfway through The Movie, so they just added a...",
+   "title": "Why does this movie look like a bunch of time travelers made it?",
    "channel": "CinemaStix",
    "minutes": null,
-   "thumbnailUrl": "https://i1.ytimg.com/vi/H-cZLil6Sak/hqdefault.jpg",
+   "thumbnailUrl": "https://i2.ytimg.com/vi/mOrljLeKLVs/hqdefault.jpg",
+   "relatedFactIds": []
+  },
+  {
+   "id": "vid-GvO1Sep15Xk",
+   "youtubeId": "GvO1Sep15Xk",
+   "category": "culture",
+   "title": "The worst man in Hollywood bought the rights to a movie he had no intention of letting people see",
+   "channel": "CinemaStix",
+   "minutes": null,
+   "thumbnailUrl": "https://i4.ytimg.com/vi/GvO1Sep15Xk/hqdefault.jpg",
+   "relatedFactIds": []
+  },
+  {
+   "id": "vid-Y4mh1PKQm_o",
+   "youtubeId": "Y4mh1PKQm_o",
+   "category": "culture",
+   "title": "This is the most UNHINGED acting performance ever",
+   "channel": "CinemaStix",
+   "minutes": null,
+   "thumbnailUrl": "https://i2.ytimg.com/vi/Y4mh1PKQm_o/hqdefault.jpg",
+   "relatedFactIds": []
+  },
+  {
+   "id": "vid-RTPEkg1XwrE",
+   "youtubeId": "RTPEkg1XwrE",
+   "category": "culture",
+   "title": "The moment you realize actual adults made this ￼",
+   "channel": "CinemaStix",
+   "minutes": null,
+   "thumbnailUrl": "https://i3.ytimg.com/vi/RTPEkg1XwrE/hqdefault.jpg",
    "relatedFactIds": []
   }
  ],
- "version": "bfddaa07e495"
+ "version": "2140494b4719"
 }
