@@ -174,7 +174,9 @@ fun SmartApp(repository: SmartRepository) {
                         repository = repository,
                         videoId = entry.arguments?.getString("videoId").orEmpty(),
                         onBack = { navController.popBackStack() },
-                        onQuiz = { factIds -> navController.navigate(Routes.quiz(factIds = factIds)) },
+                        onQuiz = { factIds, category ->
+                            navController.navigate(Routes.quiz(category = category, factIds = factIds))
+                        },
                     )
                 }
                 composable(Routes.CATEGORY) { entry ->

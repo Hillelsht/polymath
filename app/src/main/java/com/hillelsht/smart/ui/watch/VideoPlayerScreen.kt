@@ -61,7 +61,7 @@ fun VideoPlayerScreen(
     repository: SmartRepository,
     videoId: String,
     onBack: () -> Unit,
-    onQuiz: (List<String>) -> Unit,
+    onQuiz: (List<String>, com.hillelsht.smart.domain.model.Category) -> Unit,
 ) {
     val video by produceState<Video?>(initialValue = null, videoId) {
         value = repository.video(videoId)
@@ -126,24 +126,35 @@ fun VideoPlayerScreen(
                 if (current.relatedFactIds.isNotEmpty()) {
                     Spacer(Modifier.height(20.dp))
                     RelatedFacts(repository, current.relatedFactIds)
-                    Spacer(Modifier.height(20.dp))
-                    Button(
-                        onClick = { onQuiz(current.relatedFactIds) },
-                        modifier = Modifier
-                            .fillMaxWidth()
-                            .height(54.dp),
-                        shape = RoundedCornerShape(16.dp),
-                    ) {
-                        Text("Quiz me on this", style = MaterialTheme.typography.labelLarge)
-                    }
-                    Spacer(Modifier.height(8.dp))
+                }
+
+                // The button is always offered. Where the pipeline matched specific facts the
+                // quiz asks about exactly those; otherwise it falls back to the video's
+                // subject, so watching always ends in recall rather than sometimes trailing off.
+                Spacer(Modifier.height(20.dp))
+                Button(
+                    onClick = { onQuiz(current.relatedFactIds, current.category) },
+                    modifier = Modifier
+                        .fillMaxWidth()
+                        .height(54.dp),
+                    shape = RoundedCornerShape(16.dp),
+                ) {
                     Text(
-                        text = "Anything you miss joins your review queue.",
-                        style = MaterialTheme.typography.labelMedium,
-                        color = MaterialTheme.colorScheme.onSurfaceVariant,
-                        modifier = Modifier.fillMaxWidth(),
+                        text = if (current.relatedFactIds.isNotEmpty()) {
+                            "Quiz me on this"
+                        } else {
+                            "Quiz me on ${current.category.displayName}"
+                        },
+                        style = MaterialTheme.typography.labelLarge,
                     )
                 }
+                Spacer(Modifier.height(8.dp))
+                Text(
+                    text = "Anything you miss joins your review queue.",
+                    style = MaterialTheme.typography.labelMedium,
+                    color = MaterialTheme.colorScheme.onSurfaceVariant,
+                    modifier = Modifier.fillMaxWidth(),
+                )
                 Spacer(Modifier.height(24.dp))
             }
         }

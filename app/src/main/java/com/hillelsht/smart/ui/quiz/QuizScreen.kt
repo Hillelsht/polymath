@@ -99,9 +99,16 @@ class QuizViewModel(
             val generated = if (factIds.isEmpty()) {
                 QuizGenerator.generateFromPool(facts, QUIZ_LENGTH, category)
             } else {
+                // Lead with what the video taught, then top up from the same subject so a
+                // video matching two facts still yields a full-length quiz rather than a
+                // two-question stub.
                 val wanted = factIds.toSet()
+                val fromVideo = facts.filter { it.id in wanted }.shuffled()
+                val topUp = facts
+                    .filter { it.id !in wanted && (category == null || it.category == category) }
+                    .shuffled()
                 QuizGenerator.generate(
-                    subjects = facts.filter { it.id in wanted }.shuffled(),
+                    subjects = fromVideo + topUp,
                     pool = facts,
                     count = QUIZ_LENGTH,
                 )
