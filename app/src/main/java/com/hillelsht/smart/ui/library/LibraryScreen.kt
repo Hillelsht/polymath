@@ -47,6 +47,7 @@ import androidx.lifecycle.viewmodel.viewModelFactory
 import com.hillelsht.smart.data.SmartRepository
 import com.hillelsht.smart.data.remote.RemotePack
 import com.hillelsht.smart.domain.CategoryMastery
+import com.hillelsht.smart.domain.LibraryKeys
 import com.hillelsht.smart.domain.MasteryCalculator
 import com.hillelsht.smart.domain.model.Category
 import com.hillelsht.smart.domain.model.Fact
@@ -79,6 +80,7 @@ data class PackRow(
 }
 
 enum class PackStatus { AVAILABLE, UPDATE, INSTALLED, DOWNLOADING }
+
 
 class LibraryViewModel(private val repository: SmartRepository) : ViewModel() {
     val mastery = repository.mastery
@@ -164,7 +166,7 @@ fun LibraryScreen(repository: SmartRepository, onCategory: (Category) -> Unit) {
             }
         }
 
-        items(mastery, key = { it.category.id }) { entry ->
+        items(mastery, key = { LibraryKeys.category(it.category.id) }) { entry ->
             CategoryRow(entry) { onCategory(entry.category) }
         }
 
@@ -197,7 +199,7 @@ fun LibraryScreen(repository: SmartRepository, onCategory: (Category) -> Unit) {
                 )
             }
         } else {
-            items(packRows, key = { it.remote.id }) { row ->
+            items(packRows, key = { LibraryKeys.pack(it.remote.id) }) { row ->
                 PackRowItem(row) { viewModel.download(row.remote) }
             }
         }

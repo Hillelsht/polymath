@@ -21,6 +21,7 @@ import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.icons.Icons
 import android.content.Intent
 import android.net.Uri
+import android.util.Log
 import androidx.compose.material.icons.rounded.AutoAwesome
 import androidx.compose.material.icons.rounded.ExpandLess
 import androidx.compose.material.icons.rounded.ExpandMore
@@ -180,7 +181,12 @@ fun FactImage(
                 contentScale = ContentScale.Crop,
                 modifier = Modifier.fillMaxSize(),
                 loading = { CategoryGlyph() },
-                error = { CategoryGlyph() },
+                error = { state ->
+                    // A silent fallback once made a 403 look identical to "this fact has no
+                    // picture", which hid a broken image path for an entire release.
+                    Log.w("FactImage", "Failed to load $resolved", state.result.throwable)
+                    CategoryGlyph()
+                },
             )
         } else {
             CategoryGlyph()

@@ -30,13 +30,18 @@ import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
+import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
+import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.Brush
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.vector.ImageVector
+import androidx.compose.ui.platform.LocalClipboardManager
+import androidx.compose.ui.platform.LocalContext
+import androidx.compose.ui.text.AnnotatedString
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import androidx.lifecycle.ViewModel
@@ -55,6 +60,7 @@ import com.hillelsht.smart.ui.components.SmartCard
 import com.hillelsht.smart.ui.components.accent
 import com.hillelsht.smart.ui.components.secondary
 import com.hillelsht.smart.ui.theme.SmartPalette
+import com.hillelsht.smart.util.CrashLog
 import kotlinx.coroutines.flow.SharingStarted
 import kotlinx.coroutines.flow.combine
 import kotlinx.coroutines.flow.stateIn
@@ -110,12 +116,68 @@ fun HomeScreen(
         ),
         verticalArrangement = Arrangement.spacedBy(20.dp),
     ) {
+        item { CrashCard() }
         item { Greeting(state.streak) }
         item { TodayCard(state, onLearn = onLearn, onReview = onReview, onQuiz = onQuiz) }
         item { OverallProgress(state) }
         item { MasteryRow(state.mastery) }
         item {
             QuickActions(onQuiz = onQuiz, onBrowse = onBrowse)
+        }
+    }
+}
+
+/**
+ * Surfaces the last uncaught exception, if there was one.
+ *
+ * The developer cannot attach a debugger to this phone, so without this a crash report is
+ * "it closed again" and diagnosis is guesswork. Copy puts the full trace on the clipboard.
+ */
+@Composable
+private fun CrashCard() {
+    val context = LocalContext.current
+    var trace by remember { mutableStateOf(CrashLog.read(context)) }
+    val report = trace ?: return
+    val clipboard = LocalClipboardManager.current
+
+    SmartCard(
+        Modifier.fillMaxWidth(),
+        border = SmartPalette.Danger.copy(alpha = 0.5f),
+    ) {
+        Column {
+            Text(
+                text = "The app crashed last time",
+                style = MaterialTheme.typography.titleMedium,
+                color = SmartPalette.Danger,
+            )
+            Spacer(Modifier.height(6.dp))
+            Text(
+                text = report.lineSequence().take(6).joinToString("\n"),
+                style = MaterialTheme.typography.bodyMedium,
+                color = MaterialTheme.colorScheme.onSurfaceVariant,
+            )
+            Spacer(Modifier.height(10.dp))
+            Row(horizontalArrangement = Arrangement.spacedBy(8.dp)) {
+                Button(
+                    onClick = { clipboard.setText(AnnotatedString(report)) },
+                    shape = RoundedCornerShape(12.dp),
+                ) {
+                    Text("Copy report")
+                }
+                Button(
+                    onClick = {
+                        CrashLog.clear(context)
+                        trace = null
+                    },
+                    shape = RoundedCornerShape(12.dp),
+                    colors = ButtonDefaults.buttonColors(
+                        containerColor = MaterialTheme.colorScheme.surfaceVariant,
+                        contentColor = MaterialTheme.colorScheme.onSurfaceVariant,
+                    ),
+                ) {
+                    Text("Dismiss")
+                }
+            }
         }
     }
 }
