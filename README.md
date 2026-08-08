@@ -93,7 +93,14 @@ gradient rather than a broken image.
 teal, History amber, Science blue) is the app's main navigational cue, and repainting it from
 the user's wallpaper would destroy it.
 
-## Building
+## Getting the app
+
+Every push to `main` builds a debug APK in CI. To install it without building anything:
+
+**Actions → latest run → Artifacts → `smart-debug-apk`.** Unzip it, move the APK to an
+Android 8.0+ phone, allow installs from your file manager, and tap it.
+
+## Building it yourself
 
 Requires Android Studio (Ladybug or newer) or a local Android SDK.
 
