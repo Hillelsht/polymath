@@ -1,0 +1,66 @@
+name: Build
+
+on:
+  push:
+    branches: [main]
+  pull_request:
+  workflow_dispatch:
+
+jobs:
+  engine-tests:
+    name: Learning engine tests
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-java@v4
+        with:
+          distribution: temurin
+          java-version: 17
+
+      - uses: gradle/actions/setup-gradle@v4
+
+      # The domain layer has no Android dependencies, so this runs on its own and
+      # fails fast if the scheduler, quiz generator or the 517-fact curriculum break.
+      - name: Run engine and curriculum tests
+        run: ./gradlew -p enginetests test
+
+      - name: Upload test report
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: engine-test-report
+          path: enginetests/build/reports/tests/test
+          if-no-files-found: ignore
+
+  apk:
+    name: Debug APK
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-java@v4
+        with:
+          distribution: temurin
+          java-version: 17
+
+      - uses: android-actions/setup-android@v3
+
+      - uses: gradle/actions/setup-gradle@v4
+
+      - name: Install the compile SDK
+        run: sdkmanager "platforms;android-35" "build-tools;35.0.0"
+
+      - name: Assemble debug APK
+        run: ./gradlew assembleDebug --stacktrace
+
+      - name: Lint
+        run: ./gradlew lintDebug
+        continue-on-error: true
+
+      - name: Upload APK
+        uses: actions/upload-artifact@v4
+        with:
+          name: smart-debug-apk
+          path: app/build/outputs/apk/debug/*.apk
+          if-no-files-found: error
