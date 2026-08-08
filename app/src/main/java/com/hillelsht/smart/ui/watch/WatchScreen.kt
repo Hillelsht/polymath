@@ -66,6 +66,7 @@ data class WatchUiState(
     val visible: List<Video>
         get() = videos.filter { video ->
             (category == null || video.category == category) &&
+                // Videos of unknown length stay visible until a length filter is chosen.
                 (length == null || video.lengthClass == length)
         }
 }
@@ -239,27 +240,29 @@ private fun VideoCard(video: Video, watched: Boolean, onClick: () -> Unit) {
                         ),
                     ),
             )
-            Row(
-                Modifier
-                    .align(Alignment.BottomEnd)
-                    .padding(10.dp)
-                    .clip(CircleShape)
-                    .background(Color.Black.copy(alpha = 0.7f))
-                    .padding(horizontal = 8.dp, vertical = 4.dp),
-                verticalAlignment = Alignment.CenterVertically,
-            ) {
-                Icon(
-                    Icons.Rounded.PlayArrow,
-                    contentDescription = null,
-                    tint = Color.White,
-                    modifier = Modifier.size(14.dp),
-                )
-                Spacer(Modifier.width(4.dp))
-                Text(
-                    text = "${video.minutes} min",
-                    style = MaterialTheme.typography.labelSmall,
-                    color = Color.White,
-                )
+            video.minutes?.let { minutes ->
+                Row(
+                    Modifier
+                        .align(Alignment.BottomEnd)
+                        .padding(10.dp)
+                        .clip(CircleShape)
+                        .background(Color.Black.copy(alpha = 0.7f))
+                        .padding(horizontal = 8.dp, vertical = 4.dp),
+                    verticalAlignment = Alignment.CenterVertically,
+                ) {
+                    Icon(
+                        Icons.Rounded.PlayArrow,
+                        contentDescription = null,
+                        tint = Color.White,
+                        modifier = Modifier.size(14.dp),
+                    )
+                    Spacer(Modifier.width(4.dp))
+                    Text(
+                        text = "$minutes min",
+                        style = MaterialTheme.typography.labelSmall,
+                        color = Color.White,
+                    )
+                }
             }
         }
 

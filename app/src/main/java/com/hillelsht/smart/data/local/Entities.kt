@@ -50,7 +50,7 @@ data class VideoEntity(
     val categoryId: String,
     val title: String,
     val channel: String,
-    val minutes: Int,
+    val minutes: Int?,
     val thumbnailUrl: String?,
     /** Comma-joined fact ids; simple enough that a join table would be ceremony. */
     val relatedFactIds: String,

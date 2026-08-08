@@ -117,9 +117,13 @@ suggestions: a video is watchable only because it is on the allowlist in
 video ends with **Quiz me on this** and anything missed enters the spaced-repetition queue —
 watching becomes studying rather than a substitute for it.
 
-`tools/enrich_videos.py` verifies every entry in CI against YouTube's oEmbed endpoint, drops
-anything deleted, private or non-embeddable, and rewrites titles and channels from YouTube's
-own metadata so the shelf cannot drift from reality.
+**Video ids are never written by hand.** The allowlist in
+`app/src/main/assets/content/channels.json` names *channels*; `tools/enrich_videos.py`
+resolves each handle to its channel id, reads that channel's public RSS feed, and takes real
+upload ids straight from YouTube. Every id is therefore real by construction, and the shelf
+refreshes itself as those channels publish. (The first attempt did hand-author ids from
+memory: CI found that 30 of 187 existed and most of those pointed at unrelated videos, which
+is exactly why the pipeline discovers rather than guesses.)
 
 **What this is not:** Smart cannot restrict the separate YouTube app, or anything else on the
 device — no app can. That is device-level parental control (Family Link or Screen Time). What

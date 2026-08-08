@@ -92,12 +92,12 @@ class ContentSeeder(
         val downloaded = File(downloadedPacksDir(context), VIDEOS_FILE).exists()
         if (downloaded) return
 
+        // Only the pipeline-built catalog is ever seeded: its ids came from YouTube itself.
+        // There is deliberately no hand-authored fallback — that is how a shelf of dead links
+        // would get shipped.
         val assets = context.assets
-        val path = listOf("$ENRICHED_DIR/$VIDEOS_FILE", "$AUTHORING_DIR/$VIDEOS_FILE")
-            .firstOrNull { p ->
-                val dir = p.substringBefore('/')
-                assets.list(dir).orEmpty().contains(VIDEOS_FILE)
-            } ?: return
+        if (!assets.list(ENRICHED_DIR).orEmpty().contains(VIDEOS_FILE)) return
+        val path = "$ENRICHED_DIR/$VIDEOS_FILE"
 
         try {
             val raw = assets.open(path).bufferedReader().use { it.readText() }
@@ -110,11 +110,11 @@ class ContentSeeder(
     private fun readBundledPacks(): List<ContentParser.ParsedPack> {
         val assets = context.assets
         val enriched = assets.list(ENRICHED_DIR).orEmpty()
-            .filter { it.endsWith(".json") && it != VIDEOS_FILE }
+            .filter { it.endsWith(".json") && it !in NON_FACT_FILES }
         val dir = if (enriched.isNotEmpty()) ENRICHED_DIR else AUTHORING_DIR
         val names = if (enriched.isNotEmpty()) enriched
         else assets.list(AUTHORING_DIR).orEmpty()
-            .filter { it.endsWith(".json") && it != VIDEOS_FILE }
+            .filter { it.endsWith(".json") && it !in NON_FACT_FILES }
 
         return names.mapNotNull { name ->
             val path = "$dir/$name"
@@ -135,6 +135,7 @@ class ContentSeeder(
 
         private const val TAG = "ContentSeeder"
         const val VIDEOS_FILE = "videos.json"
+        private val NON_FACT_FILES = setOf("videos.json", "channels.json")
         private const val ENRICHED_DIR = "packs"
         private const val AUTHORING_DIR = "content"
 

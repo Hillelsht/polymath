@@ -69,7 +69,7 @@ abstract class SmartDatabase : RoomDatabase() {
                         "categoryId TEXT NOT NULL, " +
                         "title TEXT NOT NULL, " +
                         "channel TEXT NOT NULL, " +
-                        "minutes INTEGER NOT NULL, " +
+                        "minutes INTEGER, " +
                         "thumbnailUrl TEXT, " +
                         "relatedFactIds TEXT NOT NULL)",
                 )

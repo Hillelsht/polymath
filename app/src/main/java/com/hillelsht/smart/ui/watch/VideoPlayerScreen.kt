@@ -114,7 +114,11 @@ fun VideoPlayerScreen(
                 )
                 Spacer(Modifier.height(6.dp))
                 Text(
-                    text = "${current.channel} · ${current.minutes} min · ${current.lengthClass.label}",
+                    text = listOfNotNull(
+                        current.channel,
+                        current.minutes?.let { "$it min" },
+                        current.lengthClass?.label,
+                    ).joinToString(" · "),
                     style = MaterialTheme.typography.bodyMedium,
                     color = MaterialTheme.colorScheme.onSurfaceVariant,
                 )

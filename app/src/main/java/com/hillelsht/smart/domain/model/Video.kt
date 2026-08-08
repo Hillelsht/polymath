@@ -8,7 +8,6 @@ enum class LengthClass(val label: String) {
     ;
 
     companion object {
-        /** oEmbed carries no duration, so minutes are authored and bucketed here. */
         fun fromMinutes(minutes: Int): LengthClass = when {
             minutes < 5 -> SHORT
             minutes <= 15 -> MEDIUM
@@ -30,12 +29,13 @@ data class Video(
     val category: Category,
     val title: String,
     val channel: String,
-    val minutes: Int,
+    /** Null when YouTube did not expose a duration; the UI simply omits it. */
+    val minutes: Int?,
     val thumbnailUrl: String?,
     /** Facts from the curriculum this video teaches; powers "Quiz me on this". */
     val relatedFactIds: List<String>,
 ) {
-    val lengthClass: LengthClass get() = LengthClass.fromMinutes(minutes)
+    val lengthClass: LengthClass? get() = minutes?.let(LengthClass::fromMinutes)
 
     /** YouTube serves thumbnails keyless by id; used when enrichment supplied none. */
     val bestThumbnailUrl: String
@@ -44,7 +44,7 @@ data class Video(
     init {
         require(id.isNotBlank()) { "Video id must not be blank" }
         require(YOUTUBE_ID_REGEX.matches(youtubeId)) { "Video $id has malformed youtubeId '$youtubeId'" }
-        require(minutes > 0) { "Video $id has non-positive minutes" }
+        require(minutes == null || minutes > 0) { "Video $id has non-positive minutes" }
     }
 
     companion object {

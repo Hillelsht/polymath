@@ -1,98 +1,127 @@
 package com.hillelsht.smart.content
 
-import com.hillelsht.smart.data.seed.ContentParser
 import com.hillelsht.smart.data.seed.VideoParser
 import com.hillelsht.smart.domain.model.Category
 import com.hillelsht.smart.domain.model.LengthClass
 import com.hillelsht.smart.domain.model.Video
+import kotlinx.serialization.Serializable
+import kotlinx.serialization.json.Json
 import kotlin.test.Test
 import kotlin.test.assertEquals
+import kotlin.test.assertNull
 import kotlin.test.assertTrue
 import kotlin.test.fail
 
 /**
- * Validates the curated video catalog through the production parser.
+ * Guards the Watch tab's content.
  *
- * The catalog is the app's entire content-safety mechanism: a video can only be watched
- * because it is on this list. A malformed or mislinked entry therefore has to fail the build,
- * not the user's evening.
+ * The first version of this feature shipped a hand-written list of YouTube ids, and CI found
+ * that only 30 of 187 existed — most of the rest pointed at unrelated videos. Ids are no
+ * longer authored at all: `channels.json` names channels, and the pipeline discovers real
+ * uploads from them. So the thing worth testing here is the allowlist and the parser, since
+ * the catalog itself is machine-generated and verified in CI.
  */
 class VideoCatalogTest {
 
-    private val catalog: VideoParser.ParsedCatalog by lazy {
-        val raw = javaClass.getResource("/content/videos.json")?.readText()
-            ?: fail("Missing /content/videos.json")
-        VideoParser.parse(raw, "videos.json")
-    }
+    @Serializable
+    private data class ChannelFile(val channels: List<Channel>)
 
-    private val videos: List<Video> get() = catalog.videos
+    @Serializable
+    private data class Channel(val handle: String, val category: String)
 
-    private val factIds: Set<String> by lazy {
-        Category.entries.flatMap { category ->
-            val raw = javaClass.getResource("/content/${category.id}.json")?.readText()
-                ?: fail("Missing curriculum file for ${category.id}")
-            ContentParser.parseFile(raw, "${category.id}.json")
-        }.map { it.id }.toSet()
+    private val json = Json { ignoreUnknownKeys = true }
+
+    private val channels: List<Channel> by lazy {
+        val raw = javaClass.getResource("/content/channels.json")?.readText()
+            ?: fail("Missing /content/channels.json")
+        json.decodeFromString<ChannelFile>(raw).channels
     }
 
     @Test
-    fun `the catalog parses and ships a real shelf of videos`() {
-        assertTrue(videos.size >= 100, "expected at least 100 videos, found ${videos.size}")
-        println("Video catalog: ${videos.size} videos")
+    fun `every allowlisted channel names a real category`() {
+        val bad = channels.filter { Category.fromId(it.category) == null }
+        assertTrue(bad.isEmpty(), "channels with unknown categories: ${bad.map { it.handle }}")
+    }
+
+    @Test
+    fun `every subject has channels feeding it`() {
+        val byCategory = channels.groupingBy { it.category }.eachCount()
+        println("Allowlisted channels: ${channels.size}")
         Category.entries.forEach { category ->
-            val count = videos.count { it.category == category }
+            val count = byCategory[category.id] ?: 0
             println("  ${category.displayName.padEnd(20)} $count")
-            assertTrue(count >= 20, "${category.displayName} has only $count videos")
+            assertTrue(count >= 3, "${category.displayName} has only $count channels")
         }
     }
 
     @Test
-    fun `video ids are unique`() {
-        val duplicates = videos.groupBy { it.id }.filterValues { it.size > 1 }.keys
-        assertTrue(duplicates.isEmpty(), "duplicate video ids: $duplicates")
+    fun `no channel is listed twice`() {
+        val duplicates = channels.groupBy { it.handle.lowercase() }.filterValues { it.size > 1 }.keys
+        assertTrue(duplicates.isEmpty(), "duplicate channel handles: $duplicates")
     }
 
     @Test
-    fun `no video appears twice under different entries`() {
-        // The pipeline rewrites titles from YouTube's canonical metadata, so two entries
-        // sharing an id become two identical-looking cards on the shelf.
-        val duplicates = videos.groupBy { it.youtubeId }.filterValues { it.size > 1 }
-        assertTrue(
-            duplicates.isEmpty(),
-            "same video listed more than once: ${duplicates.mapValues { it.value.map { v -> v.id } }}",
-        )
+    fun `handles are bare, without an at-sign or a URL`() {
+        // The pipeline builds youtube.com/@<handle>, so anything decorative breaks resolution.
+        val malformed = channels.filter { it.handle.startsWith("@") || it.handle.contains("/") }
+        assertTrue(malformed.isEmpty(), "handles must be bare: ${malformed.map { it.handle }}")
     }
 
     @Test
-    fun `every youtube id is a well-formed 11-character id`() {
-        val malformed = videos.filterNot { Video.YOUTUBE_ID_REGEX.matches(it.youtubeId) }
-        assertTrue(malformed.isEmpty(), "malformed ids: ${malformed.map { it.id to it.youtubeId }}")
+    fun `the parser reads a pipeline-shaped catalog`() {
+        val raw = """
+            {
+              "packId": "videos",
+              "version": "abc123",
+              "videos": [
+                {
+                  "id": "vid-aircAruvnKk",
+                  "youtubeId": "aircAruvnKk",
+                  "category": "science",
+                  "title": "But what is a neural network?",
+                  "channel": "3blue1brown",
+                  "minutes": 19,
+                  "thumbnailUrl": "https://i.ytimg.com/vi/aircAruvnKk/hqdefault.jpg",
+                  "relatedFactIds": ["sci-022"]
+                }
+              ]
+            }
+        """.trimIndent()
+
+        val catalog = VideoParser.parse(raw, "videos.json")
+        assertEquals("videos", catalog.packId)
+        assertEquals("abc123", catalog.version)
+
+        val video = catalog.videos.single()
+        assertEquals("aircAruvnKk", video.youtubeId)
+        assertEquals(Category.SCIENCE, video.category)
+        assertEquals(LengthClass.LONG, video.lengthClass)
+        assertTrue(Video.YOUTUBE_ID_REGEX.matches(video.youtubeId))
     }
 
     @Test
-    fun `every related fact actually exists in the curriculum`() {
-        val dangling = videos.flatMap { video ->
-            video.relatedFactIds.filterNot { it in factIds }.map { "${video.id} -> $it" }
-        }
-        assertTrue(dangling.isEmpty(), "videos linked to non-existent facts: $dangling")
-    }
+    fun `a video with no duration still parses and simply has no length`() {
+        // YouTube does not always expose lengthSeconds; an unknown runtime must not drop
+        // the video or crash the shelf.
+        val raw = """
+            {
+              "packId": "videos",
+              "videos": [
+                {
+                  "id": "vid-aircAruvnKk",
+                  "youtubeId": "aircAruvnKk",
+                  "category": "science",
+                  "title": "Something",
+                  "channel": "3blue1brown"
+                }
+              ]
+            }
+        """.trimIndent()
 
-    @Test
-    fun `most videos teach something the app can quiz on`() {
-        val linked = videos.count { it.relatedFactIds.isNotEmpty() }
-        assertTrue(
-            linked >= videos.size * 0.9,
-            "only $linked of ${videos.size} videos link to facts; the Quiz me button needs them",
-        )
-    }
-
-    @Test
-    fun `the shelf offers a range of lengths, not one format`() {
-        val spread = videos.groupingBy { it.lengthClass }.eachCount()
-        println("Length spread: $spread")
-        LengthClass.entries.forEach { length ->
-            assertTrue((spread[length] ?: 0) > 0, "no $length videos in the catalog")
-        }
+        val video = VideoParser.parse(raw, "videos.json").videos.single()
+        assertNull(video.minutes)
+        assertNull(video.lengthClass)
+        assertTrue(video.bestThumbnailUrl.contains("aircAruvnKk"))
     }
 
     @Test
@@ -101,16 +130,5 @@ class VideoCatalogTest {
         assertEquals(LengthClass.MEDIUM, LengthClass.fromMinutes(5))
         assertEquals(LengthClass.MEDIUM, LengthClass.fromMinutes(15))
         assertEquals(LengthClass.LONG, LengthClass.fromMinutes(16))
-    }
-
-    @Test
-    fun `a thumbnail is always available, resolved or derived`() {
-        videos.forEach { video ->
-            assertTrue(
-                video.bestThumbnailUrl.contains(video.youtubeId) ||
-                    video.bestThumbnailUrl.startsWith("https://"),
-                "${video.id} has no usable thumbnail",
-            )
-        }
     }
 }

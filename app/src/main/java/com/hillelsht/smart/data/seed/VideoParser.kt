@@ -20,7 +20,7 @@ data class SeedVideo(
     val category: String,
     val title: String,
     val channel: String,
-    val minutes: Int,
+    val minutes: Int? = null,
     val relatedFactIds: List<String> = emptyList(),
     /** Filled by the pipeline from oEmbed; absent in authoring files. */
     val thumbnailUrl: String? = null,
