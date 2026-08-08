@@ -42,23 +42,60 @@ PACK_NAMES = {
 
 
 def api_query(titles):
-    params = {
+    """One batched query, following the API's continuation cursor.
+
+    TextExtracts hands back extracts for only a page or two per response and expects the
+    client to keep requesting with the returned `continue` parameters until done — without
+    this loop most facts silently get no extract. `pilicense=any` includes non-free page
+    images (film posters, album covers), which are exactly the pictures pop-culture facts
+    need; the default free-only setting drops them.
+    """
+    base = {
         "action": "query",
         "format": "json",
         "formatversion": "2",
         "redirects": "1",
         "prop": "pageimages|extracts|info",
         "pithumbsize": str(THUMB_SIZE),
+        "pilicense": "any",
         "exsentences": str(SENTENCES),
         "explaintext": "1",
         "exlimit": "max",
         "inprop": "url",
         "titles": "|".join(titles),
     }
-    url = API + "?" + urllib.parse.urlencode(params)
-    req = urllib.request.Request(url, headers={"User-Agent": USER_AGENT})
-    with urllib.request.urlopen(req, timeout=30) as resp:
-        return json.load(resp)
+
+    merged = {"normalized": [], "redirects": [], "pages": {}}
+    cont = {}
+    for _ in range(40):  # hard stop; a batch never legitimately needs this many rounds
+        params = dict(base)
+        params.update(cont)
+        url = API + "?" + urllib.parse.urlencode(params)
+        req = urllib.request.Request(url, headers={"User-Agent": USER_AGENT})
+        with urllib.request.urlopen(req, timeout=30) as resp:
+            data = json.load(resp)
+
+        query = data.get("query", {})
+        merged["normalized"] += query.get("normalized", [])
+        merged["redirects"] += query.get("redirects", [])
+        for page in query.get("pages", []):
+            key = page.get("pageid") or page.get("title")
+            existing = merged["pages"].setdefault(key, {})
+            # Later continuation rounds fill in fields the first round lacked.
+            for field, value in page.items():
+                existing.setdefault(field, value)
+
+        if "continue" in data:
+            cont = data["continue"]
+            time.sleep(0.2)
+        else:
+            break
+
+    return {"query": {
+        "normalized": merged["normalized"],
+        "redirects": merged["redirects"],
+        "pages": list(merged["pages"].values()),
+    }}
 
 
 def resolve_titles(titles):
