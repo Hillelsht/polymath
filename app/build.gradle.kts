@@ -85,6 +85,7 @@ dependencies {
     implementation(libs.androidx.datastore.preferences)
 
     implementation(libs.coil.compose)
+    implementation(libs.youtube.player)
     implementation(libs.okhttp)
 
     testImplementation(libs.junit)

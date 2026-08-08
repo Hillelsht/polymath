@@ -12,12 +12,14 @@ import androidx.sqlite.db.SupportSQLiteDatabase
     entities = [
         FactEntity::class,
         PackEntity::class,
+        VideoEntity::class,
+        WatchedVideoEntity::class,
         ReviewStateEntity::class,
         QuizResultEntity::class,
         DailyActivityEntity::class,
         ImageCacheEntity::class,
     ],
-    version = 2,
+    version = 3,
     exportSchema = true,
 )
 @TypeConverters(Converters::class)
@@ -25,6 +27,8 @@ abstract class SmartDatabase : RoomDatabase() {
 
     abstract fun factDao(): FactDao
     abstract fun packDao(): PackDao
+    abstract fun videoDao(): VideoDao
+    abstract fun watchedDao(): WatchedDao
     abstract fun reviewDao(): ReviewDao
     abstract fun quizDao(): QuizDao
     abstract fun activityDao(): ActivityDao
@@ -55,11 +59,34 @@ abstract class SmartDatabase : RoomDatabase() {
             }
         }
 
+        /** v2 → v3: the Watch tab's tables. Purely additive; nothing existing is touched. */
+        private val MIGRATION_2_3 = object : Migration(2, 3) {
+            override fun migrate(db: SupportSQLiteDatabase) {
+                db.execSQL(
+                    "CREATE TABLE IF NOT EXISTS videos (" +
+                        "id TEXT NOT NULL PRIMARY KEY, " +
+                        "youtubeId TEXT NOT NULL, " +
+                        "categoryId TEXT NOT NULL, " +
+                        "title TEXT NOT NULL, " +
+                        "channel TEXT NOT NULL, " +
+                        "minutes INTEGER NOT NULL, " +
+                        "thumbnailUrl TEXT, " +
+                        "relatedFactIds TEXT NOT NULL)",
+                )
+                db.execSQL("CREATE INDEX IF NOT EXISTS index_videos_categoryId ON videos(categoryId)")
+                db.execSQL(
+                    "CREATE TABLE IF NOT EXISTS watched_videos (" +
+                        "videoId TEXT NOT NULL PRIMARY KEY, " +
+                        "watchedOn TEXT NOT NULL)",
+                )
+            }
+        }
+
         fun build(context: Context): SmartDatabase =
             // Schemas are exported to app/schemas so that future releases can keep shipping
             // real migrations — review history must survive every update.
             Room.databaseBuilder(context, SmartDatabase::class.java, "smart.db")
-                .addMigrations(MIGRATION_1_2)
+                .addMigrations(MIGRATION_1_2, MIGRATION_2_3)
                 .build()
     }
 }

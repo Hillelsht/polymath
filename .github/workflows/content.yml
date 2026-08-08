@@ -6,6 +6,7 @@ on:
     paths:
       - "app/src/main/assets/content/**"
       - "tools/enrich_content.py"
+      - "tools/enrich_videos.py"
   workflow_dispatch:
 
 permissions:
@@ -22,6 +23,9 @@ jobs:
 
       - name: Resolve images and extracts
         run: python3 tools/enrich_content.py
+
+      - name: Verify the video catalog
+        run: python3 tools/enrich_videos.py
 
       - name: Commit enriched packs
         run: |

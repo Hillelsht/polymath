@@ -8,6 +8,7 @@ import com.hillelsht.smart.domain.model.Category
 import com.hillelsht.smart.domain.model.Fact
 import com.hillelsht.smart.domain.model.Phase
 import com.hillelsht.smart.domain.model.ReviewState
+import com.hillelsht.smart.domain.model.Video
 import java.time.LocalDate
 
 @Entity(tableName = "facts", indices = [Index("categoryId"), Index("packId")])
@@ -40,6 +41,25 @@ data class PackEntity(
     val factCount: Int,
     /** "bundled" or "remote". */
     val source: String,
+)
+
+@Entity(tableName = "videos", indices = [Index("categoryId")])
+data class VideoEntity(
+    @PrimaryKey val id: String,
+    val youtubeId: String,
+    val categoryId: String,
+    val title: String,
+    val channel: String,
+    val minutes: Int,
+    val thumbnailUrl: String?,
+    /** Comma-joined fact ids; simple enough that a join table would be ceremony. */
+    val relatedFactIds: String,
+)
+
+@Entity(tableName = "watched_videos")
+data class WatchedVideoEntity(
+    @PrimaryKey val videoId: String,
+    val watchedOn: LocalDate,
 )
 
 @Entity(tableName = "review_states", indices = [Index("dueDate")])
@@ -132,6 +152,31 @@ fun Fact.toEntity(): FactEntity = FactEntity(
     imageUrl = imageUrl,
     pageUrl = pageUrl,
     packId = packId,
+)
+
+fun VideoEntity.toDomain(): Video? {
+    val category = Category.fromId(categoryId) ?: return null
+    return Video(
+        id = id,
+        youtubeId = youtubeId,
+        category = category,
+        title = title,
+        channel = channel,
+        minutes = minutes,
+        thumbnailUrl = thumbnailUrl,
+        relatedFactIds = relatedFactIds.split(',').filter { it.isNotBlank() },
+    )
+}
+
+fun Video.toEntity(): VideoEntity = VideoEntity(
+    id = id,
+    youtubeId = youtubeId,
+    categoryId = category.id,
+    title = title,
+    channel = channel,
+    minutes = minutes,
+    thumbnailUrl = thumbnailUrl,
+    relatedFactIds = relatedFactIds.joinToString(","),
 )
 
 fun ReviewStateEntity.toDomain(): ReviewState = ReviewState(

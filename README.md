@@ -108,6 +108,25 @@ extract, and an article link per fact. Pushing new content updates every install
 next Library visit — the APK never grows, because images stream from Wikipedia's servers into
 a bounded 256 MB on-device cache.
 
+## Watch — a walled garden of videos
+
+A fourth tab plays curated educational videos in-app, restricted to the same six subjects.
+There is no search of YouTube, no recommendation feed, no comments and no end-screen
+suggestions: a video is watchable only because it is on the allowlist in
+`app/src/main/assets/content/videos.json`. Each entry links to facts in the curriculum, so a
+video ends with **Quiz me on this** and anything missed enters the spaced-repetition queue —
+watching becomes studying rather than a substitute for it.
+
+`tools/enrich_videos.py` verifies every entry in CI against YouTube's oEmbed endpoint, drops
+anything deleted, private or non-embeddable, and rewrites titles and channels from YouTube's
+own metadata so the shelf cannot drift from reality.
+
+**What this is not:** Smart cannot restrict the separate YouTube app, or anything else on the
+device — no app can. That is device-level parental control (Family Link or Screen Time). What
+this tab does is make the good option the easy one, inside an app that has nothing else in it.
+Playback uses YouTube's official embedded player, so ads still play and YouTube's branding
+still appears.
+
 ## Building it yourself
 
 Requires Android Studio (Ladybug or newer) or a local Android SDK.

@@ -3,6 +3,7 @@ package com.hillelsht.smart.data.local
 import android.content.Context
 import android.util.Log
 import com.hillelsht.smart.data.seed.ContentParser
+import com.hillelsht.smart.data.seed.VideoParser
 import java.io.File
 
 /**
@@ -21,6 +22,7 @@ class ContentSeeder(
     private val context: Context,
     private val factDao: FactDao,
     private val packDao: PackDao,
+    private val videoDao: VideoDao,
 ) {
 
     suspend fun seedIfNeeded() {
@@ -29,14 +31,20 @@ class ContentSeeder(
 
         downloadedPackFiles(context).forEach { file ->
             try {
-                installIfChanged(
-                    ContentParser.parsePack(file.readText(), file.name),
-                    source = SOURCE_REMOTE,
-                )
+                if (file.name == VIDEOS_FILE) {
+                    installVideosIfChanged(VideoParser.parse(file.readText(), file.name))
+                } else {
+                    installIfChanged(
+                        ContentParser.parsePack(file.readText(), file.name),
+                        source = SOURCE_REMOTE,
+                    )
+                }
             } catch (e: Exception) {
                 Log.e(TAG, "Ignoring corrupt downloaded pack ${file.name}", e)
             }
         }
+
+        seedBundledVideos()
 
         // Facts seeded before the pack system existed carry an empty packId; the re-seed
         // above replaces them by id, and this sweeps any that no longer exist at all.
@@ -60,12 +68,53 @@ class ContentSeeder(
         Log.i(TAG, "Seeded pack ${pack.packId} v${pack.version} (${pack.facts.size} facts, $source)")
     }
 
+    /** Replaces the whole catalog when its version changes; watched state is keyed separately. */
+    suspend fun installVideosIfChanged(catalog: VideoParser.ParsedCatalog) {
+        val installed = packDao.byId(catalog.packId)
+        if (installed != null && installed.version == catalog.version) return
+
+        videoDao.clear()
+        videoDao.insertAll(catalog.videos.map { it.toEntity() })
+        packDao.upsert(
+            PackEntity(
+                id = catalog.packId,
+                version = catalog.version,
+                factCount = catalog.videos.size,
+                source = SOURCE_BUNDLED,
+            ),
+        )
+        Log.i(TAG, "Seeded video catalog v${catalog.version} (${catalog.videos.size} videos)")
+    }
+
+    private suspend fun seedBundledVideos() {
+        // A downloaded catalog (handled above) wins over the bundled one; only seed bundled
+        // when nothing newer has been fetched.
+        val downloaded = File(downloadedPacksDir(context), VIDEOS_FILE).exists()
+        if (downloaded) return
+
+        val assets = context.assets
+        val path = listOf("$ENRICHED_DIR/$VIDEOS_FILE", "$AUTHORING_DIR/$VIDEOS_FILE")
+            .firstOrNull { p ->
+                val dir = p.substringBefore('/')
+                assets.list(dir).orEmpty().contains(VIDEOS_FILE)
+            } ?: return
+
+        try {
+            val raw = assets.open(path).bufferedReader().use { it.readText() }
+            installVideosIfChanged(VideoParser.parse(raw, path))
+        } catch (e: Exception) {
+            Log.e(TAG, "Failed to seed bundled video catalog", e)
+        }
+    }
+
     private fun readBundledPacks(): List<ContentParser.ParsedPack> {
         val assets = context.assets
-        val enriched = assets.list(ENRICHED_DIR).orEmpty().filter { it.endsWith(".json") }
+        val enriched = assets.list(ENRICHED_DIR).orEmpty()
+            .filter { it.endsWith(".json") && it != VIDEOS_FILE }
         val dir = if (enriched.isNotEmpty()) ENRICHED_DIR else AUTHORING_DIR
         val names = if (enriched.isNotEmpty()) enriched
-        else assets.list(AUTHORING_DIR).orEmpty().filter { it.endsWith(".json") }
+        else assets.list(AUTHORING_DIR).orEmpty()
+            .filter { it.endsWith(".json") && it != VIDEOS_FILE }
 
         return names.mapNotNull { name ->
             val path = "$dir/$name"
@@ -85,6 +134,7 @@ class ContentSeeder(
         const val SOURCE_REMOTE = "remote"
 
         private const val TAG = "ContentSeeder"
+        const val VIDEOS_FILE = "videos.json"
         private const val ENRICHED_DIR = "packs"
         private const val AUTHORING_DIR = "content"
 

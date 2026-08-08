@@ -160,7 +160,9 @@ def main():
     total = images = extracts = 0
     missing_images = []
 
-    for src in sorted(CONTENT_DIR.glob("*.json")):
+    # videos.json lives alongside the fact files but is a different schema, handled by
+    # tools/enrich_videos.py.
+    for src in sorted(f for f in CONTENT_DIR.glob("*.json") if f.name != "videos.json"):
         data = json.loads(src.read_text())
         category = data["category"]
         facts = data["facts"]

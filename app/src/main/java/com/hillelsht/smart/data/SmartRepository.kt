@@ -11,6 +11,9 @@ import com.hillelsht.smart.data.local.PackEntity
 import com.hillelsht.smart.data.local.QuizDao
 import com.hillelsht.smart.data.local.QuizResultEntity
 import com.hillelsht.smart.data.local.ReviewDao
+import com.hillelsht.smart.data.local.VideoDao
+import com.hillelsht.smart.data.local.WatchedDao
+import com.hillelsht.smart.data.local.WatchedVideoEntity
 import com.hillelsht.smart.data.local.toDomain
 import com.hillelsht.smart.data.local.toEntity
 import com.hillelsht.smart.data.remote.PackManifest
@@ -18,6 +21,7 @@ import com.hillelsht.smart.data.remote.PackService
 import com.hillelsht.smart.data.remote.RemotePack
 import com.hillelsht.smart.data.remote.WikiImageService
 import com.hillelsht.smart.data.seed.ContentParser
+import com.hillelsht.smart.data.seed.VideoParser
 import com.hillelsht.smart.domain.CategoryMastery
 import com.hillelsht.smart.domain.DailyPlan
 import com.hillelsht.smart.domain.MasteryCalculator
@@ -29,6 +33,7 @@ import com.hillelsht.smart.domain.model.Category
 import com.hillelsht.smart.domain.model.Fact
 import com.hillelsht.smart.domain.model.Rating
 import com.hillelsht.smart.domain.model.ReviewState
+import com.hillelsht.smart.domain.model.Video
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
@@ -51,6 +56,8 @@ class SmartRepository(
     private val quizDao: QuizDao,
     private val activityDao: ActivityDao,
     private val imageCacheDao: ImageCacheDao,
+    private val videoDao: VideoDao,
+    private val watchedDao: WatchedDao,
     private val seeder: ContentSeeder,
     private val wikiImageService: WikiImageService,
     private val packService: PackService,
@@ -185,6 +192,36 @@ class SmartRepository(
         seeder.installIfChanged(parsed, source = ContentSeeder.SOURCE_REMOTE)
         return true
     }
+
+    // --- Videos -----------------------------------------------------------------------
+
+    val videos: Flow<List<Video>> =
+        videoDao.observeAll().map { rows -> rows.mapNotNull { it.toDomain() } }
+
+    val watchedVideoIds: Flow<Set<String>> = watchedDao.observeAll().map { it.toSet() }
+
+    suspend fun video(id: String): Video? = videoDao.byId(id)?.toDomain()
+
+    suspend fun markWatched(videoId: String) {
+        watchedDao.upsert(WatchedVideoEntity(videoId = videoId, watchedOn = today()))
+    }
+
+    /** Pulls a newer curated catalog from the repo, if there is one. */
+    suspend fun refreshVideos(): Boolean {
+        val raw = packService.fetchVideos() ?: return false
+        val catalog = try {
+            VideoParser.parse(raw, "videos.json")
+        } catch (e: Exception) {
+            return false
+        }
+        packStorage.save("videos.json", raw)
+        seeder.installVideosIfChanged(catalog)
+        return true
+    }
+
+    /** The facts a video teaches, for its "Quiz me on this" button. */
+    suspend fun factsByIds(ids: List<String>): List<Fact> =
+        ids.mapNotNull { factDao.byId(it)?.toDomain() }
 
     // --- Images -----------------------------------------------------------------------
 

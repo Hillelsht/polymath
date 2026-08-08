@@ -77,6 +77,7 @@ data class QuizUiState(
 class QuizViewModel(
     private val repository: SmartRepository,
     private val category: Category?,
+    private val factIds: List<String> = emptyList(),
 ) : ViewModel() {
 
     private val index = MutableStateFlow(0)
@@ -93,7 +94,19 @@ class QuizViewModel(
     ) { facts, position, choice, given ->
         val built = questions ?: run {
             if (facts.isEmpty()) return@run emptyList()
-            QuizGenerator.generateFromPool(facts, QUIZ_LENGTH, category).also { questions = it }
+            // A quiz launched from a video asks about exactly what that video taught; every
+            // other entry point draws from the whole corpus.
+            val generated = if (factIds.isEmpty()) {
+                QuizGenerator.generateFromPool(facts, QUIZ_LENGTH, category)
+            } else {
+                val wanted = factIds.toSet()
+                QuizGenerator.generate(
+                    subjects = facts.filter { it.id in wanted }.shuffled(),
+                    pool = facts,
+                    count = QUIZ_LENGTH,
+                )
+            }
+            generated.also { questions = it }
         }
         QuizUiState(
             questions = built,
@@ -138,16 +151,25 @@ class QuizViewModel(
     }
 
     companion object {
-        fun factory(repository: SmartRepository, category: Category?) = viewModelFactory {
-            initializer { QuizViewModel(repository, category) }
+        fun factory(
+            repository: SmartRepository,
+            category: Category?,
+            factIds: List<String>,
+        ) = viewModelFactory {
+            initializer { QuizViewModel(repository, category, factIds) }
         }
     }
 }
 
 @Composable
-fun QuizScreen(repository: SmartRepository, category: Category?, onDone: () -> Unit) {
+fun QuizScreen(
+    repository: SmartRepository,
+    category: Category?,
+    factIds: List<String> = emptyList(),
+    onDone: () -> Unit,
+) {
     val viewModel: QuizViewModel = viewModel(
-        factory = QuizViewModel.factory(repository, category),
+        factory = QuizViewModel.factory(repository, category, factIds),
     )
     val state by viewModel.state.collectAsStateWithLifecycle()
 

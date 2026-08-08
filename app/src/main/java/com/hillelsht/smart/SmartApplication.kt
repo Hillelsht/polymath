@@ -40,7 +40,12 @@ class AppContainer(context: Context) {
         .readTimeout(20, TimeUnit.SECONDS)
         .build()
 
-    private val seeder = ContentSeeder(context, database.factDao(), database.packDao())
+    private val seeder = ContentSeeder(
+        context = context,
+        factDao = database.factDao(),
+        packDao = database.packDao(),
+        videoDao = database.videoDao(),
+    )
 
     val repository = SmartRepository(
         factDao = database.factDao(),
@@ -49,6 +54,8 @@ class AppContainer(context: Context) {
         quizDao = database.quizDao(),
         activityDao = database.activityDao(),
         imageCacheDao = database.imageCacheDao(),
+        videoDao = database.videoDao(),
+        watchedDao = database.watchedDao(),
         seeder = seeder,
         wikiImageService = WikiImageService(httpClient, USER_AGENT),
         packService = PackService(httpClient, USER_AGENT),

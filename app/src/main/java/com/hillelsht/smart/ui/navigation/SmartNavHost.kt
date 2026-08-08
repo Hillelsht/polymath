@@ -12,6 +12,7 @@ import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.rounded.Home
 import androidx.compose.material.icons.rounded.Insights
 import androidx.compose.material.icons.rounded.MenuBook
+import androidx.compose.material.icons.rounded.PlayCircle
 import androidx.compose.material3.Icon
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.NavigationBar
@@ -40,18 +41,25 @@ import com.hillelsht.smart.ui.library.LibraryScreen
 import com.hillelsht.smart.ui.quiz.QuizScreen
 import com.hillelsht.smart.ui.review.ReviewScreen
 import com.hillelsht.smart.ui.stats.StatsScreen
+import com.hillelsht.smart.ui.watch.VideoPlayerScreen
+import com.hillelsht.smart.ui.watch.WatchScreen
 
 object Routes {
     const val HOME = "home"
     const val LIBRARY = "library"
+    const val WATCH = "watch"
     const val STATS = "stats"
     const val LEARN = "learn"
     const val REVIEW = "review"
-    const val QUIZ = "quiz?category={category}"
+    const val QUIZ = "quiz?category={category}&facts={facts}"
     const val CATEGORY = "category/{categoryId}"
+    const val PLAYER = "player/{videoId}"
 
-    fun quiz(category: Category? = null) = "quiz?category=${category?.id ?: ""}"
+    fun quiz(category: Category? = null, factIds: List<String> = emptyList()) =
+        "quiz?category=${category?.id ?: ""}&facts=${factIds.joinToString(",")}"
+
     fun category(category: Category) = "category/${category.id}"
+    fun player(videoId: String) = "player/$videoId"
 }
 
 private data class Tab(val route: String, val label: String, val icon: ImageVector)
@@ -59,6 +67,7 @@ private data class Tab(val route: String, val label: String, val icon: ImageVect
 private val tabs = listOf(
     Tab(Routes.HOME, "Today", Icons.Rounded.Home),
     Tab(Routes.LIBRARY, "Library", Icons.Rounded.MenuBook),
+    Tab(Routes.WATCH, "Watch", Icons.Rounded.PlayCircle),
     Tab(Routes.STATS, "Progress", Icons.Rounded.Insights),
 )
 
@@ -124,6 +133,12 @@ fun SmartApp(repository: SmartRepository) {
                         onCategory = { navController.navigate(Routes.category(it)) },
                     )
                 }
+                composable(Routes.WATCH) {
+                    WatchScreen(
+                        repository = repository,
+                        onPlay = { navController.navigate(Routes.player(it.id)) },
+                    )
+                }
                 composable(Routes.STATS) {
                     StatsScreen(repository = repository)
                 }
@@ -145,10 +160,21 @@ fun SmartApp(repository: SmartRepository) {
                 }
                 composable(Routes.QUIZ) { entry ->
                     val categoryId = entry.arguments?.getString("category").orEmpty()
+                    val factIds = entry.arguments?.getString("facts").orEmpty()
+                        .split(",").filter { it.isNotBlank() }
                     QuizScreen(
                         repository = repository,
                         category = Category.fromId(categoryId),
+                        factIds = factIds,
                         onDone = { navController.popBackStack() },
+                    )
+                }
+                composable(Routes.PLAYER) { entry ->
+                    VideoPlayerScreen(
+                        repository = repository,
+                        videoId = entry.arguments?.getString("videoId").orEmpty(),
+                        onBack = { navController.popBackStack() },
+                        onQuiz = { factIds -> navController.navigate(Routes.quiz(factIds = factIds)) },
                     )
                 }
                 composable(Routes.CATEGORY) { entry ->

@@ -33,6 +33,30 @@ interface FactDao {
 }
 
 @Dao
+interface VideoDao {
+    @Query("SELECT * FROM videos")
+    fun observeAll(): Flow<List<VideoEntity>>
+
+    @Query("SELECT * FROM videos WHERE id = :id")
+    suspend fun byId(id: String): VideoEntity?
+
+    @Insert(onConflict = OnConflictStrategy.REPLACE)
+    suspend fun insertAll(videos: List<VideoEntity>)
+
+    @Query("DELETE FROM videos")
+    suspend fun clear()
+}
+
+@Dao
+interface WatchedDao {
+    @Query("SELECT videoId FROM watched_videos")
+    fun observeAll(): Flow<List<String>>
+
+    @Upsert
+    suspend fun upsert(watched: WatchedVideoEntity)
+}
+
+@Dao
 interface PackDao {
     @Query("SELECT * FROM packs")
     fun observeAll(): Flow<List<PackEntity>>
