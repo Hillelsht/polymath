@@ -1,10 +1,11 @@
 package com.hillelsht.smart.data.remote
 
+import android.util.Log
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.withContext
-import kotlinx.serialization.SerialName
-import kotlinx.serialization.Serializable
 import kotlinx.serialization.json.Json
+import kotlinx.serialization.json.jsonObject
+import kotlinx.serialization.json.jsonPrimitive
 import okhttp3.OkHttpClient
 import okhttp3.Request
 import java.net.URLEncoder
@@ -13,12 +14,12 @@ import java.net.URLEncoder
 data class WikiImage(val imageUrl: String?, val pageUrl: String?)
 
 /**
- * Resolves a Wikipedia article title to an image.
+ * Runtime fallback resolver for facts that shipped without a pre-resolved [WikiImage].
  *
- * Uses the REST summary endpoint rather than guessing Wikimedia Commons filenames: article
- * titles are stable and knowable ("Mona Lisa"), whereas the exact file name behind a picture
- * is neither. The endpoint hands back a pre-scaled thumbnail, so the app is not downloading
- * 40-megapixel scans of paintings onto a phone.
+ * The primary image path is build-time: the CI pipeline resolves every fact to a direct
+ * thumbnail URL and the app just loads it. This class only covers stragglers, via the classic
+ * Action API (`w/api.php`), which is the most permissive endpoint Wikipedia has. Failures are
+ * logged loudly — a silent image failure already cost one debugging round trip.
  */
 class WikiImageService(
     private val client: OkHttpClient,
@@ -28,47 +29,45 @@ class WikiImageService(
     private val json = Json { ignoreUnknownKeys = true }
 
     suspend fun fetch(wikiTitle: String): WikiImage? = withContext(Dispatchers.IO) {
-        val encoded = URLEncoder.encode(wikiTitle.replace(' ', '_'), "UTF-8")
-            .replace("+", "_")
+        val encoded = URLEncoder.encode(wikiTitle, "UTF-8")
+        val url = "https://en.wikipedia.org/w/api.php" +
+            "?action=query&format=json&redirects=1" +
+            "&prop=pageimages%7Cinfo&pithumbsize=640&inprop=url" +
+            "&titles=$encoded"
+
         val request = Request.Builder()
-            .url("$ENDPOINT$encoded")
+            .url(url)
             .header("User-Agent", userAgent)
-            .header("Accept", "application/json")
             .build()
 
         try {
             client.newCall(request).execute().use { response ->
-                if (!response.isSuccessful) return@withContext null
+                if (!response.isSuccessful) {
+                    Log.w(TAG, "Wikipedia returned HTTP ${response.code} for '$wikiTitle'")
+                    return@withContext null
+                }
                 val body = response.body?.string() ?: return@withContext null
-                val summary = json.decodeFromString<Summary>(body)
-                WikiImage(
-                    imageUrl = summary.thumbnail?.source ?: summary.originalImage?.source,
-                    pageUrl = summary.contentUrls?.desktop?.page,
-                )
+                parse(body)
             }
         } catch (e: Exception) {
-            // Offline or rate-limited: the UI falls back to its gradient placeholder.
+            Log.w(TAG, "Image lookup failed for '$wikiTitle': ${e.javaClass.simpleName}: ${e.message}")
             null
         }
     }
 
-    @Serializable
-    private data class Summary(
-        val thumbnail: Image? = null,
-        @SerialName("originalimage") val originalImage: Image? = null,
-        @SerialName("content_urls") val contentUrls: ContentUrls? = null,
-    )
+    /** The Action API keys pages by numeric id, so this walks the JSON generically. */
+    private fun parse(body: String): WikiImage? {
+        val pages = json.parseToJsonElement(body)
+            .jsonObject["query"]?.jsonObject?.get("pages")?.jsonObject
+            ?: return null
+        val page = pages.values.firstOrNull()?.jsonObject ?: return null
 
-    @Serializable
-    private data class Image(val source: String)
-
-    @Serializable
-    private data class ContentUrls(val desktop: Desktop? = null)
-
-    @Serializable
-    private data class Desktop(val page: String? = null)
+        val thumb = page["thumbnail"]?.jsonObject?.get("source")?.jsonPrimitive?.content
+        val fullUrl = page["fullurl"]?.jsonPrimitive?.content
+        return WikiImage(imageUrl = thumb, pageUrl = fullUrl)
+    }
 
     private companion object {
-        const val ENDPOINT = "https://en.wikipedia.org/api/rest_v1/page/summary/"
+        const val TAG = "WikiImageService"
     }
 }

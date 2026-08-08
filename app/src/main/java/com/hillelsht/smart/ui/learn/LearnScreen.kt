@@ -8,6 +8,7 @@ import androidx.compose.foundation.layout.PaddingValues
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxSize
+import androidx.compose.foundation.layout.systemBarsPadding
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
@@ -42,6 +43,7 @@ import com.hillelsht.smart.domain.model.Fact
 import com.hillelsht.smart.ui.components.CategoryChip
 import com.hillelsht.smart.ui.components.EmptyState
 import com.hillelsht.smart.ui.components.FactImage
+import com.hillelsht.smart.ui.components.GoDeeper
 import com.hillelsht.smart.ui.components.SessionProgress
 import com.hillelsht.smart.ui.components.accent
 import kotlinx.coroutines.flow.MutableStateFlow
@@ -106,8 +108,9 @@ fun LearnScreen(repository: SmartRepository, onDone: () -> Unit) {
         Modifier
             .fillMaxSize()
             .background(MaterialTheme.colorScheme.background)
+            .systemBarsPadding()
             .padding(horizontal = 20.dp)
-            .padding(top = 48.dp, bottom = 24.dp),
+            .padding(top = 8.dp, bottom = 16.dp),
     ) {
         Row(verticalAlignment = Alignment.CenterVertically) {
             IconButton(onClick = onDone) {
@@ -178,7 +181,7 @@ private fun FactCard(fact: Fact, modifier: Modifier = Modifier, onNext: () -> Un
                 .weight(1f)
                 .verticalScroll(rememberScrollState()),
         ) {
-            FactImage(wikiTitle = fact.wikiTitle, category = fact.category)
+            FactImage(imageUrl = fact.imageUrl, wikiTitle = fact.wikiTitle, category = fact.category)
             Spacer(Modifier.height(20.dp))
             CategoryChip(fact.category)
             Spacer(Modifier.height(14.dp))
@@ -225,6 +228,13 @@ private fun FactCard(fact: Fact, modifier: Modifier = Modifier, onNext: () -> Un
                     }
                 }
             }
+
+            GoDeeper(
+                details = fact.details,
+                pageUrl = fact.pageUrl,
+                accent = fact.category.accent(),
+                modifier = Modifier.padding(top = 8.dp),
+            )
             Spacer(Modifier.height(24.dp))
         }
 

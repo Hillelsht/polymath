@@ -25,8 +25,23 @@ interface FactDao {
     @Insert(onConflict = OnConflictStrategy.REPLACE)
     suspend fun insertAll(facts: List<FactEntity>)
 
+    @Query("DELETE FROM facts WHERE packId = :packId")
+    suspend fun clearPack(packId: String)
+
     @Query("DELETE FROM facts")
     suspend fun clear()
+}
+
+@Dao
+interface PackDao {
+    @Query("SELECT * FROM packs")
+    fun observeAll(): Flow<List<PackEntity>>
+
+    @Query("SELECT * FROM packs WHERE id = :id")
+    suspend fun byId(id: String): PackEntity?
+
+    @Upsert
+    suspend fun upsert(pack: PackEntity)
 }
 
 @Dao

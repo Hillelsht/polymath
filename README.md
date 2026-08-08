@@ -83,11 +83,11 @@ app/src/main/java/com/hillelsht/smart/
 enginetests/  Standalone JVM build that compiles the real domain sources and tests them
 ```
 
-**Images** are resolved at runtime from Wikipedia's REST summary endpoint, keyed by article
-title rather than by guessing Wikimedia Commons filenames — article titles are stable and
-knowable, file names are neither. Resolved URLs are cached in Room permanently and the bytes
-by Coil, so each fact hits the network at most once; offline, cards fall back to a category
-gradient rather than a broken image.
+**Images** are resolved at *build time* by the content pipeline into direct
+`upload.wikimedia.org` thumbnail URLs shipped inside each pack, so the phone never calls a
+Wikipedia API — it just loads an image URL through Coil's bounded disk cache. A runtime
+resolver (Action API, with logging) covers only facts that shipped without one; offline, cards
+fall back to the category gradient rather than a broken image.
 
 **Colour** is deliberately *not* Material You dynamic theming. Category identity (Geography
 teal, History amber, Science blue) is the app's main navigational cue, and repainting it from
@@ -95,10 +95,18 @@ the user's wallpaper would destroy it.
 
 ## Getting the app
 
-Every push to `main` builds a debug APK in CI. To install it without building anything:
+**On your phone, open [github.com/Hillelsht/smart/releases/latest](https://github.com/Hillelsht/smart/releases/latest)
+and download `smart.apk`.** Tap it to install (allow installs from your browser if asked).
+Android 8.0+. Every push to `main` refreshes this release automatically.
 
-**Actions → latest run → Artifacts → `smart-debug-apk`.** Unzip it, move the APK to an
-Android 8.0+ phone, allow installs from your file manager, and tap it.
+## Content without app updates
+
+Facts live as JSON packs in [`packs/`](packs/), served to installed apps via
+raw.githubusercontent.com. A CI pipeline (`tools/enrich_content.py`) enriches the hand-written
+files in `app/src/main/assets/content/` with a direct Wikipedia thumbnail URL, a ~10-sentence
+extract, and an article link per fact. Pushing new content updates every installed app on its
+next Library visit — the APK never grows, because images stream from Wikipedia's servers into
+a bounded 256 MB on-device cache.
 
 ## Building it yourself
 

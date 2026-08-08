@@ -11,6 +11,7 @@ import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxSize
+import androidx.compose.foundation.layout.systemBarsPadding
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
@@ -154,8 +155,9 @@ fun QuizScreen(repository: SmartRepository, category: Category?, onDone: () -> U
         Modifier
             .fillMaxSize()
             .background(MaterialTheme.colorScheme.background)
+            .systemBarsPadding()
             .padding(horizontal = 20.dp)
-            .padding(top = 48.dp, bottom = 24.dp),
+            .padding(top = 8.dp, bottom = 16.dp),
     ) {
         Row(verticalAlignment = Alignment.CenterVertically) {
             androidx.compose.material3.IconButton(onClick = onDone) {
@@ -244,6 +246,7 @@ private fun QuestionCard(
             if (selected != null) {
                 Spacer(Modifier.height(10.dp))
                 FactImage(
+                    imageUrl = question.imageUrl,
                     wikiTitle = question.wikiTitle,
                     category = question.category,
                     ratio = 16f / 9f,

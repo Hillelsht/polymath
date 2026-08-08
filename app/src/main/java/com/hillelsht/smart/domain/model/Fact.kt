@@ -23,6 +23,14 @@ data class Fact(
     val hook: String? = null,
     val wikiTitle: String? = null,
     val difficulty: Int = 1,
+    /** A longer teaching passage (up to ~10 sentences), pulled from Wikipedia by the pipeline. */
+    val details: String? = null,
+    /** Direct thumbnail URL on upload.wikimedia.org, resolved at build time. */
+    val imageUrl: String? = null,
+    /** Canonical Wikipedia article URL for "Read more". */
+    val pageUrl: String? = null,
+    /** The content pack this fact arrived in; the seeder replaces facts per pack. */
+    val packId: String = "",
 ) {
     init {
         require(id.isNotBlank()) { "Fact id must not be blank" }

@@ -6,11 +6,21 @@ import kotlinx.serialization.SerialName
 import kotlinx.serialization.Serializable
 import kotlinx.serialization.json.Json
 
-/** One JSON file under `assets/content`: a category header plus its facts. */
+/**
+ * One content file: a category header plus its facts.
+ *
+ * Two flavours share this shape. Authoring files under `content/` carry only the hand-written
+ * fields; enriched packs under `packs/` (produced by the CI pipeline) additionally carry
+ * [SeedFact.details], [SeedFact.imageUrl] and [SeedFact.pageUrl], plus [packId] and [version]
+ * so the seeder can tell whether an installed pack is stale.
+ */
 @Serializable
 data class SeedFile(
     @SerialName("category") val categoryId: String,
     val facts: List<SeedFact>,
+    val packId: String? = null,
+    val version: String? = null,
+    val name: String? = null,
 )
 
 /**
@@ -28,6 +38,10 @@ data class SeedFact(
     val hook: String? = null,
     val wikiTitle: String? = null,
     val difficulty: Int = 1,
+    // Enrichment fields, filled in by the CI pipeline rather than by hand.
+    val details: String? = null,
+    val imageUrl: String? = null,
+    val pageUrl: String? = null,
 )
 
 /**
@@ -46,8 +60,23 @@ object ContentParser {
 
     class ContentException(message: String) : IllegalArgumentException(message)
 
+    /** A parsed content file with its pack identity resolved. */
+    data class ParsedPack(
+        val packId: String,
+        val version: String,
+        val category: Category,
+        val facts: List<Fact>,
+    )
+
     /** @param source a filename or similar label, used only to make errors legible. */
-    fun parseFile(raw: String, source: String): List<Fact> {
+    fun parseFile(raw: String, source: String): List<Fact> = parsePack(raw, source).facts
+
+    /**
+     * Parses a content file into a pack. Authoring files carry no pack metadata, so identity
+     * falls back to the category id and the version to a hash of the raw text — good enough
+     * to detect that bundled content changed between app versions.
+     */
+    fun parsePack(raw: String, source: String): ParsedPack {
         val file = try {
             json.decodeFromString<SeedFile>(raw)
         } catch (e: Exception) {
@@ -57,10 +86,16 @@ object ContentParser {
         val category = Category.fromId(file.categoryId)
             ?: throw ContentException("$source declares unknown category '${file.categoryId}'")
 
-        return file.facts.map { seed -> seed.toFact(category, source) }
+        val packId = file.packId ?: category.id
+        return ParsedPack(
+            packId = packId,
+            version = file.version ?: "text-${raw.hashCode()}",
+            category = category,
+            facts = file.facts.map { seed -> seed.toFact(category, packId, source) },
+        )
     }
 
-    private fun SeedFact.toFact(category: Category, source: String): Fact {
+    private fun SeedFact.toFact(category: Category, packId: String, source: String): Fact {
         fun require(condition: Boolean, message: String) {
             if (!condition) throw ContentException("$source: fact '$id' $message")
         }
@@ -84,6 +119,10 @@ object ContentParser {
             hook = hook?.takeIf { it.isNotBlank() },
             wikiTitle = wikiTitle?.takeIf { it.isNotBlank() },
             difficulty = difficulty,
+            details = details?.takeIf { it.isNotBlank() },
+            imageUrl = imageUrl?.takeIf { it.isNotBlank() },
+            pageUrl = pageUrl?.takeIf { it.isNotBlank() },
+            packId = packId,
         )
     }
 }

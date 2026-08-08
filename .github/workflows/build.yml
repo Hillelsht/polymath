@@ -6,6 +6,9 @@ on:
   pull_request:
   workflow_dispatch:
 
+permissions:
+  contents: write
+
 jobs:
   engine-tests:
     name: Learning engine tests
@@ -64,3 +67,20 @@ jobs:
           name: smart-debug-apk
           path: app/build/outputs/apk/debug/*.apk
           if-no-files-found: error
+
+      # A rolling public release so the APK installs from one stable link on a phone,
+      # with no GitHub login and no artifact-zip dance.
+      - name: Publish rolling release
+        if: github.event_name == 'push' && github.ref == 'refs/heads/main'
+        run: |
+          cp app/build/outputs/apk/debug/app-debug.apk smart.apk
+      - uses: softprops/action-gh-release@v2
+        if: github.event_name == 'push' && github.ref == 'refs/heads/main'
+        with:
+          tag_name: latest
+          name: Smart (latest build)
+          body: |
+            Rolling build of the latest `main`. Download `smart.apk` on your phone and tap to install
+            (allow installs from your browser or file manager if asked). Android 8.0+.
+          files: smart.apk
+          prerelease: false

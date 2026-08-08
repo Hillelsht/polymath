@@ -6,12 +6,18 @@ import com.hillelsht.smart.data.local.DailyActivityEntity
 import com.hillelsht.smart.data.local.FactDao
 import com.hillelsht.smart.data.local.ImageCacheDao
 import com.hillelsht.smart.data.local.ImageCacheEntity
+import com.hillelsht.smart.data.local.PackDao
+import com.hillelsht.smart.data.local.PackEntity
 import com.hillelsht.smart.data.local.QuizDao
 import com.hillelsht.smart.data.local.QuizResultEntity
 import com.hillelsht.smart.data.local.ReviewDao
 import com.hillelsht.smart.data.local.toDomain
 import com.hillelsht.smart.data.local.toEntity
+import com.hillelsht.smart.data.remote.PackManifest
+import com.hillelsht.smart.data.remote.PackService
+import com.hillelsht.smart.data.remote.RemotePack
 import com.hillelsht.smart.data.remote.WikiImageService
+import com.hillelsht.smart.data.seed.ContentParser
 import com.hillelsht.smart.domain.CategoryMastery
 import com.hillelsht.smart.domain.DailyPlan
 import com.hillelsht.smart.domain.MasteryCalculator
@@ -24,6 +30,8 @@ import com.hillelsht.smart.domain.model.Fact
 import com.hillelsht.smart.domain.model.Rating
 import com.hillelsht.smart.domain.model.ReviewState
 import kotlinx.coroutines.flow.Flow
+import kotlinx.coroutines.flow.MutableStateFlow
+import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.combine
 import kotlinx.coroutines.flow.map
 import kotlinx.coroutines.sync.Mutex
@@ -38,14 +46,22 @@ import java.time.LocalDate
  */
 class SmartRepository(
     private val factDao: FactDao,
+    private val packDao: PackDao,
     private val reviewDao: ReviewDao,
     private val quizDao: QuizDao,
     private val activityDao: ActivityDao,
     private val imageCacheDao: ImageCacheDao,
     private val seeder: ContentSeeder,
     private val wikiImageService: WikiImageService,
+    private val packService: PackService,
+    private val packStorage: PackStorage,
     private val today: () -> LocalDate = LocalDate::now,
 ) {
+
+    /** Persists a downloaded pack's JSON so it survives restarts and re-seeds. */
+    fun interface PackStorage {
+        fun save(fileName: String, content: String)
+    }
 
     private val imageLock = Mutex()
 
@@ -135,6 +151,39 @@ class SmartRepository(
                 reviewsDone = (current?.reviewsDone ?: 0) + reviewsDone,
             ),
         )
+    }
+
+    // --- Content packs ----------------------------------------------------------------
+
+    /** Packs currently installed in the database. */
+    val installedPacks: Flow<List<PackEntity>> = packDao.observeAll()
+
+    private val manifestState = MutableStateFlow<PackManifest?>(null)
+
+    /** The remote catalog, refreshed by [refreshManifest]; null until first fetched. */
+    val manifest: StateFlow<PackManifest?> = manifestState
+
+    /** Fetches the remote catalog. Safe to call repeatedly; failures leave the old value. */
+    suspend fun refreshManifest(): Boolean {
+        val fetched = packService.fetchManifest() ?: return false
+        manifestState.value = fetched
+        return true
+    }
+
+    /**
+     * Downloads a pack, persists its JSON for future re-seeds, and installs it into the
+     * database. Existing review progress on overlapping fact ids is untouched.
+     */
+    suspend fun downloadPack(pack: RemotePack): Boolean {
+        val raw = packService.fetchPack(pack) ?: return false
+        val parsed = try {
+            ContentParser.parsePack(raw, pack.file)
+        } catch (e: Exception) {
+            return false
+        }
+        packStorage.save("${parsed.packId}.json", raw)
+        seeder.installIfChanged(parsed, source = ContentSeeder.SOURCE_REMOTE)
+        return true
     }
 
     // --- Images -----------------------------------------------------------------------

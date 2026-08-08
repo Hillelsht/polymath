@@ -12,6 +12,7 @@ data class QuizQuestion(
     val correctIndex: Int,
     val hook: String? = null,
     val wikiTitle: String? = null,
+    val imageUrl: String? = null,
 ) {
     val correctAnswer: String get() = options[correctIndex]
 

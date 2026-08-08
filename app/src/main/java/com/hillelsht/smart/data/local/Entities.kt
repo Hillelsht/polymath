@@ -10,7 +10,7 @@ import com.hillelsht.smart.domain.model.Phase
 import com.hillelsht.smart.domain.model.ReviewState
 import java.time.LocalDate
 
-@Entity(tableName = "facts", indices = [Index("categoryId")])
+@Entity(tableName = "facts", indices = [Index("categoryId"), Index("packId")])
 data class FactEntity(
     @PrimaryKey val id: String,
     val categoryId: String,
@@ -22,6 +22,24 @@ data class FactEntity(
     val hook: String?,
     val wikiTitle: String?,
     val difficulty: Int,
+    val details: String?,
+    val imageUrl: String?,
+    val pageUrl: String?,
+    val packId: String,
+)
+
+/**
+ * An installed content pack. The seeder compares [version] against the bundled or downloaded
+ * file and replaces the pack's facts only when it changed; review progress is keyed by fact id
+ * and never touched.
+ */
+@Entity(tableName = "packs")
+data class PackEntity(
+    @PrimaryKey val id: String,
+    val version: String,
+    val factCount: Int,
+    /** "bundled" or "remote". */
+    val source: String,
 )
 
 @Entity(tableName = "review_states", indices = [Index("dueDate")])
@@ -92,6 +110,10 @@ fun FactEntity.toDomain(): Fact? {
         hook = hook,
         wikiTitle = wikiTitle,
         difficulty = difficulty,
+        details = details,
+        imageUrl = imageUrl,
+        pageUrl = pageUrl,
+        packId = packId,
     )
 }
 
@@ -106,6 +128,10 @@ fun Fact.toEntity(): FactEntity = FactEntity(
     hook = hook,
     wikiTitle = wikiTitle,
     difficulty = difficulty,
+    details = details,
+    imageUrl = imageUrl,
+    pageUrl = pageUrl,
+    packId = packId,
 )
 
 fun ReviewStateEntity.toDomain(): ReviewState = ReviewState(

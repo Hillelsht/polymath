@@ -99,6 +99,7 @@ object QuizGenerator {
             correctIndex = options.indexOf(subject.answer),
             hook = subject.hook,
             wikiTitle = subject.wikiTitle,
+            imageUrl = subject.imageUrl,
         )
     }
 

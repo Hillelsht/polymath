@@ -19,15 +19,23 @@ import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.icons.Icons
+import android.content.Intent
+import android.net.Uri
 import androidx.compose.material.icons.rounded.AutoAwesome
+import androidx.compose.material.icons.rounded.ExpandLess
+import androidx.compose.material.icons.rounded.ExpandMore
 import androidx.compose.material3.Card
 import androidx.compose.material3.CardDefaults
 import androidx.compose.material3.Icon
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
+import androidx.compose.material3.TextButton
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
+import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.produceState
+import androidx.compose.runtime.saveable.rememberSaveable
+import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
@@ -37,6 +45,7 @@ import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.StrokeCap
 import androidx.compose.ui.graphics.drawscope.Stroke
 import androidx.compose.ui.layout.ContentScale
+import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.Dp
@@ -128,12 +137,15 @@ fun MasteryRing(
 /**
  * A Wikipedia image for a fact, with a graceful fallback.
  *
- * When there is no network, no picture, or the resolution is still in flight, the slot is
- * filled with the category's gradient rather than a grey box or a layout jump — an empty state
- * that still looks deliberate is the difference between "loading" and "broken".
+ * [imageUrl] is the build-time-resolved direct URL and is preferred; the runtime resolver only
+ * covers facts that shipped without one. When there is no network, no picture, or resolution
+ * is still in flight, the slot is filled with the category's gradient rather than a grey box
+ * or a layout jump — an empty state that still looks deliberate is the difference between
+ * "loading" and "broken".
  */
 @Composable
 fun FactImage(
+    imageUrl: String?,
     wikiTitle: String?,
     category: Category,
     modifier: Modifier = Modifier,
@@ -141,8 +153,8 @@ fun FactImage(
     cornerRadius: Dp = 20.dp,
 ) {
     val resolver = LocalImageResolver.current
-    val url by produceState<String?>(initialValue = null, wikiTitle) {
-        value = wikiTitle?.let { resolver.resolve(it) }
+    val url by produceState(initialValue = imageUrl, imageUrl, wikiTitle) {
+        if (value == null) value = wikiTitle?.let { resolver.resolve(it) }
     }
 
     Box(
@@ -302,5 +314,62 @@ fun SessionProgress(
                 .clip(CircleShape)
                 .background(accent),
         )
+    }
+}
+
+/**
+ * The fact's longer Wikipedia passage, collapsed behind one tap so cards stay scannable,
+ * with a link out to the full article.
+ */
+@Composable
+fun GoDeeper(
+    details: String?,
+    pageUrl: String?,
+    accent: Color,
+    modifier: Modifier = Modifier,
+) {
+    if (details == null && pageUrl == null) return
+    var expanded by rememberSaveable { mutableStateOf(false) }
+    val context = LocalContext.current
+
+    Column(modifier.fillMaxWidth()) {
+        if (details != null) {
+            TextButton(onClick = { expanded = !expanded }) {
+                Text(
+                    text = if (expanded) "Show less" else "Go deeper",
+                    style = MaterialTheme.typography.labelLarge,
+                    color = accent,
+                )
+                Icon(
+                    imageVector = if (expanded) Icons.Rounded.ExpandLess else Icons.Rounded.ExpandMore,
+                    contentDescription = null,
+                    tint = accent,
+                    modifier = Modifier.size(20.dp),
+                )
+            }
+            if (expanded) {
+                Text(
+                    text = details,
+                    style = MaterialTheme.typography.bodyMedium,
+                    color = MaterialTheme.colorScheme.onSurfaceVariant,
+                    modifier = Modifier.padding(horizontal = 12.dp),
+                )
+            }
+        }
+        if (pageUrl != null && (expanded || details == null)) {
+            TextButton(
+                onClick = {
+                    runCatching {
+                        context.startActivity(Intent(Intent.ACTION_VIEW, Uri.parse(pageUrl)))
+                    }
+                },
+            ) {
+                Text(
+                    text = "Read on Wikipedia",
+                    style = MaterialTheme.typography.labelLarge,
+                    color = MaterialTheme.colorScheme.onSurfaceVariant,
+                )
+            }
+        }
     }
 }
