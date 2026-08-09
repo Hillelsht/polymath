@@ -1,46 +1,149 @@
 {
-  "note": "The allowlist that defines the Watch tab. Videos are never hand-listed by id — the CI pipeline discovers real uploads from these channels. Adding a channel here is the only way a video can enter the app.",
-  "channels": [
-    { "handle": "GeographyNow", "category": "geography" },
-    { "handle": "AtlasPro", "category": "geography" },
-    { "handle": "RealLifeLore", "category": "geography" },
-    { "handle": "Wendoverproductions", "category": "geography" },
-    { "handle": "GeographyKing", "category": "geography" },
-
-    { "handle": "OverSimplified", "category": "history" },
-    { "handle": "KingsandGenerals", "category": "history" },
-    { "handle": "HistoriaCivilis", "category": "history" },
-    { "handle": "EpicHistoryTV", "category": "history" },
-    { "handle": "TheGreatWar", "category": "history" },
-    { "handle": "historymatters", "category": "history" },
-
-    { "handle": "kurzgesagt", "category": "science" },
-    { "handle": "veritasium", "category": "science" },
-    { "handle": "SciShow", "category": "science" },
-    { "handle": "3blue1brown", "category": "science" },
-    { "handle": "MinutePhysics", "category": "science" },
-    { "handle": "TEDEd", "category": "science" },
-    { "handle": "pbseons", "category": "science" },
-    { "handle": "SmarterEveryDay", "category": "science" },
-    { "handle": "sciencechannel", "category": "science" },
-
-    { "handle": "GreatArtExplained", "category": "arts" },
-    { "handle": "TheArtAssignment", "category": "arts" },
-    { "handle": "Nerdwriter1", "category": "arts" },
-    { "handle": "InsidetheScore", "category": "arts" },
-    { "handle": "ListeningIn", "category": "arts" },
-
-    { "handle": "TifoFootball", "category": "sports" },
-    { "handle": "NinhLy", "category": "sports" },
-    { "handle": "olympics", "category": "sports" },
-    { "handle": "TifoIRL", "category": "sports" },
-    { "handle": "ChainBearF1", "category": "sports" },
-
-    { "handle": "Vox", "category": "culture" },
-    { "handle": "ThomasFlight", "category": "culture" },
-    { "handle": "Polyphonic", "category": "culture" },
-    { "handle": "GMTK", "category": "culture" },
-    { "handle": "everyframeapainting", "category": "culture" },
-    { "handle": "CinemaStix", "category": "culture" }
-  ]
+ "note": "The allowlist that defines the Watch tab. Videos are never hand-listed by id — the CI pipeline discovers real uploads from these channels. Adding a channel here is the only way a video can enter the app.",
+ "channels": [
+  {
+   "handle": "GreatArtExplained",
+   "category": "arts"
+  },
+  {
+   "handle": "InsidetheScore",
+   "category": "arts"
+  },
+  {
+   "handle": "ListeningIn",
+   "category": "arts"
+  },
+  {
+   "handle": "Nerdwriter1",
+   "category": "arts"
+  },
+  {
+   "handle": "TheArtAssignment",
+   "category": "arts"
+  },
+  {
+   "handle": "CinemaStix",
+   "category": "culture"
+  },
+  {
+   "handle": "everyframeapainting",
+   "category": "culture"
+  },
+  {
+   "handle": "GMTK",
+   "category": "culture"
+  },
+  {
+   "handle": "Polyphonic",
+   "category": "culture"
+  },
+  {
+   "handle": "ThomasFlight",
+   "category": "culture"
+  },
+  {
+   "handle": "Vox",
+   "category": "culture"
+  },
+  {
+   "handle": "AtlasPro",
+   "category": "geography"
+  },
+  {
+   "handle": "GeographyKing",
+   "category": "geography"
+  },
+  {
+   "handle": "GeographyNow",
+   "category": "geography"
+  },
+  {
+   "handle": "RealLifeLore",
+   "category": "geography"
+  },
+  {
+   "handle": "Wendoverproductions",
+   "category": "geography"
+  },
+  {
+   "handle": "EpicHistoryTV",
+   "category": "history"
+  },
+  {
+   "handle": "HistoriaCivilis",
+   "category": "history"
+  },
+  {
+   "handle": "historymatters",
+   "category": "history"
+  },
+  {
+   "handle": "KingsandGenerals",
+   "category": "history"
+  },
+  {
+   "handle": "OverSimplified",
+   "category": "history"
+  },
+  {
+   "handle": "TheGreatWar",
+   "category": "history"
+  },
+  {
+   "handle": "3blue1brown",
+   "category": "science"
+  },
+  {
+   "handle": "eons",
+   "category": "science"
+  },
+  {
+   "handle": "kurzgesagt",
+   "category": "science"
+  },
+  {
+   "handle": "MinutePhysics",
+   "category": "science"
+  },
+  {
+   "handle": "sciencechannel",
+   "category": "science"
+  },
+  {
+   "handle": "SciShow",
+   "category": "science"
+  },
+  {
+   "handle": "SmarterEveryDay",
+   "category": "science"
+  },
+  {
+   "handle": "TEDEd",
+   "category": "science"
+  },
+  {
+   "handle": "veritasium",
+   "category": "science"
+  },
+  {
+   "handle": "AthleticInterest",
+   "category": "sports"
+  },
+  {
+   "handle": "chainbear",
+   "category": "sports"
+  },
+  {
+   "handle": "olympics",
+   "category": "sports"
+  },
+  {
+   "handle": "Tifo",
+   "category": "sports"
+  },
+  {
+   "handle": "TifoSports",
+   "category": "sports"
+  }
+ ]
 }

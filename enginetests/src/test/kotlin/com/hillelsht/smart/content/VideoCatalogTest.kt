@@ -42,15 +42,16 @@ class VideoCatalogTest {
     }
 
     @Test
-    fun `every subject has channels feeding it`() {
-        // The prober drops any channel that blocks embedding, so a subject needs slack here:
-        // starting from three, one drop would empty a filter.
+    fun `every subject is authored with slack for channels the prober drops`() {
+        // This counts what is *authored*, not what survives. The first probe run dropped four
+        // of five sports channels at once — all four handles had been renamed — so a subject
+        // authored down to the bone loses its filter the moment a channel moves.
         val byCategory = channels.groupingBy { it.category }.eachCount()
         println("Allowlisted channels: ${channels.size}")
         Category.entries.forEach { category ->
             val count = byCategory[category.id] ?: 0
             println("  ${category.displayName.padEnd(20)} $count")
-            assertTrue(count >= 4, "${category.displayName} has only $count channels")
+            assertTrue(count >= 5, "${category.displayName} has only $count channels authored")
         }
     }
 

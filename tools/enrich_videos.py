@@ -42,6 +42,8 @@ YT = "{http://www.youtube.com/xml/schemas/2015}"
 
 SAMPLE_SIZE = 3
 MIN_CHANNELS = 12
+MIN_PER_CATEGORY = 3
+CATEGORIES = ("geography", "history", "science", "arts", "sports", "culture")
 
 
 def fetch(url, timeout=25):
@@ -166,14 +168,10 @@ def main():
         print(f"FAIL: only {len(usable)} channels usable — YouTube may be blocking the runner")
         return 1
 
-    per_category = {}
+    per_category = {c: 0 for c in CATEGORIES}
     for channel in usable:
         per_category[channel["category"]] = per_category.get(channel["category"], 0) + 1
     print("Per category:", ", ".join(f"{k}={v}" for k, v in sorted(per_category.items())))
-
-    missing = {"geography", "history", "science", "arts", "sports", "culture"} - per_category.keys()
-    if missing:
-        print(f"WARNING: no usable channels for {sorted(missing)} — those filters will be empty")
 
     payload = {"channels": usable}
     body = json.dumps(payload, ensure_ascii=False, indent=1)
@@ -192,6 +190,20 @@ def main():
             print(f"Removed stale {stale.relative_to(ROOT)}")
 
     print(f"Wrote packs/channels.json ({len(body.encode())} bytes)")
+
+    # Checked *after* writing, on purpose: a thin subject is still better than a stale
+    # allowlist, so the good channels ship either way. But it exits non-zero so the run goes
+    # red — the first version of this only warned, and nobody noticed sports quietly falling
+    # from five channels to one when four handles were renamed out from under it.
+    thin = {c: n for c, n in per_category.items() if n < MIN_PER_CATEGORY}
+    if thin:
+        print(
+            "FAIL: too few usable channels for "
+            + ", ".join(f"{c} ({n})" for c, n in sorted(thin.items()))
+            + f" — each subject needs at least {MIN_PER_CATEGORY}. "
+            "Add replacements to assets/content/channels.json."
+        )
+        return 1
     return 0
 
 
