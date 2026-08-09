@@ -13,7 +13,12 @@ coil = "2.7.0"
 okhttp = "4.12.0"
 serialization = "1.7.3"
 coroutines = "1.9.0"
-youtubePlayer = "12.1.2"
+# 13.0.0 stops claiming the embed originates from youtube.com and identifies the app by its
+# package instead. YouTube's error 153 asks for "the HTTP Referer header or equivalent API
+# Client identification", which a per-app origin satisfies and impersonating youtube.com does
+# not — the most likely lever we have on videos refusing to play inline. It also adds the
+# REQUEST_MISSING_HTTP_REFERER constant we now handle. Listener signatures are unchanged.
+youtubePlayer = "13.0.0"
 junit = "4.13.2"
 androidxJunit = "1.2.1"
 espresso = "3.6.1"

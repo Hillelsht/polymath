@@ -1,5 +1,6 @@
 package com.hillelsht.smart.ui.watch
 
+import android.content.Context
 import android.content.Intent
 import android.net.Uri
 import androidx.compose.foundation.background
@@ -13,6 +14,7 @@ import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.layout.systemBarsPadding
 import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.rememberScrollState
@@ -20,12 +22,14 @@ import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.foundation.verticalScroll
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.rounded.Close
+import androidx.compose.material.icons.rounded.OpenInNew
 import androidx.compose.material3.Button
 import androidx.compose.material3.Icon
 import androidx.compose.material3.IconButton
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.produceState
@@ -40,6 +44,7 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.viewinterop.AndroidView
 import androidx.lifecycle.compose.LocalLifecycleOwner
 import com.hillelsht.smart.data.SmartRepository
+import com.hillelsht.smart.domain.PlaybackWatchdog
 import com.hillelsht.smart.domain.model.Category
 import com.hillelsht.smart.domain.model.Fact
 import com.hillelsht.smart.domain.model.Video
@@ -51,6 +56,7 @@ import com.pierfrancescosoffritti.androidyoutubeplayer.core.player.PlayerConstan
 import com.pierfrancescosoffritti.androidyoutubeplayer.core.player.YouTubePlayer
 import com.pierfrancescosoffritti.androidyoutubeplayer.core.player.listeners.AbstractYouTubePlayerListener
 import com.pierfrancescosoffritti.androidyoutubeplayer.core.player.views.YouTubePlayerView
+import kotlinx.coroutines.delay
 import kotlinx.coroutines.launch
 import java.util.concurrent.atomic.AtomicBoolean
 
@@ -73,7 +79,8 @@ fun VideoPlayerScreen(
         value = repository.video(videoId)
     }
     val current = video
-    var blocked by remember(videoId) { mutableStateOf(false) }
+    val context = LocalContext.current
+    var playback by remember(videoId) { mutableStateOf<Playback>(Playback.Embedded) }
 
     Column(
         Modifier
@@ -106,16 +113,23 @@ fun VideoPlayerScreen(
                 .weight(1f)
                 .verticalScroll(rememberScrollState()),
         ) {
-            if (blocked) {
-                UnplayableNotice(current.youtubeId)
-            } else {
-                VideoSurface(
+            when (val state = playback) {
+                is Playback.HandedOff -> HandedOffStrip(state.reason)
+                Playback.Embedded -> VideoSurface(
                     youtubeId = current.youtubeId,
                     onStarted = { repository.markWatched(current.id) },
                     onDuration = { seconds -> repository.recordDuration(current.youtubeId, seconds) },
-                    onUnplayable = {
-                        repository.blockVideo(current.youtubeId, it)
-                        blocked = true
+                    onFailed = { failure ->
+                        // Only a refusal aimed at this one video may delete it. An app-level
+                        // rejection or a timeout would otherwise drain the whole shelf.
+                        val verdict = PlaybackWatchdog.assess(0, sawSignal = false, failure = failure)
+                        if (verdict is PlaybackWatchdog.Verdict.Failed && verdict.blocklist) {
+                            repository.blockVideo(current.youtubeId, failure.name)
+                        }
+                        // It is about to be watched, just not here.
+                        repository.markWatched(current.id)
+                        playback = Playback.HandedOff(failure)
+                        openOnYouTube(context, current.youtubeId)
                     },
                 )
             }
@@ -177,48 +191,63 @@ fun VideoPlayerScreen(
     }
 }
 
+/** Whether this video is playing here, or was handed to the YouTube app. */
+private sealed interface Playback {
+    data object Embedded : Playback
+    data class HandedOff(val reason: PlaybackWatchdog.Failure) : Playback
+}
+
+/** Android routes this to the YouTube app when it is installed, and to the browser otherwise. */
+private fun openOnYouTube(context: Context, youtubeId: String) {
+    runCatching {
+        context.startActivity(
+            Intent(Intent.ACTION_VIEW, Uri.parse("https://www.youtube.com/watch?v=$youtubeId")),
+        )
+    }
+}
+
 /**
- * Shown when YouTube refuses to embed a video (its error 152).
+ * Replaces the player once the video has been sent to YouTube.
  *
- * The video has already been removed from the shelf by this point, so this is the last time
- * it will ever be seen; the message says so rather than inviting a pointless retry.
+ * Deliberately a slim strip rather than a full error screen: everything below it — the title,
+ * the facts, the quiz button — stays exactly where it was, so coming back from YouTube lands
+ * on the quiz with nothing to navigate and no dead player to look at.
  */
 @Composable
-private fun UnplayableNotice(youtubeId: String) {
-    val context = LocalContext.current
-    Column(
+private fun HandedOffStrip(reason: PlaybackWatchdog.Failure) {
+    Row(
         Modifier
             .fillMaxWidth()
             .background(Color.Black)
-            .padding(28.dp),
-        horizontalAlignment = Alignment.CenterHorizontally,
+            .padding(horizontal = 20.dp, vertical = 22.dp),
+        verticalAlignment = Alignment.CenterVertically,
     ) {
-        Text(
-            text = "This channel does not allow playback outside YouTube",
-            style = MaterialTheme.typography.titleMedium,
-            color = Color.White,
+        Icon(
+            Icons.Rounded.OpenInNew,
+            contentDescription = null,
+            tint = Color.White,
+            modifier = Modifier.size(20.dp),
         )
-        Spacer(Modifier.height(8.dp))
-        Text(
-            text = "Removed from your shelf, so it will not come up again.",
-            style = MaterialTheme.typography.bodyMedium,
-            color = MaterialTheme.colorScheme.onSurfaceVariant,
-        )
-        Spacer(Modifier.height(16.dp))
-        Button(
-            onClick = {
-                runCatching {
-                    context.startActivity(
-                        Intent(
-                            Intent.ACTION_VIEW,
-                            Uri.parse("https://www.youtube.com/watch?v=$youtubeId"),
-                        ),
-                    )
-                }
-            },
-            shape = RoundedCornerShape(14.dp),
-        ) {
-            Text("Open in YouTube")
+        Spacer(Modifier.width(12.dp))
+        Column(Modifier.weight(1f)) {
+            Text(
+                text = "Playing on YouTube",
+                style = MaterialTheme.typography.titleSmall,
+                color = Color.White,
+            )
+            Text(
+                text = when (reason) {
+                    // Only this case has actually removed anything, so only it says so.
+                    PlaybackWatchdog.Failure.VIDEO_REFUSED ->
+                        "This one will not play inside apps. Removed from your shelf."
+                    PlaybackWatchdog.Failure.APP_REJECTED ->
+                        "YouTube would not play it here. It stays on your shelf."
+                    PlaybackWatchdog.Failure.SILENT ->
+                        "It would not start here. It stays on your shelf."
+                },
+                style = MaterialTheme.typography.bodySmall,
+                color = MaterialTheme.colorScheme.onSurfaceVariant,
+            )
         }
     }
 }
@@ -234,12 +263,30 @@ private fun VideoSurface(
     youtubeId: String,
     onStarted: suspend () -> Unit,
     onDuration: suspend (Int) -> Unit,
-    onUnplayable: suspend (String) -> Unit,
+    onFailed: suspend (PlaybackWatchdog.Failure) -> Unit,
 ) {
     val lifecycleOwner = LocalLifecycleOwner.current
     // Survives recomposition, and the listener reads the same instance the factory captured.
     val started = remember { AtomicBoolean(false) }
+    // Anything from YouTube proving it served the video. Error 152 never reports itself, so
+    // this flag not flipping is the only evidence the app gets that playback failed.
+    val sawSignal = remember(youtubeId) { AtomicBoolean(false) }
+    // Whichever path fires first wins; the other becomes a no-op.
+    val settled = remember(youtubeId) { AtomicBoolean(false) }
     val scope = rememberCoroutineScope()
+
+    val report: (PlaybackWatchdog.Failure) -> Unit = { failure ->
+        if (settled.compareAndSet(false, true)) scope.launch { onFailed(failure) }
+    }
+
+    LaunchedEffect(youtubeId) {
+        delay(PlaybackWatchdog.DEADLINE_MS)
+        val verdict = PlaybackWatchdog.assess(
+            elapsedMs = PlaybackWatchdog.DEADLINE_MS,
+            sawSignal = sawSignal.get(),
+        )
+        if (verdict is PlaybackWatchdog.Verdict.Failed) report(verdict.reason)
+    }
 
     AndroidView(
         modifier = Modifier
@@ -259,6 +306,13 @@ private fun VideoSurface(
                             youTubePlayer: YouTubePlayer,
                             state: PlayerConstants.PlayerState,
                         ) {
+                            // Any of these proves YouTube answered, which calls the watchdog off.
+                            if (state == PlayerConstants.PlayerState.VIDEO_CUED ||
+                                state == PlayerConstants.PlayerState.BUFFERING ||
+                                state == PlayerConstants.PlayerState.PLAYING
+                            ) {
+                                sawSignal.set(true)
+                            }
                             if (state == PlayerConstants.PlayerState.PLAYING &&
                                 started.compareAndSet(false, true)
                             ) {
@@ -266,21 +320,35 @@ private fun VideoSurface(
                             }
                         }
 
-                        // The feed cannot say whether a video allows embedding, so the app
-                        // finds out here — once — and never offers it again.
+                        /**
+                         * The errors YouTube *does* report. Error 152 is not among them — it is
+                         * drawn by the player itself in silence, which is what the watchdog
+                         * above exists to catch.
+                         */
                         override fun onError(
                             youTubePlayer: YouTubePlayer,
                             error: PlayerConstants.PlayerError,
                         ) {
-                            if (error == PlayerConstants.PlayerError.VIDEO_NOT_PLAYABLE_IN_EMBEDDED_PLAYER ||
-                                error == PlayerConstants.PlayerError.VIDEO_NOT_FOUND
-                            ) {
-                                scope.launch { onUnplayable(error.name) }
+                            when (error) {
+                                PlayerConstants.PlayerError.VIDEO_NOT_PLAYABLE_IN_EMBEDDED_PLAYER,
+                                PlayerConstants.PlayerError.VIDEO_NOT_FOUND,
+                                -> report(PlaybackWatchdog.Failure.VIDEO_REFUSED)
+
+                                // YouTube rejected this app's right to embed anything, not this
+                                // video. Blocklisting on it would empty the shelf card by card.
+                                PlayerConstants.PlayerError.REQUEST_MISSING_HTTP_REFERER,
+                                -> report(PlaybackWatchdog.Failure.APP_REJECTED)
+
+                                else -> Unit
                             }
                         }
 
-                        /** Feeds carry no duration; the player does, once the video loads. */
+                        /**
+                         * Feeds carry no duration; the player does, once the video loads — which
+                         * also makes this the earliest hard proof that playback is alive.
+                         */
                         override fun onVideoDuration(youTubePlayer: YouTubePlayer, duration: Float) {
+                            sawSignal.set(true)
                             scope.launch { onDuration(duration.toInt()) }
                         }
                     },
