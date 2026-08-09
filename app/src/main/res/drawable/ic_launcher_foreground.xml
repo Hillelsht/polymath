@@ -1,18 +1,105 @@
 <?xml version="1.0" encoding="utf-8"?>
+<!--
+  Aryeh, the Lion of Judah cub, under the Crown of Torah.
+
+  Transcribed from the generator that produced the reviewed design rather than redrawn, so the
+  launcher icon is the same geometry that was approved. Every point sits inside the 66dp safe
+  circle the adaptive mask allows. The crown's band is seated below the mane line with fur tufts
+  drawn over it, which is what makes it read as worn rather than balanced on top — those tufts
+  are the lighter amber, and they must stay lighter or the layering disappears.
+-->
 <vector xmlns:android="http://schemas.android.com/apk/res/android"
     android:width="108dp"
     android:height="108dp"
     android:viewportWidth="108"
     android:viewportHeight="108">
 
-    <!-- Primary spark: the "insight" mark. Kept inside the 66dp adaptive safe zone. -->
     <path
-        android:pathData="M58,26 C61,46 71,56 91,59 C71,62 61,72 58,92 C55,72 45,62 25,59 C45,56 55,46 58,26 Z"
-        android:fillColor="#FFFFFF" />
-
-    <!-- Secondary spark, offset for depth. -->
+        android:pathData="M69.2,53.1 Q77.6,53.9 80.0,58.0 Q77.6,62.1 69.2,62.9 A16.0,16.0 0 0 0 69.2,53.1 Z M68.8,64.0 Q74.7,70.0 73.9,74.7 Q69.4,76.3 62.5,71.6 A16.0,16.0 0 0 0 68.8,64.0 Z M61.5,72.1 Q62.1,80.5 58.5,83.6 Q54.0,81.9 51.8,73.8 A16.0,16.0 0 0 0 61.5,72.1 Z M50.7,73.7 Q45.8,80.5 41.0,80.5 Q38.7,76.4 42.1,68.7 A16.0,16.0 0 0 0 50.7,73.7 Z M41.4,67.9 Q33.3,69.9 29.6,66.9 Q30.5,62.2 38.0,58.6 A16.0,16.0 0 0 0 41.4,67.9 Z M38.0,57.4 Q30.5,53.8 29.6,49.1 Q33.3,46.1 41.4,48.1 A16.0,16.0 0 0 0 38.0,57.4 Z M42.1,47.3 Q38.7,39.6 41.0,35.5 Q45.8,35.5 50.7,42.3 A16.0,16.0 0 0 0 42.1,47.3 Z M51.8,42.2 Q54.0,34.1 58.5,32.4 Q62.1,35.5 61.5,43.9 A16.0,16.0 0 0 0 51.8,42.2 Z M62.5,44.4 Q69.4,39.7 73.9,41.3 Q74.7,46.0 68.8,52.0 A16.0,16.0 0 0 0 62.5,44.4 Z"
+        android:fillColor="#B9741C" />
     <path
-        android:pathData="M34,22 C35.4,30 39,33.6 47,35 C39,36.4 35.4,40 34,48 C32.6,40 29,36.4 21,35 C29,33.6 32.6,30 34,22 Z"
-        android:fillColor="#FFFFFF"
+        android:pathData="M37.00,58.00 a17.00,17.00 0 1,0 34.00,0 a17.00,17.00 0 1,0 -34.00,0 Z"
+        android:fillColor="#F2C978" />
+    <path
+        android:pathData="M41.5,40.8 Q41.6,32.7 44.0,27.8 Q48.2,38.2 50.2,38.2 Q52.5,38.2 54.0,27.8 Q55.5,38.2 57.8,38.2 Q59.8,38.2 64.0,27.8 Q66.4,32.7 66.5,40.8 Z"
+        android:fillColor="#FFD98A" />
+    <path
+        android:pathData="M41.70,40.80 h24.60 a1.00,1.00 0 0,1 1.00,1.00 v1.20 a1.00,1.00 0 0,1 -1.00,1.00 h-24.60 a1.00,1.00 0 0,1 -1.00,-1.00 v-1.20 a1.00,1.00 0 0,1 1.00,-1.00 Z"
+        android:fillColor="#FFD98A" />
+    <path
+        android:pathData="M40.7,41.9 h26.6"
+        android:strokeColor="#B9741C"
+        android:strokeWidth="0.9"
+        android:strokeAlpha="0.55"
+        android:strokeLineCap="round" />
+    <path
+        android:pathData="M46.73,42.60 a0.77,0.77 0 1,0 1.54,0 a0.77,0.77 0 1,0 -1.54,0 Z"
+        android:fillColor="#B9741C"
         android:fillAlpha="0.75" />
+    <path
+        android:pathData="M53.23,42.60 a0.77,0.77 0 1,0 1.54,0 a0.77,0.77 0 1,0 -1.54,0 Z"
+        android:fillColor="#B9741C"
+        android:fillAlpha="0.75" />
+    <path
+        android:pathData="M59.73,42.60 a0.77,0.77 0 1,0 1.54,0 a0.77,0.77 0 1,0 -1.54,0 Z"
+        android:fillColor="#B9741C"
+        android:fillAlpha="0.75" />
+    <path
+        android:pathData="M42.7,46.7 Q39.5,39.0 41.8,35.0 Q46.4,35.3 50.9,42.3 A16.0,16.0 0 0 0 42.7,46.7 Z M49.9,42.5 Q51.3,39.1 54.0,37.2 Q56.7,39.1 58.1,42.5 A16.0,16.0 0 0 0 49.9,42.5 Z M57.1,42.3 Q61.6,35.3 66.2,35.0 Q68.5,39.0 65.3,46.7 A16.0,16.0 0 0 0 57.1,42.3 Z"
+        android:fillColor="#D98F2C" />
+    <path
+        android:pathData="M37.00,47.10 a5.10,5.10 0 1,0 10.20,0 a5.10,5.10 0 1,0 -10.20,0 Z"
+        android:fillColor="#B9741C" />
+    <path
+        android:pathData="M60.80,47.10 a5.10,5.10 0 1,0 10.20,0 a5.10,5.10 0 1,0 -10.20,0 Z"
+        android:fillColor="#B9741C" />
+    <path
+        android:pathData="M39.60,47.50 a2.50,2.50 0 1,0 5.00,0 a2.50,2.50 0 1,0 -5.00,0 Z"
+        android:fillColor="#FCEBC8" />
+    <path
+        android:pathData="M63.40,47.50 a2.50,2.50 0 1,0 5.00,0 a2.50,2.50 0 1,0 -5.00,0 Z"
+        android:fillColor="#FCEBC8" />
+    <path
+        android:pathData="M40.40,62.80 a3.30,2.20 0 1,0 6.60,0 a3.30,2.20 0 1,0 -6.60,0 Z"
+        android:fillColor="#E8836B"
+        android:fillAlpha="0.34" />
+    <path
+        android:pathData="M61.00,62.80 a3.30,2.20 0 1,0 6.60,0 a3.30,2.20 0 1,0 -6.60,0 Z"
+        android:fillColor="#E8836B"
+        android:fillAlpha="0.34" />
+    <path
+        android:pathData="M43.90,66.10 a5.70,4.70 0 1,0 11.40,0 a5.70,4.70 0 1,0 -11.40,0 Z"
+        android:fillColor="#FCEBC8" />
+    <path
+        android:pathData="M52.70,66.10 a5.70,4.70 0 1,0 11.40,0 a5.70,4.70 0 1,0 -11.40,0 Z"
+        android:fillColor="#FCEBC8" />
+    <path
+        android:pathData="M51.0,61.0 Q54.0,59.2 57.0,61.0 Q54.0,64.9 51.0,61.0 Z"
+        android:fillColor="#2A1A06" />
+    <path
+        android:pathData="M54.0,64.2 L54.0,66.5 M54.0,66.5 Q51.4,70.0 47.8,65.6 M54.0,66.5 Q56.6,70.0 60.2,65.6"
+        android:strokeColor="#2A1A06"
+        android:strokeWidth="1.7"
+        android:strokeAlpha="1"
+        android:strokeLineCap="round" />
+    <path
+        android:pathData="M43.90,56.20 a3.70,4.00 0 1,0 7.40,0 a3.70,4.00 0 1,0 -7.40,0 Z"
+        android:fillColor="#2A1A06" />
+    <path
+        android:pathData="M56.70,56.20 a3.70,4.00 0 1,0 7.40,0 a3.70,4.00 0 1,0 -7.40,0 Z"
+        android:fillColor="#2A1A06" />
+    <path
+        android:pathData="M45.00,54.70 a1.40,1.50 0 1,0 2.80,0 a1.40,1.50 0 1,0 -2.80,0 Z"
+        android:fillColor="#FFFFFF" />
+    <path
+        android:pathData="M57.80,54.70 a1.40,1.50 0 1,0 2.80,0 a1.40,1.50 0 1,0 -2.80,0 Z"
+        android:fillColor="#FFFFFF" />
+    <path
+        android:pathData="M48.20,58.30 a0.70,0.70 0 1,0 1.40,0 a0.70,0.70 0 1,0 -1.40,0 Z"
+        android:fillColor="#FFFFFF"
+        android:fillAlpha="0.8" />
+    <path
+        android:pathData="M61.00,58.30 a0.70,0.70 0 1,0 1.40,0 a0.70,0.70 0 1,0 -1.40,0 Z"
+        android:fillColor="#FFFFFF"
+        android:fillAlpha="0.8" />
 </vector>
