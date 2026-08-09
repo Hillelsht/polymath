@@ -22,6 +22,7 @@ import androidx.compose.material3.Scaffold
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
+import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.vector.ImageVector
 import androidx.compose.ui.unit.dp
@@ -33,11 +34,13 @@ import androidx.navigation.compose.composable
 import androidx.navigation.compose.currentBackStackEntryAsState
 import androidx.navigation.compose.rememberNavController
 import com.hillelsht.smart.data.SmartRepository
+import com.hillelsht.smart.domain.MascotDirector.Surface
 import com.hillelsht.smart.domain.model.Category
 import com.hillelsht.smart.ui.home.HomeScreen
 import com.hillelsht.smart.ui.learn.LearnScreen
 import com.hillelsht.smart.ui.library.CategoryScreen
 import com.hillelsht.smart.ui.library.LibraryScreen
+import com.hillelsht.smart.ui.mascot.MascotHost
 import com.hillelsht.smart.ui.quiz.QuizScreen
 import com.hillelsht.smart.ui.review.ReviewScreen
 import com.hillelsht.smart.ui.stats.StatsScreen
@@ -112,6 +115,16 @@ fun SmartApp(repository: SmartRepository) {
                 .fillMaxSize()
                 .padding(bottom = if (showBottomBar) padding.calculateBottomPadding() else 0.dp),
         ) {
+            // Aryeh lives on the browsing tabs only. The study flows below hide the tab bar for
+            // the same reason he is absent from them: a lion strolling past mid-flashcard would
+            // undo exactly what that was for.
+            val mascotSurface = when (currentRoute) {
+                Routes.HOME -> Surface.TODAY
+                Routes.LIBRARY -> Surface.LIBRARY
+                Routes.WATCH -> Surface.WATCH
+                Routes.STATS -> Surface.PROGRESS
+                else -> null
+            }
             NavHost(
                 navController = navController,
                 startDestination = Routes.HOME,
@@ -188,6 +201,15 @@ fun SmartApp(repository: SmartRepository) {
                         onQuiz = { navController.navigate(Routes.quiz(it)) },
                     )
                 }
+            }
+
+            // Drawn over the tab content rather than inside it, so he is not clipped by a
+            // screen's scroll and does not shift when a list grows. He sits above the tab bar.
+            if (mascotSurface != null) {
+                MascotHost(
+                    surface = mascotSurface,
+                    modifier = Modifier.align(Alignment.BottomStart),
+                )
             }
         }
     }
