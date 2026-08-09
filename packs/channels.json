@@ -1,0 +1,191 @@
+{
+ "channels": [
+  {
+   "id": "UCmmPgObSUPw1HL2lq6H4ffA",
+   "handle": "GeographyNow",
+   "category": "geography",
+   "displayName": "Geography Now"
+  },
+  {
+   "id": "UC5xjDrmnS9CAOxSdRtSkVig",
+   "handle": "AtlasPro",
+   "category": "geography",
+   "displayName": "atlaspro"
+  },
+  {
+   "id": "UCP5tjEmvPItGyLhmjdwP7Ww",
+   "handle": "RealLifeLore",
+   "category": "geography",
+   "displayName": "RealLifeLore"
+  },
+  {
+   "id": "UC9RM-iSvTu1uPJb8X5yp3EQ",
+   "handle": "Wendoverproductions",
+   "category": "geography",
+   "displayName": "Wendover Productions"
+  },
+  {
+   "id": "UCZ6Qas2nqiX98L0NwqfVT7A",
+   "handle": "GeographyKing",
+   "category": "geography",
+   "displayName": "Geography King"
+  },
+  {
+   "id": "UCNIuvl7V8zACPpTmmNIqP2A",
+   "handle": "OverSimplified",
+   "category": "history",
+   "displayName": "OverSimplified"
+  },
+  {
+   "id": "UCMmaBzfCCwZ2KqaBJjkj0fw",
+   "handle": "KingsandGenerals",
+   "category": "history",
+   "displayName": "Kings and Generals"
+  },
+  {
+   "id": "UCv_vLHiWVBh_FR9vbeuiY-A",
+   "handle": "HistoriaCivilis",
+   "category": "history",
+   "displayName": "Historia Civilis"
+  },
+  {
+   "id": "UCvPXiKxH-eH9xq-80vpgmKQ",
+   "handle": "EpicHistoryTV",
+   "category": "history",
+   "displayName": "Epic History"
+  },
+  {
+   "id": "UCUcyEsEjhPEDf69RRVhRh4A",
+   "handle": "TheGreatWar",
+   "category": "history",
+   "displayName": "The Great War"
+  },
+  {
+   "id": "UC22BdTgxefuvUivrjesETjg",
+   "handle": "historymatters",
+   "category": "history",
+   "displayName": "History Matters"
+  },
+  {
+   "id": "UCsXVk37bltHxD1rDPwtNM8Q",
+   "handle": "kurzgesagt",
+   "category": "science",
+   "displayName": "Kurzgesagt – In a Nutshell"
+  },
+  {
+   "id": "UCHnyfMqiRRG1u-2MsSQLbXA",
+   "handle": "veritasium",
+   "category": "science",
+   "displayName": "Veritasium"
+  },
+  {
+   "id": "UCZYTClx2T1of7BRZ86-8fow",
+   "handle": "SciShow",
+   "category": "science",
+   "displayName": "SciShow"
+  },
+  {
+   "id": "UCYO_jab_esuFRV4b17AJtAw",
+   "handle": "3blue1brown",
+   "category": "science",
+   "displayName": "3Blue1Brown"
+  },
+  {
+   "id": "UCUHW94eEFW7hkUMVaZz4eDg",
+   "handle": "MinutePhysics",
+   "category": "science",
+   "displayName": "minutephysics"
+  },
+  {
+   "id": "UCsooa4yRKGN_zEE8iknghZA",
+   "handle": "TEDEd",
+   "category": "science",
+   "displayName": "TED-Ed"
+  },
+  {
+   "id": "UC6107grRI4m0o2-emgoDnAA",
+   "handle": "SmarterEveryDay",
+   "category": "science",
+   "displayName": "SmarterEveryDay"
+  },
+  {
+   "id": "UCvJiYiBUbw4tmpRSZT2r1Hw",
+   "handle": "sciencechannel",
+   "category": "science",
+   "displayName": "Science Channel"
+  },
+  {
+   "id": "UCePDFpCr78_qmVtpoB1Axaw",
+   "handle": "GreatArtExplained",
+   "category": "arts",
+   "displayName": "Great Art Explained"
+  },
+  {
+   "id": "UCmQThz1OLYt8mb2PU540LOA",
+   "handle": "TheArtAssignment",
+   "category": "arts",
+   "displayName": "The Art Assignment"
+  },
+  {
+   "id": "UCJkMlOu7faDgqh4PfzbpLdg",
+   "handle": "Nerdwriter1",
+   "category": "arts",
+   "displayName": "Nerdwriter1"
+  },
+  {
+   "id": "UC4ihNhN8iN9QPg2XTxiiPJw",
+   "handle": "InsidetheScore",
+   "category": "arts",
+   "displayName": "Inside the Score"
+  },
+  {
+   "id": "UCiawGYzxoZSPDLReSFETqeQ",
+   "handle": "ListeningIn",
+   "category": "arts",
+   "displayName": "Listening In"
+  },
+  {
+   "id": "UCTl3QQTvqHFjurroKxexy2Q",
+   "handle": "olympics",
+   "category": "sports",
+   "displayName": "Olympic Games"
+  },
+  {
+   "id": "UCLXo7UDZvByw2ixzpQCufnA",
+   "handle": "Vox",
+   "category": "culture",
+   "displayName": "Vox"
+  },
+  {
+   "id": "UCUyvQV2JsICeLZP4c_h40kA",
+   "handle": "ThomasFlight",
+   "category": "culture",
+   "displayName": "Thomas Flight"
+  },
+  {
+   "id": "UCXkNod_JcH7PleOjwK_8rYQ",
+   "handle": "Polyphonic",
+   "category": "culture",
+   "displayName": "Polyphonic"
+  },
+  {
+   "id": "UCqJ-Xo29CKyLTjn6z2XwYAw",
+   "handle": "GMTK",
+   "category": "culture",
+   "displayName": "Game Maker's Toolkit"
+  },
+  {
+   "id": "UCjFqcJQXGZ6T6sxyFB-5i6A",
+   "handle": "everyframeapainting",
+   "category": "culture",
+   "displayName": "Every Frame a Painting"
+  },
+  {
+   "id": "UCzjbia0NqUsSL1_-loJihMg",
+   "handle": "CinemaStix",
+   "category": "culture",
+   "displayName": "CinemaStix"
+  }
+ ],
+ "version": "4dbd09ccef07"
+}
