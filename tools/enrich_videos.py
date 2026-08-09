@@ -69,8 +69,20 @@ def resolve_channel(handle):
     match = re.search(r'"(?:channelId|externalId)"\s*:\s*"(UC[\w-]{22})"', page)
     if not match:
         return None, None
-    name = re.search(r'"channelMetadataRenderer"\s*:\s*\{\s*"title"\s*:\s*"([^"]{1,80})"', page)
-    return match.group(1), (name.group(1) if name else handle)
+
+    # The title is lifted out of JSON embedded in the page, so it arrives still escaped:
+    # "Kurzgesagt – In a Nutshell". Decoding it here is the difference between a clean
+    # channel name under every video card and a literal backslash-u.
+    name = re.search(
+        r'"channelMetadataRenderer"\s*:\s*\{\s*"title"\s*:\s*"((?:[^"\\]|\\.){1,120})"', page
+    )
+    display = handle
+    if name:
+        try:
+            display = json.loads(f'"{name.group(1)}"')
+        except json.JSONDecodeError:
+            display = handle
+    return match.group(1), display
 
 
 def sample_video_ids(channel_id, count=SAMPLE_SIZE):
