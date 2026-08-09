@@ -7,6 +7,10 @@ on:
       - "app/src/main/assets/content/**"
       - "tools/enrich_content.py"
       - "tools/enrich_videos.py"
+  # Channels change without anyone pushing: handles get renamed, and a channel can start
+  # blocking embedding at any time. Re-probing weekly is what keeps error 152 off the shelf.
+  schedule:
+    - cron: "17 6 * * 1"
   workflow_dispatch:
 
 permissions:
@@ -24,7 +28,11 @@ jobs:
       - name: Resolve images and extracts
         run: python3 tools/enrich_content.py
 
-      - name: Verify the video catalog
+      - name: Probe the Watch channels
+        # YouTube sometimes refuses datacenter IPs outright. The prober writes nothing unless
+        # it got a usable answer, so a bad run leaves the previous allowlist intact — and it
+        # must not also hold back the Wikipedia enrichment that already succeeded above.
+        continue-on-error: true
         run: python3 tools/enrich_videos.py
 
       - name: Commit enriched packs

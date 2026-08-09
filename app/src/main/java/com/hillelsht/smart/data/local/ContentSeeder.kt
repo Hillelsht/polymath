@@ -2,8 +2,8 @@ package com.hillelsht.smart.data.local
 
 import android.content.Context
 import android.util.Log
+import com.hillelsht.smart.data.seed.ChannelParser
 import com.hillelsht.smart.data.seed.ContentParser
-import com.hillelsht.smart.data.seed.VideoParser
 import java.io.File
 
 /**
@@ -22,7 +22,7 @@ class ContentSeeder(
     private val context: Context,
     private val factDao: FactDao,
     private val packDao: PackDao,
-    private val videoDao: VideoDao,
+    private val channelDao: ChannelDao,
 ) {
 
     suspend fun seedIfNeeded() {
@@ -31,8 +31,8 @@ class ContentSeeder(
 
         downloadedPackFiles(context).forEach { file ->
             try {
-                if (file.name == VIDEOS_FILE) {
-                    installVideosIfChanged(VideoParser.parse(file.readText(), file.name))
+                if (file.name == CHANNELS_FILE) {
+                    installChannels(ChannelParser.parse(file.readText(), file.name))
                 } else {
                     installIfChanged(
                         ContentParser.parsePack(file.readText(), file.name),
@@ -44,7 +44,7 @@ class ContentSeeder(
             }
         }
 
-        seedBundledVideos()
+        seedBundledChannels()
 
         // Facts seeded before the pack system existed carry an empty packId; the re-seed
         // above replaces them by id, and this sweeps any that no longer exist at all.
@@ -68,42 +68,56 @@ class ContentSeeder(
         Log.i(TAG, "Seeded pack ${pack.packId} v${pack.version} (${pack.facts.size} facts, $source)")
     }
 
-    /** Replaces the whole catalog when its version changes; watched state is keyed separately. */
-    suspend fun installVideosIfChanged(catalog: VideoParser.ParsedCatalog) {
-        val installed = packDao.byId(catalog.packId)
-        if (installed != null && installed.version == catalog.version) return
+    /**
+     * Installs the channel allowlist. Channels are the only Watch content that ships; the
+     * videos themselves are fetched live, so there is no catalogue here to go stale.
+     */
+    suspend fun installChannels(parsed: ChannelParser.ParsedChannels) {
+        if (parsed.channels.isEmpty()) return
+        val installed = packDao.byId(CHANNELS_PACK)
+        if (installed != null && installed.version == parsed.version) return
 
-        videoDao.clear()
-        videoDao.insertAll(catalog.videos.map { it.toEntity() })
+        channelDao.clear()
+        channelDao.insertAll(
+            parsed.channels.map {
+                ChannelEntity(
+                    id = it.id,
+                    handle = it.handle,
+                    categoryId = it.category.id,
+                    displayName = it.displayName,
+                )
+            },
+        )
         packDao.upsert(
             PackEntity(
-                id = catalog.packId,
-                version = catalog.version,
-                factCount = catalog.videos.size,
+                id = CHANNELS_PACK,
+                version = parsed.version,
+                factCount = parsed.channels.size,
                 source = SOURCE_BUNDLED,
             ),
         )
-        Log.i(TAG, "Seeded video catalog v${catalog.version} (${catalog.videos.size} videos)")
+        Log.i(TAG, "Seeded ${parsed.channels.size} watch channels (v${parsed.version})")
     }
 
-    private suspend fun seedBundledVideos() {
-        // A downloaded catalog (handled above) wins over the bundled one; only seed bundled
-        // when nothing newer has been fetched.
-        val downloaded = File(downloadedPacksDir(context), VIDEOS_FILE).exists()
-        if (downloaded) return
-
-        // Only the pipeline-built catalog is ever seeded: its ids came from YouTube itself.
-        // There is deliberately no hand-authored fallback — that is how a shelf of dead links
-        // would get shipped.
+    /**
+     * Installs the bundled allowlist, preferring the probed copy in `packs/`.
+     *
+     * The authoring file in `content/` lists handles, not the UC ids the feed endpoint needs,
+     * so before the pipeline has run it parses to nothing and the tab stays empty until the
+     * app fetches the probed list over the network. That is the right failure: a handle the
+     * app cannot resolve is not a channel it can read.
+     */
+    private suspend fun seedBundledChannels() {
+        if (File(downloadedPacksDir(context), CHANNELS_FILE).exists()) return
         val assets = context.assets
-        if (!assets.list(ENRICHED_DIR).orEmpty().contains(VIDEOS_FILE)) return
-        val path = "$ENRICHED_DIR/$VIDEOS_FILE"
-
+        val dir = listOf(ENRICHED_DIR, AUTHORING_DIR)
+            .firstOrNull { assets.list(it).orEmpty().contains(CHANNELS_FILE) }
+            ?: return
         try {
-            val raw = assets.open(path).bufferedReader().use { it.readText() }
-            installVideosIfChanged(VideoParser.parse(raw, path))
+            val raw = assets.open("$dir/$CHANNELS_FILE").bufferedReader().use { it.readText() }
+            installChannels(ChannelParser.parse(raw, CHANNELS_FILE))
         } catch (e: Exception) {
-            Log.e(TAG, "Failed to seed bundled video catalog", e)
+            Log.e(TAG, "Failed to seed watch channels", e)
         }
     }
 
@@ -134,7 +148,8 @@ class ContentSeeder(
         const val SOURCE_REMOTE = "remote"
 
         private const val TAG = "ContentSeeder"
-        const val VIDEOS_FILE = "videos.json"
+        const val CHANNELS_FILE = "channels.json"
+        private const val CHANNELS_PACK = "watch-channels"
         private val NON_FACT_FILES = setOf("videos.json", "channels.json")
         private const val ENRICHED_DIR = "packs"
         private const val AUTHORING_DIR = "content"

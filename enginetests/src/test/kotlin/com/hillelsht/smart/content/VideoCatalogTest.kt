@@ -1,14 +1,12 @@
 package com.hillelsht.smart.content
 
-import com.hillelsht.smart.data.seed.VideoParser
+import com.hillelsht.smart.data.seed.ChannelParser
 import com.hillelsht.smart.domain.model.Category
 import com.hillelsht.smart.domain.model.LengthClass
-import com.hillelsht.smart.domain.model.Video
 import kotlinx.serialization.Serializable
 import kotlinx.serialization.json.Json
 import kotlin.test.Test
 import kotlin.test.assertEquals
-import kotlin.test.assertNull
 import kotlin.test.assertTrue
 import kotlin.test.fail
 
@@ -16,25 +14,25 @@ import kotlin.test.fail
  * Guards the Watch tab's content.
  *
  * The first version of this feature shipped a hand-written list of YouTube ids, and CI found
- * that only 30 of 187 existed — most of the rest pointed at unrelated videos. Ids are no
- * longer authored at all: `channels.json` names channels, and the pipeline discovers real
- * uploads from them. So the thing worth testing here is the allowlist and the parser, since
- * the catalog itself is machine-generated and verified in CI.
+ * that only 30 of 187 existed — most of the rest pointed at unrelated videos. Ids are no longer
+ * authored *or* published: `channels.json` names channels, CI checks they resolve and allow
+ * embedding, and the app discovers real uploads from their feeds at runtime. So the only
+ * content left to guard here is the allowlist and the parser that reads it.
  */
 class VideoCatalogTest {
 
     @Serializable
-    private data class ChannelFile(val channels: List<Channel>)
+    private data class AllowlistFile(val channels: List<Entry>)
 
     @Serializable
-    private data class Channel(val handle: String, val category: String)
+    private data class Entry(val handle: String, val category: String)
 
     private val json = Json { ignoreUnknownKeys = true }
 
-    private val channels: List<Channel> by lazy {
+    private val channels: List<Entry> by lazy {
         val raw = javaClass.getResource("/content/channels.json")?.readText()
             ?: fail("Missing /content/channels.json")
-        json.decodeFromString<ChannelFile>(raw).channels
+        json.decodeFromString<AllowlistFile>(raw).channels
     }
 
     @Test
@@ -45,12 +43,14 @@ class VideoCatalogTest {
 
     @Test
     fun `every subject has channels feeding it`() {
+        // The prober drops any channel that blocks embedding, so a subject needs slack here:
+        // starting from three, one drop would empty a filter.
         val byCategory = channels.groupingBy { it.category }.eachCount()
         println("Allowlisted channels: ${channels.size}")
         Category.entries.forEach { category ->
             val count = byCategory[category.id] ?: 0
             println("  ${category.displayName.padEnd(20)} $count")
-            assertTrue(count >= 3, "${category.displayName} has only $count channels")
+            assertTrue(count >= 4, "${category.displayName} has only $count channels")
         }
     }
 
@@ -68,64 +68,54 @@ class VideoCatalogTest {
     }
 
     @Test
-    fun `the parser reads a pipeline-shaped catalog`() {
+    fun `the parser reads a probed channel list`() {
         val raw = """
             {
-              "packId": "videos",
               "version": "abc123",
-              "videos": [
+              "channels": [
                 {
-                  "id": "vid-aircAruvnKk",
-                  "youtubeId": "aircAruvnKk",
+                  "id": "UCYO_jab_esuFRV4b17AJtAw",
+                  "handle": "3blue1brown",
                   "category": "science",
-                  "title": "But what is a neural network?",
-                  "channel": "3blue1brown",
-                  "minutes": 19,
-                  "thumbnailUrl": "https://i.ytimg.com/vi/aircAruvnKk/hqdefault.jpg",
-                  "relatedFactIds": ["sci-022"]
+                  "displayName": "3Blue1Brown"
                 }
               ]
             }
         """.trimIndent()
 
-        val catalog = VideoParser.parse(raw, "videos.json")
-        assertEquals("videos", catalog.packId)
-        assertEquals("abc123", catalog.version)
+        val parsed = ChannelParser.parse(raw, "channels.json")
+        assertEquals("abc123", parsed.version)
 
-        val video = catalog.videos.single()
-        assertEquals("aircAruvnKk", video.youtubeId)
-        assertEquals(Category.SCIENCE, video.category)
-        assertEquals(LengthClass.LONG, video.lengthClass)
-        assertTrue(Video.YOUTUBE_ID_REGEX.matches(video.youtubeId))
+        val channel = parsed.channels.single()
+        assertEquals("UCYO_jab_esuFRV4b17AJtAw", channel.id)
+        assertEquals(Category.SCIENCE, channel.category)
+        assertEquals("3Blue1Brown", channel.displayName)
     }
 
     @Test
-    fun `a video with no duration still parses and simply has no length`() {
-        // YouTube does not always expose lengthSeconds; an unknown runtime must not drop
-        // the video or crash the shelf.
+    fun `channels the app cannot use are skipped rather than crashing the tab`() {
+        // A stale pack could name a subject the app dropped, or carry a handle the prober never
+        // resolved to a UC id. Either way the rest of the shelf must still load.
         val raw = """
             {
-              "packId": "videos",
-              "videos": [
-                {
-                  "id": "vid-aircAruvnKk",
-                  "youtubeId": "aircAruvnKk",
-                  "category": "science",
-                  "title": "Something",
-                  "channel": "3blue1brown"
-                }
+              "channels": [
+                { "id": "UCYO_jab_esuFRV4b17AJtAw", "handle": "good", "category": "science" },
+                { "id": "UCsooa4yRKGN", "handle": "unknown-subject", "category": "astrology" },
+                { "id": "3blue1brown", "handle": "unresolved", "category": "science" }
               ]
             }
         """.trimIndent()
 
-        val video = VideoParser.parse(raw, "videos.json").videos.single()
-        assertNull(video.minutes)
-        assertNull(video.lengthClass)
-        assertTrue(video.bestThumbnailUrl.contains("aircAruvnKk"))
+        val parsed = ChannelParser.parse(raw, "channels.json")
+        assertEquals(listOf("good"), parsed.channels.map { it.handle })
+        // No displayName in the file: the handle stands in, so a card is never blank.
+        assertEquals("good", parsed.channels.single().displayName)
     }
 
     @Test
     fun `length classification follows the documented thresholds`() {
+        // Durations now arrive from the player itself rather than a pack, but the shelf's
+        // Short/Medium/Long filters still key off these boundaries.
         assertEquals(LengthClass.SHORT, LengthClass.fromMinutes(4))
         assertEquals(LengthClass.MEDIUM, LengthClass.fromMinutes(5))
         assertEquals(LengthClass.MEDIUM, LengthClass.fromMinutes(15))

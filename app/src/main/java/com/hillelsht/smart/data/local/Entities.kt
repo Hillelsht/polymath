@@ -1,5 +1,6 @@
 package com.hillelsht.smart.data.local
 
+import androidx.room.ColumnInfo
 import androidx.room.Entity
 import androidx.room.Index
 import androidx.room.PrimaryKey
@@ -54,6 +55,42 @@ data class VideoEntity(
     val thumbnailUrl: String?,
     /** Comma-joined fact ids; simple enough that a join table would be ceremony. */
     val relatedFactIds: String,
+    /**
+     * Where this video sits on the shelf. The refresh interleaves channels so the tab opens
+     * with a spread rather than eight videos from whoever was fetched first, and that ordering
+     * is worth nothing if the read-back leaves it to SQLite's row order.
+     *
+     * The default is declared here as well as in the migration: SQLite demands one when adding
+     * a NOT NULL column to an existing table, and Room compares the two schemas on open.
+     */
+    @ColumnInfo(defaultValue = "0")
+    val position: Int = 0,
+)
+
+@Entity(tableName = "watch_channels", indices = [Index("categoryId")])
+data class ChannelEntity(
+    @PrimaryKey val id: String,
+    val handle: String,
+    val categoryId: String,
+    val displayName: String,
+)
+
+/**
+ * Videos that failed to play — almost always because the owner disabled embedding, which the
+ * IFrame player reports as error 152. Recording them is what stops the same dead card being
+ * offered again tomorrow.
+ */
+@Entity(tableName = "blocked_videos")
+data class BlockedVideoEntity(
+    @PrimaryKey val youtubeId: String,
+    val reason: String,
+)
+
+/** Durations the player told us about; a feed never carries them. */
+@Entity(tableName = "video_durations")
+data class VideoDurationEntity(
+    @PrimaryKey val youtubeId: String,
+    val seconds: Int,
 )
 
 @Entity(tableName = "watched_videos")
@@ -168,7 +205,7 @@ fun VideoEntity.toDomain(): Video? {
     )
 }
 
-fun Video.toEntity(): VideoEntity = VideoEntity(
+fun Video.toEntity(position: Int = 0): VideoEntity = VideoEntity(
     id = id,
     youtubeId = youtubeId,
     categoryId = category.id,
@@ -177,6 +214,7 @@ fun Video.toEntity(): VideoEntity = VideoEntity(
     minutes = minutes,
     thumbnailUrl = thumbnailUrl,
     relatedFactIds = relatedFactIds.joinToString(","),
+    position = position,
 )
 
 fun ReviewStateEntity.toDomain(): ReviewState = ReviewState(

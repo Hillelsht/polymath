@@ -1,6 +1,10 @@
 package com.hillelsht.smart.data
 
 import com.hillelsht.smart.data.local.ActivityDao
+import com.hillelsht.smart.data.local.BlockedVideoDao
+import com.hillelsht.smart.data.local.BlockedVideoEntity
+import com.hillelsht.smart.data.local.ChannelDao
+import com.hillelsht.smart.data.local.ChannelEntity
 import com.hillelsht.smart.data.local.ContentSeeder
 import com.hillelsht.smart.data.local.DailyActivityEntity
 import com.hillelsht.smart.data.local.FactDao
@@ -12,6 +16,8 @@ import com.hillelsht.smart.data.local.QuizDao
 import com.hillelsht.smart.data.local.QuizResultEntity
 import com.hillelsht.smart.data.local.ReviewDao
 import com.hillelsht.smart.data.local.VideoDao
+import com.hillelsht.smart.data.local.VideoDurationDao
+import com.hillelsht.smart.data.local.VideoDurationEntity
 import com.hillelsht.smart.data.local.WatchedDao
 import com.hillelsht.smart.data.local.WatchedVideoEntity
 import com.hillelsht.smart.data.local.toDomain
@@ -20,28 +26,32 @@ import com.hillelsht.smart.data.remote.PackManifest
 import com.hillelsht.smart.data.remote.PackService
 import com.hillelsht.smart.data.remote.RemotePack
 import com.hillelsht.smart.data.remote.WikiImageService
+import com.hillelsht.smart.data.remote.YoutubeFeedService
+import com.hillelsht.smart.data.seed.ChannelParser
 import com.hillelsht.smart.data.seed.ContentParser
-import com.hillelsht.smart.data.seed.VideoParser
 import com.hillelsht.smart.domain.CategoryMastery
 import com.hillelsht.smart.domain.DailyPlan
+import com.hillelsht.smart.domain.FeedEntry
 import com.hillelsht.smart.domain.MasteryCalculator
 import com.hillelsht.smart.domain.SessionPlanner
 import com.hillelsht.smart.domain.Sm2Scheduler
 import com.hillelsht.smart.domain.Streak
 import com.hillelsht.smart.domain.StreakCalculator
+import com.hillelsht.smart.domain.VideoCuration
 import com.hillelsht.smart.domain.model.Category
 import com.hillelsht.smart.domain.model.Fact
 import com.hillelsht.smart.domain.model.Rating
 import com.hillelsht.smart.domain.model.ReviewState
 import com.hillelsht.smart.domain.model.Video
+import java.time.LocalDate
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.combine
+import kotlinx.coroutines.flow.first
 import kotlinx.coroutines.flow.map
 import kotlinx.coroutines.sync.Mutex
 import kotlinx.coroutines.sync.withLock
-import java.time.LocalDate
 
 /**
  * The single place the UI talks to.
@@ -57,10 +67,14 @@ class SmartRepository(
     private val activityDao: ActivityDao,
     private val imageCacheDao: ImageCacheDao,
     private val videoDao: VideoDao,
+    private val channelDao: ChannelDao,
+    private val blockedVideoDao: BlockedVideoDao,
+    private val videoDurationDao: VideoDurationDao,
     private val watchedDao: WatchedDao,
     private val seeder: ContentSeeder,
     private val wikiImageService: WikiImageService,
     private val packService: PackService,
+    private val feedService: YoutubeFeedService,
     private val packStorage: PackStorage,
     private val today: () -> LocalDate = LocalDate::now,
 ) {
@@ -193,8 +207,12 @@ class SmartRepository(
         return true
     }
 
-    // --- Videos -----------------------------------------------------------------------
+    // --- Videos: a live shelf, not a catalogue ------------------------------------------
 
+    /**
+     * The last shelf that was built, so the tab paints instantly instead of flashing empty
+     * while the feeds load. It is replaced wholesale by every refresh.
+     */
     val videos: Flow<List<Video>> =
         videoDao.observeAll().map { rows -> rows.mapNotNull { it.toDomain() } }
 
@@ -206,16 +224,119 @@ class SmartRepository(
         watchedDao.upsert(WatchedVideoEntity(videoId = videoId, watchedOn = today()))
     }
 
-    /** Pulls a newer curated catalog from the repo, if there is one. */
-    suspend fun refreshVideos(): Boolean {
-        val raw = packService.fetchVideos() ?: return false
-        val catalog = try {
-            VideoParser.parse(raw, "videos.json")
+    /**
+     * Records a video that would not play, so it never reaches the shelf again.
+     *
+     * Almost always error 152: the owner disallows embedding. Nothing in a channel feed
+     * reveals that in advance, so the app learns it the only way it can — by trying — and
+     * then remembers.
+     */
+    suspend fun blockVideo(youtubeId: String, reason: String) {
+        blockedVideoDao.upsert(BlockedVideoEntity(youtubeId = youtubeId, reason = reason))
+        videoDao.deleteByYoutubeId(youtubeId)
+    }
+
+    /** The player reports a duration once a video loads; feeds never carry one. */
+    suspend fun recordDuration(youtubeId: String, seconds: Int) {
+        if (seconds <= 0) return
+        videoDurationDao.upsert(VideoDurationEntity(youtubeId = youtubeId, seconds = seconds))
+        videoDao.updateMinutes(youtubeId, (seconds / 60).coerceAtLeast(1))
+    }
+
+    /**
+     * Rebuilds the shelf from the allowlisted channels' current uploads.
+     *
+     * This is the whole point of the Watch tab: the videos are whatever those channels have
+     * published as of now, fetched over the network, with nothing baked into the app. Returns
+     * false only when every feed failed, which the UI reports as an offline state rather than
+     * an empty shelf.
+     */
+    suspend fun refreshShelf(): Boolean {
+        val channels = channelDao.all()
+        if (channels.isEmpty()) return false
+
+        val feeds = feedService.fetchAll(channels.map { it.id })
+        if (feeds.isEmpty()) return false
+
+        val blocked = blockedVideoDao.all().toSet()
+        val durations = videoDurationDao.all().associate { it.youtubeId to it.seconds }
+        val factsByCategory = facts.first().groupBy { it.category }
+
+        val curatedByChannel = channels.mapNotNull { channel ->
+            val entries = feeds[channel.id] ?: return@mapNotNull null
+            val category = Category.fromId(channel.categoryId) ?: return@mapNotNull null
+            VideoCuration.curate(entries, blocked = blocked).map { entry ->
+                Video(
+                    id = "vid-${entry.youtubeId}",
+                    youtubeId = entry.youtubeId,
+                    category = category,
+                    title = entry.title,
+                    channel = channel.displayName,
+                    minutes = durations[entry.youtubeId]?.let { (it / 60).coerceAtLeast(1) },
+                    thumbnailUrl = entry.thumbnailUrl,
+                    relatedFactIds = linkFacts(entry.title, factsByCategory[category].orEmpty()),
+                )
+            }
+        }
+
+        val shelf = VideoCuration.interleave(curatedByChannel.map { list -> list.map { it.toEntry() } })
+        val byId = curatedByChannel.flatten().associateBy { it.youtubeId }
+        val ordered = shelf.mapNotNull { byId[it.youtubeId] }
+        if (ordered.isEmpty()) return false
+
+        videoDao.replaceShelf(ordered.mapIndexed { position, video -> video.toEntity(position) })
+        return true
+    }
+
+    private fun Video.toEntry() = FeedEntry(
+        youtubeId = youtubeId,
+        title = title,
+        thumbnailUrl = thumbnailUrl,
+        views = 0,
+    )
+
+    /**
+     * Links a video to facts by significant word overlap within its own subject. Conservative
+     * on purpose: two matching words before a claim is made, so "Quiz me on this" reflects
+     * what was actually watched.
+     */
+    private fun linkFacts(title: String, candidates: List<Fact>): List<String> {
+        val words = title.lowercase().split(Regex("[^a-z]+")).filter { it.length >= 4 }.toSet()
+        if (words.isEmpty()) return emptyList()
+        return candidates
+            .map { fact ->
+                val target = "${fact.title} ${fact.answer} ${fact.wikiTitle.orEmpty()}"
+                    .lowercase().split(Regex("[^a-z]+")).filter { it.length >= 4 }.toSet()
+                (words intersect target).size to fact.id
+            }
+            .filter { it.first >= 2 }
+            .sortedByDescending { it.first }
+            .take(4)
+            .map { it.second }
+    }
+
+    /** The channel allowlist, refreshed from the repo. */
+    suspend fun refreshChannels(): Boolean {
+        val raw = packService.fetchChannels() ?: return false
+        val parsed = try {
+            ChannelParser.parse(raw, "channels.json")
         } catch (e: Exception) {
             return false
         }
-        packStorage.save("videos.json", raw)
-        seeder.installVideosIfChanged(catalog)
+        if (parsed.channels.isEmpty()) return false
+
+        packStorage.save("channels.json", raw)
+        channelDao.clear()
+        channelDao.insertAll(
+            parsed.channels.map {
+                ChannelEntity(
+                    id = it.id,
+                    handle = it.handle,
+                    categoryId = it.category.id,
+                    displayName = it.displayName,
+                )
+            },
+        )
         return true
     }
 

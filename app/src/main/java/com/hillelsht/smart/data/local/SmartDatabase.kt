@@ -13,13 +13,16 @@ import androidx.sqlite.db.SupportSQLiteDatabase
         FactEntity::class,
         PackEntity::class,
         VideoEntity::class,
+        ChannelEntity::class,
+        BlockedVideoEntity::class,
+        VideoDurationEntity::class,
         WatchedVideoEntity::class,
         ReviewStateEntity::class,
         QuizResultEntity::class,
         DailyActivityEntity::class,
         ImageCacheEntity::class,
     ],
-    version = 3,
+    version = 4,
     exportSchema = true,
 )
 @TypeConverters(Converters::class)
@@ -28,6 +31,9 @@ abstract class SmartDatabase : RoomDatabase() {
     abstract fun factDao(): FactDao
     abstract fun packDao(): PackDao
     abstract fun videoDao(): VideoDao
+    abstract fun channelDao(): ChannelDao
+    abstract fun blockedVideoDao(): BlockedVideoDao
+    abstract fun videoDurationDao(): VideoDurationDao
     abstract fun watchedDao(): WatchedDao
     abstract fun reviewDao(): ReviewDao
     abstract fun quizDao(): QuizDao
@@ -82,11 +88,44 @@ abstract class SmartDatabase : RoomDatabase() {
             }
         }
 
+        /**
+         * v3 → v4: the Watch tab stops shipping a video catalogue and starts discovering
+         * videos live, so it needs the channel allowlist plus the two things only the device
+         * can learn — which videos refuse to embed, and how long each one runs.
+         */
+        private val MIGRATION_3_4 = object : Migration(3, 4) {
+            override fun migrate(db: SupportSQLiteDatabase) {
+                db.execSQL(
+                    "CREATE TABLE IF NOT EXISTS watch_channels (" +
+                        "id TEXT NOT NULL PRIMARY KEY, " +
+                        "handle TEXT NOT NULL, " +
+                        "categoryId TEXT NOT NULL, " +
+                        "displayName TEXT NOT NULL)",
+                )
+                db.execSQL(
+                    "CREATE INDEX IF NOT EXISTS index_watch_channels_categoryId " +
+                        "ON watch_channels(categoryId)",
+                )
+                db.execSQL(
+                    "CREATE TABLE IF NOT EXISTS blocked_videos (" +
+                        "youtubeId TEXT NOT NULL PRIMARY KEY, " +
+                        "reason TEXT NOT NULL)",
+                )
+                db.execSQL(
+                    "CREATE TABLE IF NOT EXISTS video_durations (" +
+                        "youtubeId TEXT NOT NULL PRIMARY KEY, " +
+                        "seconds INTEGER NOT NULL)",
+                )
+                // The shelf is now an ordered, interleaved list rather than a catalogue.
+                db.execSQL("ALTER TABLE videos ADD COLUMN position INTEGER NOT NULL DEFAULT 0")
+            }
+        }
+
         fun build(context: Context): SmartDatabase =
             // Schemas are exported to app/schemas so that future releases can keep shipping
             // real migrations — review history must survive every update.
             Room.databaseBuilder(context, SmartDatabase::class.java, "smart.db")
-                .addMigrations(MIGRATION_1_2, MIGRATION_2_3)
+                .addMigrations(MIGRATION_1_2, MIGRATION_2_3, MIGRATION_3_4)
                 .build()
     }
 }

@@ -4,6 +4,7 @@ import androidx.room.Dao
 import androidx.room.Insert
 import androidx.room.OnConflictStrategy
 import androidx.room.Query
+import androidx.room.Transaction
 import androidx.room.Upsert
 import kotlinx.coroutines.flow.Flow
 import java.time.LocalDate
@@ -34,7 +35,7 @@ interface FactDao {
 
 @Dao
 interface VideoDao {
-    @Query("SELECT * FROM videos")
+    @Query("SELECT * FROM videos ORDER BY position")
     fun observeAll(): Flow<List<VideoEntity>>
 
     @Query("SELECT * FROM videos WHERE id = :id")
@@ -43,8 +44,63 @@ interface VideoDao {
     @Insert(onConflict = OnConflictStrategy.REPLACE)
     suspend fun insertAll(videos: List<VideoEntity>)
 
+    @Query("DELETE FROM videos WHERE youtubeId = :youtubeId")
+    suspend fun deleteByYoutubeId(youtubeId: String)
+
+    @Query("UPDATE videos SET minutes = :minutes WHERE youtubeId = :youtubeId")
+    suspend fun updateMinutes(youtubeId: String, minutes: Int)
+
     @Query("DELETE FROM videos")
     suspend fun clear()
+
+    /**
+     * Swaps the whole shelf in one transaction.
+     *
+     * A bare clear-then-insert would emit an empty list to the tab in between, so every
+     * refresh would blink the shelf away and back — the exact thing keeping the previous
+     * shelf on screen was meant to avoid.
+     */
+    @Transaction
+    suspend fun replaceShelf(videos: List<VideoEntity>) {
+        clear()
+        insertAll(videos)
+    }
+}
+
+@Dao
+interface ChannelDao {
+    @Query("SELECT * FROM watch_channels")
+    fun observeAll(): Flow<List<ChannelEntity>>
+
+    @Query("SELECT * FROM watch_channels")
+    suspend fun all(): List<ChannelEntity>
+
+    @Insert(onConflict = OnConflictStrategy.REPLACE)
+    suspend fun insertAll(channels: List<ChannelEntity>)
+
+    @Query("DELETE FROM watch_channels")
+    suspend fun clear()
+}
+
+@Dao
+interface BlockedVideoDao {
+    @Query("SELECT youtubeId FROM blocked_videos")
+    fun observeAll(): Flow<List<String>>
+
+    @Query("SELECT youtubeId FROM blocked_videos")
+    suspend fun all(): List<String>
+
+    @Upsert
+    suspend fun upsert(blocked: BlockedVideoEntity)
+}
+
+@Dao
+interface VideoDurationDao {
+    @Query("SELECT * FROM video_durations")
+    suspend fun all(): List<VideoDurationEntity>
+
+    @Upsert
+    suspend fun upsert(duration: VideoDurationEntity)
 }
 
 @Dao

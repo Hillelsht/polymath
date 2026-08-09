@@ -50,8 +50,11 @@ class PackService(
     /** Returns the raw JSON of a pack file, or null if unreachable. */
     suspend fun fetchPack(pack: RemotePack): String? = get("$BASE/${pack.file}")
 
-    /** The curated video catalog, refreshed independently of the fact packs. */
-    suspend fun fetchVideos(): String? = get("$BASE/$VIDEOS_FILE")
+    /**
+     * The Watch tab's channel allowlist. Only the channels ship — which videos exist is
+     * discovered live on the device from those channels' feeds.
+     */
+    suspend fun fetchChannels(): String? = get("$BASE/$CHANNELS_FILE")
 
     private suspend fun get(url: String): String? = withContext(Dispatchers.IO) {
         val request = Request.Builder()
@@ -70,6 +73,6 @@ class PackService(
 
     private companion object {
         const val BASE = "https://raw.githubusercontent.com/Hillelsht/smart/main/packs"
-        const val VIDEOS_FILE = "videos.json"
+        const val CHANNELS_FILE = "channels.json"
     }
 }

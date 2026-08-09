@@ -10,6 +10,7 @@ import com.hillelsht.smart.data.local.ContentSeeder
 import com.hillelsht.smart.data.local.SmartDatabase
 import com.hillelsht.smart.data.remote.PackService
 import com.hillelsht.smart.data.remote.WikiImageService
+import com.hillelsht.smart.data.remote.YoutubeFeedService
 import com.hillelsht.smart.util.CrashLog
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
@@ -23,7 +24,7 @@ import java.util.concurrent.TimeUnit
  * Wikimedia's User-Agent policy rejects generic agents with 403 — including okhttp's default.
  * Every request the app makes to a Wikimedia host, API *or* image, must carry this.
  */
-const val USER_AGENT = "SmartTriviaApp/2.1 (https://github.com/hillelsht/smart)"
+const val USER_AGENT = "SmartTriviaApp/4.0 (https://github.com/hillelsht/smart)"
 
 /**
  * Manual dependency wiring.
@@ -44,7 +45,7 @@ class AppContainer(context: Context) {
         context = context,
         factDao = database.factDao(),
         packDao = database.packDao(),
-        videoDao = database.videoDao(),
+        channelDao = database.channelDao(),
     )
 
     val repository = SmartRepository(
@@ -55,10 +56,14 @@ class AppContainer(context: Context) {
         activityDao = database.activityDao(),
         imageCacheDao = database.imageCacheDao(),
         videoDao = database.videoDao(),
+        channelDao = database.channelDao(),
+        blockedVideoDao = database.blockedVideoDao(),
+        videoDurationDao = database.videoDurationDao(),
         watchedDao = database.watchedDao(),
         seeder = seeder,
         wikiImageService = WikiImageService(httpClient, USER_AGENT),
         packService = PackService(httpClient, USER_AGENT),
+        feedService = YoutubeFeedService(httpClient, USER_AGENT),
         packStorage = { fileName, content ->
             File(ContentSeeder.downloadedPacksDir(context), fileName).writeText(content)
         },

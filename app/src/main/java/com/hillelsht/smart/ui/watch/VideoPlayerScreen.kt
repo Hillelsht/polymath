@@ -1,5 +1,7 @@
 package com.hillelsht.smart.ui.watch
 
+import android.content.Intent
+import android.net.Uri
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
@@ -25,16 +27,20 @@ import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
+import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.produceState
 import androidx.compose.runtime.remember
 import androidx.compose.runtime.rememberCoroutineScope
+import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.draw.clip
+import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.platform.LocalContext
+import androidx.compose.ui.unit.dp
 import androidx.compose.ui.viewinterop.AndroidView
 import androidx.lifecycle.compose.LocalLifecycleOwner
-import androidx.compose.ui.unit.dp
 import com.hillelsht.smart.data.SmartRepository
+import com.hillelsht.smart.domain.model.Category
 import com.hillelsht.smart.domain.model.Fact
 import com.hillelsht.smart.domain.model.Video
 import com.hillelsht.smart.ui.components.CategoryChip
@@ -61,12 +67,13 @@ fun VideoPlayerScreen(
     repository: SmartRepository,
     videoId: String,
     onBack: () -> Unit,
-    onQuiz: (List<String>, com.hillelsht.smart.domain.model.Category) -> Unit,
+    onQuiz: (List<String>, Category) -> Unit,
 ) {
     val video by produceState<Video?>(initialValue = null, videoId) {
         value = repository.video(videoId)
     }
     val current = video
+    var blocked by remember(videoId) { mutableStateOf(false) }
 
     Column(
         Modifier
@@ -99,10 +106,19 @@ fun VideoPlayerScreen(
                 .weight(1f)
                 .verticalScroll(rememberScrollState()),
         ) {
-            VideoSurface(
-                youtubeId = current.youtubeId,
-                onStarted = { repository.markWatched(current.id) },
-            )
+            if (blocked) {
+                UnplayableNotice(current.youtubeId)
+            } else {
+                VideoSurface(
+                    youtubeId = current.youtubeId,
+                    onStarted = { repository.markWatched(current.id) },
+                    onDuration = { seconds -> repository.recordDuration(current.youtubeId, seconds) },
+                    onUnplayable = {
+                        repository.blockVideo(current.youtubeId, it)
+                        blocked = true
+                    },
+                )
+            }
 
             Column(Modifier.padding(20.dp)) {
                 CategoryChip(current.category)
@@ -162,13 +178,64 @@ fun VideoPlayerScreen(
 }
 
 /**
+ * Shown when YouTube refuses to embed a video (its error 152).
+ *
+ * The video has already been removed from the shelf by this point, so this is the last time
+ * it will ever be seen; the message says so rather than inviting a pointless retry.
+ */
+@Composable
+private fun UnplayableNotice(youtubeId: String) {
+    val context = LocalContext.current
+    Column(
+        Modifier
+            .fillMaxWidth()
+            .background(Color.Black)
+            .padding(28.dp),
+        horizontalAlignment = Alignment.CenterHorizontally,
+    ) {
+        Text(
+            text = "This channel does not allow playback outside YouTube",
+            style = MaterialTheme.typography.titleMedium,
+            color = Color.White,
+        )
+        Spacer(Modifier.height(8.dp))
+        Text(
+            text = "Removed from your shelf, so it will not come up again.",
+            style = MaterialTheme.typography.bodyMedium,
+            color = MaterialTheme.colorScheme.onSurfaceVariant,
+        )
+        Spacer(Modifier.height(16.dp))
+        Button(
+            onClick = {
+                runCatching {
+                    context.startActivity(
+                        Intent(
+                            Intent.ACTION_VIEW,
+                            Uri.parse("https://www.youtube.com/watch?v=$youtubeId"),
+                        ),
+                    )
+                }
+            },
+            shape = RoundedCornerShape(14.dp),
+        ) {
+            Text("Open in YouTube")
+        }
+    }
+}
+
+/**
  * The IFrame player, bound to the composition's lifecycle.
  *
  * Handing the view to the lifecycle is what releases the underlying WebView when the screen
  * goes away — without it the player keeps playing audio after you navigate back.
  */
 @Composable
-private fun VideoSurface(youtubeId: String, onStarted: suspend () -> Unit) {
+private fun VideoSurface(
+    youtubeId: String,
+    onStarted: suspend () -> Unit,
+    onDuration: suspend (Int) -> Unit,
+    onUnplayable: suspend (String) -> Unit,
+) {
     val lifecycleOwner = LocalLifecycleOwner.current
     // Survives recomposition, and the listener reads the same instance the factory captured.
     val started = remember { AtomicBoolean(false) }
@@ -178,7 +245,7 @@ private fun VideoSurface(youtubeId: String, onStarted: suspend () -> Unit) {
         modifier = Modifier
             .fillMaxWidth()
             .aspectRatio(16f / 9f)
-            .background(androidx.compose.ui.graphics.Color.Black),
+            .background(Color.Black),
         factory = { context ->
             YouTubePlayerView(context).apply {
                 lifecycleOwner.lifecycle.addObserver(this)
@@ -197,6 +264,24 @@ private fun VideoSurface(youtubeId: String, onStarted: suspend () -> Unit) {
                             ) {
                                 scope.launch { onStarted() }
                             }
+                        }
+
+                        // The feed cannot say whether a video allows embedding, so the app
+                        // finds out here — once — and never offers it again.
+                        override fun onError(
+                            youTubePlayer: YouTubePlayer,
+                            error: PlayerConstants.PlayerError,
+                        ) {
+                            if (error == PlayerConstants.PlayerError.VIDEO_NOT_PLAYABLE_IN_EMBEDDED_PLAYER ||
+                                error == PlayerConstants.PlayerError.VIDEO_NOT_FOUND
+                            ) {
+                                scope.launch { onUnplayable(error.name) }
+                            }
+                        }
+
+                        /** Feeds carry no duration; the player does, once the video loads. */
+                        override fun onVideoDuration(youTubePlayer: YouTubePlayer, duration: Float) {
+                            scope.launch { onDuration(duration.toInt()) }
                         }
                     },
                 )

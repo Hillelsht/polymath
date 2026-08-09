@@ -1,5 +1,6 @@
 package com.hillelsht.smart.ui.watch
 
+import android.os.SystemClock
 import androidx.compose.foundation.background
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Arrangement
@@ -28,10 +29,12 @@ import androidx.compose.material3.Icon
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.getValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
+import androidx.compose.ui.graphics.Brush
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.unit.dp
@@ -61,6 +64,8 @@ data class WatchUiState(
     val category: Category? = null,
     val length: LengthClass? = null,
     val loaded: Boolean = false,
+    val refreshing: Boolean = false,
+    val offline: Boolean = false,
 ) {
     /**
      * YouTube does not always expose a duration, so the length filter is only meaningful when
@@ -83,14 +88,42 @@ class WatchViewModel(private val repository: SmartRepository) : ViewModel() {
     private val category = MutableStateFlow<Category?>(null)
     private val length = MutableStateFlow<LengthClass?>(null)
     private val loaded = MutableStateFlow(false)
+    private val refreshing = MutableStateFlow(false)
+    private val offline = MutableStateFlow(false)
 
-    init {
-        // Same pattern as content packs: check for a fresher catalog when the tab is opened,
-        // which is the only moment the result is visible.
+    private var lastRefresh = 0L
+
+    /**
+     * Rebuilds the shelf from the channels' current uploads.
+     *
+     * Called every time the tab is entered, which is the point: the shelf is whatever those
+     * channels have published as of now, not a list baked in at build time. The previous shelf
+     * stays on screen while this runs so the tab never flashes empty.
+     *
+     * Flipping between tabs is not "opening the app", though, so an automatic call inside
+     * [STALE_AFTER_MS] of the last one is dropped — thirty-odd feed requests for a shelf that
+     * is seconds old would spend the user's data for nothing. The Refresh control passes
+     * [force] and is never throttled.
+     */
+    fun refresh(force: Boolean = false) {
+        if (refreshing.value) return
+        val now = SystemClock.elapsedRealtime()
+        if (!force && lastRefresh != 0L && now - lastRefresh < STALE_AFTER_MS) return
+
+        refreshing.value = true
         viewModelScope.launch {
-            repository.refreshVideos()
+            // The allowlist changes rarely; the videos change constantly.
+            repository.refreshChannels()
+            val ok = repository.refreshShelf()
+            offline.value = !ok
             loaded.value = true
+            lastRefresh = SystemClock.elapsedRealtime()
+            refreshing.value = false
         }
+    }
+
+    private val flags = combine(loaded, refreshing, offline) { isLoaded, isRefreshing, isOffline ->
+        Triple(isLoaded, isRefreshing, isOffline)
     }
 
     val state = combine(
@@ -98,14 +131,16 @@ class WatchViewModel(private val repository: SmartRepository) : ViewModel() {
         repository.watchedVideoIds,
         category,
         length,
-        loaded,
-    ) { videos, watched, selectedCategory, selectedLength, isLoaded ->
+        flags,
+    ) { videos, watched, selectedCategory, selectedLength, (isLoaded, isRefreshing, isOffline) ->
         WatchUiState(
             videos = videos,
             watched = watched,
             category = selectedCategory,
             length = selectedLength,
             loaded = isLoaded || videos.isNotEmpty(),
+            refreshing = isRefreshing,
+            offline = isOffline && videos.isEmpty(),
         )
     }.stateIn(viewModelScope, SharingStarted.WhileSubscribed(5_000), WatchUiState())
 
@@ -118,6 +153,9 @@ class WatchViewModel(private val repository: SmartRepository) : ViewModel() {
     }
 
     companion object {
+        /** Long enough that tab-hopping is free, short enough that reopening the app is fresh. */
+        private const val STALE_AFTER_MS = 5 * 60 * 1000L
+
         fun factory(repository: SmartRepository) = viewModelFactory {
             initializer { WatchViewModel(repository) }
         }
@@ -128,6 +166,10 @@ class WatchViewModel(private val repository: SmartRepository) : ViewModel() {
 fun WatchScreen(repository: SmartRepository, onPlay: (Video) -> Unit) {
     val viewModel: WatchViewModel = viewModel(factory = WatchViewModel.factory(repository))
     val state by viewModel.state.collectAsStateWithLifecycle()
+
+    // Entering the tab is the moment a fresh shelf is worth fetching; the ViewModel decides
+    // whether enough time has passed to be worth the requests.
+    LaunchedEffect(Unit) { viewModel.refresh() }
 
     LazyColumn(
         Modifier
@@ -144,11 +186,29 @@ fun WatchScreen(repository: SmartRepository, onPlay: (Video) -> Unit) {
                     style = MaterialTheme.typography.displayMedium,
                     color = MaterialTheme.colorScheme.onBackground,
                 )
-                Text(
-                    text = "Only videos that teach you something",
-                    style = MaterialTheme.typography.bodyMedium,
-                    color = MaterialTheme.colorScheme.onSurfaceVariant,
-                )
+                Row(verticalAlignment = Alignment.CenterVertically) {
+                    Text(
+                        text = when {
+                            state.refreshing -> "Fetching the latest uploads…"
+                            state.offline -> "Offline — could not reach YouTube"
+                            else -> "Fresh from these channels, every time you open"
+                        },
+                        style = MaterialTheme.typography.bodyMedium,
+                        color = MaterialTheme.colorScheme.onSurfaceVariant,
+                        modifier = Modifier.weight(1f),
+                    )
+                    if (!state.refreshing) {
+                        Text(
+                            text = "Refresh",
+                            style = MaterialTheme.typography.labelMedium,
+                            color = MaterialTheme.colorScheme.primary,
+                            modifier = Modifier
+                                .clip(CircleShape)
+                                .clickable { viewModel.refresh(force = true) }
+                                .padding(horizontal = 10.dp, vertical = 6.dp),
+                        )
+                    }
+                }
             }
         }
 
@@ -184,11 +244,18 @@ fun WatchScreen(repository: SmartRepository, onPlay: (Video) -> Unit) {
         if (visible.isEmpty()) {
             item {
                 EmptyState(
-                    title = if (state.loaded) "Nothing matches" else "Loading the catalog…",
-                    body = if (state.loaded) {
-                        "No videos in this combination yet. Try clearing a filter."
-                    } else {
-                        "Fetching the curated list of videos."
+                    title = when {
+                        !state.loaded || state.refreshing -> "Loading the shelf…"
+                        state.offline -> "No connection"
+                        else -> "Nothing matches"
+                    },
+                    body = when {
+                        !state.loaded || state.refreshing ->
+                            "Reading what these channels have published."
+                        state.offline ->
+                            "The Watch tab pulls videos live, so it needs a connection. " +
+                                "Everything else in the app works offline."
+                        else -> "No videos in this combination yet. Try clearing a filter."
                     },
                 )
             }
@@ -241,7 +308,7 @@ private fun VideoCard(video: Video, watched: Boolean, onClick: () -> Unit) {
                     .fillMaxWidth()
                     .aspectRatio(16f / 9f)
                     .background(
-                        androidx.compose.ui.graphics.Brush.linearGradient(
+                        Brush.linearGradient(
                             listOf(
                                 video.category.accent().copy(alpha = 0.35f),
                                 video.category.secondary().copy(alpha = 0.55f),

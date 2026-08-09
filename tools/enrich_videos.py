@@ -1,68 +1,47 @@
 #!/usr/bin/env python3
-"""Build the Watch catalog by discovering real uploads from allowlisted channels.
+"""Probe the Watch tab's channel allowlist.
 
-An earlier version of this pipeline verified a hand-written list of video ids. That failed
-badly — of 187 authored ids only 30 existed, and 26 of those pointed at unrelated videos —
-because nobody can reliably write 11-character YouTube ids from memory. The lesson is baked
-into the design here: **ids are never authored, only discovered.**
+This script no longer builds a video list at all. The app discovers videos itself, live, from
+each channel's public feed — so the only thing CI needs to publish is *which channels are
+usable*, which is a few KB.
 
-The allowlist is now a list of *channels*. For each one the pipeline resolves the handle to a
-channel id, reads that channel's public RSS feed for its recent uploads, and takes the video
-ids straight from YouTube. Every id is therefore real by construction, and every video comes
-from a channel a human chose. It also self-maintains: new uploads appear on the next run
-without anyone editing a file.
+Two things have to be established per channel, and neither can be done on the device cheaply:
 
-Keyless throughout — RSS and the public watch page only, no API key. Stdlib only.
+1. **The channel id.** Handles are what a human can write down; the stable UC… id is what the
+   feed endpoint wants.
+2. **Whether the channel allows embedding.** A feed says nothing about this, and a channel that
+   forbids it produces YouTube error 152 — a card that looks fine and fails on tap. Sampling a
+   few of its videos through oEmbed answers it once, for everyone, before shipping.
+
+Keyless throughout. Stdlib only.
 """
 
-import html
+import hashlib
 import json
 import re
 import sys
 import time
-import urllib.error
+import urllib.parse
 import urllib.request
 import xml.etree.ElementTree as ET
 from pathlib import Path
 
 ROOT = Path(__file__).resolve().parent.parent
-CHANNELS_FILE = ROOT / "app" / "src" / "main" / "assets" / "content" / "channels.json"
-CONTENT_DIR = ROOT / "app" / "src" / "main" / "assets" / "content"
+ALLOWLIST = ROOT / "app" / "src" / "main" / "assets" / "content" / "channels.json"
 PACKS_DIR = ROOT / "packs"
 ASSETS_PACKS_DIR = ROOT / "app" / "src" / "main" / "assets" / "packs"
 
-# A browser-ish agent: YouTube serves a stripped page to unknown clients.
 UA = (
     "Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) "
     "Chrome/124.0 Safari/537.36"
 )
-RSS = "https://www.youtube.com/feeds/videos.xml?channel_id="
+FEED = "https://www.youtube.com/feeds/videos.xml?channel_id="
+OEMBED = "https://www.youtube.com/oembed"
 ATOM = "{http://www.w3.org/2005/Atom}"
 YT = "{http://www.youtube.com/xml/schemas/2015}"
-MEDIA = "{http://search.yahoo.com/mrss/}"
 
-# Shorts are not teaching material; anything under this is skipped.
-MIN_SECONDS = 120
+SAMPLE_SIZE = 3
 MIN_CHANNELS = 12
-MIN_VIDEOS = 60
-
-# Recent uploads include community posts, livestreams and Shorts. None of them teach.
-JUNK_TITLE = re.compile(
-    r"live ?stream|\blive\b|#shorts|\bshorts?\b|\bchat\b|q&a|podcast|announce|"
-    r"subscribe|merch|schedule|trailer|teaser|behind the scenes|patreon|giveaway|"
-    r"update|vlog|reacts?\b|unboxing",
-    re.I,
-)
-
-# Keep each channel's strongest recent uploads rather than simply its newest.
-TOP_PER_CHANNEL = 8
-
-STOPWORDS = {
-    "what", "why", "how", "the", "and", "for", "with", "from", "that", "this", "your", "you",
-    "are", "was", "were", "his", "her", "its", "into", "about", "explained", "history",
-    "science", "world", "does", "did", "can", "all", "one", "two", "new", "not", "but",
-    "video", "part", "full", "documentary", "episode", "official", "everything",
-}
 
 
 def fetch(url, timeout=25):
@@ -71,224 +50,136 @@ def fetch(url, timeout=25):
         headers={
             "User-Agent": UA,
             "Accept-Language": "en-US,en",
-            # Without this YouTube answers a datacenter IP with a consent interstitial that
-            # contains none of the page data — the reason the first run resolved 1 duration
-            # out of 455.
+            # YouTube answers datacenter IPs with a consent interstitial without this.
             "Cookie": "CONSENT=YES+cb; SOCS=CAI",
         },
     )
     try:
         with urllib.request.urlopen(request, timeout=timeout) as response:
             return response.read().decode("utf-8", "replace")
-    except Exception as e:
+    except Exception:
         return None
 
 
-def resolve_channel_id(handle):
-    """A handle is stable and memorable; the UC id is neither. Resolve one to the other."""
+def resolve_channel(handle):
+    """Handle -> (channel id, display name)."""
     page = fetch(f"https://www.youtube.com/@{handle}/videos")
     if not page:
-        return None
+        return None, None
     match = re.search(r'"(?:channelId|externalId)"\s*:\s*"(UC[\w-]{22})"', page)
-    return match.group(1) if match else None
+    if not match:
+        return None, None
+    name = re.search(r'"channelMetadataRenderer"\s*:\s*\{\s*"title"\s*:\s*"([^"]{1,80})"', page)
+    return match.group(1), (name.group(1) if name else handle)
 
 
-def channel_uploads(channel_id):
-    """Recent uploads straight from YouTube's public feed — ids here are real by definition."""
-    feed = fetch(RSS + channel_id)
+def sample_video_ids(channel_id, count=SAMPLE_SIZE):
+    feed = fetch(FEED + channel_id)
     if not feed:
         return []
     try:
         root = ET.fromstring(feed)
     except ET.ParseError:
         return []
-
-    videos = []
+    ids = []
     for entry in root.findall(f"{ATOM}entry"):
         video_id = entry.findtext(f"{YT}videoId")
-        title = entry.findtext(f"{ATOM}title")
-        if not video_id or not title:
-            continue
-        group = entry.find(f"{MEDIA}group")
-        thumb, views = None, 0
-        if group is not None:
-            node = group.find(f"{MEDIA}thumbnail")
-            if node is not None:
-                thumb = node.get("url")
-            community = group.find(f"{MEDIA}community")
-            if community is not None:
-                stats = community.find(f"{MEDIA}statistics")
-                if stats is not None:
-                    views = int(stats.get("views") or 0)
-        videos.append(
-            {
-                "youtubeId": video_id,
-                "title": html.unescape(title).strip(),
-                "views": views,
-                "thumbnailUrl": thumb or f"https://img.youtube.com/vi/{video_id}/hqdefault.jpg",
-            }
-        )
-    return videos
+        if video_id:
+            ids.append(video_id)
+        if len(ids) >= count:
+            break
+    return ids
 
 
-def duration_seconds(video_id):
-    """Best effort: the watch page carries lengthSeconds. Unknown length is not fatal."""
-    page = fetch(
-        f"https://www.youtube.com/watch?v={video_id}&bpctr=9999999999&has_verified=1",
-        timeout=20,
+def embeddable(video_id):
+    """oEmbed refuses videos whose owner disabled embedding — exactly the 152 case."""
+    params = urllib.parse.urlencode(
+        {"url": f"https://www.youtube.com/watch?v={video_id}", "format": "json"}
     )
-    if not page:
-        return None
-    match = re.search(r'"(?:lengthSeconds|approxDurationMs)"\s*:\s*"(\d+)"', page)
-    if not match:
-        return None
-    value = int(match.group(1))
-    # approxDurationMs is milliseconds; lengthSeconds is seconds. Tell them apart by scale.
-    return value // 1000 if value > 100_000 else value
-
-
-def load_facts():
-    facts = []
-    for path in sorted(CONTENT_DIR.glob("*.json")):
-        if path.name in {"videos.json", "channels.json"}:
-            continue
-        data = json.loads(path.read_text())
-        for fact in data.get("facts", []):
-            facts.append((data["category"], fact))
-    return facts
-
-
-def tokens(text):
-    return {
-        w
-        for w in re.findall(r"[a-z]{4,}", text.lower())
-        if w not in STOPWORDS
-    }
-
-
-def link_facts(title, category, facts_by_category):
-    """Match a video title against fact titles and answers within the same subject.
-
-    Deliberately conservative: two overlapping significant words before a link is claimed, so
-    "Quiz me on this" asks about what the video actually covered rather than something loosely
-    adjacent. Videos that match nothing simply do not offer the button.
-    """
-    title_tokens = tokens(title)
-    if not title_tokens:
-        return []
-
-    scored = []
-    for fact in facts_by_category.get(category, []):
-        target = tokens(f"{fact['title']} {fact['answer']} {fact.get('wikiTitle', '')}")
-        overlap = len(title_tokens & target)
-        if overlap >= 2:
-            scored.append((overlap, fact["id"]))
-    scored.sort(reverse=True)
-    return [fact_id for _, fact_id in scored[:4]]
+    request = urllib.request.Request(f"{OEMBED}?{params}", headers={"User-Agent": UA})
+    try:
+        with urllib.request.urlopen(request, timeout=20) as response:
+            json.load(response)
+            return True
+    except Exception:
+        return False
 
 
 def main():
-    allowlist = json.loads(CHANNELS_FILE.read_text())["channels"]
-    facts = load_facts()
-    facts_by_category = {}
-    for category, fact in facts:
-        facts_by_category.setdefault(category, []).append(fact)
+    allowlist = json.loads(ALLOWLIST.read_text())["channels"]
 
-    videos = []
-    resolved_channels = 0
-    unresolved = []
-
+    usable, dropped = [], []
     for entry in allowlist:
         handle, category = entry["handle"], entry["category"]
-        channel_id = resolve_channel_id(handle)
+
+        channel_id, display_name = resolve_channel(handle)
         if not channel_id:
-            unresolved.append(handle)
-            print(f"[{category}] @{handle}: could not resolve — skipped")
-            time.sleep(0.5)
+            dropped.append(f"@{handle}: handle did not resolve")
+            time.sleep(0.4)
             continue
 
-        uploads = channel_uploads(channel_id)
-        if not uploads:
-            unresolved.append(handle)
-            print(f"[{category}] @{handle}: no feed entries — skipped")
-            time.sleep(0.5)
+        samples = sample_video_ids(channel_id)
+        if not samples:
+            dropped.append(f"@{handle}: feed empty")
+            time.sleep(0.4)
             continue
 
-        resolved_channels += 1
+        passes = sum(1 for vid in samples if embeddable(vid))
+        time.sleep(0.4)
 
-        # Rank by views, then take the best few: a channel's most-watched recent uploads are
-        # reliably its real lessons, while its livestreams and filler sit at the bottom.
-        uploads = [u for u in uploads if not JUNK_TITLE.search(u["title"]) and len(u["title"]) > 15]
-        uploads.sort(key=lambda u: u["views"], reverse=True)
-        uploads = uploads[:TOP_PER_CHANNEL]
-
-        kept = 0
-        for upload in uploads:
-            seconds = duration_seconds(upload["youtubeId"])
-            time.sleep(0.25)
-            if seconds is not None and seconds < MIN_SECONDS:
-                continue  # a Short, not a lesson
-            minutes = round(seconds / 60) if seconds else None
-            videos.append(
-                {
-                    "id": f"vid-{upload['youtubeId']}",
-                    "youtubeId": upload["youtubeId"],
-                    "category": category,
-                    "title": upload["title"],
-                    "channel": handle,
-                    "minutes": minutes,
-                    "thumbnailUrl": upload["thumbnailUrl"],
-                    "relatedFactIds": link_facts(upload["title"], category, facts_by_category),
-                }
+        if passes * 2 <= len(samples):  # needs a clear majority
+            dropped.append(
+                f"@{handle}: blocks embedding ({passes}/{len(samples)} playable) — "
+                "would surface as error 152 on tap"
             )
-            kept += 1
-        print(f"[{category}] @{handle}: {kept} videos")
-        time.sleep(0.5)
-
-    # De-duplicate: a channel can legitimately appear under one category only.
-    seen, unique = set(), []
-    for video in videos:
-        if video["youtubeId"] in seen:
             continue
-        seen.add(video["youtubeId"])
-        unique.append(video)
-    videos = unique
+
+        usable.append(
+            {
+                "id": channel_id,
+                "handle": handle,
+                "category": category,
+                "displayName": display_name or handle,
+            }
+        )
+        print(f"[{category}] @{handle} -> {channel_id} ({passes}/{len(samples)} embeddable)")
+
+    print(f"\nUsable channels: {len(usable)}/{len(allowlist)}")
+    if dropped:
+        print("Dropped:")
+        for line in dropped:
+            print("  -", line)
+
+    if len(usable) < MIN_CHANNELS:
+        print(f"FAIL: only {len(usable)} channels usable — YouTube may be blocking the runner")
+        return 1
 
     per_category = {}
-    for video in videos:
-        per_category[video["category"]] = per_category.get(video["category"], 0) + 1
-    linked = sum(1 for v in videos if v["relatedFactIds"])
-    timed = sum(1 for v in videos if v["minutes"])
-
-    print(f"\nChannels resolved: {resolved_channels}/{len(allowlist)}")
-    if unresolved:
-        print("Unresolved handles (fix or remove in channels.json):", ", ".join(unresolved))
-    print(f"Videos: {len(videos)} | with duration: {timed} | linked to facts: {linked}")
+    for channel in usable:
+        per_category[channel["category"]] = per_category.get(channel["category"], 0) + 1
     print("Per category:", ", ".join(f"{k}={v}" for k, v in sorted(per_category.items())))
-
-    if resolved_channels < MIN_CHANNELS:
-        print(f"FAIL: only {resolved_channels} channels resolved — YouTube may be blocking the runner")
-        return 1
-    if len(videos) < MIN_VIDEOS:
-        print(f"FAIL: only {len(videos)} videos discovered")
-        return 1
 
     missing = {"geography", "history", "science", "arts", "sports", "culture"} - per_category.keys()
     if missing:
-        print(f"WARNING: no videos for {sorted(missing)} — those tabs will read as empty")
+        print(f"WARNING: no usable channels for {sorted(missing)} — those filters will be empty")
 
-    catalog = {"packId": "videos", "videos": videos}
-    body = json.dumps(catalog, ensure_ascii=False, indent=1)
-    import hashlib
-
-    catalog["version"] = hashlib.sha1(body.encode()).hexdigest()[:12]
-    body = json.dumps(catalog, ensure_ascii=False, indent=1)
+    payload = {"channels": usable}
+    body = json.dumps(payload, ensure_ascii=False, indent=1)
+    payload["version"] = hashlib.sha1(body.encode()).hexdigest()[:12]
+    body = json.dumps(payload, ensure_ascii=False, indent=1)
 
     PACKS_DIR.mkdir(exist_ok=True)
     ASSETS_PACKS_DIR.mkdir(parents=True, exist_ok=True)
-    (PACKS_DIR / "videos.json").write_text(body)
-    (ASSETS_PACKS_DIR / "videos.json").write_text(body)
-    print(f"Wrote packs/videos.json ({len(body.encode()) // 1024} KB)")
+    (PACKS_DIR / "channels.json").write_text(body)
+    (ASSETS_PACKS_DIR / "channels.json").write_text(body)
+
+    # The old video catalogue is obsolete: the app builds its own shelf now.
+    for stale in (PACKS_DIR / "videos.json", ASSETS_PACKS_DIR / "videos.json"):
+        if stale.exists():
+            stale.unlink()
+            print(f"Removed stale {stale.relative_to(ROOT)}")
+
+    print(f"Wrote packs/channels.json ({len(body.encode())} bytes)")
     return 0
 
 
