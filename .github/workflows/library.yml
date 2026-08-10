@@ -20,6 +20,9 @@ on:
       limit:
         description: "Facts per template (small = fast smoke run)"
         default: "400"
+      budget_minutes:
+        description: "Stop starting new templates after this long"
+        default: "40"
       dry_run:
         description: "Harvest and report, but publish nothing"
         type: boolean
@@ -35,6 +38,12 @@ jobs:
     # The pipeline's own commit must not retrigger the pipeline.
     if: "!contains(github.event.head_commit.message, '[library]')"
     timeout-minutes: 60
+    env:
+      # Without this the run is invisible. Python block-buffers stdout when it is not a TTY,
+      # so a 40-minute harvest prints nothing at all until it exits — and a cancelled or
+      # timed-out job loses the buffer entirely, taking the per-template yields with it. The
+      # CI log is the only window into a run that cannot happen anywhere else.
+      PYTHONUNBUFFERED: "1"
     steps:
       - uses: actions/checkout@v4
 
@@ -44,13 +53,17 @@ jobs:
         run: python3 tools/generate_facts.py --self-test
 
       - name: Generate
+        # A push to the generator validates it; it never publishes. Editing a template should
+        # not silently replace the whole library as a side effect of saving the file — that is
+        # what the schedule and a deliberate dispatch are for.
         run: |
           python3 tools/generate_facts.py \
             --limit "${{ github.event.inputs.limit || 400 }}" \
-            ${{ github.event.inputs.dry_run == 'true' && '--dry-run' || '' }}
+            --budget-minutes "${{ github.event.inputs.budget_minutes || 40 }}" \
+            ${{ (github.event_name == 'push' || github.event.inputs.dry_run == 'true') && '--dry-run' || '' }}
 
       - name: Commit the library
-        if: github.event.inputs.dry_run != 'true'
+        if: github.event_name != 'push' && github.event.inputs.dry_run != 'true'
         run: |
           git config user.name "github-actions[bot]"
           git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
