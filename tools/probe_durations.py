@@ -13,6 +13,17 @@ answer is already free:
    videos). The embed page is a different endpoint and carries lengthSeconds. Untested.
 
 Prints a verdict. Nothing is assumed; every claim below is something this script observed.
+
+RESULT, run 2026-08-10 against 3Blue1Brown:
+
+    1. The RSS feed carries NO duration. A full entry contains only author, channelId,
+       community, content, description, group, id, link, name, published, starRating,
+       statistics, thumbnail, title, updated, uri, videoId.
+    2. The embed page IS reachable from a runner (~135 KB, unlike watch pages which are
+       blocked) but contains NO lengthSeconds — the modern player fetches its config over
+       InnerTube after load, so the duration is not in the served HTML.
+
+    => No keyless source. Durations require the YouTube Data API.
 """
 
 import json

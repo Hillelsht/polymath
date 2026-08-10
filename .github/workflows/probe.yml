@@ -1,13 +1,9 @@
 name: Probe
 
-# Scaffolding, not a permanent workflow. The sandbox this app is developed in cannot reach
-# YouTube at all, so questions like "does the RSS feed carry a duration" can only be answered
-# from a runner. This exists to answer one, and is deleted once it has.
+# On-demand only. The sandbox this app is developed in cannot reach YouTube at all, so
+# questions like "does the RSS feed carry a duration" can only be answered from a runner.
+# Run this by hand whenever that answer might have changed — YouTube changes often.
 on:
-  push:
-    paths:
-      - "tools/probe_*.py"
-      - ".github/workflows/probe.yml"
   workflow_dispatch:
 
 jobs:
