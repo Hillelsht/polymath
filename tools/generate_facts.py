@@ -70,6 +70,11 @@ BUDGET_MINUTES = 40
 # Publishing far less than last time means something broke upstream, not that the world shrank.
 MIN_TOTAL = 400
 MIN_FRACTION_OF_PREVIOUS = 0.6
+# The quiz draws three distractors from the same answerType, so four distinct answers is the
+# arithmetic floor. Eight facts is the practical one: a type with three questions in it will
+# offer the same three over and over.
+MIN_DISTINCT_ANSWERS = 4
+MIN_PER_ANSWER_TYPE = 8
 
 CATEGORIES = {
     "geography": "Geography",
@@ -120,28 +125,32 @@ TEMPLATES = [
              "Symbol for {s}", "What is the chemical symbol for {s}?",
              "The chemical symbol for {s} is {o}.",
              "?s wdt:P246 ?o ."),
+    # No P31 constraint. Q2537 resolves to "natural satellite" — the preflight confirmed that —
+    # but pinning P31 to it yielded a single fact, because real moons are typed as something
+    # more specific and inherit natural-satellite-hood through subclassing. The property alone
+    # selects the subject well enough, and the floor keeps out the numbered asteroids.
     Template("moon-parent", "science", "astronomical body",
              "Orbit of {s}", "Which body does {s} orbit?", "{s} orbits {o}.",
-             "?s wdt:P31 wd:Q2537 ; wdt:P397 ?o .", floor=15),
+             "?s wdt:P397 ?o .", floor=30),
     Template("discoverer", "science", "discoverer",
              "Discovery of {s}", "Who discovered {s}?", "{s} was discovered by {o}.",
              "?s wdt:P61 ?o .", floor=30),
-    Template("genus", "science", "genus",
-             "Genus of the {s}", "Which genus does the {s} belong to?",
-             "The {s} belongs to the genus {o}.",
-             "?s wdt:P105 wd:Q7432 ; wdt:P171 ?o .", floor=60),
     Template("named-after", "science", "namesake",
              "Namesake of {s}", "What is {s} named after?", "{s} is named after {o}.",
              "?s wdt:P138 ?o .", floor=60),
 
     # --- Arts & Literature ---------------------------------------------------------------
-    # Paintings are the template that timed out at 865,300 items; the floor is what makes it fit.
+    # Paintings are the template that timed out at 865,300 items. Starting at 30 it timed out,
+    # skipped to 120 and returned a single painting — almost nothing has 120 Wikipedias. 60 is
+    # the rung in between, which the three-attempt rule had been stepping over.
     Template("painting-creator", "arts", "painter",
              "Painter of {s}", "Who painted {s}?", "{s} was painted by {o}.",
-             "?s wdt:P31 wd:Q3305213 ; wdt:P170 ?o .", floor=30),
+             "?s wdt:P31 wd:Q3305213 ; wdt:P170 ?o .", floor=60),
+    # Same shape of problem, same fix: it timed out at 15 and again at 60, then found nothing
+    # at 250. Books do not have 250 Wikipedias.
     Template("book-author", "arts", "author",
              "Author of {s}", "Who wrote {s}?", "{s} was written by {o}.",
-             "?s wdt:P31 wd:Q7725634 ; wdt:P50 ?o .", floor=15),
+             "?s wdt:P31 wd:Q7725634 ; wdt:P50 ?o .", floor=60),
     Template("sculpture-creator", "arts", "sculptor",
              "Sculptor of {s}", "Who sculpted {s}?", "{s} was sculpted by {o}.",
              "?s wdt:P31 wd:Q860861 ; wdt:P170 ?o .", floor=15),
@@ -153,13 +162,12 @@ TEMPLATES = [
     Template("battle-conflict", "history", "war",
              "The {s}", "Which war was the {s} part of?", "The {s} was part of {o}.",
              "?s wdt:P31 wd:Q178561 ; wdt:P361 ?o .", floor=15),
-    Template("birthplace", "history", "birthplace",
-             "Birthplace of {s}", "Where was {s} born?", "{s} was born in {o}.",
-             "?s wdt:P31 wd:Q5 ; wdt:P19 ?o .", floor=80),
-    Template("citizenship", "history", "country",
-             "Nationality of {s}", "Which country was {s} a citizen of?",
-             "{s} was a citizen of {o}.",
-             "?s wdt:P31 wd:Q5 ; wdt:P27 ?o .", floor=100),
+    # Two templates over Q5 lived here — birthplace (P19) and citizenship (P27). Both timed out
+    # at every floor on the way up to 250, which is unsurprising in hindsight: Wikidata holds
+    # over ten million humans, and computing sitelink counts across all of them to rank them is
+    # not a question the public endpoint will answer in sixty seconds. They cost six minutes a
+    # run to fail. Facts about people are worth having and want a different formulation —
+    # starting from a bounded set of notable people rather than from "all humans".
 
     # --- Culture -------------------------------------------------------------------------
     Template("film-director", "culture", "director",
@@ -168,10 +176,7 @@ TEMPLATES = [
     Template("dish-origin", "culture", "country",
              "Origin of {s}", "Which country does {s} come from?", "{s} comes from {o}.",
              "?s wdt:P31 wd:Q746549 ; wdt:P495 ?o .", floor=15),
-    Template("writing-system", "culture", "writing system",
-             "Script of {s}", "Which writing system is {s} written in?",
-             "{s} is written in the {o} script.",
-             "?s wdt:P282 ?o .", floor=40),
+    # A writing-system template on P282 also lived here and timed out at 60, 120 and 250.
 
     # --- Sports --------------------------------------------------------------------------
     Template("club-country", "sports", "country",
@@ -506,8 +511,40 @@ def extracts_for(titles):
 
 # --- Publishing --------------------------------------------------------------------------
 
+def prune(by_category):
+    """Drop answerTypes too thin to quiz on, and name them.
+
+    The first full run harvested 3,223 facts and published none of them: two templates yielded
+    a single fact each, a one-answer answerType cannot furnish a quiz question, and the
+    validator vetoed the whole corpus over it. A weak template should cost its own facts, not
+    everybody else's — so its facts come out here and the rest goes on to be published.
+    """
+    counts, answers = {}, {}
+    for facts in by_category.values():
+        for fact in facts:
+            answer_type = fact["answerType"]
+            counts[answer_type] = counts.get(answer_type, 0) + 1
+            answers.setdefault(answer_type, set()).add(fact["answer"])
+
+    weak = {
+        answer_type for answer_type, count in counts.items()
+        if count < MIN_PER_ANSWER_TYPE or len(answers[answer_type]) < MIN_DISTINCT_ANSWERS
+    }
+    for answer_type in sorted(weak):
+        print(f"  dropping '{answer_type}': {counts[answer_type]} facts, "
+              f"{len(answers[answer_type])} distinct answers — too thin to quiz on")
+
+    for category in list(by_category):
+        kept = [f for f in by_category[category] if f["answerType"] not in weak]
+        if kept:
+            by_category[category] = kept
+        else:
+            del by_category[category]
+    return by_category
+
+
 def validate(facts):
-    """Refuse to publish a corpus that would make bad quizzes."""
+    """Refuse to publish a corpus the app could not use."""
     problems = []
     ids = [f["id"] for f in facts]
     if len(ids) != len(set(ids)):
@@ -517,9 +554,9 @@ def validate(facts):
     for fact in facts:
         by_type.setdefault(fact["answerType"], set()).add(fact["answer"])
     for answer_type, answers in sorted(by_type.items()):
-        # The quiz draws three distractors from the same answerType; fewer than four distinct
-        # answers means it cannot build a question without offering the right one twice.
-        if len(answers) < 4:
+        # prune() should already have removed these. If one survives, something above is wrong
+        # and publishing would put an unanswerable quiz question on a phone.
+        if len(answers) < MIN_DISTINCT_ANSWERS:
             problems.append(f"answerType '{answer_type}' has only {len(answers)} distinct answers")
 
     for field in ("title", "statement", "question", "answer", "answerType"):
@@ -676,6 +713,29 @@ def self_test():
           any("duplicate" in p for p in validate(thin + [dict(thin[0])])))
     varied = [dict(f, id=f"y{i}", answer=f"a{i}") for i, f in enumerate(thin)]
     check("a healthy corpus passes", validate(varied) == [])
+
+    # The rule that cost a 3,223-fact run: one thin template must not veto every other one.
+    def corpus(answer_type, count, start=0):
+        return [{"id": f"{answer_type}{i}", "title": "t", "statement": "s", "question": "q",
+                 "answer": f"{answer_type}-{i}", "answerType": answer_type, "difficulty": 1}
+                for i in range(start, start + count)]
+
+    mixed = {"geography": corpus("capital", 50), "science": corpus("painter", 1)}
+    kept = prune(mixed)
+    check("a thin answerType is dropped, not the corpus with it",
+          "geography" in kept and len(kept["geography"]) == 50)
+    check("a category left with nothing is dropped entirely", "science" not in kept)
+    check("what survives pruning passes validation",
+          validate([f for facts in kept.values() for f in facts]) == [])
+    check("an answerType exactly at the floor survives",
+          len(prune({"a": corpus("x", MIN_PER_ANSWER_TYPE)}).get("a", [])) == MIN_PER_ANSWER_TYPE)
+    check("one fact below the floor does not",
+          prune({"a": corpus("x", MIN_PER_ANSWER_TYPE - 1)}) == {})
+    repeated = corpus("y", MIN_PER_ANSWER_TYPE)
+    for fact in repeated:
+        fact["answer"] = "the same answer every time"
+    check("plenty of facts with one answer between them is still too thin",
+          prune({"a": repeated}) == {})
     check("a blank required field is refused",
           any("blank answer" in p for p in validate(varied + [dict(varied[0], id="z", answer=" ")])))
 
@@ -762,6 +822,10 @@ def main(argv=None):
         print(f"\n{skipped} templates never ran. The size guards below decide whether what "
               f"was collected is still worth publishing.")
 
+    harvested = sum(len(v) for v in by_category.values())
+    print(f"\n{harvested} facts harvested. Checking each answerType can hold a quiz...")
+    by_category = prune(by_category)
+
     total = sum(len(v) for v in by_category.values())
     previous = previous_total()
     if total < MIN_TOTAL or (previous and total < previous * MIN_FRACTION_OF_PREVIOUS):
@@ -770,6 +834,7 @@ def main(argv=None):
         return 1
 
     # Details make the Learn screen worth reading; fetched once here rather than on the phone.
+    # After the pruning above, so nothing is fetched for facts that are already discarded.
     print("\nFetching Wikipedia extracts...")
     for category, facts in sorted(by_category.items()):
         extracts = extracts_for([f["wikiTitle"] for f in facts])
