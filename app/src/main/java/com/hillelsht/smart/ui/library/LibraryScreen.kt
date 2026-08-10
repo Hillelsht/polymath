@@ -51,6 +51,7 @@ import com.hillelsht.smart.domain.LibraryKeys
 import com.hillelsht.smart.domain.MasteryCalculator
 import com.hillelsht.smart.domain.model.Category
 import com.hillelsht.smart.domain.model.Fact
+import com.hillelsht.smart.domain.model.Phase
 import com.hillelsht.smart.domain.model.ReviewState
 import com.hillelsht.smart.ui.components.FactImage
 import com.hillelsht.smart.ui.components.GoDeeper
@@ -316,7 +317,21 @@ class CategoryViewModel(repository: SmartRepository, category: Category) : ViewM
     val facts = combine(
         repository.factsIn(category),
         repository.reviewStates,
-    ) { facts, states -> facts.sortedBy { it.id } to states }
+    ) { facts, states ->
+        // Sorting by id was fine for ninety-five hand-written facts. Now that the library
+        // tops itself up, a category holds thousands and their ids order them by which
+        // template generated them — every capital, then every currency. Facts already in play
+        // come first so a learner's own material stays at the top, and the rest follow
+        // most-important-first, which is the order they will actually be taught in.
+        val ordered = facts.sortedWith(
+            compareBy(
+                { states[it.id]?.phase.let { phase -> phase == null || phase == Phase.NEW } },
+                { it.difficulty },
+                { it.title },
+            ),
+        )
+        ordered to states
+    }
         .stateIn(
             viewModelScope,
             SharingStarted.WhileSubscribed(5_000),
