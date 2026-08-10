@@ -16,3 +16,7 @@ jobs:
         run: python3 tools/probe_durations.py
         # A "no keyless source" verdict is a finding, not a broken job.
         continue-on-error: true
+
+      - name: Probe Wikidata as an unlimited fact source
+        run: python3 tools/probe_wikidata.py
+        continue-on-error: true
