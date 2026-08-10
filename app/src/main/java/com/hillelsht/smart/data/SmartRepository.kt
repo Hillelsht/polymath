@@ -52,6 +52,8 @@ import kotlinx.coroutines.flow.first
 import kotlinx.coroutines.flow.map
 import kotlinx.coroutines.sync.Mutex
 import kotlinx.coroutines.sync.withLock
+import kotlinx.serialization.Serializable
+import kotlinx.serialization.json.Json
 
 /**
  * The single place the UI talks to.
@@ -83,6 +85,12 @@ class SmartRepository(
     fun interface PackStorage {
         fun save(fileName: String, content: String)
     }
+
+    /** `{"durations": {"<youtubeId>": <seconds>}}` as published by the content pipeline. */
+    @Serializable
+    private data class DurationPack(val durations: Map<String, Int> = emptyMap())
+
+    private val json = Json { ignoreUnknownKeys = true }
 
     private val imageLock = Mutex()
 
@@ -313,6 +321,30 @@ class SmartRepository(
             .sortedByDescending { it.first }
             .take(4)
             .map { it.second }
+    }
+
+    /**
+     * Pulls the published duration map into the local table.
+     *
+     * The length filter used to work only on videos you had already opened, because the player
+     * was the sole source of a runtime. Neither the channel feed nor the embed page carries one
+     * — both were checked from CI — so the pipeline publishes them and this fills the gaps.
+     * Player-measured values are never overwritten: `insertMissing` ignores conflicts.
+     */
+    suspend fun refreshDurations(): Boolean {
+        val raw = packService.fetchDurations() ?: return false
+        val parsed = try {
+            json.decodeFromString<DurationPack>(raw).durations
+        } catch (e: Exception) {
+            return false
+        }
+        if (parsed.isEmpty()) return false
+        videoDurationDao.insertMissing(
+            parsed.mapNotNull { (id, seconds) ->
+                if (seconds > 0) VideoDurationEntity(youtubeId = id, seconds = seconds) else null
+            },
+        )
+        return true
     }
 
     /** The channel allowlist, refreshed from the repo. */

@@ -110,8 +110,10 @@ class WatchViewModel(private val repository: SmartRepository) : ViewModel() {
 
         refreshing.value = true
         viewModelScope.launch {
-            // The allowlist changes rarely; the videos change constantly.
+            // The allowlist changes rarely; the videos change constantly. Durations come from
+            // the pipeline because the device cannot look up 500 runtimes per refresh.
             repository.refreshChannels()
+            repository.refreshDurations()
             val ok = repository.refreshShelf()
             offline.value = !ok
             loaded.value = true

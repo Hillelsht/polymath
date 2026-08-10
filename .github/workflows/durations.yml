@@ -1,0 +1,44 @@
+name: Durations
+
+# Hourly and cheap. The channel prober and the Wikipedia enrichment are heavy and change
+# rarely, so they stay in content.yml; this only asks YouTube how long ~540 videos are, which
+# is 11 API calls. Frequent runs matter because the app builds its shelf from the *current*
+# feeds — a duration map that lags a day would miss every recent upload.
+on:
+  schedule:
+    - cron: "23 * * * *"
+  push:
+    paths:
+      - "tools/fetch_durations.py"
+      - "packs/channels.json"
+  workflow_dispatch:
+
+permissions:
+  contents: write
+
+jobs:
+  durations:
+    name: Refresh video durations
+    runs-on: ubuntu-latest
+    # The pipeline's own commit must not retrigger the pipeline.
+    if: "!contains(github.event.head_commit.message, '[durations]')"
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Fetch durations
+        env:
+          # Absent until the secret is added, and the script treats that as "skip", not "fail".
+          YOUTUBE_API_KEY: ${{ secrets.YOUTUBE_API_KEY }}
+        run: python3 tools/fetch_durations.py
+
+      - name: Commit the map
+        run: |
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git add packs/durations.json app/src/main/assets/packs/durations.json || true
+          if git diff --cached --quiet; then
+            echo "Durations unchanged"
+          else
+            git commit -m "[durations] Refresh video durations"
+            git push
+          fi

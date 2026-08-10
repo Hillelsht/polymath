@@ -99,8 +99,18 @@ interface VideoDurationDao {
     @Query("SELECT * FROM video_durations")
     suspend fun all(): List<VideoDurationEntity>
 
+    /** The player measured this one; it wins over anything the pipeline published. */
     @Upsert
     suspend fun upsert(duration: VideoDurationEntity)
+
+    /**
+     * Durations from the content pipeline.
+     *
+     * IGNORE rather than REPLACE on purpose: the player's own figure is the one this device
+     * actually observed, so a pipeline refresh must not overwrite it.
+     */
+    @Insert(onConflict = OnConflictStrategy.IGNORE)
+    suspend fun insertMissing(durations: List<VideoDurationEntity>)
 }
 
 @Dao

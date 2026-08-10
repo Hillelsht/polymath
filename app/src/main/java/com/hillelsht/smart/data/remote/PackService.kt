@@ -56,6 +56,16 @@ class PackService(
      */
     suspend fun fetchChannels(): String? = get("$BASE/$CHANNELS_FILE")
 
+    /**
+     * Runtimes for the videos the shelf can show, keyed by YouTube id.
+     *
+     * Published by CI because neither the channel feed nor the embed page carries a duration —
+     * both were checked — so the only source is the YouTube Data API, and a phone cannot make
+     * ~540 lookups per refresh. Absent until the pipeline has a key, which is why every caller
+     * treats null as "no durations yet" rather than an error.
+     */
+    suspend fun fetchDurations(): String? = get("$BASE/$DURATIONS_FILE")
+
     private suspend fun get(url: String): String? = withContext(Dispatchers.IO) {
         val request = Request.Builder()
             .url(url)
@@ -74,5 +84,6 @@ class PackService(
     private companion object {
         const val BASE = "https://raw.githubusercontent.com/Hillelsht/smart/main/packs"
         const val CHANNELS_FILE = "channels.json"
+        const val DURATIONS_FILE = "durations.json"
     }
 }
