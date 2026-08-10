@@ -54,6 +54,16 @@ MAX_PER_TEMPLATE = 400
 DETAIL_CHARS = 700
 # Each retry raises the importance floor, which is both the timeout fix and a quality filter.
 FLOOR_LADDER = [0, 15, 30, 60, 120, 250]
+# A template that has timed out twice is not going to squeak through on the third nudge, and
+# every attempt costs a full minute of the endpoint's budget. The third try therefore jumps
+# straight to the top of the ladder — one deliberately tiny question instead of three
+# middling ones that all time out.
+MAX_ATTEMPTS = 3
+# Without this the run time is unbounded in the number of templates: 22 templates that each
+# time out three times is over an hour on its own. When the budget runs out the remaining
+# templates are skipped and said to be skipped, and the publish guards below decide whether
+# what was collected is worth publishing.
+BUDGET_MINUTES = 40
 # Publishing far less than last time means something broke upstream, not that the world shrank.
 MIN_TOTAL = 400
 MIN_FRACTION_OF_PREVIOUS = 0.6
@@ -176,7 +186,7 @@ class BadQuery(Exception):
     """The endpoint rejected the query itself. Retrying at a higher floor cannot help."""
 
 
-def sparql(query, timeout=75):
+def sparql(query, timeout=65):
     url = f"{SPARQL}?{urllib.parse.urlencode({'query': query, 'format': 'json'})}"
     request = urllib.request.Request(
         url, headers={"User-Agent": UA, "Accept": "application/sparql-results+json"})
@@ -296,10 +306,18 @@ def build_query(template, floor, limit):
     """
 
 
+def attempt_floors(template):
+    """The floors to try, cheapest question last-resorted to the narrowest one."""
+    rungs = [f for f in FLOOR_LADDER if f >= template.floor] or [template.floor]
+    if len(rungs) <= MAX_ATTEMPTS:
+        return rungs
+    # Keep the template's own floor, the top of the ladder, and one step in between.
+    return [rungs[0], rungs[len(rungs) // 2], rungs[-1]]
+
+
 def harvest(template, limit):
     """Query, raising the importance floor until the endpoint can answer inside its budget."""
-    floors = [f for f in FLOOR_LADDER if f >= template.floor] or [template.floor]
-    for attempt, floor in enumerate(floors):
+    for attempt, floor in enumerate(attempt_floors(template)):
         try:
             rows = sparql(build_query(template, floor, limit))["results"]["bindings"]
             note = f"floor {floor}" + (f", raised {attempt}x" if attempt else "")
@@ -627,6 +645,17 @@ def self_test():
     check("a blank required field is refused",
           any("blank answer" in p for p in validate(varied + [dict(varied[0], id="z", answer=" ")])))
 
+    wide = Template("w", "science", "x", "{s}", "{s}?", "{s}.", "?s wdt:P31 ?o .", floor=0)
+    narrow = Template("n", "science", "x", "{s}", "{s}?", "{s}.", "?s wdt:P31 ?o .", floor=120)
+    check("no template is attempted more than three times",
+          all(len(attempt_floors(t)) <= MAX_ATTEMPTS for t in TEMPLATES + [wide, narrow]))
+    check("the last attempt is the narrowest question available",
+          attempt_floors(wide)[-1] == FLOOR_LADDER[-1])
+    check("the first attempt honours the template's own floor",
+          attempt_floors(wide)[0] == 0 and attempt_floors(narrow)[0] == 120)
+    check("attempts never loosen the floor",
+          all(attempt_floors(t) == sorted(attempt_floors(t)) for t in TEMPLATES))
+
     check("a query ranks before it decorates",
           build_query(TEMPLATES[0], 0, 5).index("ORDER BY DESC(?sl)")
           < build_query(TEMPLATES[0], 0, 5).index("OPTIONAL"))
@@ -648,6 +677,8 @@ def main(argv=None):
                         help="facts per template (a small value makes a fast smoke run)")
     parser.add_argument("--dry-run", action="store_true",
                         help="harvest and report, but publish nothing")
+    parser.add_argument("--budget-minutes", type=float, default=BUDGET_MINUTES,
+                        help="stop starting new templates after this long")
     args = parser.parse_args(argv)
 
     if args.self_test:
@@ -659,15 +690,26 @@ def main(argv=None):
         print("\nFAIL: no template survived preflight. Leaving the library untouched.")
         return 1
 
-    print(f"\nHarvesting {len(templates)} templates, up to {args.limit} each.\n")
+    print(f"\nHarvesting {len(templates)} templates, up to {args.limit} each, "
+          f"within {args.budget_minutes} minutes.\n")
+    deadline = time.monotonic() + args.budget_minutes * 60
     by_category = {}
+    skipped = 0
     for template in templates:
+        if time.monotonic() > deadline:
+            print(f"  {template.key:<20}    - skipped, out of time")
+            skipped += 1
+            continue
         rows, note = harvest(template, args.limit)
         facts = make_facts(template, rows)
         images = sum(1 for f in facts if f["imageUrl"])
         print(f"  {template.key:<20} {len(facts):>4} facts, {images:>4} with images  [{note}]")
         by_category.setdefault(template.category, []).extend(facts)
         time.sleep(1)
+
+    if skipped:
+        print(f"\n{skipped} templates never ran. The size guards below decide whether what "
+              f"was collected is still worth publishing.")
 
     total = sum(len(v) for v in by_category.values())
     previous = previous_total()
