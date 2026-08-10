@@ -1,0 +1,63 @@
+name: Library
+
+# Generates the unbounded fact library from Wikidata.
+#
+# This is the only place the generator can run. The sandbox the app is developed in has no
+# route to query.wikidata.org, so every Q-number and P-number in tools/generate_facts.py is
+# unverified until this workflow prints the preflight table. Read that table before trusting
+# a run: an id that resolves to the wrong thing is a template quietly harvesting nonsense.
+#
+# Monthly, not hourly. Wikidata's most-linked items barely move, and each full run writes
+# several megabytes of shards.
+on:
+  schedule:
+    - cron: "41 4 3 * *"
+  push:
+    paths:
+      - "tools/generate_facts.py"
+  workflow_dispatch:
+    inputs:
+      limit:
+        description: "Facts per template (small = fast smoke run)"
+        default: "400"
+      dry_run:
+        description: "Harvest and report, but publish nothing"
+        type: boolean
+        default: false
+
+permissions:
+  contents: write
+
+jobs:
+  generate:
+    name: Generate facts from Wikidata
+    runs-on: ubuntu-latest
+    # The pipeline's own commit must not retrigger the pipeline.
+    if: "!contains(github.event.head_commit.message, '[library]')"
+    timeout-minutes: 60
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Self-test the generator
+        # Everything that needs no network. Runs first so a logic bug fails in seconds rather
+        # than after forty minutes of harvesting.
+        run: python3 tools/generate_facts.py --self-test
+
+      - name: Generate
+        run: |
+          python3 tools/generate_facts.py \
+            --limit "${{ github.event.inputs.limit || 400 }}" \
+            ${{ github.event.inputs.dry_run == 'true' && '--dry-run' || '' }}
+
+      - name: Commit the library
+        if: github.event.inputs.dry_run != 'true'
+        run: |
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git add packs/library
+          if git diff --cached --quiet; then
+            echo "Library unchanged"
+          else
+            git commit -m "[library] Regenerate the fact library from Wikidata"
+            git push
+          fi
