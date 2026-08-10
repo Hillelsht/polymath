@@ -1,5 +1,6 @@
 package com.hillelsht.smart.ui.home
 
+import android.util.Log
 import androidx.compose.foundation.background
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Arrangement
@@ -64,6 +65,7 @@ import com.hillelsht.smart.util.CrashLog
 import kotlinx.coroutines.flow.SharingStarted
 import kotlinx.coroutines.flow.combine
 import kotlinx.coroutines.flow.stateIn
+import kotlinx.coroutines.launch
 import java.time.LocalTime
 
 data class HomeUiState(
@@ -79,6 +81,17 @@ data class HomeUiState(
 }
 
 class HomeViewModel(repository: SmartRepository) : ViewModel() {
+
+    init {
+        // Refill the pool of unlearned facts before it runs dry. Today is where running out
+        // would show — as a screen with nothing new to offer — so this is where it is caught.
+        // Ordinarily a no-op: it fetches a few KB of index and stops unless a category is low.
+        viewModelScope.launch {
+            // Never let a network hiccup take the Today screen down with it.
+            runCatching { repository.topUpLibrary() }
+                .onFailure { Log.w("HomeViewModel", "Library top-up failed", it) }
+        }
+    }
 
     val state = combine(
         repository.plan,

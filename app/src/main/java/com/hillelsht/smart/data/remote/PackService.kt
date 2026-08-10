@@ -17,12 +17,31 @@ data class RemotePack(
     val facts: Int,
     val bytes: Long,
     val file: String,
+    /**
+     * Position within its category for generated library shards, ascending by importance.
+     * The six curated packs in `manifest.json` carry no such ordering and leave it at 0.
+     */
+    val shard: Int = 0,
 )
 
 @Serializable
 data class PackManifest(
     val generated: String = "",
     val packs: List<RemotePack> = emptyList(),
+)
+
+/**
+ * The generated library: thousands of facts in small shards, published by CI from Wikidata.
+ *
+ * Separate from [PackManifest] on purpose. The manifest is a *catalogue* — six named packs a
+ * person chooses between in the Library tab. This is a *supply*, consumed automatically as the
+ * pool of unlearned facts drains, and nobody should ever have to scroll a list of "Geography
+ * 007" to keep learning.
+ */
+@Serializable
+data class LibraryIndex(
+    val generated: String = "",
+    val shards: List<RemotePack> = emptyList(),
 )
 
 /**
@@ -49,6 +68,19 @@ class PackService(
 
     /** Returns the raw JSON of a pack file, or null if unreachable. */
     suspend fun fetchPack(pack: RemotePack): String? = get("$BASE/${pack.file}")
+
+    /**
+     * The index of generated library shards. Null until CI has published one, which every
+     * caller treats as "no library yet" rather than as an error — the app works exactly as
+     * before on the bundled packs alone.
+     */
+    suspend fun fetchLibraryIndex(): LibraryIndex? = get("$BASE/$LIBRARY_INDEX")?.let { body ->
+        try {
+            json.decodeFromString<LibraryIndex>(body)
+        } catch (e: Exception) {
+            null
+        }
+    }
 
     /**
      * The Watch tab's channel allowlist. Only the channels ship — which videos exist is
@@ -85,5 +117,6 @@ class PackService(
         const val BASE = "https://raw.githubusercontent.com/Hillelsht/smart/main/packs"
         const val CHANNELS_FILE = "channels.json"
         const val DURATIONS_FILE = "durations.json"
+        const val LIBRARY_INDEX = "library/index.json"
     }
 }

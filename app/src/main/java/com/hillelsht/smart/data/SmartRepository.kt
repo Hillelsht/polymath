@@ -32,6 +32,8 @@ import com.hillelsht.smart.data.seed.ContentParser
 import com.hillelsht.smart.domain.CategoryMastery
 import com.hillelsht.smart.domain.DailyPlan
 import com.hillelsht.smart.domain.FeedEntry
+import com.hillelsht.smart.domain.LibraryShard
+import com.hillelsht.smart.domain.LibraryTopUp
 import com.hillelsht.smart.domain.MasteryCalculator
 import com.hillelsht.smart.domain.SessionPlanner
 import com.hillelsht.smart.domain.Sm2Scheduler
@@ -40,6 +42,7 @@ import com.hillelsht.smart.domain.StreakCalculator
 import com.hillelsht.smart.domain.VideoCuration
 import com.hillelsht.smart.domain.model.Category
 import com.hillelsht.smart.domain.model.Fact
+import com.hillelsht.smart.domain.model.Phase
 import com.hillelsht.smart.domain.model.Rating
 import com.hillelsht.smart.domain.model.ReviewState
 import com.hillelsht.smart.domain.model.Video
@@ -213,6 +216,47 @@ class SmartRepository(
         packStorage.save("${parsed.packId}.json", raw)
         seeder.installIfChanged(parsed, source = ContentSeeder.SOURCE_REMOTE)
         return true
+    }
+
+    // --- An unbounded library ------------------------------------------------------------
+
+    /**
+     * Refills the pool of unlearned facts before it runs out.
+     *
+     * The app bundles a fixed 517 facts; learn them all and the Today screen quietly stops
+     * offering new material. CI publishes thousands more as small shards, and this pulls the
+     * next one down as a category drains — so the collection behaves as if it had no end,
+     * while the APK never grows because none of it ships inside the app.
+     *
+     * Nothing is deleted to make room. A learned fact leaves the *unseen* pool the moment it
+     * is learned, which is the visible "it disappears and a new one takes its place"; the fact
+     * itself has to stay, because tomorrow's review depends on it.
+     *
+     * @return how many shards were installed. Zero is the ordinary case and not a failure:
+     *   the pool is usually full, and a missing index simply means CI has not published yet.
+     */
+    suspend fun topUpLibrary(): Int {
+        val index = packService.fetchLibraryIndex() ?: return 0
+        if (index.shards.isEmpty()) return 0
+
+        val states = reviewStates.first()
+        val unseenByCategory = facts.first()
+            .filter { fact -> states[fact.id]?.phase.let { it == null || it == Phase.NEW } }
+            .groupingBy { it.category.id }
+            .eachCount()
+
+        val wanted = LibraryTopUp.next(
+            available = index.shards.map {
+                LibraryShard(packId = it.id, categoryId = it.category, order = it.shard)
+            },
+            installed = installedPacks.first().map { it.id }.toSet(),
+            unseenByCategory = unseenByCategory,
+        )
+
+        val byId = index.shards.associateBy { it.id }
+        return wanted.count { shard ->
+            byId[shard.packId]?.let { downloadPack(it) } ?: false
+        }
     }
 
     // --- Videos: a live shelf, not a catalogue ------------------------------------------

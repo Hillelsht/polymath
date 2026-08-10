@@ -96,6 +96,11 @@ class LibraryViewModel(private val repository: SmartRepository) : ViewModel() {
             checkedManifest.value = false
             repository.refreshManifest()
             checkedManifest.value = true
+            // The generated library tops itself up silently. It is deliberately not listed
+            // alongside the six named packs: those are a catalogue a person chooses from,
+            // this is a supply, and nobody should have to scroll to "Geography 007" to keep
+            // learning. The only visible effect is that the counts keep going up.
+            runCatching { repository.topUpLibrary() }
         }
     }
 

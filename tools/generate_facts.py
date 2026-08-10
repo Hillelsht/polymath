@@ -523,6 +523,9 @@ def publish(by_category):
                 "bytes": len(raw.encode()),
                 # Relative to packs/, which is what PackService appends to its base URL.
                 "file": f"library/{name}",
+                # The device takes shards in this order, so a learner meets the most-linked
+                # facts of a category before its obscure ones.
+                "shard": number,
             })
         print(f"  {category:<12} {len(facts):>5} facts in {len(chunks)} shards")
 
