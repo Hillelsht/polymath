@@ -12,6 +12,8 @@ data class CategoryMastery(
     val masteredFacts: Int,
     /** 0f..1f — the ring fill. */
     val mastery: Float,
+    /** What the ring is measured against: everything seen, plus the next stretch of new. */
+    val reachableFacts: Int = totalFacts,
 ) {
     val untouched: Boolean get() = seenFacts == 0
 }
@@ -24,8 +26,25 @@ data class CategoryMastery(
  * scheduler is willing to leave alone for three weeks is. Each fact contributes
  * `min(1, interval / MATURE_INTERVAL_DAYS)`, so the ring moves a little from the first
  * successful review and reaches full only at genuine retention.
+ *
+ * It is measured against a **horizon**, not against the whole corpus, and that matters now
+ * that the corpus has no end. [LibraryTopUp] keeps pulling more facts down as the pool drains,
+ * so a ring reading "fraction of everything" would fall every time a shard arrived and would
+ * converge on zero however much was learned — the app would punish the learner for having more
+ * to learn. Measuring against what has been started plus the next stretch of new material
+ * gives a number that only moves when the learner does.
  */
 object MasteryCalculator {
+
+    /**
+     * How far past the facts already started the ring looks.
+     *
+     * Roughly a fortnight of new material: the daily cap is dealt round-robin across six
+     * categories, so a category supplies two or so new facts a day. Small enough that a
+     * category with a shard waiting behind it does not read as barely begun; large enough that
+     * the number is not simply "how well do I know the twelve I did yesterday".
+     */
+    const val LOOKAHEAD = 30
 
     fun factMastery(state: ReviewState?): Float {
         if (state == null || state.phase == Phase.NEW) return 0f
@@ -53,22 +72,30 @@ object MasteryCalculator {
             val forCategory = grouped[category].orEmpty().filter { it.phase != Phase.NEW }
             val masteredCount = forCategory.count(::isMastered)
             val summed = forCategory.sumOf { factMastery(it).toDouble() }
+            val seen = forCategory.size
+            val reachable = seen + (total - seen).coerceAtMost(LOOKAHEAD)
 
             CategoryMastery(
                 category = category,
                 totalFacts = total,
-                seenFacts = forCategory.size,
+                seenFacts = seen,
                 masteredFacts = masteredCount,
-                mastery = if (total == 0) 0f else (summed / total).toFloat().coerceIn(0f, 1f),
+                mastery = if (reachable == 0) 0f else (summed / reachable).toFloat().coerceIn(0f, 1f),
+                reachableFacts = reachable,
             )
         }
     }
 
-    /** Corpus-wide mastery, weighted by category size rather than by category count. */
+    /**
+     * Mastery across every category, weighted by size rather than by category count.
+     *
+     * Weighted by *reachable* size for the same reason the ring is: weighting by total would
+     * hand a category all the influence for having had a shard downloaded into it.
+     */
     fun overall(byCategory: List<CategoryMastery>): Float {
-        val total = byCategory.sumOf { it.totalFacts }
+        val total = byCategory.sumOf { it.reachableFacts }
         if (total == 0) return 0f
-        val weighted = byCategory.sumOf { it.mastery.toDouble() * it.totalFacts }
+        val weighted = byCategory.sumOf { it.mastery.toDouble() * it.reachableFacts }
         return (weighted / total).toFloat().coerceIn(0f, 1f)
     }
 }

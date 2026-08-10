@@ -92,7 +92,7 @@ class MasteryCalculatorTest {
     }
 
     @Test
-    fun `category mastery is measured against the whole category, not just what was seen`() {
+    fun `category mastery counts the unseen against you, not just what was seen`() {
         val totals = mapOf(Category.GEOGRAPHY to 10, Category.SCIENCE to 10)
         val states = mapOf(
             "g1" to state("g1", 21),
@@ -119,5 +119,86 @@ class MasteryCalculatorTest {
             CategoryMastery(Category.SCIENCE, totalFacts = 10, seenFacts = 0, masteredFacts = 0, mastery = 0f),
         )
         assertEquals(0.9f, MasteryCalculator.overall(summary), 1e-4f)
+    }
+
+    // --- the ring under an endless library -----------------------------------------------
+    // LibraryTopUp keeps pulling more facts down as the pool drains. Measured against the
+    // whole corpus, the ring would fall every time a shard landed and converge on zero however
+    // much was learned — the app punishing a learner for having more left to learn.
+
+    @Test
+    fun `a shard landing does not undo progress already made`() {
+        val states = (1..20).associate { "g$it" to state("g$it", 21) }
+        val categoryOf = { _: String -> Category.GEOGRAPHY }
+
+        fun ringWith(total: Int) = MasteryCalculator
+            .byCategory(mapOf(Category.GEOGRAPHY to total), states, categoryOf)
+            .first { it.category == Category.GEOGRAPHY }
+            .mastery
+
+        // 95 bundled facts, then 150 more arrive, then 150 more again.
+        val before = ringWith(95)
+        assertEquals(before, ringWith(245), 1e-4f)
+        assertEquals(before, ringWith(395), 1e-4f)
+    }
+
+    @Test
+    fun `the ring is measured against what is actually within reach`() {
+        val states = (1..20).associate { "g$it" to state("g$it", 21) }
+        val result = MasteryCalculator
+            .byCategory(mapOf(Category.GEOGRAPHY to 1_000), states, { Category.GEOGRAPHY })
+            .first { it.category == Category.GEOGRAPHY }
+
+        assertEquals(20 + MasteryCalculator.LOOKAHEAD, result.reachableFacts)
+        assertEquals(1_000, result.totalFacts, "the true size is still reported honestly")
+        assertEquals(20f / (20 + MasteryCalculator.LOOKAHEAD), result.mastery, 1e-4f)
+    }
+
+    @Test
+    fun `a category smaller than the horizon is unaffected`() {
+        // The bundled corpus is well inside the lookahead per category, so nothing a learner
+        // has already seen on their rings shifts for reasons they cannot see.
+        val states = mapOf("g1" to state("g1", 21), "g2" to state("g2", 21))
+        val result = MasteryCalculator
+            .byCategory(mapOf(Category.GEOGRAPHY to 10), states, { Category.GEOGRAPHY })
+            .first { it.category == Category.GEOGRAPHY }
+        assertEquals(10, result.reachableFacts)
+        assertEquals(0.2f, result.mastery, 1e-4f)
+    }
+
+    @Test
+    fun `finishing everything still reads as finished`() {
+        // The horizon must not stop a completed category short of a full ring.
+        val states = (1..40).associate { "g$it" to state("g$it", 21) }
+        val result = MasteryCalculator
+            .byCategory(mapOf(Category.GEOGRAPHY to 40), states, { Category.GEOGRAPHY })
+            .first { it.category == Category.GEOGRAPHY }
+        assertEquals(1f, result.mastery, 1e-4f)
+    }
+
+    @Test
+    fun `an untouched endless category still reads as zero, not as progress`() {
+        val result = MasteryCalculator
+            .byCategory(mapOf(Category.GEOGRAPHY to 5_000), emptyMap(), { Category.GEOGRAPHY })
+            .first { it.category == Category.GEOGRAPHY }
+        assertTrue(result.untouched)
+        assertEquals(0f, result.mastery)
+    }
+
+    @Test
+    fun `overall is not hijacked by whichever category got a shard`() {
+        // Weighting by raw totals would let one downloaded shard swamp five finished
+        // categories, dropping the headline number for a reason the learner never caused.
+        val states = (1..20).associate { "g$it" to state("g$it", 21) }
+        val small = MasteryCalculator.byCategory(
+            Category.entries.associateWith { 20 }, states, { Category.GEOGRAPHY },
+        )
+        val oneCategoryTopped = MasteryCalculator.byCategory(
+            Category.entries.associateWith { if (it == Category.SCIENCE) 2_000 else 20 },
+            states,
+            { Category.GEOGRAPHY },
+        )
+        val drop = MasteryCalculator.overall(small) - MasteryCalculator.overall(oneCategoryTopped)
+        assertTrue(drop < 0.05f, "a single shard moved the headline number by $drop")
     }
 }
