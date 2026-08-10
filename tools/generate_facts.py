@@ -76,6 +76,15 @@ MIN_FRACTION_OF_PREVIOUS = 0.6
 MIN_DISTINCT_ANSWERS = 4
 MIN_PER_ANSWER_TYPE = 8
 
+# Wikidata's polite way of recording that nobody knows. As a quiz answer, "Who wrote the Old
+# Testament? — various authors" is a question with no answer in it, and as a *distractor* it is
+# worse: it looks plausible against every question of its type.
+NON_ANSWER = re.compile(
+    r"^(unknown|anonymous|various|no value|none|n/?a|unnamed|untitled)\b"
+    r"|\bvarious (authors|artists|contributors)\b|\bet al\.?$|^\W*$",
+    re.IGNORECASE,
+)
+
 CATEGORIES = {
     "geography": "Geography",
     "history": "History",
@@ -84,6 +93,15 @@ CATEGORIES = {
     "sports": "Sports & Games",
     "culture": "Pop Culture",
 }
+
+
+# A statement that applies to only part of the subject, or that has stopped being true, is not
+# an answer to a question about the subject. `wdt:` discards these qualifiers and keeps the
+# claim, so any template that cares reads the statement node instead.
+UNQUALIFIED = (
+    "FILTER NOT EXISTS {{ ?st pq:P518 [] }} "
+    "FILTER NOT EXISTS {{ ?st pq:P582 [] }}"
+)
 
 
 class Template:
@@ -102,12 +120,18 @@ class Template:
 
 TEMPLATES = [
     # --- Geography ----------------------------------------------------------------------
+    # These three read the full statement rather than the truthy shortcut, so that qualified
+    # statements can be excluded. The published library said "the currency of France is the CFP
+    # Franc" — Wikidata does hold that, qualified with "applies to part: French overseas
+    # collectivities", and `wdt:` throws the qualifier away and keeps the claim. Dropping any
+    # statement carrying P518 (applies to part) or P582 (end time) removes both that class of
+    # half-truth and currencies a country has stopped using.
     Template("capital", "geography", "capital",
              "Capital of {s}", "What is the capital of {s}?", "{o} is the capital of {s}.",
-             "?s wdt:P31 wd:Q6256 ; wdt:P36 ?o ."),
+             "?s wdt:P31 wd:Q6256 ; p:P36 ?st . ?st ps:P36 ?o . " + UNQUALIFIED.format(p="P36")),
     Template("currency", "geography", "currency",
              "Currency of {s}", "What is the currency of {s}?", "The currency of {s} is the {o}.",
-             "?s wdt:P31 wd:Q6256 ; wdt:P38 ?o ."),
+             "?s wdt:P31 wd:Q6256 ; p:P38 ?st . ?st ps:P38 ?o . " + UNQUALIFIED.format(p="P38")),
     Template("continent", "geography", "continent",
              "Continent of {s}", "Which continent is {s} in?", "{s} is in {o}.",
              "?s wdt:P31 wd:Q6256 ; wdt:P30 ?o ."),
@@ -154,8 +178,13 @@ TEMPLATES = [
     Template("sculpture-creator", "arts", "sculptor",
              "Sculptor of {s}", "Who sculpted {s}?", "{s} was sculpted by {o}.",
              "?s wdt:P31 wd:Q860861 ; wdt:P170 ?o .", floor=15),
+    # "Who composed The Simpsons?" was in the published library. P86 is not confined to concert
+    # works — it also carries the score of a film, a game or a television series, and the answer
+    # (Alf Clausen) was right while the question was nonsense. This phrasing is true of all of
+    # them, so the template no longer needs to pretend every subject is a symphony.
     Template("composer", "arts", "composer",
-             "Composer of {s}", "Who composed {s}?", "{s} was composed by {o}.",
+             "Music of {s}", "Who wrote the music for {s}?",
+             "The music for {s} was written by {o}.",
              "?s wdt:P86 ?o .", floor=15),
 
     # --- History -------------------------------------------------------------------------
@@ -240,7 +269,9 @@ def sparql(query, timeout=65):
         raise
 
 
-ENTITY_TOKEN = re.compile(r"\bwdt?:([A-Za-z0-9]+)")
+# Covers the statement prefixes too (p:, ps:, pq:), so an id used only in a qualifier filter is
+# still checked against Wikidata rather than taken on trust. Longest alternative first.
+ENTITY_TOKEN = re.compile(r"\b(?:wdt|wd|ps|pq|p):([A-Za-z0-9]+)")
 WELL_FORMED = re.compile(r"^[QP][1-9][0-9]*$")
 
 
@@ -408,6 +439,8 @@ def make_facts(template, rows):
         if re.fullmatch(r"Q\d+", subject) or re.fullmatch(r"Q\d+", answer):
             continue
         if answer.lower() == subject.lower():
+            continue
+        if NON_ANSWER.search(answer):
             continue
 
         entry = grouped.setdefault(qid, {"answers": set(), "row": row, "subject": subject})
@@ -647,8 +680,13 @@ def self_test():
     check("every shipped template names only well-formed ids",
           all(not malformed_ids(t) for t in TEMPLATES))
     check("preflight drops a template it cannot trust", preflight([typo], offline=True) == [])
-    check("ids are extracted from both wd: and wdt: prefixes, in order",
-          referenced_ids(TEMPLATES[0]) == ["P31", "Q6256", "P36"])
+    every_prefix = Template("x", "science", "t", "{s}", "{s}?", "{s}.",
+                            "?s wdt:P31 wd:Q6256 ; p:P36 ?st . ?st ps:P36 ?o . "
+                            "FILTER NOT EXISTS { ?st pq:P518 [] }")
+    check("ids are extracted from every prefix a template can use, in order",
+          referenced_ids(every_prefix) == ["P31", "Q6256", "P36", "P518"])
+    check("a qualifier id is checked like any other",
+          "P582" in referenced_ids(TEMPLATES[0]))
 
     template = TEMPLATES[0]
 
@@ -671,6 +709,12 @@ def self_test():
 
     check("an unresolved label is dropped",
           make_facts(template, [row("Q1", "Q1", "Paris")]) == [])
+    check("an answer that is not an answer is dropped",
+          all(make_facts(template, [row("Q1", "A work", a)]) == []
+              for a in ("various authors", "Unknown", "anonymous", "no value", "N/A", "  ")))
+    # "Nonesuch" starts with "none" but does not end there, so the word boundary saves it.
+    check("a real name that merely starts like one is kept",
+          len(make_facts(template, [row("Q1", "A work", "Nonesuch Press")])) == 1)
     check("a subject with two answers is dropped as ambiguous",
           make_facts(template, [row("Q1", "Panama", "Balboa"), row("Q1", "Panama", "Dollar")]) == [])
     check("a subject repeated with one answer survives once",
