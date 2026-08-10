@@ -46,6 +46,7 @@ import androidx.lifecycle.viewmodel.initializer
 import androidx.lifecycle.viewmodel.viewModelFactory
 import coil.compose.AsyncImage
 import com.hillelsht.smart.data.SmartRepository
+import com.hillelsht.smart.domain.ShelfFilter
 import com.hillelsht.smart.domain.model.Category
 import com.hillelsht.smart.domain.model.LengthClass
 import com.hillelsht.smart.domain.model.Video
@@ -68,19 +69,16 @@ data class WatchUiState(
     val offline: Boolean = false,
 ) {
     /**
-     * YouTube does not always expose a duration, so the length filter is only meaningful when
-     * at least some of the shelf has one. Offering a filter that filters nothing is worse than
-     * offering none.
+     * Whether the Short / Medium / Long chips are worth showing at all.
+     *
+     * Delegated to [ShelfFilter], which is under test. This used to be `videos.any { ... }`
+     * here in the composable, and since durations only arrive once you open a video, a single
+     * watched video switched the chips on and picking one then hid the entire shelf.
      */
-    val lengthFilterUseful: Boolean get() = videos.any { it.lengthClass != null }
+    val lengthFilterUseful: Boolean get() = ShelfFilter.offerLengthFilter(videos)
 
-    /** The catalog after the two filter chips are applied. */
-    val visible: List<Video>
-        get() = videos.filter { video ->
-            (category == null || video.category == category) &&
-                // Videos of unknown length stay visible until a length filter is chosen.
-                (length == null || video.lengthClass == length)
-        }
+    /** The shelf after the two filter chips are applied. */
+    val visible: List<Video> get() = ShelfFilter.visible(videos, category, length)
 }
 
 class WatchViewModel(private val repository: SmartRepository) : ViewModel() {
