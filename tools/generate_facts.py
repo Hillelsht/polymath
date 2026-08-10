@@ -197,11 +197,13 @@ class Overtime(Exception):
 def hard_timeout(seconds):
     """Bound a whole request by the wall clock.
 
-    `urlopen(timeout=...)` is a *socket* timeout: it bounds each individual read, not the
-    request. A query that dribbles its results back never trips it, which is how a run given an
-    eight-minute budget was still going after twenty-six minutes — the budget is checked
-    between templates, and control never came back to check it. SIGALRM bounds the thing that
-    was actually meant to be bounded.
+    Belt to `urlopen(timeout=...)`'s braces rather than a replacement for it. That timeout is a
+    *socket* timeout — it bounds each individual read, not the request — so a response arriving
+    as a slow trickle could outlast it without any single read being late. Nothing here has
+    been seen doing that: the CI log shows Wikidata giving up at about sixty seconds and saying
+    so with an HTTP error, and the retry ladder handling it. But the harvest budget is only
+    checked between templates, so one request that never returned would sail past it unnoticed,
+    and that is worth a signal handler to rule out.
     """
     def fire(signum, frame):
         raise Overtime(f"exceeded {seconds:.0f}s")
