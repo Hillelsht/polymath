@@ -1,0 +1,325 @@
+{
+ "generated": "2026-08-10T20:54:17Z",
+ "shards": [
+  {
+   "id": "library-arts-000",
+   "name": "Arts & Literature \u00b7 more facts",
+   "category": "arts",
+   "version": "91f13517fb86",
+   "facts": 150,
+   "bytes": 174972,
+   "file": "library/arts-000.json",
+   "shard": 0
+  },
+  {
+   "id": "library-arts-001",
+   "name": "Arts & Literature \u00b7 more facts",
+   "category": "arts",
+   "version": "5efbadaef94e",
+   "facts": 150,
+   "bytes": 169515,
+   "file": "library/arts-001.json",
+   "shard": 1
+  },
+  {
+   "id": "library-arts-002",
+   "name": "Arts & Literature \u00b7 more facts",
+   "category": "arts",
+   "version": "5fbd3e157c5b",
+   "facts": 150,
+   "bytes": 169699,
+   "file": "library/arts-002.json",
+   "shard": 2
+  },
+  {
+   "id": "library-arts-003",
+   "name": "Arts & Literature \u00b7 more facts",
+   "category": "arts",
+   "version": "ff0504e60d36",
+   "facts": 7,
+   "bytes": 7665,
+   "file": "library/arts-003.json",
+   "shard": 3
+  },
+  {
+   "id": "library-culture-000",
+   "name": "Pop Culture \u00b7 more facts",
+   "category": "culture",
+   "version": "a3368c09a53a",
+   "facts": 150,
+   "bytes": 170930,
+   "file": "library/culture-000.json",
+   "shard": 0
+  },
+  {
+   "id": "library-culture-001",
+   "name": "Pop Culture \u00b7 more facts",
+   "category": "culture",
+   "version": "76b3bbd08dee",
+   "facts": 150,
+   "bytes": 169599,
+   "file": "library/culture-001.json",
+   "shard": 1
+  },
+  {
+   "id": "library-culture-002",
+   "name": "Pop Culture \u00b7 more facts",
+   "category": "culture",
+   "version": "0cfa62399d05",
+   "facts": 150,
+   "bytes": 153644,
+   "file": "library/culture-002.json",
+   "shard": 2
+  },
+  {
+   "id": "library-culture-003",
+   "name": "Pop Culture \u00b7 more facts",
+   "category": "culture",
+   "version": "24ef111a325f",
+   "facts": 74,
+   "bytes": 71228,
+   "file": "library/culture-003.json",
+   "shard": 3
+  },
+  {
+   "id": "library-geography-000",
+   "name": "Geography \u00b7 more facts",
+   "category": "geography",
+   "version": "7a6953bcd10f",
+   "facts": 150,
+   "bytes": 169387,
+   "file": "library/geography-000.json",
+   "shard": 0
+  },
+  {
+   "id": "library-geography-001",
+   "name": "Geography \u00b7 more facts",
+   "category": "geography",
+   "version": "26d9f01efeac",
+   "facts": 150,
+   "bytes": 170503,
+   "file": "library/geography-001.json",
+   "shard": 1
+  },
+  {
+   "id": "library-geography-002",
+   "name": "Geography \u00b7 more facts",
+   "category": "geography",
+   "version": "9f590ece6cf2",
+   "facts": 150,
+   "bytes": 168951,
+   "file": "library/geography-002.json",
+   "shard": 2
+  },
+  {
+   "id": "library-geography-003",
+   "name": "Geography \u00b7 more facts",
+   "category": "geography",
+   "version": "f42dce0e3045",
+   "facts": 150,
+   "bytes": 173336,
+   "file": "library/geography-003.json",
+   "shard": 3
+  },
+  {
+   "id": "library-geography-004",
+   "name": "Geography \u00b7 more facts",
+   "category": "geography",
+   "version": "9a02e71f072c",
+   "facts": 150,
+   "bytes": 164960,
+   "file": "library/geography-004.json",
+   "shard": 4
+  },
+  {
+   "id": "library-geography-005",
+   "name": "Geography \u00b7 more facts",
+   "category": "geography",
+   "version": "878ca0d9290d",
+   "facts": 150,
+   "bytes": 160797,
+   "file": "library/geography-005.json",
+   "shard": 5
+  },
+  {
+   "id": "library-geography-006",
+   "name": "Geography \u00b7 more facts",
+   "category": "geography",
+   "version": "115d8494fcfc",
+   "facts": 150,
+   "bytes": 156621,
+   "file": "library/geography-006.json",
+   "shard": 6
+  },
+  {
+   "id": "library-geography-007",
+   "name": "Geography \u00b7 more facts",
+   "category": "geography",
+   "version": "199a24af5d2a",
+   "facts": 150,
+   "bytes": 154863,
+   "file": "library/geography-007.json",
+   "shard": 7
+  },
+  {
+   "id": "library-geography-008",
+   "name": "Geography \u00b7 more facts",
+   "category": "geography",
+   "version": "df160bf432fa",
+   "facts": 80,
+   "bytes": 85434,
+   "file": "library/geography-008.json",
+   "shard": 8
+  },
+  {
+   "id": "library-history-000",
+   "name": "History \u00b7 more facts",
+   "category": "history",
+   "version": "f9f0efe4e870",
+   "facts": 150,
+   "bytes": 180626,
+   "file": "library/history-000.json",
+   "shard": 0
+  },
+  {
+   "id": "library-history-001",
+   "name": "History \u00b7 more facts",
+   "category": "history",
+   "version": "17dfa4619166",
+   "facts": 150,
+   "bytes": 172892,
+   "file": "library/history-001.json",
+   "shard": 1
+  },
+  {
+   "id": "library-history-002",
+   "name": "History \u00b7 more facts",
+   "category": "history",
+   "version": "1d5746c841cb",
+   "facts": 6,
+   "bytes": 6906,
+   "file": "library/history-002.json",
+   "shard": 2
+  },
+  {
+   "id": "library-science-000",
+   "name": "Science \u00b7 more facts",
+   "category": "science",
+   "version": "9a1126f1a07e",
+   "facts": 150,
+   "bytes": 171329,
+   "file": "library/science-000.json",
+   "shard": 0
+  },
+  {
+   "id": "library-science-001",
+   "name": "Science \u00b7 more facts",
+   "category": "science",
+   "version": "f0cafc40a78a",
+   "facts": 150,
+   "bytes": 171095,
+   "file": "library/science-001.json",
+   "shard": 1
+  },
+  {
+   "id": "library-science-002",
+   "name": "Science \u00b7 more facts",
+   "category": "science",
+   "version": "265bcfcd816c",
+   "facts": 150,
+   "bytes": 171029,
+   "file": "library/science-002.json",
+   "shard": 2
+  },
+  {
+   "id": "library-science-003",
+   "name": "Science \u00b7 more facts",
+   "category": "science",
+   "version": "e159cdfbe076",
+   "facts": 150,
+   "bytes": 165283,
+   "file": "library/science-003.json",
+   "shard": 3
+  },
+  {
+   "id": "library-science-004",
+   "name": "Science \u00b7 more facts",
+   "category": "science",
+   "version": "0ef1e842de56",
+   "facts": 150,
+   "bytes": 145331,
+   "file": "library/science-004.json",
+   "shard": 4
+  },
+  {
+   "id": "library-science-005",
+   "name": "Science \u00b7 more facts",
+   "category": "science",
+   "version": "b671765fdd28",
+   "facts": 150,
+   "bytes": 150690,
+   "file": "library/science-005.json",
+   "shard": 5
+  },
+  {
+   "id": "library-science-006",
+   "name": "Science \u00b7 more facts",
+   "category": "science",
+   "version": "9a04397d24b5",
+   "facts": 37,
+   "bytes": 39662,
+   "file": "library/science-006.json",
+   "shard": 6
+  },
+  {
+   "id": "library-sports-000",
+   "name": "Sports & Games \u00b7 more facts",
+   "category": "sports",
+   "version": "85271d938912",
+   "facts": 150,
+   "bytes": 167703,
+   "file": "library/sports-000.json",
+   "shard": 0
+  },
+  {
+   "id": "library-sports-001",
+   "name": "Sports & Games \u00b7 more facts",
+   "category": "sports",
+   "version": "88fdf6b40505",
+   "facts": 150,
+   "bytes": 163334,
+   "file": "library/sports-001.json",
+   "shard": 1
+  },
+  {
+   "id": "library-sports-002",
+   "name": "Sports & Games \u00b7 more facts",
+   "category": "sports",
+   "version": "897e711c1f9b",
+   "facts": 150,
+   "bytes": 160131,
+   "file": "library/sports-002.json",
+   "shard": 2
+  },
+  {
+   "id": "library-sports-003",
+   "name": "Sports & Games \u00b7 more facts",
+   "category": "sports",
+   "version": "0e65a710f048",
+   "facts": 150,
+   "bytes": 158111,
+   "file": "library/sports-003.json",
+   "shard": 3
+  },
+  {
+   "id": "library-sports-004",
+   "name": "Sports & Games \u00b7 more facts",
+   "category": "sports",
+   "version": "f6fc8a79acab",
+   "facts": 56,
+   "bytes": 52373,
+   "file": "library/sports-004.json",
+   "shard": 4
+  }
+ ]
+}
