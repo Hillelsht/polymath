@@ -149,4 +149,57 @@ class VideoCurationTest {
         assertTrue(VideoCuration.interleave(emptyList()).isEmpty())
         assertTrue(VideoCuration.interleave(listOf(emptyList(), emptyList())).isEmpty())
     }
+
+    // --- duration filtering ------------------------------------------------------------------
+    // The first published duration map held 530 videos and 101 of them ran under 90 seconds:
+    // Shorts, nearly all with ordinary titles the junk regex could never catch. It also held a
+    // 4.5-hour livestream. Title heuristics existed only because no runtime was available.
+
+    @Test
+    fun `Shorts are dropped once their runtime is known`() {
+        val entries = listOf(
+            entry("Why is the Sahara so dry?", "clip", views = 999_999),
+            entry("The Fall of Constantinople, explained", "lesson", views = 10),
+        )
+        // A nine-second clip, exactly like the shortest entry in the real map.
+        val curated = VideoCuration.curate(entries, durations = mapOf("clip" to 9))
+        assertEquals(listOf("lesson"), curated.map { it.youtubeId })
+    }
+
+    @Test
+    fun `marathon streams are dropped`() {
+        val entries = listOf(
+            entry("Why is the Sahara so dry?", "stream", views = 999_999),
+            entry("The Fall of Constantinople, explained", "lesson", views = 10),
+        )
+        val curated = VideoCuration.curate(entries, durations = mapOf("stream" to 269 * 60))
+        assertEquals(listOf("lesson"), curated.map { it.youtubeId })
+    }
+
+    @Test
+    fun `a real lesson of ordinary length survives`() {
+        listOf(2 * 60 + 30, 8 * 60, 19 * 60, 95 * 60).forEach { seconds ->
+            assertFalse(VideoCuration.isJunkLength(seconds), "$seconds s should be kept")
+        }
+    }
+
+    @Test
+    fun `an unmeasured video is not dropped for being unmeasured`() {
+        // A video uploaded since the pipeline last ran has no duration yet. Dropping it would
+        // hide exactly the newest content the live shelf exists to surface.
+        assertFalse(VideoCuration.isJunkLength(null))
+        val curated = VideoCuration.curate(
+            listOf(entry("Why is the Sahara so dry?", "fresh")),
+            durations = emptyMap(),
+        )
+        assertEquals(listOf("fresh"), curated.map { it.youtubeId })
+    }
+
+    @Test
+    fun `the thresholds sit where they are documented`() {
+        assertTrue(VideoCuration.isJunkLength(VideoCuration.MIN_SECONDS - 1))
+        assertFalse(VideoCuration.isJunkLength(VideoCuration.MIN_SECONDS))
+        assertFalse(VideoCuration.isJunkLength(VideoCuration.MAX_SECONDS))
+        assertTrue(VideoCuration.isJunkLength(VideoCuration.MAX_SECONDS + 1))
+    }
 }

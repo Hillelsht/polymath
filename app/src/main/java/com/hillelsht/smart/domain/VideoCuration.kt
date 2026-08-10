@@ -35,8 +35,34 @@ object VideoCuration {
     /** Enough for a varied shelf without one prolific channel swamping a subject. */
     const val PER_CHANNEL_LIMIT = 8
 
+    /**
+     * Below this, nothing can be taught. These are Shorts.
+     *
+     * The title rules above were written when no duration was available, and they can only
+     * catch a Short that announces itself — the first published duration map showed **101 of
+     * 530** videos under 90 seconds, most of them with perfectly ordinary titles. Nine-second
+     * clips were reaching the shelf dressed as lessons.
+     */
+    const val MIN_SECONDS = 90
+
+    /**
+     * Above this it is a livestream, a podcast marathon or a compilation, not a lesson. The
+     * same map had a 4.5-hour entry.
+     */
+    const val MAX_SECONDS = 180 * 60
+
     fun isJunkTitle(title: String): Boolean =
         title.length < MIN_TITLE_LENGTH || JUNK.containsMatchIn(title)
+
+    /**
+     * Whether a runtime disqualifies a video.
+     *
+     * Unknown stays eligible: a duration the pipeline has not published yet — a video uploaded
+     * in the last hour — should not be silently dropped, and by the same argument that keeps
+     * unmeasured videos visible under a length filter.
+     */
+    fun isJunkLength(seconds: Int?): Boolean =
+        seconds != null && (seconds < MIN_SECONDS || seconds > MAX_SECONDS)
 
     /**
      * Drops the junk, then keeps each channel's most-watched entries.
@@ -49,10 +75,12 @@ object VideoCuration {
         entries: List<FeedEntry>,
         limit: Int = PER_CHANNEL_LIMIT,
         blocked: Set<String> = emptySet(),
+        durations: Map<String, Int> = emptyMap(),
     ): List<FeedEntry> = entries
         .asSequence()
         .filterNot { it.youtubeId in blocked }
         .filterNot { isJunkTitle(it.title) }
+        .filterNot { isJunkLength(durations[it.youtubeId]) }
         .distinctBy { it.youtubeId }
         .sortedByDescending { it.views }
         .take(limit)

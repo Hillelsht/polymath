@@ -273,7 +273,7 @@ class SmartRepository(
         val curatedByChannel = channels.mapNotNull { channel ->
             val entries = feeds[channel.id] ?: return@mapNotNull null
             val category = Category.fromId(channel.categoryId) ?: return@mapNotNull null
-            VideoCuration.curate(entries, blocked = blocked).map { entry ->
+            VideoCuration.curate(entries, blocked = blocked, durations = durations).map { entry ->
                 Video(
                     id = "vid-${entry.youtubeId}",
                     youtubeId = entry.youtubeId,
