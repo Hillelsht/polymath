@@ -64,6 +64,23 @@ jobs:
             --budget-minutes "${{ github.event.inputs.budget_minutes || 40 }}" \
             ${{ (github.event_name == 'push' || github.event.inputs.dry_run == 'true') && '--dry-run' || '' }}
 
+      - uses: actions/setup-java@v4
+        if: github.event_name != 'push' && github.event.inputs.dry_run != 'true'
+        with:
+          distribution: temurin
+          java-version: 17
+
+      - uses: gradle/actions/setup-gradle@v4
+        if: github.event_name != 'push' && github.event.inputs.dry_run != 'true'
+
+      - name: Check the app can read what was generated
+        if: github.event_name != 'push' && github.event.inputs.dry_run != 'true'
+        # GeneratedLibraryTest runs the app's real parser over the shards just written. Without
+        # this the regeneration commits straight to main and any schema drift — a renamed field,
+        # a missing category header — lands first and turns the build red afterwards, having
+        # already replaced a library that worked.
+        run: ./gradlew -p enginetests test
+
       - name: Commit the library
         if: github.event_name != 'push' && github.event.inputs.dry_run != 'true'
         run: |
