@@ -3,6 +3,7 @@ package com.hillelsht.smart.content
 import com.hillelsht.smart.data.seed.ContentParser
 import com.hillelsht.smart.domain.LibraryShard
 import com.hillelsht.smart.domain.LibraryTopUp
+import com.hillelsht.smart.domain.PackInstall
 import com.hillelsht.smart.domain.QuizGenerator
 import com.hillelsht.smart.domain.model.Category
 import com.hillelsht.smart.domain.model.Fact
@@ -112,6 +113,20 @@ class GeneratedLibraryTest {
             assertNotNull(
                 Category.fromId(entry.category),
                 "${entry.id} declares category '${entry.category}', which the app would reject",
+            )
+        }
+    }
+
+    @Test
+    fun `every shard is named so the seeder installs it additively`() {
+        // PackInstall recognises a generated shard by its id, and gets it wrong the shard is
+        // cleared and reinstalled on every regeneration — deleting facts the learner studied.
+        // The generator's naming and the seeder's rule have to agree, so they are checked here
+        // against each other rather than each being trusted separately.
+        parsedPacks().forEach { pack ->
+            assertTrue(
+                PackInstall.isGeneratedLibrary(pack.packId),
+                "${pack.packId} would be treated as a curated pack and cleared on every run",
             )
         }
     }

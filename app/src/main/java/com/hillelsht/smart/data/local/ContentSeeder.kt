@@ -4,6 +4,7 @@ import android.content.Context
 import android.util.Log
 import com.hillelsht.smart.data.seed.ChannelParser
 import com.hillelsht.smart.data.seed.ContentParser
+import com.hillelsht.smart.domain.PackInstall
 import java.io.File
 
 /**
@@ -55,7 +56,12 @@ class ContentSeeder(
         val installed = packDao.byId(pack.packId)
         if (installed != null && installed.version == pack.version) return
 
-        factDao.clearPack(pack.packId)
+        // A generated library shard only ever adds and updates — see [PackInstall] for why
+        // clearing one would destroy review history the learner has earned. Curated packs are
+        // still replaced wholesale, because a new version of one is a correction.
+        if (PackInstall.replacesExistingFacts(pack.packId)) {
+            factDao.clearPack(pack.packId)
+        }
         factDao.insertAll(pack.facts.map { it.toEntity() })
         packDao.upsert(
             PackEntity(
