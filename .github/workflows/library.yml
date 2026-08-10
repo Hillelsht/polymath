@@ -37,7 +37,9 @@ jobs:
     runs-on: ubuntu-latest
     # The pipeline's own commit must not retrigger the pipeline.
     if: "!contains(github.event.head_commit.message, '[library]')"
-    timeout-minutes: 60
+    # The generator bounds itself to --budget-minutes of harvesting plus one last template and
+    # the Wikipedia extracts. This is the outer backstop, with room for those two tails.
+    timeout-minutes: 75
     env:
       # Without this the run is invisible. Python block-buffers stdout when it is not a TTY,
       # so a 40-minute harvest prints nothing at all until it exits — and a cancelled or

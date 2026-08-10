@@ -18,10 +18,11 @@ Why Wikidata rather than prose:
 Two constraints were found by probing rather than guessed, and both shape the code below.
 
 **Broad queries time out.** The public endpoint gives roughly 60 seconds, and asking it to rank
-865,300 paintings by sitelinks exceeds that. Two fixes, applied together: the ranking runs in a
-subquery so the OPTIONAL image and article lookups touch only the surviving N rows rather than
-all 865,300; and a sitelink floor shrinks the candidate set, which is a quality filter anyway.
-When a query still times out the floor is raised and it is retried.
+865,300 paintings by sitelinks exceeds that. The importance floor is the fix — it shrinks the
+candidate set, and it selects for importance, which is wanted anyway. When a query still times
+out the floor is raised and it is retried. (The ranking also runs in a subquery so the OPTIONAL
+image and article lookups touch only the surviving rows. That is worth having but does not fix
+a timeout: the inner query still visits and sorts everything that matches.)
 
 **This sandbox cannot reach Wikidata at all**, so no Q-number or P-number in the template table
 below can be verified where it was written. Rather than trust them, `preflight()` checks every
@@ -33,11 +34,13 @@ import argparse
 import hashlib
 import json
 import re
+import signal
 import sys
 import time
 import urllib.error
 import urllib.parse
 import urllib.request
+from contextlib import contextmanager
 from datetime import datetime, timezone
 from pathlib import Path
 
@@ -186,13 +189,40 @@ class BadQuery(Exception):
     """The endpoint rejected the query itself. Retrying at a higher floor cannot help."""
 
 
+class Overtime(Exception):
+    """A request ran past its wall-clock allowance."""
+
+
+@contextmanager
+def hard_timeout(seconds):
+    """Bound a whole request by the wall clock.
+
+    `urlopen(timeout=...)` is a *socket* timeout: it bounds each individual read, not the
+    request. A query that dribbles its results back never trips it, which is how a run given an
+    eight-minute budget was still going after twenty-six minutes — the budget is checked
+    between templates, and control never came back to check it. SIGALRM bounds the thing that
+    was actually meant to be bounded.
+    """
+    def fire(signum, frame):
+        raise Overtime(f"exceeded {seconds:.0f}s")
+
+    previous = signal.signal(signal.SIGALRM, fire)
+    signal.setitimer(signal.ITIMER_REAL, seconds)
+    try:
+        yield
+    finally:
+        signal.setitimer(signal.ITIMER_REAL, 0)
+        signal.signal(signal.SIGALRM, previous)
+
+
 def sparql(query, timeout=65):
     url = f"{SPARQL}?{urllib.parse.urlencode({'query': query, 'format': 'json'})}"
     request = urllib.request.Request(
         url, headers={"User-Agent": UA, "Accept": "application/sparql-results+json"})
     try:
-        with urllib.request.urlopen(request, timeout=timeout) as response:
-            return json.load(response)
+        with hard_timeout(timeout + 5):
+            with urllib.request.urlopen(request, timeout=timeout) as response:
+                return json.load(response)
     except urllib.error.HTTPError as error:
         # 400 is a malformed query — a typo in a template, not a set too large to rank.
         # Reporting it as a timeout would send the retry loop up the floor ladder pointlessly
@@ -283,10 +313,11 @@ def preflight(templates, offline=False):
 def build_query(template, floor, limit):
     """Rank first in a subquery, decorate second.
 
-    The OPTIONAL image and article lookups are the expensive part, and running them over the
-    whole matched set before ORDER BY is what put the painting template past the 60-second
-    budget. Inside a subquery the ranking sees only ?s ?o ?sl, and the OPTIONALs then touch
-    `limit` rows instead of 865,300.
+    This keeps the OPTIONAL image and article lookups off the whole matched set — they touch
+    `limit` rows instead of 865,300. Worth having, but it is **not** what fixes a timeout: the
+    inner query still has to visit every matching item and sort it, and `LIMIT` cannot help a
+    sort that has to see everything first. The importance floor is what actually shrinks the
+    set, and for the largest properties it is the only thing that does.
     """
     return f"""
     SELECT ?s ?sLabel ?o ?oLabel ?sl ?img ?article WHERE {{
@@ -449,8 +480,9 @@ def extracts_for(titles):
                 f"{WIKI_API}?{urllib.parse.urlencode({**params, **cont})}",
                 headers={"User-Agent": UA})
             try:
-                with urllib.request.urlopen(request, timeout=40) as response:
-                    payload = json.load(response)
+                with hard_timeout(45):
+                    with urllib.request.urlopen(request, timeout=40) as response:
+                        payload = json.load(response)
             except Exception:
                 break
             resolver = resolver or resolve_titles(payload)
@@ -655,6 +687,23 @@ def self_test():
           attempt_floors(wide)[0] == 0 and attempt_floors(narrow)[0] == 120)
     check("attempts never loosen the floor",
           all(attempt_floors(t) == sorted(attempt_floors(t)) for t in TEMPLATES))
+
+    # The bound that matters: urlopen's own timeout is per-socket-read, so a slow trickle of
+    # bytes escapes it entirely. This is what stops one query eating the whole run.
+    started = time.monotonic()
+    try:
+        with hard_timeout(0.2):
+            time.sleep(5)
+        timed_out = False
+    except Overtime:
+        timed_out = True
+    elapsed = time.monotonic() - started
+    check("a request that overruns its wall clock is cut off", timed_out and elapsed < 1.0)
+
+    with hard_timeout(30):
+        pass
+    check("the alarm is disarmed once the request returns",
+          signal.getitimer(signal.ITIMER_REAL)[0] == 0.0)
 
     check("a query ranks before it decorates",
           build_query(TEMPLATES[0], 0, 5).index("ORDER BY DESC(?sl)")
