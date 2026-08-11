@@ -19,16 +19,14 @@ internal object AryehColors {
     val Pale = Color(0xFFFCEBC8)
     val Dark = Color(0xFF2A1A06)
     val Blush = Color(0xFFE8836B)
-    val Crown = Color(0xFFFFD98A)
-    val CrownRim = Color(0xFFB9741C)
     val White = Color(0xFFFFFFFF)
 }
 
 /**
  * The pose Aryeh holds, and the joint angles laid over it.
  *
- * Pose is data, not artwork: the same head, mane, crown, torso, four tapered limbs and tail are
- * drawn in every one of them. That is what lets him sit, walk, read and sleep without shipping
+ * Pose is data, not artwork: the same head, mane, torso, four tapered limbs and tail are drawn
+ * in every one of them. That is what lets him sit, walk, read and sleep without shipping
  * a frame of animation for each, and it is why the whole character costs a few KB of path data.
  */
 internal enum class AryehPose { STAND, SIT, CURL }
@@ -55,9 +53,8 @@ private fun path(data: String): Path =
 /**
  * Draws Aryeh at [origin] (his feet) scaled by [scale].
  *
- * Layer order is the whole illusion: far limbs sit behind the torso in a darker tone, the neck
- * bridges chest to skull, and the mane's front tufts land on top of the crown band so the crown
- * reads as worn rather than balanced on the fur.
+ * Layer order is the whole illusion: far limbs sit behind the torso in a darker tone, and the
+ * neck bridges chest to skull.
  */
 internal fun DrawScope.drawAryeh(
     origin: Offset,
@@ -143,13 +140,6 @@ private fun DrawScope.head(at: Offset, j: AryehJoints, scale: Float = 1f) {
                     fill(AryehArt.MANE, AryehColors.Mane)
                 }
                 fill(AryehArt.SKULL, AryehColors.Fur)
-
-                // Crown first, then the front tufts over its band — that ordering is what makes
-                // it look worn. Reverse the two and it goes back to sitting on top like a hat.
-                fill(AryehArt.CROWN_ARCH, AryehColors.Crown)
-                fill(AryehArt.CROWN_BAND, AryehColors.Crown)
-                stroke(AryehArt.CROWN_RIM, AryehColors.CrownRim, 0.9f, alpha = 0.55f)
-                fill(AryehArt.CROWN_JEWELS, AryehColors.CrownRim, alpha = 0.75f)
                 rotate(j.maneSway, pivot = Offset.Zero) {
                     fill(AryehArt.MANE_FRONT, AryehColors.ManeFront)
                 }
