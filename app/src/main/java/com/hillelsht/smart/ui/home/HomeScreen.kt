@@ -16,14 +16,14 @@ import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.layout.statusBarsPadding
 import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.lazy.LazyColumn
-import androidx.compose.foundation.lazy.LazyRow
-import androidx.compose.foundation.lazy.items
 import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.rounded.LocalFireDepartment
 import androidx.compose.material.icons.rounded.MenuBook
+import androidx.compose.material.icons.rounded.PlayCircle
 import androidx.compose.material.icons.rounded.Quiz
+import androidx.compose.material.icons.rounded.SportsEsports
 import androidx.compose.material3.Button
 import androidx.compose.material3.ButtonDefaults
 import androidx.compose.material3.Icon
@@ -58,8 +58,6 @@ import com.hillelsht.smart.domain.MasteryCalculator
 import com.hillelsht.smart.domain.Streak
 import com.hillelsht.smart.ui.components.MasteryRing
 import com.hillelsht.smart.ui.components.SmartCard
-import com.hillelsht.smart.ui.components.accent
-import com.hillelsht.smart.ui.components.secondary
 import com.hillelsht.smart.ui.theme.SmartPalette
 import com.hillelsht.smart.util.CrashLog
 import kotlinx.coroutines.flow.SharingStarted
@@ -115,6 +113,8 @@ fun HomeScreen(
     onReview: () -> Unit,
     onQuiz: () -> Unit,
     onBrowse: () -> Unit,
+    onWatch: () -> Unit,
+    onPlay: () -> Unit,
 ) {
     val viewModel: HomeViewModel = viewModel(factory = HomeViewModel.factory(repository))
     val state by viewModel.state.collectAsStateWithLifecycle()
@@ -135,9 +135,8 @@ fun HomeScreen(
         item { Greeting(state.streak) }
         item { TodayCard(state, onLearn = onLearn, onReview = onReview, onQuiz = onQuiz) }
         item { OverallProgress(state) }
-        item { MasteryRow(state.mastery) }
         item {
-            QuickActions(onQuiz = onQuiz, onBrowse = onBrowse)
+            QuickActions(onQuiz = onQuiz, onBrowse = onBrowse, onWatch = onWatch, onPlay = onPlay)
         }
     }
 }
@@ -394,67 +393,45 @@ private fun OverallProgress(state: HomeUiState) {
 }
 
 @Composable
-private fun MasteryRow(mastery: List<CategoryMastery>) {
-    Column {
-        Text(
-            text = "By subject",
-            style = MaterialTheme.typography.headlineSmall,
-            color = MaterialTheme.colorScheme.onBackground,
-            modifier = Modifier.padding(bottom = 12.dp),
-        )
-        LazyRow(horizontalArrangement = Arrangement.spacedBy(12.dp)) {
-            items(mastery, key = { it.category.id }) { entry ->
-                Column(
-                    Modifier
-                        .clip(RoundedCornerShape(20.dp))
-                        .background(MaterialTheme.colorScheme.surface)
-                        .padding(16.dp)
-                        .width(104.dp),
-                    horizontalAlignment = Alignment.CenterHorizontally,
-                ) {
-                    MasteryRing(
-                        progress = entry.mastery,
-                        ringSize = 60.dp,
-                        strokeWidth = 6.dp,
-                        colors = listOf(entry.category.accent(), entry.category.secondary()),
-                        label = {
-                            Text(
-                                text = "${(entry.mastery * 100).toInt()}",
-                                style = MaterialTheme.typography.labelLarge,
-                                color = MaterialTheme.colorScheme.onSurface,
-                            )
-                        },
-                    )
-                    Spacer(Modifier.height(10.dp))
-                    Text(
-                        text = entry.category.displayName,
-                        style = MaterialTheme.typography.labelMedium,
-                        color = MaterialTheme.colorScheme.onSurfaceVariant,
-                        maxLines = 2,
-                    )
-                }
-            }
+private fun QuickActions(
+    onQuiz: () -> Unit,
+    onBrowse: () -> Unit,
+    onWatch: () -> Unit,
+    onPlay: () -> Unit,
+) {
+    Column(verticalArrangement = Arrangement.spacedBy(12.dp)) {
+        Row(horizontalArrangement = Arrangement.spacedBy(12.dp)) {
+            ActionTile(
+                icon = Icons.Rounded.Quiz,
+                title = "Quiz me",
+                subtitle = "10 questions",
+                modifier = Modifier.weight(1f),
+                onClick = onQuiz,
+            )
+            ActionTile(
+                icon = Icons.Rounded.MenuBook,
+                title = "Read",
+                subtitle = "Browse everything",
+                modifier = Modifier.weight(1f),
+                onClick = onBrowse,
+            )
         }
-    }
-}
-
-@Composable
-private fun QuickActions(onQuiz: () -> Unit, onBrowse: () -> Unit) {
-    Row(horizontalArrangement = Arrangement.spacedBy(12.dp)) {
-        ActionTile(
-            icon = Icons.Rounded.Quiz,
-            title = "Quiz me",
-            subtitle = "10 questions",
-            modifier = Modifier.weight(1f),
-            onClick = onQuiz,
-        )
-        ActionTile(
-            icon = Icons.Rounded.MenuBook,
-            title = "Library",
-            subtitle = "Browse everything",
-            modifier = Modifier.weight(1f),
-            onClick = onBrowse,
-        )
+        Row(horizontalArrangement = Arrangement.spacedBy(12.dp)) {
+            ActionTile(
+                icon = Icons.Rounded.PlayCircle,
+                title = "Watch",
+                subtitle = "Fresh videos waiting",
+                modifier = Modifier.weight(1f),
+                onClick = onWatch,
+            )
+            ActionTile(
+                icon = Icons.Rounded.SportsEsports,
+                title = "Play",
+                subtitle = "Games and puzzles",
+                modifier = Modifier.weight(1f),
+                onClick = onPlay,
+            )
+        }
     }
 }
 

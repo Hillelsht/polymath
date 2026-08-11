@@ -26,7 +26,6 @@ import androidx.compose.material3.Icon
 import androidx.compose.material3.IconButton
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
-import androidx.compose.material3.TextButton
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
@@ -45,7 +44,6 @@ import androidx.lifecycle.viewmodel.compose.viewModel
 import androidx.lifecycle.viewmodel.initializer
 import androidx.lifecycle.viewmodel.viewModelFactory
 import com.hillelsht.smart.data.SmartRepository
-import com.hillelsht.smart.data.remote.RemotePack
 import com.hillelsht.smart.domain.CategoryMastery
 import com.hillelsht.smart.domain.LibraryKeys
 import com.hillelsht.smart.domain.MasteryCalculator
@@ -59,78 +57,20 @@ import com.hillelsht.smart.ui.components.MasteryRing
 import com.hillelsht.smart.ui.components.SmartCard
 import com.hillelsht.smart.ui.components.accent
 import com.hillelsht.smart.ui.components.secondary
-import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.SharingStarted
 import kotlinx.coroutines.flow.combine
 import kotlinx.coroutines.flow.stateIn
 import kotlinx.coroutines.launch
 
-/** One row in the "Content packs" section, joining the remote catalog with installed state. */
-data class PackRow(
-    val remote: RemotePack,
-    val installedVersion: String?,
-    val downloading: Boolean,
-) {
-    val status: PackStatus
-        get() = when {
-            downloading -> PackStatus.DOWNLOADING
-            installedVersion == null -> PackStatus.AVAILABLE
-            installedVersion != remote.version -> PackStatus.UPDATE
-            else -> PackStatus.INSTALLED
-        }
-}
-
-enum class PackStatus { AVAILABLE, UPDATE, INSTALLED, DOWNLOADING }
-
-
 class LibraryViewModel(private val repository: SmartRepository) : ViewModel() {
     val mastery = repository.mastery
         .stateIn(viewModelScope, SharingStarted.WhileSubscribed(5_000), emptyList())
 
-    private val downloading = MutableStateFlow<Set<String>>(emptySet())
-    private val checkedManifest = MutableStateFlow(false)
-
     init {
-        // The catalog check happens when the Library is opened, not at app start — the one
-        // place the result is visible is the one place worth paying a network call for.
         viewModelScope.launch {
-            checkedManifest.value = false
-            repository.refreshManifest()
-            checkedManifest.value = true
-            // The generated library tops itself up silently. It is deliberately not listed
-            // alongside the six named packs: those are a catalogue a person chooses from,
-            // this is a supply, and nobody should have to scroll to "Geography 007" to keep
-            // learning. The only visible effect is that the counts keep going up.
+            // The generated library tops itself up silently, so a category's fact count keeps
+            // climbing without anyone having to ask for it.
             runCatching { repository.topUpLibrary() }
-        }
-    }
-
-    val packs = combine(
-        repository.manifest,
-        repository.installedPacks,
-        downloading,
-        checkedManifest,
-    ) { manifest, installed, busy, checked ->
-        val byId = installed.associateBy { it.id }
-        val rows = manifest?.packs.orEmpty().map { remote ->
-            PackRow(
-                remote = remote,
-                installedVersion = byId[remote.id]?.version,
-                downloading = remote.id in busy,
-            )
-        }
-        rows to checked
-    }.stateIn(viewModelScope, SharingStarted.WhileSubscribed(5_000), emptyList<PackRow>() to false)
-
-    fun download(pack: RemotePack) {
-        if (pack.id in downloading.value) return
-        downloading.value += pack.id
-        viewModelScope.launch {
-            try {
-                repository.downloadPack(pack)
-            } finally {
-                downloading.value -= pack.id
-            }
         }
     }
 
@@ -145,8 +85,6 @@ class LibraryViewModel(private val repository: SmartRepository) : ViewModel() {
 fun LibraryScreen(repository: SmartRepository, onCategory: (Category) -> Unit) {
     val viewModel: LibraryViewModel = viewModel(factory = LibraryViewModel.factory(repository))
     val mastery by viewModel.mastery.collectAsStateWithLifecycle()
-    val packsState by viewModel.packs.collectAsStateWithLifecycle()
-    val (packRows, manifestChecked) = packsState
 
     LazyColumn(
         Modifier
@@ -161,7 +99,7 @@ fun LibraryScreen(repository: SmartRepository, onCategory: (Category) -> Unit) {
         item {
             Column {
                 Text(
-                    text = "Library",
+                    text = "Read",
                     style = MaterialTheme.typography.displayMedium,
                     color = MaterialTheme.colorScheme.onBackground,
                 )
@@ -176,83 +114,6 @@ fun LibraryScreen(repository: SmartRepository, onCategory: (Category) -> Unit) {
 
         items(mastery, key = { LibraryKeys.category(it.category.id) }) { entry ->
             CategoryRow(entry) { onCategory(entry.category) }
-        }
-
-        item {
-            Column {
-                Spacer(Modifier.height(10.dp))
-                Text(
-                    text = "Content packs",
-                    style = MaterialTheme.typography.headlineSmall,
-                    color = MaterialTheme.colorScheme.onBackground,
-                )
-                Text(
-                    text = "New knowledge, downloaded straight into the app — no update needed",
-                    style = MaterialTheme.typography.bodyMedium,
-                    color = MaterialTheme.colorScheme.onSurfaceVariant,
-                )
-            }
-        }
-
-        if (packRows.isEmpty()) {
-            item {
-                Text(
-                    text = if (manifestChecked) {
-                        "Couldn't reach the catalog. Check your connection and reopen this tab."
-                    } else {
-                        "Checking the catalog…"
-                    },
-                    style = MaterialTheme.typography.bodyMedium,
-                    color = MaterialTheme.colorScheme.onSurfaceVariant,
-                )
-            }
-        } else {
-            items(packRows, key = { LibraryKeys.pack(it.remote.id) }) { row ->
-                PackRowItem(row) { viewModel.download(row.remote) }
-            }
-        }
-    }
-}
-
-@Composable
-private fun PackRowItem(row: PackRow, onDownload: () -> Unit) {
-    val category = Category.fromId(row.remote.category)
-    val accent = category?.accent() ?: MaterialTheme.colorScheme.primary
-
-    SmartCard(Modifier.fillMaxWidth(), contentPadding = 16.dp) {
-        Row(verticalAlignment = Alignment.CenterVertically) {
-            Column(Modifier.weight(1f)) {
-                Text(
-                    text = row.remote.name,
-                    style = MaterialTheme.typography.titleMedium,
-                    color = MaterialTheme.colorScheme.onSurface,
-                )
-                Text(
-                    text = "${row.remote.facts} facts · ${row.remote.bytes / 1024} KB",
-                    style = MaterialTheme.typography.bodyMedium,
-                    color = MaterialTheme.colorScheme.onSurfaceVariant,
-                )
-            }
-            Spacer(Modifier.width(12.dp))
-            when (row.status) {
-                PackStatus.INSTALLED -> Text(
-                    text = "Installed",
-                    style = MaterialTheme.typography.labelLarge,
-                    color = MaterialTheme.colorScheme.onSurfaceVariant,
-                )
-                PackStatus.DOWNLOADING -> Text(
-                    text = "Downloading…",
-                    style = MaterialTheme.typography.labelLarge,
-                    color = accent,
-                )
-                PackStatus.AVAILABLE, PackStatus.UPDATE -> TextButton(onClick = onDownload) {
-                    Text(
-                        text = if (row.status == PackStatus.UPDATE) "Update" else "Download",
-                        style = MaterialTheme.typography.labelLarge,
-                        color = accent,
-                    )
-                }
-            }
         }
     }
 }

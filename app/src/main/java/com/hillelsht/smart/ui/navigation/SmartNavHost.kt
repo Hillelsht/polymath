@@ -80,7 +80,7 @@ private data class Tab(val route: String, val label: String, val icon: ImageVect
 
 private val tabs = listOf(
     Tab(Routes.HOME, "Today", Icons.Rounded.Home),
-    Tab(Routes.LIBRARY, "Library", Icons.Rounded.MenuBook),
+    Tab(Routes.LIBRARY, "Read", Icons.Rounded.MenuBook),
     Tab(Routes.WATCH, "Watch", Icons.Rounded.PlayCircle),
     Tab(Routes.PLAY, "Play", Icons.Rounded.SportsEsports),
     Tab(Routes.STATS, "Progress", Icons.Rounded.Insights),
@@ -152,6 +152,8 @@ fun SmartApp(repository: SmartRepository) {
                         onReview = { navController.navigate(Routes.REVIEW) },
                         onQuiz = { navController.navigate(Routes.quiz()) },
                         onBrowse = { navController.navigateToTab(Routes.LIBRARY) },
+                        onWatch = { navController.navigateToTab(Routes.WATCH) },
+                        onPlay = { navController.navigateToTab(Routes.PLAY) },
                     )
                 }
                 composable(Routes.LIBRARY) {
