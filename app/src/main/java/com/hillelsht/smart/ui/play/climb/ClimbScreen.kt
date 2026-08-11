@@ -80,7 +80,9 @@ class ClimbViewModel(private val repository: SmartRepository) : ViewModel() {
     private var subjects: ArrayDeque<Fact> = ArrayDeque()
     private var askedAt = 0L
     private var startedAt = 0L
-    private var random = Random.Default
+    // Typed explicitly: inferring from `Random.Default` gives the *object's* type, and the
+    // reassignment to a seeded Random in begin() then does not compile.
+    private var random: Random = Random.Default
 
     init {
         viewModelScope.launch {
