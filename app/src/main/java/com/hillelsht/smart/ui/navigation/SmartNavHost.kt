@@ -13,6 +13,7 @@ import androidx.compose.material.icons.rounded.Home
 import androidx.compose.material.icons.rounded.Insights
 import androidx.compose.material.icons.rounded.MenuBook
 import androidx.compose.material.icons.rounded.PlayCircle
+import androidx.compose.material.icons.rounded.SportsEsports
 import androidx.compose.material3.Icon
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.NavigationBar
@@ -41,6 +42,9 @@ import com.hillelsht.smart.ui.learn.LearnScreen
 import com.hillelsht.smart.ui.library.CategoryScreen
 import com.hillelsht.smart.ui.library.LibraryScreen
 import com.hillelsht.smart.ui.mascot.MascotHost
+import com.hillelsht.smart.ui.play.PlayScreen
+import com.hillelsht.smart.ui.play.chains.ChainsScreen
+import com.hillelsht.smart.ui.play.climb.ClimbScreen
 import com.hillelsht.smart.ui.quiz.QuizScreen
 import com.hillelsht.smart.ui.review.ReviewScreen
 import com.hillelsht.smart.ui.stats.StatsScreen
@@ -51,12 +55,15 @@ object Routes {
     const val HOME = "home"
     const val LIBRARY = "library"
     const val WATCH = "watch"
+    const val PLAY = "play"
     const val STATS = "stats"
     const val LEARN = "learn"
     const val REVIEW = "review"
     const val QUIZ = "quiz?category={category}&facts={facts}"
     const val CATEGORY = "category/{categoryId}"
     const val PLAYER = "player/{videoId}"
+    const val CLIMB = "play/climb"
+    const val CHAINS = "play/chains"
 
     fun quiz(category: Category? = null, factIds: List<String> = emptyList()) =
         "quiz?category=${category?.id ?: ""}&facts=${factIds.joinToString(",")}"
@@ -71,6 +78,7 @@ private val tabs = listOf(
     Tab(Routes.HOME, "Today", Icons.Rounded.Home),
     Tab(Routes.LIBRARY, "Library", Icons.Rounded.MenuBook),
     Tab(Routes.WATCH, "Watch", Icons.Rounded.PlayCircle),
+    Tab(Routes.PLAY, "Play", Icons.Rounded.SportsEsports),
     Tab(Routes.STATS, "Progress", Icons.Rounded.Insights),
 )
 
@@ -122,6 +130,8 @@ fun SmartApp(repository: SmartRepository) {
                 Routes.HOME -> Surface.TODAY
                 Routes.LIBRARY -> Surface.LIBRARY
                 Routes.WATCH -> Surface.WATCH
+                // The picker only. Inside a run he would be a lion wandering across a fight.
+                Routes.PLAY -> Surface.PLAY
                 Routes.STATS -> Surface.PROGRESS
                 else -> null
             }
@@ -152,8 +162,34 @@ fun SmartApp(repository: SmartRepository) {
                         onPlay = { navController.navigate(Routes.player(it.id)) },
                     )
                 }
+                composable(Routes.PLAY) {
+                    PlayScreen(
+                        repository = repository,
+                        onClimb = { navController.navigate(Routes.CLIMB) },
+                        onChains = { navController.navigate(Routes.CHAINS) },
+                        onQuiz = { navController.navigate(Routes.quiz()) },
+                    )
+                }
                 composable(Routes.STATS) {
                     StatsScreen(repository = repository)
+                }
+
+                // Games take over the screen exactly as the study flows do — the tab bar is
+                // hidden for them, so a run is somewhere you are rather than somewhere you are
+                // passing through.
+                composable(
+                    Routes.CLIMB,
+                    enterTransition = { slideInVertically(tween(280)) { it / 6 } + fadeIn(tween(280)) },
+                    exitTransition = { slideOutVertically(tween(220)) { it / 6 } + fadeOut(tween(220)) },
+                ) {
+                    ClimbScreen(repository = repository, onBack = { navController.popBackStack() })
+                }
+                composable(
+                    Routes.CHAINS,
+                    enterTransition = { slideInVertically(tween(280)) { it / 6 } + fadeIn(tween(280)) },
+                    exitTransition = { slideOutVertically(tween(220)) { it / 6 } + fadeOut(tween(220)) },
+                ) {
+                    ChainsScreen(repository = repository, onBack = { navController.popBackStack() })
                 }
 
                 // Study flows slide up over the tabs, signalling "you are inside something".

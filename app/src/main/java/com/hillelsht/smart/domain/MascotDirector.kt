@@ -13,8 +13,14 @@ import kotlin.random.Random
  */
 object MascotDirector {
 
-    /** Where he is. Only the browsing surfaces; the study flows deliberately have no mascot. */
-    enum class Surface { TODAY, LIBRARY, WATCH, PROGRESS }
+    /**
+     * Where he is. Only the browsing surfaces; the study flows deliberately have no mascot.
+     *
+     * [PLAY] is the game picker, not a game in progress. He is absent inside a run for the same
+     * reason he is absent from Learn and Review, and more so in a game where he is meant to be
+     * the one climbing.
+     */
+    enum class Surface { TODAY, LIBRARY, WATCH, PLAY, PROGRESS }
 
     enum class Activity {
         /** Ambling along the bottom of the screen. */
@@ -46,6 +52,8 @@ object MascotDirector {
         Surface.TODAY to listOf(Activity.WANDER, Activity.POUNCE, Activity.WANDER, Activity.NAP),
         Surface.LIBRARY to listOf(Activity.READ, Activity.WANDER, Activity.READ),
         Surface.WATCH to listOf(Activity.WATCH, Activity.WATCH, Activity.WANDER),
+        // He is restless where the games are, which is the point of the tab.
+        Surface.PLAY to listOf(Activity.POUNCE, Activity.WANDER, Activity.POUNCE, Activity.NAP),
         Surface.PROGRESS to listOf(Activity.WANDER, Activity.READ, Activity.NAP),
     )
 
