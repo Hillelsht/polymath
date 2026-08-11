@@ -59,6 +59,8 @@ data class PlayUiState(
      * and everything else 0, so the running best across games is exactly this, with no need for
      * a dedicated wins counter. */
     val gambitEverWon: Boolean = false,
+    val palaceRuns: Int = 0,
+    val palaceEverWon: Boolean = false,
 )
 
 class PlayViewModel(private val repository: SmartRepository) : ViewModel() {
@@ -70,18 +72,25 @@ class PlayViewModel(private val repository: SmartRepository) : ViewModel() {
         repository.runCount(GameId.CLIMB),
         repository.recentDailies(GameId.CHAINS),
         chainsToday,
-        combine(repository.runCount(GameId.GAMBIT), repository.bestScore(GameId.GAMBIT)) { games, best ->
-            games to (best > 0)
+        combine(
+            repository.runCount(GameId.GAMBIT),
+            repository.bestScore(GameId.GAMBIT),
+            repository.runCount(GameId.PALACE),
+            repository.bestScore(GameId.PALACE),
+        ) { gambitGames, gambitBest, palaceRuns, palaceBest ->
+            (gambitGames to (gambitBest > 0)) to (palaceRuns to (palaceBest > 0))
         },
-    ) { best, runs, dailies, (available, played), (gambitGames, gambitEverWon) ->
+    ) { best, runs, dailies, (available, played), (gambit, palace) ->
         PlayUiState(
             climbBest = best,
             climbRuns = runs,
             chainsPlayedToday = played,
             chainsAvailable = available,
             chainsStreak = dailyStreak(dailies.map { it.date }),
-            gambitGames = gambitGames,
-            gambitEverWon = gambitEverWon,
+            gambitGames = gambit.first,
+            gambitEverWon = gambit.second,
+            palaceRuns = palace.first,
+            palaceEverWon = palace.second,
         )
     }.stateIn(viewModelScope, SharingStarted.WhileSubscribed(5_000), PlayUiState())
 
@@ -129,6 +138,7 @@ fun PlayScreen(
     onClimb: () -> Unit,
     onChains: () -> Unit,
     onGambit: () -> Unit,
+    onPalace: () -> Unit,
     onQuiz: () -> Unit,
 ) {
     val viewModel: PlayViewModel = viewModel(factory = PlayViewModel.factory(repository))
@@ -204,6 +214,21 @@ fun PlayScreen(
                 gradient = listOf(Color(0xFF56A0FF), SmartPalette.Iris),
                 onClick = onGambit,
             ) { GambitGlyph() }
+        }
+
+        item {
+            GameCard(
+                title = GameId.PALACE.title,
+                blurb = GameId.PALACE.blurb,
+                footnote = when {
+                    state.palaceRuns == 0 -> "Never explored"
+                    state.palaceEverWon -> "${state.palaceRuns} runs · you've reached the end"
+                    else -> "${state.palaceRuns} runs"
+                },
+                callToAction = if (state.palaceRuns == 0) "Step inside" else "Run it again",
+                gradient = listOf(SmartPalette.Warning, Color(0xFFB9741C)),
+                onClick = onPalace,
+            ) { PalaceGlyph() }
         }
 
         item {
@@ -332,6 +357,18 @@ private fun GambitGlyph() {
     // The same Unicode chess set the board itself draws with — vector, in every system font,
     // nothing to ship.
     Text("♞", fontSize = 46.sp, color = Color.White)
+}
+
+@Composable
+private fun PalaceGlyph() {
+    // A doorway — the shape every gate in the level shares, rendered once here as the card's icon.
+    Box(
+        Modifier
+            .width(34.dp)
+            .height(50.dp)
+            .clip(RoundedCornerShape(topStart = 17.dp, topEnd = 17.dp))
+            .background(Color.White.copy(alpha = 0.28f)),
+    )
 }
 
 @Composable

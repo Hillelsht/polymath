@@ -46,6 +46,7 @@ import com.hillelsht.smart.ui.play.PlayScreen
 import com.hillelsht.smart.ui.play.chains.ChainsScreen
 import com.hillelsht.smart.ui.play.climb.ClimbScreen
 import com.hillelsht.smart.ui.play.gambit.ChessScreen
+import com.hillelsht.smart.ui.play.palace.PalaceScreen
 import com.hillelsht.smart.ui.quiz.QuizScreen
 import com.hillelsht.smart.ui.review.ReviewScreen
 import com.hillelsht.smart.ui.stats.StatsScreen
@@ -66,6 +67,7 @@ object Routes {
     const val CLIMB = "play/climb"
     const val CHAINS = "play/chains"
     const val GAMBIT = "play/gambit"
+    const val PALACE = "play/palace"
 
     fun quiz(category: Category? = null, factIds: List<String> = emptyList()) =
         "quiz?category=${category?.id ?: ""}&facts=${factIds.joinToString(",")}"
@@ -170,6 +172,7 @@ fun SmartApp(repository: SmartRepository) {
                         onClimb = { navController.navigate(Routes.CLIMB) },
                         onChains = { navController.navigate(Routes.CHAINS) },
                         onGambit = { navController.navigate(Routes.GAMBIT) },
+                        onPalace = { navController.navigate(Routes.PALACE) },
                         onQuiz = { navController.navigate(Routes.quiz()) },
                     )
                 }
@@ -200,6 +203,13 @@ fun SmartApp(repository: SmartRepository) {
                     exitTransition = { slideOutVertically(tween(220)) { it / 6 } + fadeOut(tween(220)) },
                 ) {
                     ChessScreen(repository = repository, onBack = { navController.popBackStack() })
+                }
+                composable(
+                    Routes.PALACE,
+                    enterTransition = { slideInVertically(tween(280)) { it / 6 } + fadeIn(tween(280)) },
+                    exitTransition = { slideOutVertically(tween(220)) { it / 6 } + fadeOut(tween(220)) },
+                ) {
+                    PalaceScreen(repository = repository, onBack = { navController.popBackStack() })
                 }
 
                 // Study flows slide up over the tabs, signalling "you are inside something".
