@@ -1,0 +1,109 @@
+{
+ "note": "The Climb's relic roster. Effects are code (RelicEffect); this is only the roster, so a new relic ships as a commit rather than an app release. An entry naming an effect an older install has never heard of is dropped by that install, not fatal to it.",
+ "relics": [
+  {
+   "id": "lions-hide",
+   "name": "Lion's Hide",
+   "description": "Shrugs off your first two wrong answers.",
+   "effect": "SHIELD",
+   "magnitude": 2
+  },
+  {
+   "id": "scarred-hide",
+   "name": "Scarred Hide",
+   "description": "Shrugs off your first four wrong answers.",
+   "effect": "SHIELD",
+   "magnitude": 4
+  },
+  {
+   "id": "second-wind",
+   "name": "Second Wind",
+   "description": "Twenty more health for the rest of the climb.",
+   "effect": "EXTRA_HEART",
+   "magnitude": 20
+  },
+  {
+   "id": "deep-lungs",
+   "name": "Deep Lungs",
+   "description": "Forty more health for the rest of the climb.",
+   "effect": "EXTRA_HEART",
+   "magnitude": 40
+  },
+  {
+   "id": "gamblers-eye",
+   "name": "Gambler's Eye",
+   "description": "Two answers to choose between instead of four, and you hit 60% harder.",
+   "effect": "NARROW_CHOICE",
+   "magnitude": 60
+  },
+  {
+   "id": "steady-nerve",
+   "name": "Steady Nerve",
+   "description": "Every fourth answer in a row mends some health.",
+   "effect": "COMBO_HEAL",
+   "magnitude": 4
+  },
+  {
+   "id": "long-memory",
+   "name": "Long Memory",
+   "description": "Every third answer in a row mends some health.",
+   "effect": "COMBO_HEAL",
+   "magnitude": 3
+  },
+  {
+   "id": "minds-eye",
+   "name": "Mind's Eye",
+   "description": "You see the picture before you answer.",
+   "effect": "REVEAL_IMAGE",
+   "magnitude": 1
+  },
+  {
+   "id": "cartographer",
+   "name": "Cartographer",
+   "description": "Geography answers hit twice as hard.",
+   "effect": "CATEGORY_MASTERY",
+   "magnitude": 100,
+   "categoryId": "geography"
+  },
+  {
+   "id": "chronicler",
+   "name": "Chronicler",
+   "description": "History answers hit twice as hard.",
+   "effect": "CATEGORY_MASTERY",
+   "magnitude": 100,
+   "categoryId": "history"
+  },
+  {
+   "id": "alchemist",
+   "name": "Alchemist",
+   "description": "Science answers hit twice as hard.",
+   "effect": "CATEGORY_MASTERY",
+   "magnitude": 100,
+   "categoryId": "science"
+  },
+  {
+   "id": "patron",
+   "name": "The Patron",
+   "description": "Arts answers hit twice as hard.",
+   "effect": "CATEGORY_MASTERY",
+   "magnitude": 100,
+   "categoryId": "arts"
+  },
+  {
+   "id": "sportsman",
+   "name": "Old Pro",
+   "description": "Sports answers hit twice as hard.",
+   "effect": "CATEGORY_MASTERY",
+   "magnitude": 100,
+   "categoryId": "sports"
+  },
+  {
+   "id": "magpie",
+   "name": "Magpie",
+   "description": "Culture answers hit twice as hard.",
+   "effect": "CATEGORY_MASTERY",
+   "magnitude": 100,
+   "categoryId": "culture"
+  }
+ ]
+}
