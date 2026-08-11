@@ -224,6 +224,62 @@ class GeneratedLibraryTest {
     // --- the device's top-up rule against the real index ---------------------------------------
 
     @Test
+    fun `a fresh install is topped up straight away`() {
+        // The bug this exists for: the threshold was 15 unseen facts per category, while a
+        // fresh install holds 70 to 95 of them and gets through about two a day. The first
+        // shard would have landed on day 27, so the app showed 517 facts and no sign of growth
+        // for a month — indistinguishable from the feature not working at all.
+        val bundled = File("../app/src/main/assets/packs")
+            .listFiles { f -> f.name.endsWith(".json") && f.name !in setOf("channels.json", "durations.json") }
+            .orEmpty()
+            .map { ContentParser.parsePack(it.readText(), it.name) }
+            .associate { it.category.id to it.facts.size }
+
+        assertTrue(bundled.isNotEmpty(), "no bundled packs to measure against")
+        val shards = index().map { LibraryShard(it.id, it.category, it.shard) }
+        val wanted = LibraryTopUp.next(shards, installed = emptySet(), unseenByCategory = bundled)
+
+        assertTrue(
+            wanted.isNotEmpty(),
+            "a brand-new install with $bundled unseen would be offered nothing to grow into",
+        )
+    }
+
+    @Test
+    fun `the buffer fills within the first few screens`() {
+        // Today and Library each check on open, so this is a handful of navigations, not a
+        // month. Anything much longer and the learner reasonably concludes it is broken.
+        val bundled = File("../app/src/main/assets/packs")
+            .listFiles { f -> f.name.endsWith(".json") && f.name !in setOf("channels.json", "durations.json") }
+            .orEmpty()
+            .map { ContentParser.parsePack(it.readText(), it.name) }
+            .associate { it.category.id to it.facts.size }
+
+        val shards = index().map { LibraryShard(it.id, it.category, it.shard) }
+        val installed = mutableSetOf<String>()
+        val unseen = bundled.toMutableMap()
+        var checks = 0
+
+        while (checks < 20) {
+            val wanted = LibraryTopUp.next(shards, installed, unseen)
+            if (wanted.isEmpty()) break
+            checks++
+            wanted.forEach { shard ->
+                installed += shard.packId
+                val facts = index().first { it.id == shard.packId }.facts
+                unseen[shard.categoryId] = (unseen[shard.categoryId] ?: 0) + facts
+            }
+        }
+
+        assertTrue(checks in 1..4, "the buffer took $checks checks to fill")
+        assertTrue(
+            unseen.values.all { it >= LibraryTopUp.MIN_UNSEEN_PER_CATEGORY } ||
+                LibraryTopUp.exhausted(shards, installed),
+            "some category settled below the buffer with shards still available: $unseen",
+        )
+    }
+
+    @Test
     fun `the top-up rule can consume the published index`() {
         val shards = index().map { LibraryShard(it.id, it.category, it.shard) }
         val empty = shards.map { it.categoryId }.distinct().associateWith { 0 }
