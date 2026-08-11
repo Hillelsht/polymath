@@ -40,6 +40,7 @@ import com.hillelsht.smart.data.SmartRepository
 import com.hillelsht.smart.domain.QuizGenerator
 import com.hillelsht.smart.domain.model.Fact
 import com.hillelsht.smart.domain.model.QuizQuestion
+import com.hillelsht.smart.domain.play.GameId
 import com.hillelsht.smart.domain.play.chess.Chess
 import com.hillelsht.smart.domain.play.chess.Fen
 import com.hillelsht.smart.domain.play.chess.Gambit
