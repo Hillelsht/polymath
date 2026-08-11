@@ -294,8 +294,13 @@ private fun GameCard(
                     horizontalArrangement = Arrangement.SpaceBetween,
                     verticalAlignment = Alignment.CenterVertically,
                 ) {
+                    // Weighted (and capped to its natural size with fill = false) so a long
+                    // footnote — Quiz's is the longest in the set — wraps within its own share
+                    // of the row instead of leaving the unweighted call-to-action text almost no
+                    // width to measure against, which is what was folding it one letter per line.
                     Text(
                         footnote,
+                        modifier = Modifier.weight(1f, fill = false),
                         style = MaterialTheme.typography.labelMedium,
                         color = MaterialTheme.colorScheme.onSurfaceVariant,
                     )

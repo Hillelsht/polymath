@@ -88,7 +88,9 @@ fun StatsScreen(repository: SmartRepository) {
             .fillMaxSize()
             .background(MaterialTheme.colorScheme.background)
             .statusBarsPadding(),
-        contentPadding = PaddingValues(start = 20.dp, end = 20.dp, top = 16.dp, bottom = 32.dp),
+        // Bottom padding clears Aryeh's 64dp strip (MascotHost.DRAWN_HEIGHT_DP) plus a margin,
+        // so the last card never sits under him when the list is scrolled to the end.
+        contentPadding = PaddingValues(start = 20.dp, end = 20.dp, top = 16.dp, bottom = 96.dp),
         verticalArrangement = Arrangement.spacedBy(16.dp),
     ) {
         item {
