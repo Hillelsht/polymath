@@ -55,7 +55,20 @@ jobs:
         run: sdkmanager "platforms;android-35" "build-tools;35.0.0"
 
       - name: Assemble debug APK
-        run: ./gradlew assembleDebug --stacktrace
+        # The compiler errors are repeated at the end on failure, because --stacktrace buries
+        # them under 130 lines of Gradle internals and this app is developed somewhere that
+        # cannot compile Android at all — CI is the only compiler, and its log is the only way
+        # to read what it said. Putting the `e:` lines last makes a red build legible from the
+        # tail instead of by paging back through the whole run.
+        run: |
+          set -o pipefail
+          ./gradlew assembleDebug --stacktrace 2>&1 | tee /tmp/assemble.log || {
+            echo ""
+            echo "================ Kotlin compiler errors ================"
+            grep -E "^e: " /tmp/assemble.log | head -60 || echo "(no e: lines — see the log above)"
+            echo "========================================================"
+            exit 1
+          }
 
       - name: Lint
         run: ./gradlew lintDebug
