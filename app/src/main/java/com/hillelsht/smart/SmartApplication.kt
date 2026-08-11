@@ -55,6 +55,7 @@ class AppContainer(context: Context) {
         quizDao = database.quizDao(),
         activityDao = database.activityDao(),
         imageCacheDao = database.imageCacheDao(),
+        gameDao = database.gameDao(),
         videoDao = database.videoDao(),
         channelDao = database.channelDao(),
         blockedVideoDao = database.blockedVideoDao(),

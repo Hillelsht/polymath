@@ -146,6 +146,56 @@ data class ImageCacheEntity(
     val fetchedAtEpochDay: Long,
 )
 
+/**
+ * One finished run of a game, so a personal best means something.
+ *
+ * [seed] is kept because a run is reproducible from it — the tower [com.hillelsht.smart.domain
+ * .play.climb.ClimbMap] builds is a pure function of the seed — which makes a memorable run
+ * replayable and a reported bug reproducible.
+ */
+@Entity(tableName = "game_runs", indices = [Index("gameId")])
+data class GameRunEntity(
+    @PrimaryKey(autoGenerate = true) val id: Long = 0,
+    val gameId: String,
+    val score: Int,
+    val seed: Long,
+    val playedOn: LocalDate,
+    val durationMs: Long,
+    /** A human summary such as "floor 14 · 62 answered". Shown to the player, never parsed. */
+    val detail: String,
+)
+
+/**
+ * Anything a game remembers between runs: unlocked relics, banked insight, a run left in progress.
+ *
+ * Deliberately a key/value bag rather than a column per game. Every game after The Climb would
+ * otherwise need its own migration to store its own progress, and a schema change per game is a
+ * schema change too many.
+ */
+@Entity(tableName = "game_progress", primaryKeys = ["gameId", "entryKey"])
+data class GameProgressEntity(
+    val gameId: String,
+    val entryKey: String,
+    val value: String,
+)
+
+/**
+ * How a daily grid went, so it cannot be replayed for a better score.
+ *
+ * The point of a daily puzzle is that everyone got the same one and had one go at it. Without
+ * this the score is meaningless and so is the streak.
+ */
+@Entity(tableName = "game_daily", primaryKeys = ["gameId", "date"])
+data class GameDailyEntity(
+    val gameId: String,
+    val date: LocalDate,
+    val score: Int,
+    val mistakes: Int,
+    val won: Boolean,
+    /** Comma-separated group ids that were solved, so a finished grid reopens showing your work. */
+    val solved: String,
+)
+
 class Converters {
     @TypeConverter
     fun dateToString(value: LocalDate?): String? = value?.toString()

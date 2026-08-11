@@ -171,6 +171,43 @@ interface ActivityDao {
 }
 
 @Dao
+interface GameDao {
+
+    @Query("SELECT MAX(score) FROM game_runs WHERE gameId = :gameId")
+    fun observeBestScore(gameId: String): Flow<Int?>
+
+    @Query("SELECT * FROM game_runs WHERE gameId = :gameId ORDER BY id DESC LIMIT :limit")
+    fun observeRecentRuns(gameId: String, limit: Int): Flow<List<GameRunEntity>>
+
+    @Query("SELECT COUNT(*) FROM game_runs WHERE gameId = :gameId")
+    fun observeRunCount(gameId: String): Flow<Int>
+
+    @Insert
+    suspend fun insertRun(run: GameRunEntity)
+
+    @Query("SELECT * FROM game_progress WHERE gameId = :gameId")
+    fun observeProgress(gameId: String): Flow<List<GameProgressEntity>>
+
+    @Query("SELECT value FROM game_progress WHERE gameId = :gameId AND entryKey = :key")
+    suspend fun progress(gameId: String, key: String): String?
+
+    @Insert(onConflict = OnConflictStrategy.REPLACE)
+    suspend fun setProgress(entry: GameProgressEntity)
+
+    @Query("DELETE FROM game_progress WHERE gameId = :gameId AND entryKey = :key")
+    suspend fun clearProgress(gameId: String, key: String)
+
+    @Query("SELECT * FROM game_daily WHERE gameId = :gameId AND date = :date")
+    suspend fun daily(gameId: String, date: LocalDate): GameDailyEntity?
+
+    @Query("SELECT * FROM game_daily WHERE gameId = :gameId ORDER BY date DESC LIMIT :limit")
+    fun observeDaily(gameId: String, limit: Int): Flow<List<GameDailyEntity>>
+
+    @Insert(onConflict = OnConflictStrategy.REPLACE)
+    suspend fun setDaily(entry: GameDailyEntity)
+}
+
+@Dao
 interface ImageCacheDao {
     @Query("SELECT * FROM image_cache WHERE wikiTitle = :wikiTitle")
     suspend fun byTitle(wikiTitle: String): ImageCacheEntity?

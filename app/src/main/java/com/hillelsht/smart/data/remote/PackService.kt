@@ -98,6 +98,18 @@ class PackService(
      */
     suspend fun fetchDurations(): String? = get("$BASE/$DURATIONS_FILE")
 
+    /**
+     * A game's content: the relic roster, a month of daily grids, a level set.
+     *
+     * Games ship their *pieces* from the repo for the same reason the library does — so adding a
+     * relic or a month of puzzles is a commit rather than an app release, and so none of it sits
+     * in the APK. Null means "not published yet or unreachable", and every caller is expected to
+     * fall back to something playable rather than treat it as an error.
+     *
+     * @param path relative to `packs/play/`, e.g. `climb.json` or `chains/2026-08.json`.
+     */
+    suspend fun fetchGamePack(path: String): String? = get("$BASE/$PLAY_DIR/$path")
+
     private suspend fun get(url: String): String? = withContext(Dispatchers.IO) {
         val request = Request.Builder()
             .url(url)
@@ -118,5 +130,6 @@ class PackService(
         const val CHANNELS_FILE = "channels.json"
         const val DURATIONS_FILE = "durations.json"
         const val LIBRARY_INDEX = "library/index.json"
+        const val PLAY_DIR = "play"
     }
 }

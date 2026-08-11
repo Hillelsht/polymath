@@ -8,6 +8,10 @@ import com.hillelsht.smart.data.local.ChannelEntity
 import com.hillelsht.smart.data.local.ContentSeeder
 import com.hillelsht.smart.data.local.DailyActivityEntity
 import com.hillelsht.smart.data.local.FactDao
+import com.hillelsht.smart.data.local.GameDailyEntity
+import com.hillelsht.smart.data.local.GameDao
+import com.hillelsht.smart.data.local.GameProgressEntity
+import com.hillelsht.smart.data.local.GameRunEntity
 import com.hillelsht.smart.data.local.ImageCacheDao
 import com.hillelsht.smart.data.local.ImageCacheEntity
 import com.hillelsht.smart.data.local.PackDao
@@ -40,6 +44,11 @@ import com.hillelsht.smart.domain.Sm2Scheduler
 import com.hillelsht.smart.domain.Streak
 import com.hillelsht.smart.domain.StreakCalculator
 import com.hillelsht.smart.domain.VideoCuration
+import com.hillelsht.smart.domain.play.GameId
+import com.hillelsht.smart.domain.play.chains.ChainsGroup
+import com.hillelsht.smart.domain.play.chains.ChainsPuzzle
+import com.hillelsht.smart.domain.play.climb.Relic
+import com.hillelsht.smart.domain.play.climb.Relics
 import com.hillelsht.smart.domain.model.Category
 import com.hillelsht.smart.domain.model.Fact
 import com.hillelsht.smart.domain.model.Phase
@@ -71,6 +80,7 @@ class SmartRepository(
     private val quizDao: QuizDao,
     private val activityDao: ActivityDao,
     private val imageCacheDao: ImageCacheDao,
+    private val gameDao: GameDao,
     private val videoDao: VideoDao,
     private val channelDao: ChannelDao,
     private val blockedVideoDao: BlockedVideoDao,
@@ -257,6 +267,183 @@ class SmartRepository(
         return wanted.count { shard ->
             byId[shard.packId]?.let { downloadPack(it) } ?: false
         }
+    }
+
+    // --- Play -----------------------------------------------------------------------------
+
+    @Serializable
+    private data class ClimbPack(val relics: List<RelicDto> = emptyList())
+
+    @Serializable
+    private data class RelicDto(
+        val id: String = "",
+        val name: String = "",
+        val description: String = "",
+        val effect: String = "",
+        val magnitude: Int = 0,
+        val categoryId: String? = null,
+    )
+
+    @Serializable
+    private data class ChainsPack(val puzzles: List<ChainsPuzzleDto> = emptyList())
+
+    @Serializable
+    private data class ChainsPuzzleDto(
+        val date: String = "",
+        val tiles: List<String> = emptyList(),
+        val groups: List<ChainsGroupDto> = emptyList(),
+    )
+
+    @Serializable
+    private data class ChainsGroupDto(
+        val id: String = "",
+        val label: String = "",
+        val members: List<String> = emptyList(),
+        val difficulty: Int = 1,
+    )
+
+    fun bestScore(game: GameId): Flow<Int> =
+        gameDao.observeBestScore(game.id).map { it ?: 0 }
+
+    fun runCount(game: GameId): Flow<Int> = gameDao.observeRunCount(game.id)
+
+    suspend fun saveRun(game: GameId, score: Int, seed: Long, durationMs: Long, detail: String) {
+        gameDao.insertRun(
+            GameRunEntity(
+                gameId = game.id,
+                score = score,
+                seed = seed,
+                playedOn = today(),
+                durationMs = durationMs,
+                detail = detail,
+            ),
+        )
+    }
+
+    /**
+     * A question missed in a game comes back to be learned properly.
+     *
+     * This is what makes the Play tab part of the app rather than an arcade attached to it: the
+     * games draw on the same corpus the study flows do, and getting something wrong while
+     * playing is exactly the signal the scheduler exists to act on.
+     *
+     * Two deliberate restraints.
+     *
+     * A fact you have **never met** is left alone. Grading it here would drop it into the review
+     * queue without it ever having been taught, which inverts the Learn-then-Review order the
+     * whole app is built around — it will come up in Learn on its own.
+     *
+     * The daily activity counters are **not** bumped, unlike [grade]. Missing a question is not
+     * a completed review, and counting it as one would inflate the Progress figures and let a
+     * streak be kept alive by playing badly.
+     */
+    suspend fun recordGameMiss(factId: String) {
+        val existing = reviewDao.byId(factId)?.toDomain() ?: return
+        if (existing.phase == Phase.NEW) return
+        reviewDao.upsert(Sm2Scheduler.schedule(existing, Rating.AGAIN, today()).toEntity())
+    }
+
+    /**
+     * The relic roster, newest first: the published list, then the last one seen, then the
+     * built-in four.
+     *
+     * Three sources because a game with no relics is not a game. The network is tried first so a
+     * roster added this month is playable this month; the cached copy keeps the tab working on a
+     * train; the fallback keeps a first run on a dead connection from being an empty cache.
+     */
+    suspend fun climbRelics(): List<Relic> {
+        val fetched = packService.fetchGamePack(CLIMB_PACK)
+        if (fetched != null) {
+            val parsed = parseRelics(fetched)
+            if (parsed.isNotEmpty()) {
+                gameDao.setProgress(GameProgressEntity(GameId.CLIMB.id, KEY_ROSTER, fetched))
+                return parsed
+            }
+        }
+        val cached = gameDao.progress(GameId.CLIMB.id, KEY_ROSTER)?.let { parseRelics(it) }
+        return cached?.takeIf { it.isNotEmpty() } ?: Relics.FALLBACK
+    }
+
+    private fun parseRelics(raw: String): List<Relic> = try {
+        Relics.resolve(
+            json.decodeFromString<ClimbPack>(raw).relics.map {
+                Relics.RelicEntry(it.id, it.name, it.description, it.effect, it.magnitude, it.categoryId)
+            },
+        )
+    } catch (e: Exception) {
+        emptyList()
+    }
+
+    /**
+     * The grid for a given day, or null if none is published.
+     *
+     * A month is fetched once and kept, because a published grid never changes and because the
+     * whole point of a daily puzzle is that it is waiting for you whether or not you have signal.
+     */
+    suspend fun chainsPuzzle(date: LocalDate = today()): ChainsPuzzle? {
+        val month = date.toString().take(7)
+        val key = "$KEY_CHAINS_MONTH$month"
+        val raw = gameDao.progress(GameId.CHAINS.id, key)
+            ?: packService.fetchGamePack("$CHAINS_DIR/$month.json")?.also {
+                gameDao.setProgress(GameProgressEntity(GameId.CHAINS.id, key, it))
+            }
+            ?: return null
+
+        val puzzle = try {
+            json.decodeFromString<ChainsPack>(raw).puzzles
+                .firstOrNull { it.date == date.toString() }
+                ?.let { dto ->
+                    ChainsPuzzle(
+                        date = dto.date,
+                        groups = dto.groups.map {
+                            ChainsGroup(it.id, it.label, it.members, it.difficulty)
+                        },
+                        tiles = dto.tiles,
+                    )
+                }
+        } catch (e: Exception) {
+            null
+        } ?: return null
+
+        // A grid where a tile fits two groups has no single solution, and the player would be
+        // told they are wrong by a puzzle that is itself wrong. The generator proves this before
+        // publishing; this is the second lock, because a bad grid is worse than no grid.
+        return puzzle.takeIf { it.problems().isEmpty() }
+    }
+
+    suspend fun dailyResult(game: GameId, date: LocalDate = today()): GameDailyEntity? =
+        gameDao.daily(game.id, date)
+
+    fun recentDailies(game: GameId, limit: Int = 30): Flow<List<GameDailyEntity>> =
+        gameDao.observeDaily(game.id, limit)
+
+    suspend fun saveDailyResult(
+        game: GameId,
+        date: LocalDate,
+        score: Int,
+        mistakes: Int,
+        won: Boolean,
+        solvedGroupIds: List<String>,
+    ) {
+        gameDao.setDaily(
+            GameDailyEntity(
+                gameId = game.id,
+                date = date,
+                score = score,
+                mistakes = mistakes,
+                won = won,
+                solved = solvedGroupIds.joinToString(","),
+            ),
+        )
+    }
+
+    /** Insight banked across runs, spent on unlocking relics. */
+    suspend fun insight(): Int =
+        gameDao.progress(GameId.CLIMB.id, KEY_INSIGHT)?.toIntOrNull() ?: 0
+
+    suspend fun addInsight(amount: Int) {
+        val total = (insight() + amount).coerceAtLeast(0)
+        gameDao.setProgress(GameProgressEntity(GameId.CLIMB.id, KEY_INSIGHT, total.toString()))
     }
 
     // --- Videos: a live shelf, not a catalogue ------------------------------------------
@@ -460,5 +647,11 @@ class SmartRepository(
 
     private companion object {
         const val RECENT_QUIZ_LIMIT = 20
+
+        const val CLIMB_PACK = "climb.json"
+        const val CHAINS_DIR = "chains"
+        const val KEY_ROSTER = "roster"
+        const val KEY_INSIGHT = "insight"
+        const val KEY_CHAINS_MONTH = "month:"
     }
 }

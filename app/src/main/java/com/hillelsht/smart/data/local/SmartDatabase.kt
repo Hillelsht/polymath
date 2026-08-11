@@ -21,8 +21,11 @@ import androidx.sqlite.db.SupportSQLiteDatabase
         QuizResultEntity::class,
         DailyActivityEntity::class,
         ImageCacheEntity::class,
+        GameRunEntity::class,
+        GameProgressEntity::class,
+        GameDailyEntity::class,
     ],
-    version = 4,
+    version = 5,
     exportSchema = true,
 )
 @TypeConverters(Converters::class)
@@ -39,6 +42,7 @@ abstract class SmartDatabase : RoomDatabase() {
     abstract fun quizDao(): QuizDao
     abstract fun activityDao(): ActivityDao
     abstract fun imageCacheDao(): ImageCacheDao
+    abstract fun gameDao(): GameDao
 
     companion object {
 
@@ -121,11 +125,49 @@ abstract class SmartDatabase : RoomDatabase() {
             }
         }
 
+        /**
+         * v4 → v5: the Play tab's tables. Three new tables and not one line touching an
+         * existing one — the same rule every migration here has followed, because review
+         * history is the only thing in this database that cannot be rebuilt from the network.
+         */
+        private val MIGRATION_4_5 = object : Migration(4, 5) {
+            override fun migrate(db: SupportSQLiteDatabase) {
+                db.execSQL(
+                    "CREATE TABLE IF NOT EXISTS game_runs (" +
+                        "id INTEGER NOT NULL PRIMARY KEY AUTOINCREMENT, " +
+                        "gameId TEXT NOT NULL, " +
+                        "score INTEGER NOT NULL, " +
+                        "seed INTEGER NOT NULL, " +
+                        "playedOn TEXT NOT NULL, " +
+                        "durationMs INTEGER NOT NULL, " +
+                        "detail TEXT NOT NULL)",
+                )
+                db.execSQL("CREATE INDEX IF NOT EXISTS index_game_runs_gameId ON game_runs(gameId)")
+                db.execSQL(
+                    "CREATE TABLE IF NOT EXISTS game_progress (" +
+                        "gameId TEXT NOT NULL, " +
+                        "entryKey TEXT NOT NULL, " +
+                        "value TEXT NOT NULL, " +
+                        "PRIMARY KEY(gameId, entryKey))",
+                )
+                db.execSQL(
+                    "CREATE TABLE IF NOT EXISTS game_daily (" +
+                        "gameId TEXT NOT NULL, " +
+                        "date TEXT NOT NULL, " +
+                        "score INTEGER NOT NULL, " +
+                        "mistakes INTEGER NOT NULL, " +
+                        "won INTEGER NOT NULL, " +
+                        "solved TEXT NOT NULL, " +
+                        "PRIMARY KEY(gameId, date))",
+                )
+            }
+        }
+
         fun build(context: Context): SmartDatabase =
             // Schemas are exported to app/schemas so that future releases can keep shipping
             // real migrations — review history must survive every update.
             Room.databaseBuilder(context, SmartDatabase::class.java, "smart.db")
-                .addMigrations(MIGRATION_1_2, MIGRATION_2_3, MIGRATION_3_4)
+                .addMigrations(MIGRATION_1_2, MIGRATION_2_3, MIGRATION_3_4, MIGRATION_4_5)
                 .build()
     }
 }
