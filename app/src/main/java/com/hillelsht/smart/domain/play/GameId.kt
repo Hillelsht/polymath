@@ -25,6 +25,11 @@ enum class GameId(
         blurb = "Sixteen tiles, four hidden groups. One grid a day, the same one for everybody.",
         daily = true,
     ),
+    GAMBIT(
+        id = "gambit",
+        title = "Gambit",
+        blurb = "Chess against an engine that gets weaker the more you know. Answer between moves.",
+    ),
     QUIZ(
         id = "quiz",
         title = "Quiz",

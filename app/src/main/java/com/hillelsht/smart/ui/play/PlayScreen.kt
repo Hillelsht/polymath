@@ -30,6 +30,7 @@ import androidx.compose.ui.graphics.Brush
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
+import androidx.compose.ui.unit.sp
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import androidx.lifecycle.viewModelScope
@@ -53,6 +54,11 @@ data class PlayUiState(
     val chainsPlayedToday: Boolean = false,
     val chainsAvailable: Boolean = false,
     val chainsStreak: Int = 0,
+    val gambitGames: Int = 0,
+    /** Whether at least one game has ended in a win — [SmartRepository.saveRun] scores a win 1
+     * and everything else 0, so the running best across games is exactly this, with no need for
+     * a dedicated wins counter. */
+    val gambitEverWon: Boolean = false,
 )
 
 class PlayViewModel(private val repository: SmartRepository) : ViewModel() {
@@ -64,13 +70,18 @@ class PlayViewModel(private val repository: SmartRepository) : ViewModel() {
         repository.runCount(GameId.CLIMB),
         repository.recentDailies(GameId.CHAINS),
         chainsToday,
-    ) { best, runs, dailies, (available, played) ->
+        combine(repository.runCount(GameId.GAMBIT), repository.bestScore(GameId.GAMBIT)) { games, best ->
+            games to (best > 0)
+        },
+    ) { best, runs, dailies, (available, played), (gambitGames, gambitEverWon) ->
         PlayUiState(
             climbBest = best,
             climbRuns = runs,
             chainsPlayedToday = played,
             chainsAvailable = available,
             chainsStreak = dailyStreak(dailies.map { it.date }),
+            gambitGames = gambitGames,
+            gambitEverWon = gambitEverWon,
         )
     }.stateIn(viewModelScope, SharingStarted.WhileSubscribed(5_000), PlayUiState())
 
@@ -117,6 +128,7 @@ fun PlayScreen(
     repository: SmartRepository,
     onClimb: () -> Unit,
     onChains: () -> Unit,
+    onGambit: () -> Unit,
     onQuiz: () -> Unit,
 ) {
     val viewModel: PlayViewModel = viewModel(factory = PlayViewModel.factory(repository))
@@ -177,6 +189,21 @@ fun PlayScreen(
                 enabled = state.chainsAvailable,
                 onClick = onChains,
             ) { ChainsGlyph() }
+        }
+
+        item {
+            GameCard(
+                title = GameId.GAMBIT.title,
+                blurb = GameId.GAMBIT.blurb,
+                footnote = when {
+                    state.gambitGames == 0 -> "Never played"
+                    state.gambitEverWon -> "${state.gambitGames} games played · you've won one"
+                    else -> "${state.gambitGames} games played"
+                },
+                callToAction = if (state.gambitGames == 0) "Start a game" else "Resume or start again",
+                gradient = listOf(Color(0xFF56A0FF), SmartPalette.Iris),
+                onClick = onGambit,
+            ) { GambitGlyph() }
         }
 
         item {
@@ -298,6 +325,13 @@ private fun ChainsGlyph() {
             }
         }
     }
+}
+
+@Composable
+private fun GambitGlyph() {
+    // The same Unicode chess set the board itself draws with — vector, in every system font,
+    // nothing to ship.
+    Text("♞", fontSize = 46.sp, color = Color.White)
 }
 
 @Composable

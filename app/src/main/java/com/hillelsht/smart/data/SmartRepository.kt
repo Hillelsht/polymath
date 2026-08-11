@@ -47,6 +47,11 @@ import com.hillelsht.smart.domain.VideoCuration
 import com.hillelsht.smart.domain.play.GameId
 import com.hillelsht.smart.domain.play.chains.ChainsGroup
 import com.hillelsht.smart.domain.play.chains.ChainsPuzzle
+import com.hillelsht.smart.domain.play.chess.Chess
+import com.hillelsht.smart.domain.play.chess.Fen
+import com.hillelsht.smart.domain.play.chess.Gambit
+import com.hillelsht.smart.domain.play.chess.GambitMatch
+import com.hillelsht.smart.domain.play.chess.GambitOutcome
 import com.hillelsht.smart.domain.play.climb.Relic
 import com.hillelsht.smart.domain.play.climb.Relics
 import com.hillelsht.smart.domain.model.Category
@@ -65,6 +70,7 @@ import kotlinx.coroutines.flow.map
 import kotlinx.coroutines.sync.Mutex
 import kotlinx.coroutines.sync.withLock
 import kotlinx.serialization.Serializable
+import kotlinx.serialization.encodeToString
 import kotlinx.serialization.json.Json
 
 /**
@@ -446,6 +452,60 @@ class SmartRepository(
         gameDao.setProgress(GameProgressEntity(GameId.CLIMB.id, KEY_INSIGHT, total.toString()))
     }
 
+    @Serializable
+    private data class GambitMatchDto(
+        val fen: String = Fen.START,
+        val playerSide: Int = Chess.WHITE,
+        val baseDepth: Int = Gambit.DEFAULT_DEPTH,
+        val tempo: Int = 0,
+        val weakenBanked: Int = 0,
+        val moveHistory: List<String> = emptyList(),
+        val outcome: String = GambitOutcome.IN_PROGRESS.name,
+    )
+
+    /**
+     * The game in progress, or null if there is none. A chess game — unlike a Climb run or a
+     * daily grid — is exactly the kind of thing worth coming back to a day later, which is why
+     * [Fen] carries a whole game as one short string: cheap enough to keep in [GameProgressEntity]
+     * without a table of its own.
+     */
+    suspend fun gambitMatch(): GambitMatch? {
+        val raw = gameDao.progress(GameId.GAMBIT.id, KEY_GAMBIT_MATCH) ?: return null
+        return try {
+            val dto = json.decodeFromString<GambitMatchDto>(raw)
+            GambitMatch(
+                fen = dto.fen,
+                playerSide = dto.playerSide,
+                baseDepth = dto.baseDepth,
+                tempo = dto.tempo,
+                weakenBanked = dto.weakenBanked,
+                moveHistory = dto.moveHistory,
+                outcome = GambitOutcome.entries.firstOrNull { it.name == dto.outcome }
+                    ?: GambitOutcome.IN_PROGRESS,
+            )
+        } catch (e: Exception) {
+            null
+        }
+    }
+
+    suspend fun saveGambitMatch(match: GambitMatch) {
+        val dto = GambitMatchDto(
+            fen = match.fen,
+            playerSide = match.playerSide,
+            baseDepth = match.baseDepth,
+            tempo = match.tempo,
+            weakenBanked = match.weakenBanked,
+            moveHistory = match.moveHistory,
+            outcome = match.outcome.name,
+        )
+        gameDao.setProgress(GameProgressEntity(GameId.GAMBIT.id, KEY_GAMBIT_MATCH, json.encodeToString(dto)))
+    }
+
+    /** Called once a finished game has been shown and dismissed, so the next open starts fresh. */
+    suspend fun clearGambitMatch() {
+        gameDao.clearProgress(GameId.GAMBIT.id, KEY_GAMBIT_MATCH)
+    }
+
     // --- Videos: a live shelf, not a catalogue ------------------------------------------
 
     /**
@@ -653,5 +713,6 @@ class SmartRepository(
         const val KEY_ROSTER = "roster"
         const val KEY_INSIGHT = "insight"
         const val KEY_CHAINS_MONTH = "month:"
+        const val KEY_GAMBIT_MATCH = "match"
     }
 }
