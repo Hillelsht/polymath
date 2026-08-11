@@ -8,6 +8,7 @@ import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.BoxScope
 import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.ColumnScope
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
@@ -15,7 +16,6 @@ import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.layout.systemBarsPadding
-import androidx.compose.foundation.layout.weight
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material3.Button
 import androidx.compose.material3.MaterialTheme
@@ -262,20 +262,27 @@ fun PalaceScreen(repository: SmartRepository, onBack: () -> Unit) {
         }
 
         Header(state, onBack)
+        Body(state, viewModel, onBack)
+    }
+}
 
-        Box(Modifier.weight(1f).fillMaxWidth()) {
-            Level(state.run)
-            state.gateQuestion?.let { question ->
-                GateOverlay(question, state.lastGateAnswer, viewModel::answerGate)
-            }
-            if (state.run.over) {
-                Summary(state.run, onAgain = viewModel::restart, onBack = onBack)
-            }
+// ColumnScope because this lays itself out inside the screen's column and uses weight to take
+// the space left over between the header and the controls — the same pattern ClimbScreen's
+// Fight uses.
+@Composable
+private fun ColumnScope.Body(state: PalaceUiState, viewModel: PalaceViewModel, onBack: () -> Unit) {
+    Box(Modifier.weight(1f).fillMaxWidth()) {
+        Level(state.run)
+        state.gateQuestion?.let { question ->
+            GateOverlay(question, state.lastGateAnswer, viewModel::answerGate)
         }
+        if (state.run.over) {
+            Summary(state.run, onAgain = viewModel::restart, onBack = onBack)
+        }
+    }
 
-        if (state.gateQuestion == null && !state.run.over) {
-            Controls(state.run, viewModel)
-        }
+    if (state.gateQuestion == null && !state.run.over) {
+        Controls(state.run, viewModel)
     }
 }
 
