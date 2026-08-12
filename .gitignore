@@ -13,3 +13,7 @@ local.properties
 enginetests/build/
 enginetests/.gradle/
 enginetests/.kotlin/
+
+# Python bytecode from tools/ — regenerated on every run, never source.
+__pycache__/
+*.pyc
