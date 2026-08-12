@@ -334,7 +334,56 @@
    "category": "sports",
    "displayName": "ФК Матч ТВ",
    "language": "ru"
+  },
+  {
+   "id": "UCkeTA80xeSa9POCGRpWTIfQ",
+   "handle": "Travelingisraelinfo",
+   "category": "geography",
+   "displayName": "travelingisrael.com",
+   "language": "he"
+  },
+  {
+   "id": "UC21AwkvuziiEkSRyAM1rZsA",
+   "handle": "yadybenzvi",
+   "category": "history",
+   "displayName": "יד יצחק בן-צבי",
+   "language": "he"
+  },
+  {
+   "id": "UCP926AKuhsPeSAnqf8avq7w",
+   "handle": "davidsonweb",
+   "category": "science",
+   "displayName": "מכון דוידסון - סרטוני מדע",
+   "language": "he"
+  },
+  {
+   "id": "UCYrBUZLONlxm4PMF0_NQfNg",
+   "handle": "NLI_Hebrew",
+   "category": "arts",
+   "displayName": "הספרייה הלאומית ",
+   "language": "he"
+  },
+  {
+   "id": "UCyXf5cz6E9IIL40aivg7tOw",
+   "handle": "SPORT5_IL",
+   "category": "sports",
+   "displayName": "ערוץ הספורט של ישראל",
+   "language": "he"
+  },
+  {
+   "id": "UCgbHJENV6UgIZl1Rp_GXCfw",
+   "handle": "one-1004",
+   "category": "sports",
+   "displayName": "ONE - הערוץ הרשמי",
+   "language": "he"
+  },
+  {
+   "id": "UCKqFqiCe1dCUxRe0_YNZ6gg",
+   "handle": "KAN11",
+   "category": "culture",
+   "displayName": "כאן 11 - תאגיד השידור הישראלי",
+   "language": "he"
   }
  ],
- "version": "08d5af843798"
+ "version": "b248995c64f1"
 }
