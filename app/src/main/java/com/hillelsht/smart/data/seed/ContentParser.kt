@@ -2,6 +2,7 @@ package com.hillelsht.smart.data.seed
 
 import com.hillelsht.smart.domain.model.Category
 import com.hillelsht.smart.domain.model.Fact
+import com.hillelsht.smart.domain.model.Language
 import kotlinx.serialization.SerialName
 import kotlinx.serialization.Serializable
 import kotlinx.serialization.json.Json
@@ -13,6 +14,12 @@ import kotlinx.serialization.json.Json
  * fields; enriched packs under `packs/` (produced by the CI pipeline) additionally carry
  * [SeedFact.details], [SeedFact.imageUrl] and [SeedFact.pageUrl], plus [packId] and [version]
  * so the seeder can tell whether an installed pack is stale.
+ *
+ * [language] defaults to English so every existing file — bundled or already downloaded —
+ * parses exactly as it always has. A translated pack sets it explicitly (e.g. `"ru"`), and
+ * must also give [packId] a language-specific value (e.g. `geography-ru`, never bare
+ * `geography`): the seeder keys installed packs and clears replaced facts by [packId] alone,
+ * so two packs sharing one id — one per language — would each overwrite the other's facts.
  */
 @Serializable
 data class SeedFile(
@@ -21,6 +28,7 @@ data class SeedFile(
     val packId: String? = null,
     val version: String? = null,
     val name: String? = null,
+    val language: String = Language.default.tag,
 )
 
 /**
@@ -66,6 +74,7 @@ object ContentParser {
         val version: String,
         val category: Category,
         val facts: List<Fact>,
+        val language: Language,
     )
 
     /** @param source a filename or similar label, used only to make errors legible. */
@@ -87,15 +96,17 @@ object ContentParser {
             ?: throw ContentException("$source declares unknown category '${file.categoryId}'")
 
         val packId = file.packId ?: category.id
+        val language = Language.fromTag(file.language)
         return ParsedPack(
             packId = packId,
             version = file.version ?: "text-${raw.hashCode()}",
             category = category,
-            facts = file.facts.map { seed -> seed.toFact(category, packId, source) },
+            facts = file.facts.map { seed -> seed.toFact(category, packId, language, source) },
+            language = language,
         )
     }
 
-    private fun SeedFact.toFact(category: Category, packId: String, source: String): Fact {
+    private fun SeedFact.toFact(category: Category, packId: String, language: Language, source: String): Fact {
         fun require(condition: Boolean, message: String) {
             if (!condition) throw ContentException("$source: fact '$id' $message")
         }
@@ -123,6 +134,7 @@ object ContentParser {
             imageUrl = imageUrl?.takeIf { it.isNotBlank() },
             pageUrl = pageUrl?.takeIf { it.isNotBlank() },
             packId = packId,
+            language = language,
         )
     }
 }

@@ -56,6 +56,7 @@ import com.hillelsht.smart.domain.play.climb.Relic
 import com.hillelsht.smart.domain.play.climb.Relics
 import com.hillelsht.smart.domain.model.Category
 import com.hillelsht.smart.domain.model.Fact
+import com.hillelsht.smart.domain.model.Language
 import com.hillelsht.smart.domain.model.Phase
 import com.hillelsht.smart.domain.model.Rating
 import com.hillelsht.smart.domain.model.ReviewState
@@ -98,6 +99,15 @@ class SmartRepository(
     private val feedService: YoutubeFeedService,
     private val packStorage: PackStorage,
     private val today: () -> LocalDate = LocalDate::now,
+    /**
+     * The content language to teach in and fetch packs for. Read fresh wherever it matters
+     * rather than captured once, mirroring [today] — but unlike the clock, nothing upstream of
+     * [facts] already re-runs on a schedule, so a change here only takes effect on the next app
+     * launch (this object is built once per process by `AppContainer`, and Settings' own
+     * `Activity.recreate()` only rebuilds the UI, not this repository). Acceptable for now:
+     * there is no shipped non-English fact content yet for a live switch to reveal.
+     */
+    private val currentLanguage: () -> Language = { Language.default },
 ) {
 
     /** Persists a downloaded pack's JSON so it survives restarts and re-seeds. */
@@ -116,13 +126,14 @@ class SmartRepository(
     suspend fun initialise() = seeder.seedIfNeeded()
 
     val facts: Flow<List<Fact>> =
-        factDao.observeAll().map { rows -> rows.mapNotNull { it.toDomain() } }
+        factDao.observeByLanguage(currentLanguage().tag).map { rows -> rows.mapNotNull { it.toDomain() } }
 
     val reviewStates: Flow<Map<String, ReviewState>> =
         reviewDao.observeAll().map { rows -> rows.associate { it.factId to it.toDomain() } }
 
     fun factsIn(category: Category): Flow<List<Fact>> =
-        factDao.observeByCategory(category.id).map { rows -> rows.mapNotNull { it.toDomain() } }
+        factDao.observeByCategoryAndLanguage(category.id, currentLanguage().tag)
+            .map { rows -> rows.mapNotNull { it.toDomain() } }
 
     suspend fun fact(id: String): Fact? = factDao.byId(id)?.toDomain()
 
@@ -213,7 +224,7 @@ class SmartRepository(
 
     /** Fetches the remote catalog. Safe to call repeatedly; failures leave the old value. */
     suspend fun refreshManifest(): Boolean {
-        val fetched = packService.fetchManifest() ?: return false
+        val fetched = packService.fetchManifest(currentLanguage()) ?: return false
         manifestState.value = fetched
         return true
     }
@@ -223,7 +234,7 @@ class SmartRepository(
      * database. Existing review progress on overlapping fact ids is untouched.
      */
     suspend fun downloadPack(pack: RemotePack): Boolean {
-        val raw = packService.fetchPack(pack) ?: return false
+        val raw = packService.fetchPack(pack, currentLanguage()) ?: return false
         val parsed = try {
             ContentParser.parsePack(raw, pack.file)
         } catch (e: Exception) {
@@ -252,7 +263,7 @@ class SmartRepository(
      *   the pool is usually full, and a missing index simply means CI has not published yet.
      */
     suspend fun topUpLibrary(): Int {
-        val index = packService.fetchLibraryIndex() ?: return 0
+        val index = packService.fetchLibraryIndex(currentLanguage()) ?: return 0
         if (index.shards.isEmpty()) return 0
 
         val states = reviewStates.first()

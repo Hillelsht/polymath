@@ -14,8 +14,14 @@ interface FactDao {
     @Query("SELECT * FROM facts")
     fun observeAll(): Flow<List<FactEntity>>
 
+    @Query("SELECT * FROM facts WHERE language = :language")
+    fun observeByLanguage(language: String): Flow<List<FactEntity>>
+
     @Query("SELECT * FROM facts WHERE categoryId = :categoryId")
     fun observeByCategory(categoryId: String): Flow<List<FactEntity>>
+
+    @Query("SELECT * FROM facts WHERE categoryId = :categoryId AND language = :language")
+    fun observeByCategoryAndLanguage(categoryId: String, language: String): Flow<List<FactEntity>>
 
     @Query("SELECT * FROM facts WHERE id = :id")
     suspend fun byId(id: String): FactEntity?

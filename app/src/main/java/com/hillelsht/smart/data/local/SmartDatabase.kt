@@ -25,7 +25,7 @@ import androidx.sqlite.db.SupportSQLiteDatabase
         GameProgressEntity::class,
         GameDailyEntity::class,
     ],
-    version = 5,
+    version = 6,
     exportSchema = true,
 )
 @TypeConverters(Converters::class)
@@ -163,11 +163,24 @@ abstract class SmartDatabase : RoomDatabase() {
             }
         }
 
+        /**
+         * v5 → v6: facts learn what language they teach in, so a Russian pack can be told apart
+         * from its English counterpart instead of collapsing into the same rows. Every fact
+         * that already exists is English — the only language this app has ever taught in — so
+         * the default backfills it without touching a single review history.
+         */
+        private val MIGRATION_5_6 = object : Migration(5, 6) {
+            override fun migrate(db: SupportSQLiteDatabase) {
+                db.execSQL("ALTER TABLE facts ADD COLUMN language TEXT NOT NULL DEFAULT 'en'")
+                db.execSQL("CREATE INDEX IF NOT EXISTS index_facts_language ON facts(language)")
+            }
+        }
+
         fun build(context: Context): SmartDatabase =
             // Schemas are exported to app/schemas so that future releases can keep shipping
             // real migrations — review history must survive every update.
             Room.databaseBuilder(context, SmartDatabase::class.java, "smart.db")
-                .addMigrations(MIGRATION_1_2, MIGRATION_2_3, MIGRATION_3_4, MIGRATION_4_5)
+                .addMigrations(MIGRATION_1_2, MIGRATION_2_3, MIGRATION_3_4, MIGRATION_4_5, MIGRATION_5_6)
                 .build()
     }
 }

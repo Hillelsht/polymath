@@ -12,6 +12,7 @@ import com.hillelsht.smart.data.remote.PackService
 import com.hillelsht.smart.data.remote.WikiImageService
 import com.hillelsht.smart.data.remote.YoutubeFeedService
 import com.hillelsht.smart.util.CrashLog
+import com.hillelsht.smart.util.LocalePrefs
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.SupervisorJob
@@ -68,6 +69,7 @@ class AppContainer(context: Context) {
         packStorage = { fileName, content ->
             File(ContentSeeder.downloadedPacksDir(context), fileName).writeText(content)
         },
+        currentLanguage = { LocalePrefs.get(context) },
     )
 }
 

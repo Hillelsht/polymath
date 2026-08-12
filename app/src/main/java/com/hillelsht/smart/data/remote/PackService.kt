@@ -1,5 +1,6 @@
 package com.hillelsht.smart.data.remote
 
+import com.hillelsht.smart.domain.model.Language
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.withContext
 import kotlinx.serialization.Serializable
@@ -50,6 +51,12 @@ data class LibraryIndex(
  * `raw.githubusercontent.com` is effectively a free CDN for a public repo: pushing new packs
  * to main updates every installed app on its next check, with no server and no app release.
  * This is what makes the catalog conceptually unbounded while the APK stays the same size.
+ *
+ * A translated curriculum is just another folder on that same CDN: [Language.default] (English)
+ * resolves to the existing unprefixed paths, unchanged, so every English install keeps hitting
+ * the exact URLs it always has. Any other language resolves under `packs/<tag>/…` instead —
+ * `packs/ru/manifest.json`, `packs/ru/library/index.json` and so on — published the same way
+ * the English catalog is, so a translated pack costs the APK nothing either.
  */
 class PackService(
     private val client: OkHttpClient,
@@ -58,29 +65,32 @@ class PackService(
 
     private val json = Json { ignoreUnknownKeys = true }
 
-    suspend fun fetchManifest(): PackManifest? = get("$BASE/manifest.json")?.let { body ->
-        try {
-            json.decodeFromString<PackManifest>(body)
-        } catch (e: Exception) {
-            null
+    suspend fun fetchManifest(language: Language = Language.default): PackManifest? =
+        get("${baseFor(language)}/manifest.json")?.let { body ->
+            try {
+                json.decodeFromString<PackManifest>(body)
+            } catch (e: Exception) {
+                null
+            }
         }
-    }
 
     /** Returns the raw JSON of a pack file, or null if unreachable. */
-    suspend fun fetchPack(pack: RemotePack): String? = get("$BASE/${pack.file}")
+    suspend fun fetchPack(pack: RemotePack, language: Language = Language.default): String? =
+        get("${baseFor(language)}/${pack.file}")
 
     /**
      * The index of generated library shards. Null until CI has published one, which every
      * caller treats as "no library yet" rather than as an error — the app works exactly as
      * before on the bundled packs alone.
      */
-    suspend fun fetchLibraryIndex(): LibraryIndex? = get("$BASE/$LIBRARY_INDEX")?.let { body ->
-        try {
-            json.decodeFromString<LibraryIndex>(body)
-        } catch (e: Exception) {
-            null
+    suspend fun fetchLibraryIndex(language: Language = Language.default): LibraryIndex? =
+        get("${baseFor(language)}/$LIBRARY_INDEX")?.let { body ->
+            try {
+                json.decodeFromString<LibraryIndex>(body)
+            } catch (e: Exception) {
+                null
+            }
         }
-    }
 
     /**
      * The Watch tab's channel allowlist. Only the channels ship — which videos exist is
@@ -109,6 +119,10 @@ class PackService(
      * @param path relative to `packs/play/`, e.g. `climb.json` or `chains/2026-08.json`.
      */
     suspend fun fetchGamePack(path: String): String? = get("$BASE/$PLAY_DIR/$path")
+
+    /** English is the unprefixed root, exactly as before this existed; any other language is a subfolder. */
+    private fun baseFor(language: Language): String =
+        if (language == Language.default) BASE else "$BASE/${language.tag}"
 
     private suspend fun get(url: String): String? = withContext(Dispatchers.IO) {
         val request = Request.Builder()

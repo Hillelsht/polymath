@@ -7,12 +7,13 @@ import androidx.room.PrimaryKey
 import androidx.room.TypeConverter
 import com.hillelsht.smart.domain.model.Category
 import com.hillelsht.smart.domain.model.Fact
+import com.hillelsht.smart.domain.model.Language
 import com.hillelsht.smart.domain.model.Phase
 import com.hillelsht.smart.domain.model.ReviewState
 import com.hillelsht.smart.domain.model.Video
 import java.time.LocalDate
 
-@Entity(tableName = "facts", indices = [Index("categoryId"), Index("packId")])
+@Entity(tableName = "facts", indices = [Index("categoryId"), Index("packId"), Index("language")])
 data class FactEntity(
     @PrimaryKey val id: String,
     val categoryId: String,
@@ -28,6 +29,9 @@ data class FactEntity(
     val imageUrl: String?,
     val pageUrl: String?,
     val packId: String,
+    /** [Language.tag], e.g. "en" or "ru". See the migration for why every existing row defaults here. */
+    @ColumnInfo(defaultValue = "en")
+    val language: String = Language.default.tag,
 )
 
 /**
@@ -221,6 +225,7 @@ fun FactEntity.toDomain(): Fact? {
         imageUrl = imageUrl,
         pageUrl = pageUrl,
         packId = packId,
+        language = Language.fromTag(language),
     )
 }
 
@@ -239,6 +244,7 @@ fun Fact.toEntity(): FactEntity = FactEntity(
     imageUrl = imageUrl,
     pageUrl = pageUrl,
     packId = packId,
+    language = language.tag,
 )
 
 fun VideoEntity.toDomain(): Video? {

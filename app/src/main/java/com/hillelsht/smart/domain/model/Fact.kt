@@ -31,6 +31,12 @@ data class Fact(
     val pageUrl: String? = null,
     /** The content pack this fact arrived in; the seeder replaces facts per pack. */
     val packId: String = "",
+    /**
+     * The language this fact teaches in. A Russian fact is a distinct row with its own id and
+     * its own spaced-repetition history — never the same id as its English counterpart — so a
+     * language switch cannot suddenly change what a fact already in review says.
+     */
+    val language: Language = Language.default,
 ) {
     init {
         require(id.isNotBlank()) { "Fact id must not be blank" }
