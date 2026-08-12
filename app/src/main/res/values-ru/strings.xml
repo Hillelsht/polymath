@@ -12,4 +12,32 @@
     <string name="settings_tagline">Настройте приложение под себя</string>
     <string name="settings_language_heading">Язык</string>
     <string name="settings_language_blurb">Меняет текст приложения и материал, который оно преподаёт.</string>
+
+    <!-- Home / Today -->
+    <string name="home_crash_title">Приложение аварийно завершилось в прошлый раз</string>
+    <string name="home_crash_copy_report">Скопировать отчёт</string>
+    <string name="home_crash_dismiss">Закрыть</string>
+    <string name="home_greeting_morning">Доброе утро</string>
+    <string name="home_greeting_afternoon">Добрый день</string>
+    <string name="home_greeting_evening">Добрый вечер</string>
+    <string name="home_tagline">Станем умнее</string>
+    <string name="home_streak_description">Текущая серия</string>
+    <string name="home_today_label">СЕГОДНЯШНЕЕ ЗАНЯТИЕ</string>
+    <string name="home_today_preparing">Готовим ваш план…</string>
+    <string name="home_today_all_caught_up">Всё сделано. Повторять нечего.</string>
+    <string name="home_today_due_and_new">%1$d на повторение · %2$d новых</string>
+    <string name="home_today_quiz_hint">Пройдите тест, чтобы не растерять знания.</string>
+    <string name="home_today_estimate_minutes">Около %1$d минут.</string>
+    <string name="home_review_button">Повторить %1$d</string>
+    <string name="home_learn_button">Учить</string>
+    <string name="home_learn_new_button">Учить %1$d новых</string>
+    <string name="home_start_quiz_button">Начать тест</string>
+    <string name="home_mastery_title">Освоенные знания</string>
+    <string name="home_facts_locked_in">%1$d из %2$d фактов усвоено</string>
+    <string name="home_seen_so_far">%1$d уже изучено</string>
+    <string name="home_action_quiz_title">Проверь себя</string>
+    <string name="home_action_quiz_subtitle">10 вопросов</string>
+    <string name="home_action_read_subtitle">Изучить всё</string>
+    <string name="home_action_watch_subtitle">Новые видео</string>
+    <string name="home_action_play_subtitle">Игры и головоломки</string>
 </resources>

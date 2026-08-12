@@ -14,4 +14,32 @@
     <string name="settings_tagline">Make the app your own</string>
     <string name="settings_language_heading">Language</string>
     <string name="settings_language_blurb">Changes the app\'s text and the trivia it teaches.</string>
+
+    <!-- Home / Today -->
+    <string name="home_crash_title">The app crashed last time</string>
+    <string name="home_crash_copy_report">Copy report</string>
+    <string name="home_crash_dismiss">Dismiss</string>
+    <string name="home_greeting_morning">Good morning</string>
+    <string name="home_greeting_afternoon">Good afternoon</string>
+    <string name="home_greeting_evening">Good evening</string>
+    <string name="home_tagline">Let\'s get smarter</string>
+    <string name="home_streak_description">Current streak</string>
+    <string name="home_today_label">TODAY\'S SESSION</string>
+    <string name="home_today_preparing">Preparing your curriculum…</string>
+    <string name="home_today_all_caught_up">All caught up. Nothing is due.</string>
+    <string name="home_today_due_and_new">%1$d to review · %2$d new</string>
+    <string name="home_today_quiz_hint">Take a quiz to keep the knowledge sharp.</string>
+    <string name="home_today_estimate_minutes">About %1$d minutes.</string>
+    <string name="home_review_button">Review %1$d</string>
+    <string name="home_learn_button">Learn</string>
+    <string name="home_learn_new_button">Learn %1$d new</string>
+    <string name="home_start_quiz_button">Start a quiz</string>
+    <string name="home_mastery_title">Knowledge mastered</string>
+    <string name="home_facts_locked_in">%1$d of %2$d facts locked in</string>
+    <string name="home_seen_so_far">%1$d seen so far</string>
+    <string name="home_action_quiz_title">Quiz me</string>
+    <string name="home_action_quiz_subtitle">10 questions</string>
+    <string name="home_action_read_subtitle">Browse everything</string>
+    <string name="home_action_watch_subtitle">Fresh videos waiting</string>
+    <string name="home_action_play_subtitle">Games and puzzles</string>
 </resources>

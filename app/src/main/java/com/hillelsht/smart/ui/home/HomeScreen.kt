@@ -42,6 +42,7 @@ import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.vector.ImageVector
 import androidx.compose.ui.platform.LocalClipboardManager
 import androidx.compose.ui.platform.LocalContext
+import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.AnnotatedString
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
@@ -51,6 +52,7 @@ import androidx.lifecycle.viewModelScope
 import androidx.lifecycle.viewmodel.compose.viewModel
 import androidx.lifecycle.viewmodel.initializer
 import androidx.lifecycle.viewmodel.viewModelFactory
+import com.hillelsht.smart.R
 import com.hillelsht.smart.data.SmartRepository
 import com.hillelsht.smart.domain.CategoryMastery
 import com.hillelsht.smart.domain.DailyPlan
@@ -160,7 +162,7 @@ private fun CrashCard() {
     ) {
         Column {
             Text(
-                text = "The app crashed last time",
+                text = stringResource(R.string.home_crash_title),
                 style = MaterialTheme.typography.titleMedium,
                 color = SmartPalette.Danger,
             )
@@ -176,7 +178,7 @@ private fun CrashCard() {
                     onClick = { clipboard.setText(AnnotatedString(report)) },
                     shape = RoundedCornerShape(12.dp),
                 ) {
-                    Text("Copy report")
+                    Text(stringResource(R.string.home_crash_copy_report))
                 }
                 Button(
                     onClick = {
@@ -189,7 +191,7 @@ private fun CrashCard() {
                         contentColor = MaterialTheme.colorScheme.onSurfaceVariant,
                     ),
                 ) {
-                    Text("Dismiss")
+                    Text(stringResource(R.string.home_crash_dismiss))
                 }
             }
         }
@@ -200,9 +202,9 @@ private fun CrashCard() {
 private fun Greeting(streak: Streak) {
     val hour = remember { LocalTime.now().hour }
     val salutation = when (hour) {
-        in 5..11 -> "Good morning"
-        in 12..17 -> "Good afternoon"
-        else -> "Good evening"
+        in 5..11 -> stringResource(R.string.home_greeting_morning)
+        in 12..17 -> stringResource(R.string.home_greeting_afternoon)
+        else -> stringResource(R.string.home_greeting_evening)
     }
 
     Row(
@@ -217,7 +219,7 @@ private fun Greeting(streak: Streak) {
                 color = MaterialTheme.colorScheme.onSurfaceVariant,
             )
             Text(
-                text = "Let's get smarter",
+                text = stringResource(R.string.home_tagline),
                 style = MaterialTheme.typography.displayMedium,
                 color = MaterialTheme.colorScheme.onBackground,
             )
@@ -241,7 +243,7 @@ private fun StreakBadge(streak: Streak) {
     ) {
         Icon(
             imageVector = Icons.Rounded.LocalFireDepartment,
-            contentDescription = "Current streak",
+            contentDescription = stringResource(R.string.home_streak_description),
             tint = if (alive) SmartPalette.Warning else MaterialTheme.colorScheme.onSurfaceVariant,
             modifier = Modifier.size(20.dp),
         )
@@ -284,16 +286,16 @@ private fun TodayCard(
     ) {
         Column {
             Text(
-                text = "TODAY'S SESSION",
+                text = stringResource(R.string.home_today_label),
                 style = MaterialTheme.typography.labelSmall,
                 color = Color.White.copy(alpha = 0.75f),
             )
             Spacer(Modifier.height(10.dp))
             Text(
                 text = when {
-                    !state.ready -> "Preparing your curriculum…"
-                    state.plan.isEmpty -> "All caught up. Nothing is due."
-                    else -> "$due to review · $fresh new"
+                    !state.ready -> stringResource(R.string.home_today_preparing)
+                    state.plan.isEmpty -> stringResource(R.string.home_today_all_caught_up)
+                    else -> stringResource(R.string.home_today_due_and_new, due, fresh)
                 },
                 style = MaterialTheme.typography.headlineMedium,
                 color = Color.White,
@@ -301,9 +303,9 @@ private fun TodayCard(
             Spacer(Modifier.height(4.dp))
             Text(
                 text = if (state.plan.isEmpty) {
-                    "Take a quiz to keep the knowledge sharp."
+                    stringResource(R.string.home_today_quiz_hint)
                 } else {
-                    "About ${estimateMinutes(due, fresh)} minutes."
+                    stringResource(R.string.home_today_estimate_minutes, estimateMinutes(due, fresh))
                 },
                 style = MaterialTheme.typography.bodyMedium,
                 color = Color.White.copy(alpha = 0.85f),
@@ -312,18 +314,26 @@ private fun TodayCard(
 
             Row(horizontalArrangement = Arrangement.spacedBy(10.dp)) {
                 if (due > 0) {
-                    HeroButton("Review $due", Modifier.weight(1f), onReview)
+                    HeroButton(
+                        stringResource(R.string.home_review_button, due),
+                        Modifier.weight(1f),
+                        onReview,
+                    )
                 }
                 if (fresh > 0) {
                     HeroButton(
-                        text = if (due > 0) "Learn" else "Learn $fresh new",
+                        text = if (due > 0) {
+                            stringResource(R.string.home_learn_button)
+                        } else {
+                            stringResource(R.string.home_learn_new_button, fresh)
+                        },
                         modifier = Modifier.weight(1f),
                         onClick = onLearn,
                         filled = due == 0,
                     )
                 }
                 if (state.plan.isEmpty && state.ready) {
-                    HeroButton("Start a quiz", Modifier.weight(1f), onQuiz)
+                    HeroButton(stringResource(R.string.home_start_quiz_button), Modifier.weight(1f), onQuiz)
                 }
             }
         }
@@ -372,18 +382,22 @@ private fun OverallProgress(state: HomeUiState) {
             Spacer(Modifier.width(20.dp))
             Column {
                 Text(
-                    text = "Knowledge mastered",
+                    text = stringResource(R.string.home_mastery_title),
                     style = MaterialTheme.typography.titleMedium,
                     color = MaterialTheme.colorScheme.onSurface,
                 )
                 Spacer(Modifier.height(4.dp))
                 Text(
-                    text = "${state.masteredFacts} of ${state.totalFacts} facts locked in",
+                    text = stringResource(
+                        R.string.home_facts_locked_in,
+                        state.masteredFacts,
+                        state.totalFacts,
+                    ),
                     style = MaterialTheme.typography.bodyMedium,
                     color = MaterialTheme.colorScheme.onSurfaceVariant,
                 )
                 Text(
-                    text = "${state.seenFacts} seen so far",
+                    text = stringResource(R.string.home_seen_so_far, state.seenFacts),
                     style = MaterialTheme.typography.bodyMedium,
                     color = MaterialTheme.colorScheme.onSurfaceVariant,
                 )
@@ -403,15 +417,15 @@ private fun QuickActions(
         Row(horizontalArrangement = Arrangement.spacedBy(12.dp)) {
             ActionTile(
                 icon = Icons.Rounded.Quiz,
-                title = "Quiz me",
-                subtitle = "10 questions",
+                title = stringResource(R.string.home_action_quiz_title),
+                subtitle = stringResource(R.string.home_action_quiz_subtitle),
                 modifier = Modifier.weight(1f),
                 onClick = onQuiz,
             )
             ActionTile(
                 icon = Icons.Rounded.MenuBook,
-                title = "Read",
-                subtitle = "Browse everything",
+                title = stringResource(R.string.tab_read),
+                subtitle = stringResource(R.string.home_action_read_subtitle),
                 modifier = Modifier.weight(1f),
                 onClick = onBrowse,
             )
@@ -419,15 +433,15 @@ private fun QuickActions(
         Row(horizontalArrangement = Arrangement.spacedBy(12.dp)) {
             ActionTile(
                 icon = Icons.Rounded.PlayCircle,
-                title = "Watch",
-                subtitle = "Fresh videos waiting",
+                title = stringResource(R.string.tab_watch),
+                subtitle = stringResource(R.string.home_action_watch_subtitle),
                 modifier = Modifier.weight(1f),
                 onClick = onWatch,
             )
             ActionTile(
                 icon = Icons.Rounded.SportsEsports,
-                title = "Play",
-                subtitle = "Games and puzzles",
+                title = stringResource(R.string.tab_play),
+                subtitle = stringResource(R.string.home_action_play_subtitle),
                 modifier = Modifier.weight(1f),
                 onClick = onPlay,
             )
