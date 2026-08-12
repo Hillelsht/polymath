@@ -45,10 +45,23 @@ from datetime import datetime, timezone
 from pathlib import Path
 
 ROOT = Path(__file__).resolve().parent.parent
-OUT = ROOT / "packs" / "library"
 SPARQL = "https://query.wikidata.org/sparql"
-WIKI_API = "https://en.wikipedia.org/w/api.php"
 UA = "SmartTriviaPipeline/1.0 (+https://github.com/hillelsht/smart) python-urllib"
+
+# English is the pipeline's original, unprefixed output — packs/library/ — unchanged by any of
+# this. Any other language publishes under packs/<tag>/library/, mirroring the convention
+# PackService.kt resolves on the device: English at the root, everything else in a subfolder.
+DEFAULT_LANGUAGE = "en"
+WIKI_HOSTS = {"en": "en.wikipedia.org", "ru": "ru.wikipedia.org"}
+
+
+def out_dir(language):
+    return ROOT / "packs" / "library" if language == DEFAULT_LANGUAGE \
+        else ROOT / "packs" / language / "library"
+
+
+def wiki_api(language):
+    return f"https://{WIKI_HOSTS[language]}/w/api.php"
 
 PER_SHARD = 150
 MAX_PER_TEMPLATE = 400
@@ -86,13 +99,15 @@ NON_ANSWER = re.compile(
 )
 
 CATEGORIES = {
-    "geography": "Geography",
-    "history": "History",
-    "science": "Science",
-    "arts": "Arts & Literature",
-    "sports": "Sports & Games",
-    "culture": "Pop Culture",
+    "geography": {"en": "Geography", "ru": "География"},
+    "history": {"en": "History", "ru": "История"},
+    "science": {"en": "Science", "ru": "Наука"},
+    "arts": {"en": "Arts & Literature", "ru": "Искусство и литература"},
+    "sports": {"en": "Sports & Games", "ru": "Спорт и игры"},
+    "culture": {"en": "Pop Culture", "ru": "Поп-культура"},
 }
+
+SHARD_SUFFIX = {"en": "more facts", "ru": "больше фактов"}
 
 
 # A statement that applies to only part of the subject, or that has stopped being true, is not
@@ -215,6 +230,58 @@ TEMPLATES = [
              "Sport of {s}", "Which sport is {s} known for?", "{s} is known for {o}.",
              "?s wdt:P106 wd:Q2066131 ; wdt:P641 ?o .", floor=30),
 ]
+
+# Per-template (title, question, statement) for a non-English language, keyed by Template.key.
+# A missing key means that template is not translated yet — templates_for() drops it, so a run
+# in that language simply publishes fewer categories rather than a wrong or half-English fact.
+#
+# Wikidata's label service returns subject and object names in whatever case Wikidata stores
+# them in — nominative, with no declension. Russian grammar wants most of these phrasings to
+# put a place name in genitive or locative case ("столица Франции", "в Европе"), which no
+# template can produce correctly for an arbitrary label pulled at harvest time. Every phrasing
+# below is built to need only the nominative form Wikidata actually gives it — quoting the
+# name, or naming it in its own clause — rather than guess at a declension and sometimes get it
+# wrong. This is why the Russian phrasings do not read as a literal translation of the English
+# ones sentence-for-sentence.
+RU_PHRASING = {
+    "capital": (
+        "Столица страны «{s}»",
+        "Как называется столица страны «{s}»?",
+        "«{o}» — столица страны «{s}».",
+    ),
+    "currency": (
+        "Валюта страны «{s}»",
+        "Какая валюта используется в стране «{s}»?",
+        "Валюта страны «{s}» — «{o}».",
+    ),
+    "continent": (
+        "Часть света: «{s}»",
+        "На каком континенте расположена страна «{s}»?",
+        "Страна «{s}» находится на континенте «{o}».",
+    ),
+    "river-mouth": (
+        "Устье реки «{s}»",
+        "В какой водоём впадает река «{s}»?",
+        "Река «{s}» впадает в водоём «{o}».",
+    ),
+    "mountain-range": (
+        "Горная система: «{s}»",
+        "В состав какой горной системы входит «{s}»?",
+        "«{s}» входит в состав горной системы «{o}».",
+    ),
+}
+
+
+def phrase(template, language):
+    """(title, question, statement) for this template in this language, or None if untranslated."""
+    if language == DEFAULT_LANGUAGE:
+        return template.title, template.question, template.statement
+    return RU_PHRASING.get(template.key) if language == "ru" else None
+
+
+def templates_for(language, templates=None):
+    """Only the templates that can actually be asked in this language."""
+    return [t for t in (templates or TEMPLATES) if phrase(t, language) is not None]
 
 
 # --- Wikidata ----------------------------------------------------------------------------
@@ -348,7 +415,7 @@ def preflight(templates, offline=False):
     return checked
 
 
-def build_query(template, floor, limit):
+def build_query(template, floor, limit, language=DEFAULT_LANGUAGE):
     """Rank first in a subquery, decorate second.
 
     This keeps the OPTIONAL image and article lookups off the whole matched set — they touch
@@ -356,7 +423,15 @@ def build_query(template, floor, limit):
     inner query still has to visit every matching item and sort it, and `LIMIT` cannot help a
     sort that has to see everything first. The importance floor is what actually shrinks the
     set, and for the largest properties it is the only thing that does.
+
+    [language] drives two independent things: which Wikipedia edition `?article` must belong
+    to (so `wikiTitle`/`pageUrl`/the extract fetch all land on that language's article), and
+    which language `?sLabel`/`?oLabel` resolve in. An item with no label or no article in that
+    language comes back empty on that field — `make_facts` already drops a fact with an
+    unresolved label or a missing article, so asking in Russian naturally publishes only the
+    subset of a template's results that Russian Wikidata and Wikipedia actually cover.
     """
+    host = WIKI_HOSTS[language]
     return f"""
     SELECT ?s ?sLabel ?o ?oLabel ?sl ?img ?article WHERE {{
       {{
@@ -369,8 +444,8 @@ def build_query(template, floor, limit):
         LIMIT {limit}
       }}
       OPTIONAL {{ ?s wdt:P18 ?img }}
-      OPTIONAL {{ ?article schema:about ?s ; schema:isPartOf <https://en.wikipedia.org/> . }}
-      SERVICE wikibase:label {{ bd:serviceParam wikibase:language "en". }}
+      OPTIONAL {{ ?article schema:about ?s ; schema:isPartOf <https://{host}/> . }}
+      SERVICE wikibase:label {{ bd:serviceParam wikibase:language "{language}". }}
     }}
     """
 
@@ -384,11 +459,11 @@ def attempt_floors(template):
     return [rungs[0], rungs[len(rungs) // 2], rungs[-1]]
 
 
-def harvest(template, limit):
+def harvest(template, limit, language=DEFAULT_LANGUAGE):
     """Query, raising the importance floor until the endpoint can answer inside its budget."""
     for attempt, floor in enumerate(attempt_floors(template)):
         try:
-            rows = sparql(build_query(template, floor, limit))["results"]["bindings"]
+            rows = sparql(build_query(template, floor, limit, language))["results"]["bindings"]
             note = f"floor {floor}" + (f", raised {attempt}x" if attempt else "")
             return rows, note
         except BadQuery as exc:
@@ -417,7 +492,7 @@ def wiki_title(article_url):
     return urllib.parse.unquote(article_url.rsplit("/", 1)[-1]).replace("_", " ")
 
 
-def make_facts(template, rows):
+def make_facts(template, rows, language=DEFAULT_LANGUAGE):
     """Turn result rows into facts, dropping everything that would make a bad question.
 
     The ambiguity rule is the important one. A country with two official currencies produces
@@ -425,7 +500,17 @@ def make_facts(template, rows):
     duplicate and refuse the entire corpus over. More to the point, "What is the currency of
     Panama?" with two correct answers is a broken quiz question. Subjects with more than one
     answer are dropped rather than arbitrarily resolved.
+
+    [language] picks the phrasing (see [RU_PHRASING]) and, for the id, whether the fact needs a
+    language suffix at all: English keeps the exact ids this pipeline has always produced, so a
+    fact already installed on a device is never orphaned by this feature. Any other language
+    gets one appended — `wd-capital-Q142` (English) next to `wd-capital-Q142-ru` (Russian) — the
+    same id-collision discipline `ContentParser.kt` documents for hand-authored packs.
     """
+    phrasing = phrase(template, language)
+    if phrasing is None:
+        return []
+    title_t, question_t, statement_t = phrasing
     grouped = {}
     for row in rows:
         subject = row.get("sLabel", {}).get("value", "").strip()
@@ -461,12 +546,13 @@ def make_facts(template, rows):
         if not title:
             continue
         links = int(float(row.get("sl", {}).get("value", 0)))
+        suffix = "" if language == DEFAULT_LANGUAGE else f"-{language}"
 
         facts.append({
-            "id": f"wd-{template.key}-{qid}",
-            "title": template.title.format(s=subject),
-            "statement": template.statement.format(s=subject, o=answer),
-            "question": template.question.format(s=subject),
+            "id": f"wd-{template.key}-{qid}{suffix}",
+            "title": title_t.format(s=subject),
+            "statement": statement_t.format(s=subject, o=answer),
+            "question": question_t.format(s=subject),
             "answer": answer,
             "answerType": template.answer_type,
             "wikiTitle": title,
@@ -474,7 +560,7 @@ def make_facts(template, rows):
             # likely a learner has already met it.
             "difficulty": 1 if links >= 100 else 2 if links >= 40 else 3,
             "imageUrl": commons_image(row.get("img", {}).get("value")),
-            "pageUrl": f"https://en.wikipedia.org/wiki/{urllib.parse.quote(title.replace(' ', '_'))}",
+            "pageUrl": f"https://{WIKI_HOSTS[language]}/wiki/{urllib.parse.quote(title.replace(' ', '_'))}",
             "importance": links,
         })
     return facts
@@ -501,7 +587,7 @@ def resolve_titles(payload):
     return final
 
 
-def extracts_for(titles):
+def extracts_for(titles, language=DEFAULT_LANGUAGE):
     """Wikipedia's TextExtracts, in batches, following the continue cursor."""
     found = {}
     unique = list(dict.fromkeys(t for t in titles if t))
@@ -517,7 +603,7 @@ def extracts_for(titles):
         resolver = None
         for _ in range(6):
             request = urllib.request.Request(
-                f"{WIKI_API}?{urllib.parse.urlencode({**params, **cont})}",
+                f"{wiki_api(language)}?{urllib.parse.urlencode({**params, **cont})}",
                 headers={"User-Agent": UA})
             try:
                 with hard_timeout(45):
@@ -603,8 +689,8 @@ def validate(facts):
     return problems
 
 
-def previous_total():
-    index = OUT / "index.json"
+def previous_total(language=DEFAULT_LANGUAGE):
+    index = out_dir(language) / "index.json"
     if not index.exists():
         return 0
     try:
@@ -613,29 +699,37 @@ def previous_total():
         return 0
 
 
-def publish(by_category):
+def publish(by_category, language=DEFAULT_LANGUAGE):
     """Write the shards and the index the device reads to top itself up."""
-    OUT.mkdir(parents=True, exist_ok=True)
-    for old in OUT.glob("*.json"):
+    out = out_dir(language)
+    out.mkdir(parents=True, exist_ok=True)
+    for old in out.glob("*.json"):
         old.unlink()
+
+    # English packIds keep the exact shape this pipeline has always published — nothing
+    # already installed on a device is renamed out from under it. A translated language gets
+    # its own tag in the id, the same discipline every hand-authored pack follows, so it can
+    # never collide with the English shard of the same category and shard number.
+    id_prefix = "library" if language == DEFAULT_LANGUAGE else f"library-{language}"
 
     shards = []
     for category, facts in sorted(by_category.items()):
         facts.sort(key=lambda f: (-f["importance"], f["id"]))
         chunks = [facts[i:i + PER_SHARD] for i in range(0, len(facts), PER_SHARD)]
         for number, chunk in enumerate(chunks):
-            pack_id = f"library-{category}-{number:03d}"
+            pack_id = f"{id_prefix}-{category}-{number:03d}"
             body = {
                 "category": category,
                 "packId": pack_id,
-                "name": f"{CATEGORIES[category]} · more facts",
+                "name": f"{CATEGORIES[category][language]} · {SHARD_SUFFIX[language]}",
+                "language": language,
                 "version": hashlib.sha1(
                     json.dumps(chunk, sort_keys=True).encode()).hexdigest()[:12],
                 "facts": chunk,
             }
             name = f"{category}-{number:03d}.json"
             raw = json.dumps(body, ensure_ascii=False, separators=(",", ":"))
-            (OUT / name).write_text(raw)
+            (out / name).write_text(raw)
             shards.append({
                 "id": pack_id,
                 "name": body["name"],
@@ -643,7 +737,8 @@ def publish(by_category):
                 "version": body["version"],
                 "facts": len(chunk),
                 "bytes": len(raw.encode()),
-                # Relative to packs/, which is what PackService appends to its base URL.
+                # Relative to the language's own pack root, which is what PackService appends
+                # to its (also language-scoped) base URL.
                 "file": f"library/{name}",
                 # The device takes shards in this order, so a learner meets the most-linked
                 # facts of a category before its obscure ones.
@@ -651,7 +746,7 @@ def publish(by_category):
             })
         print(f"  {category:<12} {len(facts):>5} facts in {len(chunks)} shards")
 
-    (OUT / "index.json").write_text(json.dumps({
+    (out / "index.json").write_text(json.dumps({
         "generated": datetime.now(timezone.utc).strftime("%Y-%m-%dT%H:%M:%SZ"),
         "shards": shards,
     }, indent=1))
@@ -818,6 +913,49 @@ def self_test():
           {t.category for t in TEMPLATES} <= set(CATEGORIES))
     check("template keys are unique", len({t.key for t in TEMPLATES}) == len(TEMPLATES))
 
+    # --- Language support ---------------------------------------------------------------
+    check("English phrasing is the template's own fields, unchanged",
+          phrase(TEMPLATES[0], "en") ==
+          (TEMPLATES[0].title, TEMPLATES[0].question, TEMPLATES[0].statement))
+    check("a template with Russian phrasing resolves it",
+          phrase(next(t for t in TEMPLATES if t.key == "capital"), "ru") == RU_PHRASING["capital"])
+    check("a template with no Russian phrasing resolves to nothing",
+          phrase(next(t for t in TEMPLATES if t.key not in RU_PHRASING), "ru") is None)
+    check("every RU_PHRASING key names a real template",
+          set(RU_PHRASING) <= {t.key for t in TEMPLATES})
+    check("every Russian phrasing supplies all three parts",
+          all(len(p) == 3 and all(p) for p in RU_PHRASING.values()))
+    check("templates_for(en) is every template",
+          templates_for("en") == TEMPLATES)
+    check("templates_for(ru) is exactly the ones with Russian phrasing",
+          {t.key for t in templates_for("ru")} == set(RU_PHRASING))
+    check("English output stays at the pipeline's original, unprefixed path",
+          out_dir("en") == ROOT / "packs" / "library")
+    check("Russian output publishes under its own language subfolder",
+          out_dir("ru") == ROOT / "packs" / "ru" / "library")
+    check("the Wikipedia API host follows the language",
+          wiki_api("en") == "https://en.wikipedia.org/w/api.php"
+          and wiki_api("ru") == "https://ru.wikipedia.org/w/api.php")
+    check("a Russian query asks for Russian labels and the Russian Wikipedia edition",
+          'wikibase:language "ru"' in build_query(TEMPLATES[0], 0, 5, "ru")
+          and "ru.wikipedia.org" in build_query(TEMPLATES[0], 0, 5, "ru"))
+
+    capital = next(t for t in TEMPLATES if t.key == "capital")
+    ru_row = row("Q142", "Франция", "Париж", article="https://ru.wikipedia.org/wiki/Париж")
+    ru_facts = make_facts(capital, [ru_row], "ru")
+    check("a Russian fact uses the Russian phrasing and a language-suffixed id",
+          len(ru_facts) == 1
+          and ru_facts[0]["id"] == "wd-capital-Q142-ru"
+          and ru_facts[0]["question"] == "Как называется столица страны «Франция»?"
+          and ru_facts[0]["statement"] == "«Париж» — столица страны «Франция».")
+    check("a Russian fact's page URL points at the Russian Wikipedia",
+          ru_facts[0]["pageUrl"].startswith("https://ru.wikipedia.org/wiki/"))
+    check("the English id shape is untouched by the language feature",
+          make_facts(capital, [row("Q142", "France", "Paris")])[0]["id"] == "wd-capital-Q142")
+    check("a template outside the Russian set yields nothing for Russian, not a crash",
+          make_facts(next(t for t in TEMPLATES if t.key not in RU_PHRASING),
+                     [row("Q1", "S", "A")], "ru") == [])
+
     print(f"\n{len(failures)} failed" if failures else "\nAll checks passed.")
     return 1 if failures else 0
 
@@ -834,19 +972,29 @@ def main(argv=None):
                         help="harvest and report, but publish nothing")
     parser.add_argument("--budget-minutes", type=float, default=BUDGET_MINUTES,
                         help="stop starting new templates after this long")
+    parser.add_argument("--language", default=DEFAULT_LANGUAGE, choices=sorted(WIKI_HOSTS),
+                        help="publish under packs/<language>/library/ instead of packs/library/; "
+                             "only templates with phrasing for this language run (see RU_PHRASING)")
     args = parser.parse_args(argv)
 
     if args.self_test:
         return self_test()
 
-    print(f"Checking the {len(TEMPLATES)} templates' Wikidata ids.\n")
-    templates = preflight(TEMPLATES)
+    language = args.language
+    candidates = templates_for(language)
+    if language != DEFAULT_LANGUAGE and len(candidates) < len(TEMPLATES):
+        skipped_keys = [t.key for t in TEMPLATES if t not in candidates]
+        print(f"{len(skipped_keys)} of {len(TEMPLATES)} templates have no '{language}' phrasing "
+              f"yet, skipping: {', '.join(skipped_keys)}\n")
+
+    print(f"Checking the {len(candidates)} templates' Wikidata ids.\n")
+    templates = preflight(candidates)
     if not templates:
         print("\nFAIL: no template survived preflight. Leaving the library untouched.")
         return 1
 
     print(f"\nHarvesting {len(templates)} templates, up to {args.limit} each, "
-          f"within {args.budget_minutes} minutes.\n")
+          f"within {args.budget_minutes} minutes, in '{language}'.\n")
     deadline = time.monotonic() + args.budget_minutes * 60
     by_category = {}
     skipped = 0
@@ -855,8 +1003,8 @@ def main(argv=None):
             print(f"  {template.key:<20}    - skipped, out of time")
             skipped += 1
             continue
-        rows, note = harvest(template, args.limit)
-        facts = make_facts(template, rows)
+        rows, note = harvest(template, args.limit, language)
+        facts = make_facts(template, rows, language)
         images = sum(1 for f in facts if f["imageUrl"])
         print(f"  {template.key:<20} {len(facts):>4} facts, {images:>4} with images  [{note}]")
         by_category.setdefault(template.category, []).extend(facts)
@@ -871,7 +1019,7 @@ def main(argv=None):
     by_category = prune(by_category)
 
     total = sum(len(v) for v in by_category.values())
-    previous = previous_total()
+    previous = previous_total(language)
     if total < MIN_TOTAL or (previous and total < previous * MIN_FRACTION_OF_PREVIOUS):
         print(f"\nFAIL: {total} facts is too few (floor {MIN_TOTAL}, "
               f"previously published {previous}). Leaving the library untouched.")
@@ -881,7 +1029,7 @@ def main(argv=None):
     # After the pruning above, so nothing is fetched for facts that are already discarded.
     print("\nFetching Wikipedia extracts...")
     for category, facts in sorted(by_category.items()):
-        extracts = extracts_for([f["wikiTitle"] for f in facts])
+        extracts = extracts_for([f["wikiTitle"] for f in facts], language)
         hits = 0
         for fact in facts:
             fact["details"] = extracts.get(fact["wikiTitle"])
@@ -901,7 +1049,7 @@ def main(argv=None):
         return 0
 
     print()
-    shards = publish(by_category)
+    shards = publish(by_category, language)
     size = sum(s["bytes"] for s in shards)
     print(f"\n{total} facts in {len(shards)} shards, {size // 1024} KB "
           f"({size // max(total, 1)} bytes per fact). The app bundles 517.")
