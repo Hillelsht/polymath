@@ -10,6 +10,7 @@ package com.hillelsht.smart.domain.model
 enum class Language(val tag: String, val displayName: String) {
     ENGLISH("en", "English"),
     RUSSIAN("ru", "Русский"),
+    HEBREW("he", "עברית"),
     ;
 
     companion object {

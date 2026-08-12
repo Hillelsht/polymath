@@ -263,6 +263,55 @@
    "language": "ru",
    "id": "UCeAK3Ievttv9gCGeUrSPqZQ",
    "displayName": "ФК Матч ТВ"
+  },
+  {
+   "handle": "Travelingisraelinfo",
+   "category": "geography",
+   "language": "he",
+   "displayName": "Traveling Israel"
+  },
+  {
+   "handle": "yadybenzvi",
+   "category": "history",
+   "language": "he",
+   "displayName": "יד יצחק בן-צבי"
+  },
+  {
+   "handle": "davidsonweb",
+   "category": "science",
+   "language": "he",
+   "displayName": "מכון דוידסון לחינוך מדעי"
+  },
+  {
+   "handle": "technion",
+   "category": "science",
+   "language": "he",
+   "displayName": "הטכניון"
+  },
+  {
+   "handle": "NLI_Hebrew",
+   "category": "arts",
+   "language": "he",
+   "displayName": "הספרייה הלאומית"
+  },
+  {
+   "handle": "SPORT5_IL",
+   "category": "sports",
+   "language": "he",
+   "displayName": "ספורט 5"
+  },
+  {
+   "handle": "one-1004",
+   "category": "sports",
+   "language": "he",
+   "displayName": "ONE"
+  },
+  {
+   "handle": "KAN11",
+   "category": "culture",
+   "language": "he",
+   "id": "UCKqFqiCe1dCUxRe0_YNZ6gg",
+   "displayName": "כאן 11"
   }
  ]
 }

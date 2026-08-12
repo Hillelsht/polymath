@@ -52,7 +52,7 @@ UA = "SmartTriviaPipeline/1.0 (+https://github.com/hillelsht/smart) python-urlli
 # this. Any other language publishes under packs/<tag>/library/, mirroring the convention
 # PackService.kt resolves on the device: English at the root, everything else in a subfolder.
 DEFAULT_LANGUAGE = "en"
-WIKI_HOSTS = {"en": "en.wikipedia.org", "ru": "ru.wikipedia.org"}
+WIKI_HOSTS = {"en": "en.wikipedia.org", "ru": "ru.wikipedia.org", "he": "he.wikipedia.org"}
 
 
 def out_dir(language):
@@ -99,15 +99,15 @@ NON_ANSWER = re.compile(
 )
 
 CATEGORIES = {
-    "geography": {"en": "Geography", "ru": "География"},
-    "history": {"en": "History", "ru": "История"},
-    "science": {"en": "Science", "ru": "Наука"},
-    "arts": {"en": "Arts & Literature", "ru": "Искусство и литература"},
-    "sports": {"en": "Sports & Games", "ru": "Спорт и игры"},
-    "culture": {"en": "Pop Culture", "ru": "Поп-культура"},
+    "geography": {"en": "Geography", "ru": "География", "he": "גאוגרפיה"},
+    "history": {"en": "History", "ru": "История", "he": "היסטוריה"},
+    "science": {"en": "Science", "ru": "Наука", "he": "מדע"},
+    "arts": {"en": "Arts & Literature", "ru": "Искусство и литература", "he": "אמנות וספרות"},
+    "sports": {"en": "Sports & Games", "ru": "Спорт и игры", "he": "ספורט ומשחקים"},
+    "culture": {"en": "Pop Culture", "ru": "Поп-культура", "he": "תרבות פופולרית"},
 }
 
-SHARD_SUFFIX = {"en": "more facts", "ru": "больше фактов"}
+SHARD_SUFFIX = {"en": "more facts", "ru": "больше фактов", "he": "עוד עובדות"}
 
 
 # A statement that applies to only part of the subject, or that has stopped being true, is not
@@ -271,12 +271,53 @@ RU_PHRASING = {
     ),
 }
 
+# Hebrew's grammatical wrinkle is not Russian's. There is no case declension to dodge — the
+# problem is construct state (סמיכות), where the *first* noun of a possessive pair changes form
+# ("בירה" becomes "בירת" in "בירת צרפת"). That would be fine even unhandled, since the noun that
+# inflects is always one this file writes ("capital", "river"), never the Wikidata label dropped
+# into {s} or {o} — but leaving room for error on every phrasing was not worth it when Hebrew
+# also has a construction that needs no inflection on either side: "X של Y" ("X of Y"), which
+# works for any noun regardless of gender or number. Every phrasing below uses it, so a label
+# Wikidata hands back is always slotted in exactly as given, the same guarantee RU_PHRASING makes
+# by a different route. Subjects are countries, cities, rivers or mountains, so statements agree
+# with them in gender by Hebrew convention: countries and cities feminine, rivers and mountains
+# masculine.
+HE_PHRASING = {
+    "capital": (
+        "הבירה של {s}",
+        "מהי הבירה של {s}?",
+        "{o} היא הבירה של {s}.",
+    ),
+    "currency": (
+        "המטבע של {s}",
+        "מהו המטבע של {s}?",
+        "המטבע של {s} הוא {o}.",
+    ),
+    "continent": (
+        "היבשת של {s}",
+        "באיזו יבשת נמצאת {s}?",
+        "{s} נמצאת ביבשת {o}.",
+    ),
+    "river-mouth": (
+        "הנהר {s}",
+        "לאיזה גוף מים נשפך הנהר {s}?",
+        "הנהר {s} נשפך אל {o}.",
+    ),
+    "mountain-range": (
+        "ההר {s}",
+        "לאיזו שרשרת הרים שייך ההר {s}?",
+        "ההר {s} שייך לשרשרת ההרים {o}.",
+    ),
+}
+
+PHRASING_BY_LANGUAGE = {"ru": RU_PHRASING, "he": HE_PHRASING}
+
 
 def phrase(template, language):
     """(title, question, statement) for this template in this language, or None if untranslated."""
     if language == DEFAULT_LANGUAGE:
         return template.title, template.question, template.statement
-    return RU_PHRASING.get(template.key) if language == "ru" else None
+    return PHRASING_BY_LANGUAGE.get(language, {}).get(template.key)
 
 
 def templates_for(language, templates=None):
@@ -956,6 +997,39 @@ def self_test():
           make_facts(next(t for t in TEMPLATES if t.key not in RU_PHRASING),
                      [row("Q1", "S", "A")], "ru") == [])
 
+    check("a template with Hebrew phrasing resolves it",
+          phrase(next(t for t in TEMPLATES if t.key == "capital"), "he") == HE_PHRASING["capital"])
+    check("a template with no Hebrew phrasing resolves to nothing",
+          phrase(next(t for t in TEMPLATES if t.key not in HE_PHRASING), "he") is None)
+    check("every HE_PHRASING key names a real template",
+          set(HE_PHRASING) <= {t.key for t in TEMPLATES})
+    check("every Hebrew phrasing supplies all three parts",
+          all(len(p) == 3 and all(p) for p in HE_PHRASING.values()))
+    check("templates_for(he) is exactly the ones with Hebrew phrasing",
+          {t.key for t in templates_for("he")} == set(HE_PHRASING))
+    check("Hebrew output publishes under its own language subfolder",
+          out_dir("he") == ROOT / "packs" / "he" / "library")
+    check("the Wikipedia API host follows Hebrew too",
+          wiki_api("he") == "https://he.wikipedia.org/w/api.php")
+    check("a Hebrew query asks for Hebrew labels and the Hebrew Wikipedia edition",
+          'wikibase:language "he"' in build_query(TEMPLATES[0], 0, 5, "he")
+          and "he.wikipedia.org" in build_query(TEMPLATES[0], 0, 5, "he"))
+
+    he_row = row("Q142", "צרפת", "פריז", article="https://he.wikipedia.org/wiki/פריז")
+    he_facts = make_facts(capital, [he_row], "he")
+    check("a Hebrew fact uses the Hebrew phrasing and a language-suffixed id",
+          len(he_facts) == 1
+          and he_facts[0]["id"] == "wd-capital-Q142-he"
+          and he_facts[0]["question"] == "מהי הבירה של צרפת?"
+          and he_facts[0]["statement"] == "פריז היא הבירה של צרפת.")
+    check("a Hebrew fact's page URL points at the Hebrew Wikipedia",
+          he_facts[0]["pageUrl"].startswith("https://he.wikipedia.org/wiki/"))
+    check("a template outside the Hebrew set yields nothing for Hebrew, not a crash",
+          make_facts(next(t for t in TEMPLATES if t.key not in HE_PHRASING),
+                     [row("Q1", "S", "A")], "he") == [])
+    check("Russian and Hebrew phrasing cover the same templates",
+          set(RU_PHRASING) == set(HE_PHRASING))
+
     print(f"\n{len(failures)} failed" if failures else "\nAll checks passed.")
     return 1 if failures else 0
 
@@ -974,7 +1048,8 @@ def main(argv=None):
                         help="stop starting new templates after this long")
     parser.add_argument("--language", default=DEFAULT_LANGUAGE, choices=sorted(WIKI_HOSTS),
                         help="publish under packs/<language>/library/ instead of packs/library/; "
-                             "only templates with phrasing for this language run (see RU_PHRASING)")
+                             "only templates with phrasing for this language run "
+                             "(see RU_PHRASING, HE_PHRASING)")
     args = parser.parse_args(argv)
 
     if args.self_test:
