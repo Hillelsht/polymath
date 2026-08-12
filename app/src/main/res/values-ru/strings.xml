@@ -98,8 +98,6 @@
     <string name="game_chains_blurb">Шестнадцать плиток, четыре скрытые группы. Одна сетка в день, одна для всех.</string>
     <string name="game_gambit_title">Гамбит</string>
     <string name="game_gambit_blurb">Шахматы против движка, который слабеет по мере ваших знаний. Отвечайте между ходами.</string>
-    <string name="game_palace_title">Дворец Арье</string>
-    <string name="game_palace_blurb">Бегите, прыгайте и цепляйтесь за уступы в залах дворца. Отвечайте у каждых ворот.</string>
     <string name="game_quiz_title">Тест</string>
     <string name="game_quiz_blurb">Быстрый раунд по тому, что вы изучали.</string>
     <string name="play_climb_never">Вы ещё не поднимались</string>
@@ -118,11 +116,6 @@
     <string name="play_gambit_summary">Сыграно партий: %1$d</string>
     <string name="play_gambit_cta_start">Начать партию</string>
     <string name="play_gambit_cta_resume">Продолжить или начать заново</string>
-    <string name="play_palace_never">Вы ещё не исследовали</string>
-    <string name="play_palace_summary_won">Попыток: %1$d · дворец пройден</string>
-    <string name="play_palace_summary">Попыток: %1$d</string>
-    <string name="play_palace_cta_start">Войти</string>
-    <string name="play_palace_cta_again">Пройти снова</string>
     <string name="play_quiz_footnote">Десять вопросов по тому, что вы изучали</string>
     <string name="play_quiz_cta">Пройти тест</string>
     <string name="play_cta_disabled">Пока нет</string>
@@ -243,15 +236,4 @@
     <string name="gambit_outcome_draw">Ничья</string>
     <string name="gambit_moves_played">Сделано ходов: %1$d</string>
     <string name="gambit_new_game_button">Новая игра</string>
-
-    <!-- Aryeh's Palace -->
-    <string name="palace_empty_title">Пока не о чем спрашивать</string>
-    <string name="palace_empty_body">Изучите немного фактов, и ворота дворца будут готовы задавать вопросы.</string>
-    <string name="palace_gate_title">Ворота преграждают путь</string>
-    <string name="palace_outcome_won">Вы прошли дворец</string>
-    <string name="palace_outcome_lost">Жизни закончились</string>
-    <string name="palace_try_again_button">Попробовать снова</string>
-    <string name="palace_control_up">Вверх</string>
-    <string name="palace_control_drop">Спрыгнуть</string>
-    <string name="palace_control_jump">Прыжок</string>
 </resources>

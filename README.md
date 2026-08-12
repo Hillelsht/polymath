@@ -35,7 +35,7 @@ raw IQ — nothing does through an app.
 2. **Review** — facts return for active recall on an SM-2 schedule. You try, reveal, then grade
    yourself Forgot / Hard / Good / Easy, which sets the next interval.
 3. **Watch** — educational videos from an allowlist of channels, each ending in *Quiz me on this*.
-4. **Play** — five games that draw on what you've learned. Miss a question in any of them and it
+4. **Play** — four games that draw on what you've learned. Miss a question in any of them and it
    enters your review queue.
 5. **Progress** — streaks, per-subject mastery rings, lifetime quiz accuracy.
 
@@ -81,8 +81,6 @@ channel list all follow. Hebrew lays out right-to-left.
 - **Chains** — sixteen tiles, four hidden groups. One grid a day, the same one for everybody.
 - **Gambit** — chess against an engine that gets weaker the more you answer. Bank *tempo* between
   moves and spend it on a hint, a takeback, or a level of the engine's search depth.
-- **Aryeh's Palace** — a side-scrolling platformer with collapsing floors and gates that open only
-  when you answer.
 - **Quiz** — ten questions on what you've been studying.
 
 Every game is drawn with Compose vectors rather than sprite sheets, so none of them grow the APK.

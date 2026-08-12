@@ -30,11 +30,6 @@ enum class GameId(
         title = "Gambit",
         blurb = "Chess against an engine that gets weaker the more you know. Answer between moves.",
     ),
-    PALACE(
-        id = "palace",
-        title = "Aryeh's Palace",
-        blurb = "Run, leap and hang your way through the halls. Answer at every gate.",
-    ),
     QUIZ(
         id = "quiz",
         title = "Quiz",

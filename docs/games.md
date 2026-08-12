@@ -80,22 +80,47 @@ Threefold repetition detection exists because of a self-play test: two engines s
 deep have nothing better to do than repeat themselves, and without it a match between two weak
 players never ends.
 
-## Aryeh's Palace
+## Aryeh's Palace — removed, and why it matters
 
-A side-scrolling platformer in the *Prince of Persia* tradition — run, leap, hang off ledges,
-floors that collapse on a timer, gates that open only when you answer.
+Palace was a side-scrolling platformer. It shipped unplayable and was removed. It is worth
+keeping the post-mortem, because the failure was one of *method*, not of effort.
 
-It reuses the mascot rig as the player character. It is original work: Prince of Persia itself
-cannot be shipped (it is Ubisoft's, and every open port needs the original's copyrighted data
-files), so the level design, art and physics are all this project's own.
+The bug was a single line in `PalaceViewModel.tick()`. A tap set `pendingJump = true`; the next
+tick read it and cleared it unconditionally, while the physics honoured a jump only
+`if (input.jump && run.grounded)`. Any tap arriving on a frame where the player was airborne was
+therefore **silently destroyed** rather than held until it could be used. Simulated against the
+shipped constants, a player falling toward a ledge and tapping Jump to bounce off it:
 
-Physics and level logic are tested headlessly by driving a hand-advanced tick clock —
-`PalacePhysicsTest` covers running, jumping, ledge-grab, collapse timing and gate blocking, and
-`PalaceLevelsTest` proves each authored level is *honest* by scripting a player through the real
-physics: every pit is jumpable and every collapsing floor is crossable.
+| Tap timing | Result |
+|---|---|
+| 6 frames early (100 ms) | discarded |
+| 3 frames early (50 ms) | discarded |
+| 1 frame early (17 ms) | discarded |
+| exactly on touchdown | discarded |
+| 2 frames late | jumps |
 
-What testing cannot cover is **feel**. Jump height and control response need a real device, which
-is a round trip through a human rather than through CI. That is why this game was sequenced last.
+Android touch latency is 50–150 ms, i.e. 3–9 frames. *Anticipating* a landing — the core skill in
+any platformer — never worked. Only late taps did. Two further faults compounded it: no coyote
+time, and no acceleration at all (`vx` snapped between 0 and ±260 px/s).
+
+**Sixteen tests passed throughout.** They passed because they handed `tick()` `jump = true` on
+exactly the frame the player was grounded — the ideal input a human cannot produce.
+`PalaceLevelsTest` proved each level completable by *scripting the inputs that completed it*,
+which establishes that a solution exists, not that anyone can execute it.
+
+The lesson, and the standard any future action game here must meet:
+
+- **A completability test must model input latency.** Re-run the solution at 0/50/100/150 ms. A
+  level completable only at 0 ms is not completable by a person.
+- **Report timing margin, not just success.** "This jump has 3 frames of tolerance" is a number
+  CI can fail on. "The level is completable" is not.
+- **Input buffering and coyote time are not polish.** An input is held until used or expired,
+  never dropped. Ship them in the first commit or the game is unplayable regardless of level
+  design.
+
+None of that needed a device. Every measurement above came from a few lines of simulation against
+the real constants. The capability existed the whole time and went unused; *that* was the failure,
+not the missing hardware.
 
 ## Quiz
 

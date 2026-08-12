@@ -61,8 +61,6 @@ data class PlayUiState(
      * and everything else 0, so the running best across games is exactly this, with no need for
      * a dedicated wins counter. */
     val gambitEverWon: Boolean = false,
-    val palaceRuns: Int = 0,
-    val palaceEverWon: Boolean = false,
 )
 
 class PlayViewModel(private val repository: SmartRepository) : ViewModel() {
@@ -77,12 +75,10 @@ class PlayViewModel(private val repository: SmartRepository) : ViewModel() {
         combine(
             repository.runCount(GameId.GAMBIT),
             repository.bestScore(GameId.GAMBIT),
-            repository.runCount(GameId.PALACE),
-            repository.bestScore(GameId.PALACE),
-        ) { gambitGames, gambitBest, palaceRuns, palaceBest ->
-            (gambitGames to (gambitBest > 0)) to (palaceRuns to (palaceBest > 0))
+        ) { gambitGames, gambitBest ->
+            gambitGames to (gambitBest > 0)
         },
-    ) { best, runs, dailies, (available, played), (gambit, palace) ->
+    ) { best, runs, dailies, (available, played), gambit ->
         PlayUiState(
             climbBest = best,
             climbRuns = runs,
@@ -91,8 +87,6 @@ class PlayViewModel(private val repository: SmartRepository) : ViewModel() {
             chainsStreak = dailyStreak(dailies.map { it.date }),
             gambitGames = gambit.first,
             gambitEverWon = gambit.second,
-            palaceRuns = palace.first,
-            palaceEverWon = palace.second,
         )
     }.stateIn(viewModelScope, SharingStarted.WhileSubscribed(5_000), PlayUiState())
 
@@ -140,7 +134,6 @@ fun PlayScreen(
     onClimb: () -> Unit,
     onChains: () -> Unit,
     onGambit: () -> Unit,
-    onPalace: () -> Unit,
     onQuiz: () -> Unit,
 ) {
     val viewModel: PlayViewModel = viewModel(factory = PlayViewModel.factory(repository))
@@ -233,25 +226,6 @@ fun PlayScreen(
 
         item {
             GameCard(
-                title = GameId.PALACE.localizedTitle(),
-                blurb = GameId.PALACE.localizedBlurb(),
-                footnote = when {
-                    state.palaceRuns == 0 -> stringResource(R.string.play_palace_never)
-                    state.palaceEverWon ->
-                        stringResource(R.string.play_palace_summary_won, state.palaceRuns)
-
-                    else -> stringResource(R.string.play_palace_summary, state.palaceRuns)
-                },
-                callToAction = stringResource(
-                    if (state.palaceRuns == 0) R.string.play_palace_cta_start else R.string.play_palace_cta_again,
-                ),
-                gradient = listOf(SmartPalette.Warning, Color(0xFFB9741C)),
-                onClick = onPalace,
-            ) { PalaceGlyph() }
-        }
-
-        item {
-            GameCard(
                 title = GameId.QUIZ.localizedTitle(),
                 blurb = GameId.QUIZ.localizedBlurb(),
                 footnote = stringResource(R.string.play_quiz_footnote),
@@ -275,7 +249,6 @@ private fun GameId.localizedTitle(): String = stringResource(
         GameId.CLIMB -> R.string.game_climb_title
         GameId.CHAINS -> R.string.game_chains_title
         GameId.GAMBIT -> R.string.game_gambit_title
-        GameId.PALACE -> R.string.game_palace_title
         GameId.QUIZ -> R.string.game_quiz_title
     },
 )
@@ -286,7 +259,6 @@ private fun GameId.localizedBlurb(): String = stringResource(
         GameId.CLIMB -> R.string.game_climb_blurb
         GameId.CHAINS -> R.string.game_chains_blurb
         GameId.GAMBIT -> R.string.game_gambit_blurb
-        GameId.PALACE -> R.string.game_palace_blurb
         GameId.QUIZ -> R.string.game_quiz_blurb
     },
 )
@@ -409,18 +381,6 @@ private fun GambitGlyph() {
     // The same Unicode chess set the board itself draws with — vector, in every system font,
     // nothing to ship.
     Text("♞", fontSize = 46.sp, color = Color.White)
-}
-
-@Composable
-private fun PalaceGlyph() {
-    // A doorway — the shape every gate in the level shares, rendered once here as the card's icon.
-    Box(
-        Modifier
-            .width(34.dp)
-            .height(50.dp)
-            .clip(RoundedCornerShape(topStart = 17.dp, topEnd = 17.dp))
-            .background(Color.White.copy(alpha = 0.28f)),
-    )
 }
 
 @Composable

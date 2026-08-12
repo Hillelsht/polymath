@@ -51,8 +51,8 @@ already declares `supportsRtl`, no code overrides `LocalLayoutDirection`, no lay
 `left`/`right` instead of `start`/`end`, and the single directional icon in the app already used
 the `AutoMirrored` variant.
 
-Canvas-drawn UI — the mascot rig, the chess board, the Palace level — uses raw coordinates and is
-*not* mirrored. That is correct: a chess board and a platformer level should not flip.
+Canvas-drawn UI — the mascot rig, the chess board — uses raw coordinates and is *not* mirrored.
+That is correct: a chess board should not flip.
 
 ## The `values-iw` duplicate
 

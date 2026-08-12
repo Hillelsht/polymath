@@ -106,8 +106,6 @@
     <string name="game_chains_blurb">שש עשרה משבצות, ארבע קבוצות נסתרות. לוח אחד ביום, אותו הלוח לכולם.</string>
     <string name="game_gambit_title">גמביט</string>
     <string name="game_gambit_blurb">שחמט מול מנוע שנחלש ככל שתדעו יותר. ענו על שאלות בין המהלכים.</string>
-    <string name="game_palace_title">הארמון של אריה</string>
-    <string name="game_palace_blurb">רוצו, קפצו והיתלו דרך האולמות. ענו בכל שער.</string>
     <string name="game_quiz_title">שאלון</string>
     <string name="game_quiz_blurb">סבב מהיר על מה שאתם לומדים לאחרונה.</string>
     <string name="play_climb_never">עדיין לא טיפסתם</string>
@@ -126,11 +124,6 @@
     <string name="play_gambit_summary">שיחקתם %1$d משחקים</string>
     <string name="play_gambit_cta_start">להתחיל משחק</string>
     <string name="play_gambit_cta_resume">להמשיך או להתחיל מחדש</string>
-    <string name="play_palace_never">עדיין לא חקרתם</string>
-    <string name="play_palace_summary_won">%1$d ניסיונות · הגעתם עד הסוף</string>
-    <string name="play_palace_summary">%1$d ניסיונות</string>
-    <string name="play_palace_cta_start">להיכנס פנימה</string>
-    <string name="play_palace_cta_again">לנסות שוב</string>
     <string name="play_quiz_footnote">עשר שאלות על מה שאתם לומדים לאחרונה</string>
     <string name="play_quiz_cta">לענות על שאלון</string>
     <string name="play_cta_disabled">עוד לא</string>
@@ -251,15 +244,4 @@
     <string name="gambit_outcome_draw">תיקו</string>
     <string name="gambit_moves_played">בוצעו %1$d מהלכים</string>
     <string name="gambit_new_game_button">משחק חדש</string>
-
-    <!-- Aryeh's Palace -->
-    <string name="palace_empty_title">עדיין אין על מה לשאול</string>
-    <string name="palace_empty_body">למדו כמה עובדות, ולשערי הארמון יהיו שאלות בשבילכם.</string>
-    <string name="palace_gate_title">שער חוסם את הדרך</string>
-    <string name="palace_outcome_won">הצלחתם לעבור</string>
-    <string name="palace_outcome_lost">נגמרו החיים</string>
-    <string name="palace_try_again_button">לנסות שוב</string>
-    <string name="palace_control_up">למעלה</string>
-    <string name="palace_control_drop">צניחה</string>
-    <string name="palace_control_jump">קפיצה</string>
 </resources>
