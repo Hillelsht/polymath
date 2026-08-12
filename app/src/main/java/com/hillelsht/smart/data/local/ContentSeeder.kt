@@ -5,6 +5,7 @@ import android.util.Log
 import com.hillelsht.smart.data.seed.ChannelParser
 import com.hillelsht.smart.data.seed.ContentParser
 import com.hillelsht.smart.domain.PackInstall
+import com.hillelsht.smart.domain.model.Language
 import java.io.File
 
 /**
@@ -137,8 +138,20 @@ class ContentSeeder(
         else assets.list(AUTHORING_DIR).orEmpty()
             .filter { it.endsWith(".json") && it !in NON_FACT_FILES }
 
-        return names.mapNotNull { name ->
-            val path = "$dir/$name"
+        // A translated pack sits one level down, in a folder named for its language tag —
+        // `packs/ru/geography.json` — mirroring how it is published. The listing above only
+        // sees files, so without this a translated pack ships inside the APK and is never
+        // installed: the Read tab and the daily plan come up empty in that language while the
+        // bytes sit right there in assets.
+        val translated = Language.entries
+            .filter { it != Language.default }
+            .flatMap { language ->
+                assets.list("$dir/${language.tag}").orEmpty()
+                    .filter { it.endsWith(".json") && it !in NON_FACT_FILES }
+                    .map { "$dir/${language.tag}/$it" }
+            }
+
+        return (names.map { "$dir/$it" } + translated).mapNotNull { path ->
             try {
                 val raw = assets.open(path).bufferedReader().use { it.readText() }
                 ContentParser.parsePack(raw, path)

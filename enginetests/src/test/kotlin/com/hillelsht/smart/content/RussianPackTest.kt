@@ -45,6 +45,21 @@ class RussianPackTest {
     }
 
     @Test
+    fun `the Russian pack is bundled where the seeder actually looks for it`() {
+        // The failure this exists for: the pack was published under packs/ru/ and shipped
+        // nowhere, so a Russian speaker got an empty Read tab and an empty daily plan while
+        // the facts sat in the repository. ContentSeeder reads assets/packs/<tag>/, so the
+        // copy has to be there — and has to be the same content as the published one.
+        val bundled = File("../app/src/main/assets/packs/ru/geography.json")
+        assertTrue(bundled.exists(), "packs/ru/geography.json is not bundled into assets")
+
+        val fromAssets = ContentParser.parsePack(bundled.readText(), bundled.name)
+        val fromRepo = ContentParser.parsePack(russianFile.readText(), russianFile.name)
+        assertEquals(fromRepo.facts.map { it.id }, fromAssets.facts.map { it.id })
+        assertEquals(Language.RUSSIAN, fromAssets.language)
+    }
+
+    @Test
     fun `every Russian fact id is suffixed for its language, per the documented convention`() {
         val russian = ContentParser.parsePack(russianFile.readText(), russianFile.name).facts
         russian.forEach { fact ->
