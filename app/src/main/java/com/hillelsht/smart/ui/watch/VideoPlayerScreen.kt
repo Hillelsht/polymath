@@ -40,9 +40,11 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.platform.LocalContext
+import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.viewinterop.AndroidView
 import androidx.lifecycle.compose.LocalLifecycleOwner
+import com.hillelsht.smart.R
 import com.hillelsht.smart.data.SmartRepository
 import com.hillelsht.smart.domain.PlaybackWatchdog
 import com.hillelsht.smart.domain.model.Category
@@ -52,6 +54,8 @@ import com.hillelsht.smart.ui.components.CategoryChip
 import com.hillelsht.smart.ui.components.EmptyState
 import com.hillelsht.smart.ui.components.SmartCard
 import com.hillelsht.smart.ui.components.accent
+import com.hillelsht.smart.ui.components.localizedLabel
+import com.hillelsht.smart.ui.components.localizedName
 import com.pierfrancescosoffritti.androidyoutubeplayer.core.player.PlayerConstants
 import com.pierfrancescosoffritti.androidyoutubeplayer.core.player.YouTubePlayer
 import com.pierfrancescosoffritti.androidyoutubeplayer.core.player.listeners.AbstractYouTubePlayerListener
@@ -95,7 +99,7 @@ fun VideoPlayerScreen(
             IconButton(onClick = onBack) {
                 Icon(
                     Icons.Rounded.Close,
-                    contentDescription = "Close",
+                    contentDescription = stringResource(R.string.action_close),
                     tint = MaterialTheme.colorScheme.onSurfaceVariant,
                 )
             }
@@ -103,7 +107,10 @@ fun VideoPlayerScreen(
 
         if (current == null) {
             Box(Modifier.fillMaxSize(), contentAlignment = Alignment.Center) {
-                EmptyState(title = "Video unavailable", body = "This video is no longer in the catalog.")
+                EmptyState(
+                    title = stringResource(R.string.video_unavailable_title),
+                    body = stringResource(R.string.video_unavailable_body),
+                )
             }
             return@Column
         }
@@ -146,8 +153,8 @@ fun VideoPlayerScreen(
                 Text(
                     text = listOfNotNull(
                         current.channel,
-                        current.minutes?.let { "$it min" },
-                        current.lengthClass?.label,
+                        current.minutes?.let { stringResource(R.string.watch_minutes, it) },
+                        current.lengthClass?.localizedLabel(),
                     ).joinToString(" · "),
                     style = MaterialTheme.typography.bodyMedium,
                     color = MaterialTheme.colorScheme.onSurfaceVariant,
@@ -171,16 +178,16 @@ fun VideoPlayerScreen(
                 ) {
                     Text(
                         text = if (current.relatedFactIds.isNotEmpty()) {
-                            "Quiz me on this"
+                            stringResource(R.string.video_quiz_me_on_this)
                         } else {
-                            "Quiz me on ${current.category.displayName}"
+                            stringResource(R.string.video_quiz_me_on_category, current.category.localizedName())
                         },
                         style = MaterialTheme.typography.labelLarge,
                     )
                 }
                 Spacer(Modifier.height(8.dp))
                 Text(
-                    text = "Anything you miss joins your review queue.",
+                    text = stringResource(R.string.video_quiz_footnote),
                     style = MaterialTheme.typography.labelMedium,
                     color = MaterialTheme.colorScheme.onSurfaceVariant,
                     modifier = Modifier.fillMaxWidth(),
@@ -231,20 +238,19 @@ private fun HandedOffStrip(reason: PlaybackWatchdog.Failure) {
         Spacer(Modifier.width(12.dp))
         Column(Modifier.weight(1f)) {
             Text(
-                text = "Playing on YouTube",
+                text = stringResource(R.string.video_handed_off_title),
                 style = MaterialTheme.typography.titleSmall,
                 color = Color.White,
             )
             Text(
-                text = when (reason) {
+                text = stringResource(
                     // Only this case has actually removed anything, so only it says so.
-                    PlaybackWatchdog.Failure.VIDEO_REFUSED ->
-                        "This one will not play inside apps. Removed from your shelf."
-                    PlaybackWatchdog.Failure.APP_REJECTED ->
-                        "YouTube would not play it here. It stays on your shelf."
-                    PlaybackWatchdog.Failure.SILENT ->
-                        "It would not start here. It stays on your shelf."
-                },
+                    when (reason) {
+                        PlaybackWatchdog.Failure.VIDEO_REFUSED -> R.string.video_handed_off_refused
+                        PlaybackWatchdog.Failure.APP_REJECTED -> R.string.video_handed_off_app_rejected
+                        PlaybackWatchdog.Failure.SILENT -> R.string.video_handed_off_silent
+                    },
+                ),
                 style = MaterialTheme.typography.bodySmall,
                 color = MaterialTheme.colorScheme.onSurfaceVariant,
             )
@@ -367,7 +373,7 @@ private fun RelatedFacts(repository: SmartRepository, factIds: List<String>) {
 
     Column(verticalArrangement = Arrangement.spacedBy(8.dp)) {
         Text(
-            text = "WHAT THIS TEACHES",
+            text = stringResource(R.string.video_related_facts_label),
             style = MaterialTheme.typography.labelSmall,
             color = MaterialTheme.colorScheme.onSurfaceVariant,
         )

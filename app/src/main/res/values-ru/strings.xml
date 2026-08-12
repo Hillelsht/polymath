@@ -137,4 +137,121 @@
     <string name="stats_longest_streak">Самая длинная серия: %1$d дн. · встречено фактов: %2$d из %3$d</string>
     <string name="stats_mastery_by_subject">Освоение по темам</string>
     <string name="stats_fraction">%1$d/%2$d</string>
+
+    <!-- Shared generic actions -->
+    <string name="action_close">Закрыть</string>
+    <string name="action_done">Готово</string>
+    <string name="action_continue">Продолжить</string>
+    <string name="action_next">Далее</string>
+    <string name="action_clear">Очистить</string>
+    <string name="action_submit">Проверить</string>
+    <string name="play_leave_button">Выйти</string>
+    <string name="memory_hook_label">ПОДСКАЗКА ДЛЯ ПАМЯТИ</string>
+
+    <!-- The Climb -->
+    <string name="climb_empty_title">Пока недостаточно материала для вопросов</string>
+    <string name="climb_empty_body">Изучите ещё немного фактов, и башне будет, чем вас озадачить.</string>
+    <string name="climb_floor">Этаж %1$d</string>
+    <string name="climb_points">%1$d очков</string>
+    <string name="climb_points_with_streak">%1$d очков  ·  серия %2$dx</string>
+    <string name="climb_hp">%1$d / %2$d</string>
+    <string name="climb_hp_with_shield">%1$d / %2$d   защита: %3$d</string>
+    <string name="climb_doors_single">Прямо вперёд</string>
+    <string name="climb_doors_multiple">Выберите путь наверх</string>
+    <string name="node_duel_title">Соперник</string>
+    <string name="node_elite_title">Кое-что посерьёзнее</string>
+    <string name="node_cache_title">Тайник</string>
+    <string name="node_rest_title">Тихая комната</string>
+    <string name="node_boss_title">Страж</string>
+    <string name="node_duel_blurb">Обычный бой. Около %1$d вопросов.</string>
+    <string name="node_elite_blurb">Сложнее, но даёт больше озарения.</string>
+    <string name="node_cache_blurb">Выберите одну реликвию из трёх.</string>
+    <string name="node_rest_blurb">Восстановите %1$d%% здоровья и идите дальше.</string>
+    <string name="node_boss_blurb">Пути в обход нет — только напролом.</string>
+    <string name="climb_cache_title">Тайник. Выберите одну.</string>
+    <string name="climb_summary_stats">Отвечено: %1$d · пропущено: %2$d</string>
+    <string name="climb_missed_note">Пропущенные вопросы попадут в завтрашнее повторение.</string>
+    <string name="climb_insight_banked">Накоплено озарения: %1$d</string>
+
+    <!-- Chains -->
+    <string name="chains_unavailable_body">Сегодняшняя головоломка ещё не опубликована или не удалось её загрузить. Попробуйте снова, когда будет соединение.</string>
+    <string name="chains_tagline">Найдите четыре группы по четыре</string>
+    <string name="chains_solved">Решено с %1$d ошибками.</string>
+    <string name="chains_lost">Попытки закончились — вот вся сетка.</string>
+    <string name="chains_one_away">Почти получилось.</string>
+    <string name="chains_wrong">Это не группа.</string>
+    <string name="chains_already_tried">Вы уже пробовали этот вариант.</string>
+    <string name="chains_readonly">Вы уже сыграли в сегодняшнюю сетку.</string>
+
+    <!-- Learn -->
+    <string name="learn_done_title">Отличная работа</string>
+    <string name="learn_done_body_singular">Вы изучили %1$d новый факт.</string>
+    <string name="learn_done_body_plural">Вы изучили %1$d новых фактов.</string>
+    <string name="learn_empty_title">Сегодня новых фактов нет</string>
+    <string name="learn_empty_body">Вы достигли сегодняшнего лимита нового материала. Возвращайтесь завтра или повторите то, что уже знаете.</string>
+    <string name="learn_got_it_button">Понятно</string>
+
+    <!-- Review -->
+    <string name="review_remaining">Осталось: %1$d</string>
+    <string name="review_complete_title">Повторение завершено</string>
+    <string name="review_nothing_due_title">Нечего повторять</string>
+    <string name="review_complete_body_singular">Вы разобрали %1$d карточку. Она вернётся точно тогда, когда вы начнёте её забывать.</string>
+    <string name="review_complete_body_plural">Вы разобрали %1$d карточек. Они вернутся точно тогда, когда вы начнёте их забывать.</string>
+    <string name="review_nothing_due_body">Сейчас нечего повторять. Изучите что-нибудь новое.</string>
+    <string name="review_show_answer_button">Показать ответ</string>
+    <string name="rating_forgot">Забыл</string>
+    <string name="rating_hard">Сложно</string>
+    <string name="rating_good">Хорошо</string>
+    <string name="rating_easy">Легко</string>
+
+    <!-- Quiz -->
+    <string name="quiz_building_title">Собираем тест</string>
+    <string name="quiz_building_body">Подбираем вопросы из программы…</string>
+    <string name="quiz_verdict_outstanding">Великолепно</string>
+    <string name="quiz_verdict_solid">Хорошая работа</string>
+    <string name="quiz_verdict_getting_there">Уже неплохо</string>
+    <string name="quiz_verdict_another_look">Стоит повторить</string>
+    <string name="quiz_correct_label">верно</string>
+    <string name="quiz_clean_sweep">Идеальный результат.</string>
+    <string name="quiz_missed_added_to_review">%1$d пропущенных вопросов добавлены в очередь на повторение.</string>
+    <string name="quiz_finish_button">Завершить</string>
+
+    <!-- Video player -->
+    <string name="video_unavailable_title">Видео недоступно</string>
+    <string name="video_unavailable_body">Этого видео больше нет в каталоге.</string>
+    <string name="video_quiz_me_on_this">Проверить меня по этому видео</string>
+    <string name="video_quiz_me_on_category">Проверить меня по теме «%1$s»</string>
+    <string name="video_quiz_footnote">Всё, что вы пропустите, попадёт в очередь на повторение.</string>
+    <string name="video_handed_off_title">Воспроизведение в YouTube</string>
+    <string name="video_handed_off_refused">Это видео не воспроизводится в приложениях. Удалено из вашей подборки.</string>
+    <string name="video_handed_off_app_rejected">YouTube отказался воспроизвести его здесь. Оно останется в вашей подборке.</string>
+    <string name="video_handed_off_silent">Не удалось запустить его здесь. Оно останется в вашей подборке.</string>
+    <string name="video_related_facts_label">ЧЕМУ ЭТО УЧИТ</string>
+
+    <!-- Gambit (chess) -->
+    <string name="gambit_tempo_banked">Накоплено темпа: %1$d</string>
+    <string name="gambit_hint_prefix">Подсказка: %1$s</string>
+    <string name="gambit_engine_thinking">Движок думает…</string>
+    <string name="gambit_action_weaken">Ослабить</string>
+    <string name="gambit_action_hint">Подсказка</string>
+    <string name="gambit_action_takeback">Отменить ход</string>
+    <string name="gambit_action_with_cost">%1$s · %2$d</string>
+    <string name="gambit_answer_for_tempo">Ответьте ради темпа</string>
+    <string name="gambit_skip_button">Пропустить — без темпа</string>
+    <string name="gambit_outcome_won">Вы победили</string>
+    <string name="gambit_outcome_lost">Победил движок</string>
+    <string name="gambit_outcome_draw">Ничья</string>
+    <string name="gambit_moves_played">Сделано ходов: %1$d</string>
+    <string name="gambit_new_game_button">Новая игра</string>
+
+    <!-- Aryeh's Palace -->
+    <string name="palace_empty_title">Пока не о чем спрашивать</string>
+    <string name="palace_empty_body">Изучите немного фактов, и ворота дворца будут готовы задавать вопросы.</string>
+    <string name="palace_gate_title">Ворота преграждают путь</string>
+    <string name="palace_outcome_won">Вы прошли дворец</string>
+    <string name="palace_outcome_lost">Жизни закончились</string>
+    <string name="palace_try_again_button">Попробовать снова</string>
+    <string name="palace_control_up">Вверх</string>
+    <string name="palace_control_drop">Спрыгнуть</string>
+    <string name="palace_control_jump">Прыжок</string>
 </resources>

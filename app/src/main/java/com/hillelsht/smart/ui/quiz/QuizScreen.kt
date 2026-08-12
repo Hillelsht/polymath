@@ -35,6 +35,7 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import androidx.lifecycle.ViewModel
@@ -43,6 +44,7 @@ import androidx.lifecycle.viewModelScope
 import androidx.lifecycle.viewmodel.compose.viewModel
 import androidx.lifecycle.viewmodel.initializer
 import androidx.lifecycle.viewmodel.viewModelFactory
+import com.hillelsht.smart.R
 import com.hillelsht.smart.data.SmartRepository
 import com.hillelsht.smart.domain.QuizGenerator
 import com.hillelsht.smart.domain.model.Category
@@ -192,7 +194,7 @@ fun QuizScreen(
             androidx.compose.material3.IconButton(onClick = onDone) {
                 Icon(
                     Icons.Rounded.Close,
-                    contentDescription = "Close",
+                    contentDescription = stringResource(R.string.action_close),
                     tint = MaterialTheme.colorScheme.onSurfaceVariant,
                 )
             }
@@ -204,8 +206,11 @@ fun QuizScreen(
             )
             Spacer(Modifier.width(12.dp))
             Text(
-                text = "${(state.index + 1).coerceAtMost(state.questions.size.coerceAtLeast(1))}" +
-                    "/${state.questions.size}",
+                text = stringResource(
+                    R.string.stats_fraction,
+                    (state.index + 1).coerceAtMost(state.questions.size.coerceAtLeast(1)),
+                    state.questions.size,
+                ),
                 style = MaterialTheme.typography.labelMedium,
                 color = MaterialTheme.colorScheme.onSurfaceVariant,
             )
@@ -232,8 +237,8 @@ fun QuizScreen(
 
             else -> Box(Modifier.weight(1f), contentAlignment = Alignment.Center) {
                 EmptyState(
-                    title = "Building your quiz",
-                    body = "Pulling questions from the curriculum…",
+                    title = stringResource(R.string.quiz_building_title),
+                    body = stringResource(R.string.quiz_building_body),
                 )
             }
         }
@@ -300,7 +305,7 @@ private fun QuestionCard(
                     .height(54.dp),
                 shape = RoundedCornerShape(16.dp),
             ) {
-                Text("Next", style = MaterialTheme.typography.labelLarge)
+                Text(stringResource(R.string.action_next), style = MaterialTheme.typography.labelLarge)
             }
         }
     }
@@ -361,12 +366,14 @@ private fun OptionRow(text: String, state: OptionState, onClick: () -> Unit) {
 @Composable
 private fun ScoreCard(correct: Int, total: Int, modifier: Modifier = Modifier, onDone: () -> Unit) {
     val ratio = if (total == 0) 0f else correct.toFloat() / total
-    val verdict = when {
-        ratio >= 0.9f -> "Outstanding"
-        ratio >= 0.7f -> "Solid work"
-        ratio >= 0.5f -> "Getting there"
-        else -> "Worth another look"
-    }
+    val verdict = stringResource(
+        when {
+            ratio >= 0.9f -> R.string.quiz_verdict_outstanding
+            ratio >= 0.7f -> R.string.quiz_verdict_solid
+            ratio >= 0.5f -> R.string.quiz_verdict_getting_there
+            else -> R.string.quiz_verdict_another_look
+        },
+    )
 
     Column(
         modifier.fillMaxWidth(),
@@ -381,13 +388,13 @@ private fun ScoreCard(correct: Int, total: Int, modifier: Modifier = Modifier, o
             label = {
                 Column(horizontalAlignment = Alignment.CenterHorizontally) {
                     Text(
-                        text = "$correct/$total",
+                        text = stringResource(R.string.stats_fraction, correct, total),
                         style = MaterialTheme.typography.displayMedium,
                         color = MaterialTheme.colorScheme.onBackground,
                         fontWeight = FontWeight.Bold,
                     )
                     Text(
-                        text = "correct",
+                        text = stringResource(R.string.quiz_correct_label),
                         style = MaterialTheme.typography.labelMedium,
                         color = MaterialTheme.colorScheme.onSurfaceVariant,
                     )
@@ -403,9 +410,9 @@ private fun ScoreCard(correct: Int, total: Int, modifier: Modifier = Modifier, o
         Spacer(Modifier.height(8.dp))
         Text(
             text = if (correct == total) {
-                "A clean sweep."
+                stringResource(R.string.quiz_clean_sweep)
             } else {
-                "The ${total - correct} you missed have been added back to your review queue."
+                stringResource(R.string.quiz_missed_added_to_review, total - correct)
             },
             style = MaterialTheme.typography.bodyMedium,
             color = MaterialTheme.colorScheme.onSurfaceVariant,
@@ -418,7 +425,7 @@ private fun ScoreCard(correct: Int, total: Int, modifier: Modifier = Modifier, o
                 .height(54.dp),
             shape = RoundedCornerShape(16.dp),
         ) {
-            Text("Finish", style = MaterialTheme.typography.labelLarge)
+            Text(stringResource(R.string.quiz_finish_button), style = MaterialTheme.typography.labelLarge)
         }
     }
 }

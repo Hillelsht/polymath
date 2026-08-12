@@ -28,6 +28,7 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
@@ -37,6 +38,7 @@ import androidx.lifecycle.viewModelScope
 import androidx.lifecycle.viewmodel.compose.viewModel
 import androidx.lifecycle.viewmodel.initializer
 import androidx.lifecycle.viewmodel.viewModelFactory
+import com.hillelsht.smart.R
 import com.hillelsht.smart.data.SmartRepository
 import com.hillelsht.smart.domain.QuizGenerator
 import com.hillelsht.smart.domain.model.Fact
@@ -215,10 +217,10 @@ fun ClimbScreen(repository: SmartRepository, onBack: () -> Unit) {
         ) {
             // No question could be built at all — a corpus too thin to quiz on.
             EmptyState(
-                title = "Not enough to ask about yet",
-                body = "Learn a few more facts and the tower will have something to throw at you.",
+                title = stringResource(R.string.climb_empty_title),
+                body = stringResource(R.string.climb_empty_body),
                 modifier = Modifier.fillMaxSize(),
-                action = { OutlinedButton(onClick = onBack) { Text("Back") } },
+                action = { OutlinedButton(onClick = onBack) { Text(stringResource(R.string.action_back)) } },
             )
             return@Column
         }
@@ -239,26 +241,34 @@ private fun Header(state: ClimbUiState, onBack: () -> Unit) {
     Row(Modifier.fillMaxWidth(), horizontalArrangement = Arrangement.SpaceBetween) {
         Column {
             Text(
-                "Floor ${state.run.floor}",
+                stringResource(R.string.climb_floor, state.run.floor),
                 style = MaterialTheme.typography.headlineMedium,
                 fontWeight = FontWeight.Bold,
                 color = MaterialTheme.colorScheme.onBackground,
             )
             Text(
-                "${state.run.score} points" +
-                    if (state.run.combo > 1) "  ·  ${state.run.combo}x streak" else "",
+                if (state.run.combo > 1) {
+                    stringResource(R.string.climb_points_with_streak, state.run.score, state.run.combo)
+                } else {
+                    stringResource(R.string.climb_points, state.run.score)
+                },
                 style = MaterialTheme.typography.bodyMedium,
                 color = MaterialTheme.colorScheme.onSurfaceVariant,
             )
         }
-        OutlinedButton(onClick = onBack, shape = RoundedCornerShape(14.dp)) { Text("Leave") }
+        OutlinedButton(onClick = onBack, shape = RoundedCornerShape(14.dp)) {
+            Text(stringResource(R.string.play_leave_button))
+        }
     }
 
     Bar(
         fraction = state.run.hp.toFloat() / state.run.maxHp,
         colour = SmartPalette.Success,
-        label = "${state.run.hp} / ${state.run.maxHp}" +
-            if (state.run.shield > 0) "   ${state.run.shield} shielded" else "",
+        label = if (state.run.shield > 0) {
+            stringResource(R.string.climb_hp_with_shield, state.run.hp, state.run.maxHp, state.run.shield)
+        } else {
+            stringResource(R.string.climb_hp, state.run.hp, state.run.maxHp)
+        },
     )
 }
 
@@ -292,7 +302,7 @@ private fun Bar(fraction: Float, colour: Color, label: String) {
 @Composable
 private fun Doors(state: ClimbUiState, onChoose: (ClimbNode) -> Unit) {
     Text(
-        if (state.doors.size == 1) "Straight ahead" else "Choose your way up",
+        stringResource(if (state.doors.size == 1) R.string.climb_doors_single else R.string.climb_doors_multiple),
         style = MaterialTheme.typography.titleMedium,
         color = MaterialTheme.colorScheme.onBackground,
     )
@@ -388,14 +398,14 @@ private fun ColumnScope.Fight(
             onClick = onContinue,
             modifier = Modifier.fillMaxWidth().height(52.dp),
             shape = RoundedCornerShape(16.dp),
-        ) { Text("Continue") }
+        ) { Text(stringResource(R.string.action_continue)) }
     }
 }
 
 @Composable
 private fun Cache(state: ClimbUiState, onTake: (String) -> Unit) {
     Text(
-        "A cache. Take one.",
+        stringResource(R.string.climb_cache_title),
         style = MaterialTheme.typography.titleMedium,
         color = MaterialTheme.colorScheme.onBackground,
     )
@@ -429,26 +439,26 @@ private fun ColumnScope.Summary(state: ClimbUiState, onAgain: () -> Unit, onBack
         horizontalAlignment = Alignment.CenterHorizontally,
     ) {
         Text(
-            "Floor ${state.run.floor}",
+            stringResource(R.string.climb_floor, state.run.floor),
             style = MaterialTheme.typography.displaySmall,
             fontWeight = FontWeight.Bold,
             color = MaterialTheme.colorScheme.onBackground,
         )
         Text(
-            "${state.run.score} points",
+            stringResource(R.string.climb_points, state.run.score),
             style = MaterialTheme.typography.titleLarge,
             color = MaterialTheme.colorScheme.primary,
         )
         Spacer(Modifier.height(10.dp))
         Text(
-            "${state.run.answered} answered · ${state.run.missed} missed",
+            stringResource(R.string.climb_summary_stats, state.run.answered, state.run.missed),
             style = MaterialTheme.typography.bodyMedium,
             color = MaterialTheme.colorScheme.onSurfaceVariant,
         )
         if (state.run.missed > 0) {
             Spacer(Modifier.height(6.dp))
             Text(
-                "The ones you missed are in tomorrow's reviews.",
+                stringResource(R.string.climb_missed_note),
                 style = MaterialTheme.typography.bodyMedium,
                 color = MaterialTheme.colorScheme.onSurfaceVariant,
                 textAlign = TextAlign.Center,
@@ -456,7 +466,7 @@ private fun ColumnScope.Summary(state: ClimbUiState, onAgain: () -> Unit, onBack
         }
         Spacer(Modifier.height(6.dp))
         Text(
-            "${state.insight} insight banked",
+            stringResource(R.string.climb_insight_banked, state.insight),
             style = MaterialTheme.typography.labelLarge,
             color = SmartPalette.Warning,
         )
@@ -466,29 +476,33 @@ private fun ColumnScope.Summary(state: ClimbUiState, onAgain: () -> Unit, onBack
             onClick = onBack,
             modifier = Modifier.weight(1f).height(52.dp),
             shape = RoundedCornerShape(16.dp),
-        ) { Text("Done") }
+        ) { Text(stringResource(R.string.action_done)) }
         Button(
             onClick = onAgain,
             modifier = Modifier.weight(1f).height(52.dp),
             shape = RoundedCornerShape(16.dp),
-        ) { Text("Climb again") }
+        ) { Text(stringResource(R.string.play_climb_cta_again)) }
     }
 }
 
-private fun NodeKind.title(): String = when (this) {
-    NodeKind.DUEL -> "A challenger"
-    NodeKind.ELITE -> "Something bigger"
-    NodeKind.CACHE -> "A cache"
-    NodeKind.REST -> "A quiet room"
-    NodeKind.BOSS -> "The gatekeeper"
-}
+@Composable
+private fun NodeKind.title(): String = stringResource(
+    when (this) {
+        NodeKind.DUEL -> R.string.node_duel_title
+        NodeKind.ELITE -> R.string.node_elite_title
+        NodeKind.CACHE -> R.string.node_cache_title
+        NodeKind.REST -> R.string.node_rest_title
+        NodeKind.BOSS -> R.string.node_boss_title
+    },
+)
 
+@Composable
 private fun NodeKind.blurb(floor: Int): String = when (this) {
-    NodeKind.DUEL -> "An ordinary fight. ${ClimbMap.questionsToClear(floor, this)} or so questions."
-    NodeKind.ELITE -> "Harder, and worth more insight."
-    NodeKind.CACHE -> "Choose one relic of three."
-    NodeKind.REST -> "Mend ${ClimbRules.REST_HEAL_PERCENT}% of your health and move on."
-    NodeKind.BOSS -> "No way past but through."
+    NodeKind.DUEL -> stringResource(R.string.node_duel_blurb, ClimbMap.questionsToClear(floor, this))
+    NodeKind.ELITE -> stringResource(R.string.node_elite_blurb)
+    NodeKind.CACHE -> stringResource(R.string.node_cache_blurb)
+    NodeKind.REST -> stringResource(R.string.node_rest_blurb, ClimbRules.REST_HEAL_PERCENT)
+    NodeKind.BOSS -> stringResource(R.string.node_boss_blurb)
 }
 
 @Composable

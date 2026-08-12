@@ -139,4 +139,121 @@
     <string name="stats_longest_streak">Longest streak: %1$d days · %2$d of %3$d facts encountered</string>
     <string name="stats_mastery_by_subject">Mastery by subject</string>
     <string name="stats_fraction">%1$d/%2$d</string>
+
+    <!-- Shared generic actions -->
+    <string name="action_close">Close</string>
+    <string name="action_done">Done</string>
+    <string name="action_continue">Continue</string>
+    <string name="action_next">Next</string>
+    <string name="action_clear">Clear</string>
+    <string name="action_submit">Submit</string>
+    <string name="play_leave_button">Leave</string>
+    <string name="memory_hook_label">MEMORY HOOK</string>
+
+    <!-- The Climb -->
+    <string name="climb_empty_title">Not enough to ask about yet</string>
+    <string name="climb_empty_body">Learn a few more facts and the tower will have something to throw at you.</string>
+    <string name="climb_floor">Floor %1$d</string>
+    <string name="climb_points">%1$d points</string>
+    <string name="climb_points_with_streak">%1$d points  ·  %2$dx streak</string>
+    <string name="climb_hp">%1$d / %2$d</string>
+    <string name="climb_hp_with_shield">%1$d / %2$d   %3$d shielded</string>
+    <string name="climb_doors_single">Straight ahead</string>
+    <string name="climb_doors_multiple">Choose your way up</string>
+    <string name="node_duel_title">A challenger</string>
+    <string name="node_elite_title">Something bigger</string>
+    <string name="node_cache_title">A cache</string>
+    <string name="node_rest_title">A quiet room</string>
+    <string name="node_boss_title">The gatekeeper</string>
+    <string name="node_duel_blurb">An ordinary fight. %1$d or so questions.</string>
+    <string name="node_elite_blurb">Harder, and worth more insight.</string>
+    <string name="node_cache_blurb">Choose one relic of three.</string>
+    <string name="node_rest_blurb">Mend %1$d%% of your health and move on.</string>
+    <string name="node_boss_blurb">No way past but through.</string>
+    <string name="climb_cache_title">A cache. Take one.</string>
+    <string name="climb_summary_stats">%1$d answered · %2$d missed</string>
+    <string name="climb_missed_note">The ones you missed are in tomorrow\'s reviews.</string>
+    <string name="climb_insight_banked">%1$d insight banked</string>
+
+    <!-- Chains -->
+    <string name="chains_unavailable_body">Today\'s puzzle has not been published, or it could not be fetched. Try again once you are back online.</string>
+    <string name="chains_tagline">Find four groups of four</string>
+    <string name="chains_solved">Solved in %1$d mistakes.</string>
+    <string name="chains_lost">Out of guesses — here is the whole grid.</string>
+    <string name="chains_one_away">One away.</string>
+    <string name="chains_wrong">Not a group.</string>
+    <string name="chains_already_tried">You have tried that one.</string>
+    <string name="chains_readonly">You have played today\'s grid.</string>
+
+    <!-- Learn -->
+    <string name="learn_done_title">Nice work</string>
+    <string name="learn_done_body_singular">You learned %1$d new fact.</string>
+    <string name="learn_done_body_plural">You learned %1$d new facts.</string>
+    <string name="learn_empty_title">Nothing new today</string>
+    <string name="learn_empty_body">You have hit today\'s limit for new material. Come back tomorrow, or review what you already know.</string>
+    <string name="learn_got_it_button">Got it</string>
+
+    <!-- Review -->
+    <string name="review_remaining">%1$d left</string>
+    <string name="review_complete_title">Review complete</string>
+    <string name="review_nothing_due_title">Nothing due</string>
+    <string name="review_complete_body_singular">You cleared %1$d card. They will come back exactly when you are about to forget them.</string>
+    <string name="review_complete_body_plural">You cleared %1$d cards. They will come back exactly when you are about to forget them.</string>
+    <string name="review_nothing_due_body">Nothing is scheduled for review right now. Learn something new instead.</string>
+    <string name="review_show_answer_button">Show answer</string>
+    <string name="rating_forgot">Forgot</string>
+    <string name="rating_hard">Hard</string>
+    <string name="rating_good">Good</string>
+    <string name="rating_easy">Easy</string>
+
+    <!-- Quiz -->
+    <string name="quiz_building_title">Building your quiz</string>
+    <string name="quiz_building_body">Pulling questions from the curriculum…</string>
+    <string name="quiz_verdict_outstanding">Outstanding</string>
+    <string name="quiz_verdict_solid">Solid work</string>
+    <string name="quiz_verdict_getting_there">Getting there</string>
+    <string name="quiz_verdict_another_look">Worth another look</string>
+    <string name="quiz_correct_label">correct</string>
+    <string name="quiz_clean_sweep">A clean sweep.</string>
+    <string name="quiz_missed_added_to_review">The %1$d you missed have been added back to your review queue.</string>
+    <string name="quiz_finish_button">Finish</string>
+
+    <!-- Video player -->
+    <string name="video_unavailable_title">Video unavailable</string>
+    <string name="video_unavailable_body">This video is no longer in the catalog.</string>
+    <string name="video_quiz_me_on_this">Quiz me on this</string>
+    <string name="video_quiz_me_on_category">Quiz me on %1$s</string>
+    <string name="video_quiz_footnote">Anything you miss joins your review queue.</string>
+    <string name="video_handed_off_title">Playing on YouTube</string>
+    <string name="video_handed_off_refused">This one will not play inside apps. Removed from your shelf.</string>
+    <string name="video_handed_off_app_rejected">YouTube would not play it here. It stays on your shelf.</string>
+    <string name="video_handed_off_silent">It would not start here. It stays on your shelf.</string>
+    <string name="video_related_facts_label">WHAT THIS TEACHES</string>
+
+    <!-- Gambit (chess) -->
+    <string name="gambit_tempo_banked">%1$d tempo banked</string>
+    <string name="gambit_hint_prefix">Hint: %1$s</string>
+    <string name="gambit_engine_thinking">The engine is thinking…</string>
+    <string name="gambit_action_weaken">Weaken</string>
+    <string name="gambit_action_hint">Hint</string>
+    <string name="gambit_action_takeback">Takeback</string>
+    <string name="gambit_action_with_cost">%1$s · %2$d</string>
+    <string name="gambit_answer_for_tempo">Answer for tempo</string>
+    <string name="gambit_skip_button">Skip — no tempo</string>
+    <string name="gambit_outcome_won">You won</string>
+    <string name="gambit_outcome_lost">The engine won</string>
+    <string name="gambit_outcome_draw">Draw</string>
+    <string name="gambit_moves_played">%1$d moves played</string>
+    <string name="gambit_new_game_button">New game</string>
+
+    <!-- Aryeh's Palace -->
+    <string name="palace_empty_title">Nothing to ask about yet</string>
+    <string name="palace_empty_body">Learn a few facts and the palace\'s gates will have questions to ask.</string>
+    <string name="palace_gate_title">A gate blocks the way</string>
+    <string name="palace_outcome_won">You made it through</string>
+    <string name="palace_outcome_lost">Out of lives</string>
+    <string name="palace_try_again_button">Try again</string>
+    <string name="palace_control_up">Up</string>
+    <string name="palace_control_drop">Drop</string>
+    <string name="palace_control_jump">Jump</string>
 </resources>

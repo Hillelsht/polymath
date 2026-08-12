@@ -26,6 +26,7 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
@@ -36,6 +37,7 @@ import androidx.lifecycle.viewModelScope
 import androidx.lifecycle.viewmodel.compose.viewModel
 import androidx.lifecycle.viewmodel.initializer
 import androidx.lifecycle.viewmodel.viewModelFactory
+import com.hillelsht.smart.R
 import com.hillelsht.smart.data.SmartRepository
 import com.hillelsht.smart.domain.QuizGenerator
 import com.hillelsht.smart.domain.model.Fact
@@ -348,18 +350,20 @@ private fun Header(state: GambitUiState, onBack: () -> Unit) {
     Row(Modifier.fillMaxWidth(), horizontalArrangement = Arrangement.SpaceBetween, verticalAlignment = Alignment.CenterVertically) {
         Column {
             Text(
-                "Gambit",
+                stringResource(R.string.game_gambit_title),
                 style = MaterialTheme.typography.headlineMedium,
                 fontWeight = FontWeight.Bold,
                 color = MaterialTheme.colorScheme.onBackground,
             )
             Text(
-                "${state.match.tempo} tempo banked",
+                stringResource(R.string.gambit_tempo_banked, state.match.tempo),
                 style = MaterialTheme.typography.bodyMedium,
                 color = SmartPalette.Warning,
             )
         }
-        OutlinedButton(onClick = onBack, shape = RoundedCornerShape(14.dp)) { Text("Leave") }
+        OutlinedButton(onClick = onBack, shape = RoundedCornerShape(14.dp)) {
+            Text(stringResource(R.string.play_leave_button))
+        }
     }
 }
 
@@ -473,7 +477,7 @@ private fun PromotionPicker(white: Boolean, onPick: (Int) -> Unit, onDismiss: ()
 private fun TempoBar(state: GambitUiState, onSpend: (TempoAction) -> Unit) {
     state.hint?.let {
         Text(
-            "Hint: $it",
+            stringResource(R.string.gambit_hint_prefix, it),
             style = MaterialTheme.typography.bodyMedium,
             color = SmartPalette.Mint,
             modifier = Modifier.fillMaxWidth(),
@@ -482,7 +486,7 @@ private fun TempoBar(state: GambitUiState, onSpend: (TempoAction) -> Unit) {
     }
     if (state.engineThinking) {
         Text(
-            "The engine is thinking…",
+            stringResource(R.string.gambit_engine_thinking),
             style = MaterialTheme.typography.bodyMedium,
             color = MaterialTheme.colorScheme.onSurfaceVariant,
             modifier = Modifier.fillMaxWidth(),
@@ -491,22 +495,31 @@ private fun TempoBar(state: GambitUiState, onSpend: (TempoAction) -> Unit) {
         return
     }
     Row(Modifier.fillMaxWidth(), horizontalArrangement = Arrangement.spacedBy(8.dp)) {
-        TempoButton("Weaken", Gambit.COST_WEAKEN, Gambit.canAfford(state.match, TempoAction.WEAKEN), Modifier.weight(1f)) {
-            onSpend(TempoAction.WEAKEN)
-        }
-        TempoButton("Hint", Gambit.COST_HINT, Gambit.canAfford(state.match, TempoAction.HINT), Modifier.weight(1f)) {
-            onSpend(TempoAction.HINT)
-        }
-        TempoButton("Takeback", Gambit.COST_TAKEBACK, Gambit.canAfford(state.match, TempoAction.TAKEBACK), Modifier.weight(1f)) {
-            onSpend(TempoAction.TAKEBACK)
-        }
+        TempoButton(
+            stringResource(R.string.gambit_action_weaken),
+            Gambit.COST_WEAKEN,
+            Gambit.canAfford(state.match, TempoAction.WEAKEN),
+            Modifier.weight(1f),
+        ) { onSpend(TempoAction.WEAKEN) }
+        TempoButton(
+            stringResource(R.string.gambit_action_hint),
+            Gambit.COST_HINT,
+            Gambit.canAfford(state.match, TempoAction.HINT),
+            Modifier.weight(1f),
+        ) { onSpend(TempoAction.HINT) }
+        TempoButton(
+            stringResource(R.string.gambit_action_takeback),
+            Gambit.COST_TAKEBACK,
+            Gambit.canAfford(state.match, TempoAction.TAKEBACK),
+            Modifier.weight(1f),
+        ) { onSpend(TempoAction.TAKEBACK) }
     }
 }
 
 @Composable
 private fun TempoButton(label: String, cost: Int, enabled: Boolean, modifier: Modifier = Modifier, onClick: () -> Unit) {
     OutlinedButton(onClick = onClick, enabled = enabled, modifier = modifier, shape = RoundedCornerShape(14.dp)) {
-        Text("$label · $cost", style = MaterialTheme.typography.labelMedium)
+        Text(stringResource(R.string.gambit_action_with_cost, label, cost), style = MaterialTheme.typography.labelMedium)
     }
 }
 
@@ -520,7 +533,7 @@ private fun ColumnScope.Question(
     val question = state.question ?: return
     Column(Modifier.weight(1f), verticalArrangement = Arrangement.spacedBy(10.dp)) {
         Text(
-            "Answer for tempo",
+            stringResource(R.string.gambit_answer_for_tempo),
             style = MaterialTheme.typography.labelLarge,
             color = SmartPalette.Warning,
         )
@@ -556,11 +569,11 @@ private fun ColumnScope.Question(
 
     if (state.answered != null) {
         Button(onClick = onContinue, modifier = Modifier.fillMaxWidth().height(52.dp), shape = RoundedCornerShape(16.dp)) {
-            Text("Continue")
+            Text(stringResource(R.string.action_continue))
         }
     } else {
         OutlinedButton(onClick = onSkip, modifier = Modifier.fillMaxWidth().height(48.dp), shape = RoundedCornerShape(16.dp)) {
-            Text("Skip — no tempo")
+            Text(stringResource(R.string.gambit_skip_button))
         }
     }
 }
@@ -568,26 +581,26 @@ private fun ColumnScope.Question(
 @Composable
 private fun ColumnScope.Summary(state: GambitUiState, onNewGame: () -> Unit, onBack: () -> Unit) {
     val (title, colour) = when (state.match.outcome) {
-        GambitOutcome.PLAYER_WON -> "You won" to SmartPalette.Success
-        GambitOutcome.ENGINE_WON -> "The engine won" to SmartPalette.Danger
-        GambitOutcome.DRAW -> "Draw" to MaterialTheme.colorScheme.onSurfaceVariant
+        GambitOutcome.PLAYER_WON -> stringResource(R.string.gambit_outcome_won) to SmartPalette.Success
+        GambitOutcome.ENGINE_WON -> stringResource(R.string.gambit_outcome_lost) to SmartPalette.Danger
+        GambitOutcome.DRAW -> stringResource(R.string.gambit_outcome_draw) to MaterialTheme.colorScheme.onSurfaceVariant
         GambitOutcome.IN_PROGRESS -> "" to MaterialTheme.colorScheme.onSurfaceVariant
     }
     Column(Modifier.weight(1f), verticalArrangement = Arrangement.Center, horizontalAlignment = Alignment.CenterHorizontally) {
         Text(title, style = MaterialTheme.typography.headlineMedium, fontWeight = FontWeight.Bold, color = colour)
         Spacer(Modifier.height(6.dp))
         Text(
-            "${state.match.moveHistory.size} moves played",
+            stringResource(R.string.gambit_moves_played, state.match.moveHistory.size),
             style = MaterialTheme.typography.bodyMedium,
             color = MaterialTheme.colorScheme.onSurfaceVariant,
         )
     }
     Row(Modifier.fillMaxWidth(), horizontalArrangement = Arrangement.spacedBy(10.dp)) {
         OutlinedButton(onClick = onBack, modifier = Modifier.weight(1f).height(52.dp), shape = RoundedCornerShape(16.dp)) {
-            Text("Done")
+            Text(stringResource(R.string.action_done))
         }
         Button(onClick = onNewGame, modifier = Modifier.weight(1f).height(52.dp), shape = RoundedCornerShape(16.dp)) {
-            Text("New game")
+            Text(stringResource(R.string.gambit_new_game_button))
         }
     }
 }

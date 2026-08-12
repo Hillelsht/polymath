@@ -35,6 +35,7 @@ import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.lerp
 import androidx.compose.ui.input.pointer.pointerInput
 import androidx.compose.ui.platform.LocalDensity
+import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import androidx.lifecycle.ViewModel
@@ -43,6 +44,7 @@ import androidx.lifecycle.viewModelScope
 import androidx.lifecycle.viewmodel.compose.viewModel
 import androidx.lifecycle.viewmodel.initializer
 import androidx.lifecycle.viewmodel.viewModelFactory
+import com.hillelsht.smart.R
 import com.hillelsht.smart.data.SmartRepository
 import com.hillelsht.smart.domain.QuizGenerator
 import com.hillelsht.smart.domain.model.Category
@@ -253,10 +255,10 @@ fun PalaceScreen(repository: SmartRepository, onBack: () -> Unit) {
         }
         if (state.poolEmpty) {
             EmptyState(
-                title = "Nothing to ask about yet",
-                body = "Learn a few facts and the palace's gates will have questions to ask.",
+                title = stringResource(R.string.palace_empty_title),
+                body = stringResource(R.string.palace_empty_body),
                 modifier = Modifier.fillMaxSize(),
-                action = { OutlinedButton(onClick = onBack) { Text("Back") } },
+                action = { OutlinedButton(onClick = onBack) { Text(stringResource(R.string.action_back)) } },
             )
             return@Column
         }
@@ -294,7 +296,7 @@ private fun Header(state: PalaceUiState, onBack: () -> Unit) {
         verticalAlignment = Alignment.CenterVertically,
     ) {
         Text(
-            "Aryeh's Palace",
+            stringResource(R.string.game_palace_title),
             style = MaterialTheme.typography.titleLarge,
             fontWeight = FontWeight.Bold,
             color = MaterialTheme.colorScheme.onBackground,
@@ -305,7 +307,9 @@ private fun Header(state: PalaceUiState, onBack: () -> Unit) {
                     Text("♥", color = SmartPalette.Danger, style = MaterialTheme.typography.titleMedium)
                 }
             }
-            OutlinedButton(onClick = onBack, shape = RoundedCornerShape(14.dp)) { Text("Leave") }
+            OutlinedButton(onClick = onBack, shape = RoundedCornerShape(14.dp)) {
+                Text(stringResource(R.string.play_leave_button))
+            }
         }
     }
 }
@@ -405,7 +409,7 @@ private fun BoxScope.GateOverlay(
         verticalArrangement = Arrangement.spacedBy(12.dp),
     ) {
         Text(
-            "A gate blocks the way",
+            stringResource(R.string.palace_gate_title),
             style = MaterialTheme.typography.labelLarge,
             color = SmartPalette.Warning,
         )
@@ -457,14 +461,18 @@ private fun BoxScope.Summary(run: PalaceRun, onAgain: () -> Unit, onBack: () -> 
     ) {
         val won = run.phase == PalacePhase.WON
         Text(
-            if (won) "You made it through" else "Out of lives",
+            stringResource(if (won) R.string.palace_outcome_won else R.string.palace_outcome_lost),
             style = MaterialTheme.typography.headlineSmall,
             fontWeight = FontWeight.Bold,
             color = if (won) SmartPalette.Success else SmartPalette.Danger,
         )
         Row(horizontalArrangement = Arrangement.spacedBy(10.dp)) {
-            OutlinedButton(onClick = onBack, shape = RoundedCornerShape(16.dp)) { Text("Done") }
-            Button(onClick = onAgain, shape = RoundedCornerShape(16.dp)) { Text("Try again") }
+            OutlinedButton(onClick = onBack, shape = RoundedCornerShape(16.dp)) {
+                Text(stringResource(R.string.action_done))
+            }
+            Button(onClick = onAgain, shape = RoundedCornerShape(16.dp)) {
+                Text(stringResource(R.string.palace_try_again_button))
+            }
         }
     }
 }
@@ -482,11 +490,11 @@ private fun Controls(run: PalaceRun, viewModel: PalaceViewModel) {
         }
         if (run.phase == PalacePhase.HANGING) {
             Row(horizontalArrangement = Arrangement.spacedBy(10.dp)) {
-                TapButton("Up", onTap = viewModel::climb)
-                TapButton("Drop", onTap = viewModel::drop)
+                TapButton(stringResource(R.string.palace_control_up), onTap = viewModel::climb)
+                TapButton(stringResource(R.string.palace_control_drop), onTap = viewModel::drop)
             }
         } else {
-            TapButton("Jump", onTap = viewModel::jump)
+            TapButton(stringResource(R.string.palace_control_jump), onTap = viewModel::jump)
         }
     }
 }

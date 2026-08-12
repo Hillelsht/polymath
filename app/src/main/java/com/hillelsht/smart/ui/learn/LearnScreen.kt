@@ -31,6 +31,7 @@ import androidx.compose.runtime.getValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
+import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
@@ -38,6 +39,7 @@ import androidx.lifecycle.viewModelScope
 import androidx.lifecycle.viewmodel.compose.viewModel
 import androidx.lifecycle.viewmodel.initializer
 import androidx.lifecycle.viewmodel.viewModelFactory
+import com.hillelsht.smart.R
 import com.hillelsht.smart.data.SmartRepository
 import com.hillelsht.smart.domain.model.Fact
 import com.hillelsht.smart.ui.components.CategoryChip
@@ -116,7 +118,7 @@ fun LearnScreen(repository: SmartRepository, onDone: () -> Unit) {
             IconButton(onClick = onDone) {
                 Icon(
                     Icons.Rounded.Close,
-                    contentDescription = "Close",
+                    contentDescription = stringResource(R.string.action_close),
                     tint = MaterialTheme.colorScheme.onSurfaceVariant,
                 )
             }
@@ -128,7 +130,11 @@ fun LearnScreen(repository: SmartRepository, onDone: () -> Unit) {
             )
             Spacer(Modifier.width(12.dp))
             Text(
-                text = "${state.index.coerceAtMost(state.queue.size)}/${state.queue.size}",
+                text = stringResource(
+                    R.string.stats_fraction,
+                    state.index.coerceAtMost(state.queue.size),
+                    state.queue.size,
+                ),
                 style = MaterialTheme.typography.labelMedium,
                 color = MaterialTheme.colorScheme.onSurfaceVariant,
             )
@@ -146,12 +152,18 @@ fun LearnScreen(repository: SmartRepository, onDone: () -> Unit) {
 
             state.finished -> Box(Modifier.weight(1f), contentAlignment = Alignment.Center) {
                 EmptyState(
-                    title = "Nice work",
-                    body = "You learned ${state.queue.size} new " +
-                        if (state.queue.size == 1) "fact." else "facts.",
+                    title = stringResource(R.string.learn_done_title),
+                    body = stringResource(
+                        if (state.queue.size == 1) {
+                            R.string.learn_done_body_singular
+                        } else {
+                            R.string.learn_done_body_plural
+                        },
+                        state.queue.size,
+                    ),
                     action = {
                         Button(onClick = onDone, shape = RoundedCornerShape(14.dp)) {
-                            Text("Done")
+                            Text(stringResource(R.string.action_done))
                         }
                     },
                 )
@@ -159,12 +171,11 @@ fun LearnScreen(repository: SmartRepository, onDone: () -> Unit) {
 
             else -> Box(Modifier.weight(1f), contentAlignment = Alignment.Center) {
                 EmptyState(
-                    title = "Nothing new today",
-                    body = "You have hit today's limit for new material. " +
-                        "Come back tomorrow, or review what you already know.",
+                    title = stringResource(R.string.learn_empty_title),
+                    body = stringResource(R.string.learn_empty_body),
                     action = {
                         Button(onClick = onDone, shape = RoundedCornerShape(14.dp)) {
-                            Text("Back")
+                            Text(stringResource(R.string.action_back))
                         }
                     },
                 )
@@ -215,7 +226,7 @@ private fun FactCard(fact: Fact, modifier: Modifier = Modifier, onNext: () -> Un
                     Spacer(Modifier.width(12.dp))
                     Column {
                         Text(
-                            text = "MEMORY HOOK",
+                            text = stringResource(R.string.memory_hook_label),
                             style = MaterialTheme.typography.labelSmall,
                             color = fact.category.accent(),
                         )
@@ -250,7 +261,7 @@ private fun FactCard(fact: Fact, modifier: Modifier = Modifier, onNext: () -> Un
             ),
             contentPadding = PaddingValues(horizontal = 24.dp),
         ) {
-            Text("Got it", style = MaterialTheme.typography.labelLarge)
+            Text(stringResource(R.string.learn_got_it_button), style = MaterialTheme.typography.labelLarge)
         }
     }
 }

@@ -35,6 +35,7 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
 import androidx.lifecycle.ViewModel
@@ -43,6 +44,7 @@ import androidx.lifecycle.viewModelScope
 import androidx.lifecycle.viewmodel.compose.viewModel
 import androidx.lifecycle.viewmodel.initializer
 import androidx.lifecycle.viewmodel.viewModelFactory
+import com.hillelsht.smart.R
 import com.hillelsht.smart.data.SmartRepository
 import com.hillelsht.smart.domain.model.Fact
 import com.hillelsht.smart.domain.model.Rating
@@ -143,7 +145,7 @@ fun ReviewScreen(repository: SmartRepository, onDone: () -> Unit) {
             IconButton(onClick = onDone) {
                 Icon(
                     Icons.Rounded.Close,
-                    contentDescription = "Close",
+                    contentDescription = stringResource(R.string.action_close),
                     tint = MaterialTheme.colorScheme.onSurfaceVariant,
                 )
             }
@@ -155,7 +157,7 @@ fun ReviewScreen(repository: SmartRepository, onDone: () -> Unit) {
             )
             Spacer(Modifier.width(12.dp))
             Text(
-                text = "${state.remaining} left",
+                text = stringResource(R.string.review_remaining, state.remaining),
                 style = MaterialTheme.typography.labelMedium,
                 color = MaterialTheme.colorScheme.onSurfaceVariant,
             )
@@ -167,16 +169,29 @@ fun ReviewScreen(repository: SmartRepository, onDone: () -> Unit) {
         if (fact == null) {
             Box(Modifier.weight(1f), contentAlignment = Alignment.Center) {
                 EmptyState(
-                    title = if (state.completed > 0) "Review complete" else "Nothing due",
+                    title = stringResource(
+                        if (state.completed > 0) {
+                            R.string.review_complete_title
+                        } else {
+                            R.string.review_nothing_due_title
+                        },
+                    ),
                     body = if (state.completed > 0) {
-                        "You cleared ${state.completed} " +
-                            (if (state.completed == 1) "card" else "cards") +
-                            ". They will come back exactly when you are about to forget them."
+                        stringResource(
+                            if (state.completed == 1) {
+                                R.string.review_complete_body_singular
+                            } else {
+                                R.string.review_complete_body_plural
+                            },
+                            state.completed,
+                        )
                     } else {
-                        "Nothing is scheduled for review right now. Learn something new instead."
+                        stringResource(R.string.review_nothing_due_body)
                     },
                     action = {
-                        Button(onClick = onDone, shape = RoundedCornerShape(14.dp)) { Text("Done") }
+                        Button(onClick = onDone, shape = RoundedCornerShape(14.dp)) {
+                            Text(stringResource(R.string.action_done))
+                        }
                     },
                 )
             }
@@ -277,7 +292,7 @@ private fun Flashcard(
                     .height(54.dp),
                 shape = RoundedCornerShape(16.dp),
             ) {
-                Text("Show answer", style = MaterialTheme.typography.labelLarge)
+                Text(stringResource(R.string.review_show_answer_button), style = MaterialTheme.typography.labelLarge)
             }
         }
     }
@@ -292,10 +307,10 @@ private fun Flashcard(
 @Composable
 private fun RatingBar(onGrade: (Rating) -> Unit) {
     val options = listOf(
-        Triple(Rating.AGAIN, "Forgot", SmartPalette.Danger),
-        Triple(Rating.HARD, "Hard", SmartPalette.Warning),
-        Triple(Rating.GOOD, "Good", SmartPalette.Mint),
-        Triple(Rating.EASY, "Easy", SmartPalette.Success),
+        Triple(Rating.AGAIN, stringResource(R.string.rating_forgot), SmartPalette.Danger),
+        Triple(Rating.HARD, stringResource(R.string.rating_hard), SmartPalette.Warning),
+        Triple(Rating.GOOD, stringResource(R.string.rating_good), SmartPalette.Mint),
+        Triple(Rating.EASY, stringResource(R.string.rating_easy), SmartPalette.Success),
     )
 
     Row(horizontalArrangement = Arrangement.spacedBy(8.dp)) {

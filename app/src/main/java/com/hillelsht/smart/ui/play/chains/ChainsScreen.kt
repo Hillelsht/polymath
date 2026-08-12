@@ -27,6 +27,7 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
@@ -36,6 +37,7 @@ import androidx.lifecycle.viewModelScope
 import androidx.lifecycle.viewmodel.compose.viewModel
 import androidx.lifecycle.viewmodel.initializer
 import androidx.lifecycle.viewmodel.viewModelFactory
+import com.hillelsht.smart.R
 import com.hillelsht.smart.data.SmartRepository
 import com.hillelsht.smart.domain.play.GameId
 import com.hillelsht.smart.domain.play.chains.ChainsGroup
@@ -145,11 +147,10 @@ fun ChainsScreen(repository: SmartRepository, onBack: () -> Unit) {
             ChainsUi.Loading -> Box(Modifier.fillMaxSize())
 
             ChainsUi.Unavailable -> EmptyState(
-                title = "No grid today",
-                body = "Today's puzzle has not been published, or it could not be fetched. " +
-                    "Try again once you are back online.",
+                title = stringResource(R.string.play_chains_none),
+                body = stringResource(R.string.chains_unavailable_body),
                 modifier = Modifier.fillMaxSize(),
-                action = { OutlinedButton(onClick = onBack) { Text("Back") } },
+                action = { OutlinedButton(onClick = onBack) { Text(stringResource(R.string.action_back)) } },
             )
 
             is ChainsUi.Playing -> Grid(
@@ -176,12 +177,12 @@ private fun Grid(
     Row(Modifier.fillMaxWidth(), horizontalArrangement = Arrangement.SpaceBetween) {
         Column {
             Text(
-                "Chains",
+                stringResource(R.string.game_chains_title),
                 style = MaterialTheme.typography.headlineMedium,
                 color = MaterialTheme.colorScheme.onBackground,
             )
             Text(
-                "Find four groups of four",
+                stringResource(R.string.chains_tagline),
                 style = MaterialTheme.typography.bodyMedium,
                 color = MaterialTheme.colorScheme.onSurfaceVariant,
             )
@@ -230,12 +231,12 @@ private fun Grid(
     Spacer(Modifier.height(2.dp))
 
     val message = when {
-        state.won -> "Solved in ${state.mistakes} mistakes."
-        state.lost -> "Out of guesses — here is the whole grid."
-        state.verdict == Verdict.ONE_AWAY -> "One away."
-        state.verdict == Verdict.WRONG -> "Not a group."
-        state.verdict == Verdict.ALREADY_TRIED -> "You have tried that one."
-        readOnly -> "You have played today's grid."
+        state.won -> stringResource(R.string.chains_solved, state.mistakes)
+        state.lost -> stringResource(R.string.chains_lost)
+        state.verdict == Verdict.ONE_AWAY -> stringResource(R.string.chains_one_away)
+        state.verdict == Verdict.WRONG -> stringResource(R.string.chains_wrong)
+        state.verdict == Verdict.ALREADY_TRIED -> stringResource(R.string.chains_already_tried)
+        readOnly -> stringResource(R.string.chains_readonly)
         else -> " "
     }
     Text(
@@ -255,7 +256,7 @@ private fun Grid(
             onClick = onBack,
             modifier = Modifier.fillMaxWidth().height(52.dp),
             shape = RoundedCornerShape(16.dp),
-        ) { Text("Done") }
+        ) { Text(stringResource(R.string.action_done)) }
     } else {
         Row(Modifier.fillMaxWidth(), horizontalArrangement = Arrangement.spacedBy(10.dp)) {
             OutlinedButton(
@@ -263,13 +264,13 @@ private fun Grid(
                 enabled = state.selected.isNotEmpty(),
                 modifier = Modifier.weight(1f).height(52.dp),
                 shape = RoundedCornerShape(16.dp),
-            ) { Text("Clear") }
+            ) { Text(stringResource(R.string.action_clear)) }
             Button(
                 onClick = onSubmit,
                 enabled = state.selected.size == ChainsPuzzle.GROUP_SIZE,
                 modifier = Modifier.weight(1f).height(52.dp),
                 shape = RoundedCornerShape(16.dp),
-            ) { Text("Submit") }
+            ) { Text(stringResource(R.string.action_submit)) }
         }
     }
 }
