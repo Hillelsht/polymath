@@ -154,6 +154,7 @@
   },
   {
    "handle": "Varlamov.Travel",
+   "id": "UClusShJbD5SIMuoF9Ql5hOw",
    "category": "geography",
    "language": "ru",
    "displayName": "Varlamov Travel"
@@ -174,6 +175,7 @@
   },
   {
    "handle": "RedRoomLIMB",
+   "id": "UCsK1oV0PGkcZ1UhFtajx0dg",
    "category": "history",
    "language": "ru",
    "displayName": "Redroom"
@@ -194,6 +196,7 @@
   },
   {
    "handle": "postnauka",
+   "id": "UCSPd93is2UQsd_jZ6yHBfqQ",
    "category": "science",
    "language": "ru",
    "displayName": "ПостНаука"
@@ -204,13 +207,6 @@
    "language": "ru",
    "id": "UCzWnF-3UWAGNeK5fIkBmahg",
    "displayName": "Простая наука"
-  },
-  {
-   "handle": "GetAClass",
-   "category": "science",
-   "language": "ru",
-   "id": "UCFnf8z994tsocrAexJU1t4A",
-   "displayName": "GetAClass — Просто наука"
   },
   {
    "handle": "nauka_tv",
@@ -228,13 +224,14 @@
   },
   {
    "handle": "pushkinmuseum",
+   "id": "UCy3tWK2zjcYzDb39mClSZfw",
    "category": "arts",
    "language": "ru",
-   "id": "UCw-SvnADFRiC87aKAuzZcXQ",
    "displayName": "ГМИИ им. А.С. Пушкина"
   },
   {
    "handle": "kinopoisk",
+   "id": "UC4tlrTXCBw6NPZ9nCA3_s9w",
    "category": "culture",
    "language": "ru",
    "displayName": "Кинопоиск"
@@ -248,6 +245,7 @@
   },
   {
    "handle": "KRASAVAvlog",
+   "id": "UCoRAnB8KixJiszlSpMHa-SA",
    "category": "sports",
    "language": "ru",
    "displayName": "КраСава"

@@ -42,7 +42,20 @@ jobs:
           git add packs app/src/main/assets/packs
           if git diff --cached --quiet; then
             echo "Packs unchanged"
-          else
-            git commit -m "[content-pipeline] Refresh enriched packs"
-            git push
+            exit 0
           fi
+          git commit -m "[content-pipeline] Refresh enriched packs"
+          # This job takes minutes — long enough for a human push to land in the middle of it
+          # and make the push below a non-fast-forward. That happened, and a full probe of 54
+          # channels was thrown away over it. Rebasing onto whatever arrived is always safe
+          # here: this job only ever touches generated packs, so there is nothing of anyone
+          # else's to conflict with.
+          for attempt in 1 2 3; do
+            if git push; then
+              exit 0
+            fi
+            echo "Push rejected (attempt $attempt) — rebasing onto the new tip and retrying"
+            git pull --rebase origin main || exit 1
+          done
+          echo "Could not push after 3 attempts"
+          exit 1
