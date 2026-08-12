@@ -64,6 +64,47 @@ class DescentTest {
     }
 
     @Test
+    fun `a deeper run always outscores a shallower one`() {
+        // bestScore keeps the maximum, so progress must dominate speed — otherwise a fast failure
+        // in room one could sit above a slow run that nearly finished.
+        val shallowAndFast = Descent(
+            rooms = Rooms.all, runner = Motion.spawn(Rooms.threshold, tuning),
+            splits = List(2) { 60 }, elapsedFrames = 120,
+        )
+        val deepAndSlow = Descent(
+            rooms = Rooms.all, runner = Motion.spawn(Rooms.threshold, tuning),
+            splits = List(5) { 1_200 }, elapsedFrames = 6_000,
+        )
+        assertTrue(
+            DescentRules.score(deepAndSlow) > DescentRules.score(shallowAndFast),
+            "five rooms slowly must beat two rooms quickly",
+        )
+    }
+
+    @Test
+    fun `finishing faster scores higher, and a slow finish still scores`() {
+        fun finish(seconds: Double) = Descent(
+            rooms = Rooms.all, runner = Motion.spawn(Rooms.threshold, tuning),
+            splits = List(Rooms.all.size) { 1 },
+            elapsedFrames = (seconds * Tuning.FPS).toInt(), finished = true,
+        )
+        assertTrue(DescentRules.score(finish(30.0)) > DescentRules.score(finish(60.0)))
+        // Past par the bonus floors at zero rather than eating into the depth already earned.
+        val crawl = DescentRules.score(finish(600.0))
+        assertEquals(Rooms.all.size * DescentRules.ROOM_VALUE, crawl)
+        assertTrue(crawl > 0)
+    }
+
+    @Test
+    fun `an unfinished run earns no speed bonus at all`() {
+        val partway = Descent(
+            rooms = Rooms.all, runner = Motion.spawn(Rooms.threshold, tuning),
+            splits = List(3) { 100 }, elapsedFrames = 300,
+        )
+        assertEquals(3 * DescentRules.ROOM_VALUE, DescentRules.score(partway))
+    }
+
+    @Test
     fun `a finished run stops advancing`() {
         var d = DescentRules.start(listOf(Rooms.threshold), tuning)
         val plan = Playtest.solve(Rooms.threshold, tuning)!!

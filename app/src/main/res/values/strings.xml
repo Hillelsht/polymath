@@ -238,4 +238,18 @@
     <string name="gambit_outcome_draw">Draw</string>
     <string name="gambit_moves_played">%1$d moves played</string>
     <string name="gambit_new_game_button">New game</string>
+
+    <!-- The Vaults -->
+    <string name="game_vaults_title">The Vaults</string>
+    <string name="game_vaults_blurb">Run, leap and hang your way down. No questions — just the descent, and a clock.</string>
+    <string name="play_vaults_never">Never descended</string>
+    <string name="play_vaults_summary">%1$d rooms deep · %2$d runs</string>
+    <string name="play_vaults_cta_start">Go down</string>
+    <string name="play_vaults_cta_again">Descend again</string>
+    <string name="vaults_room_of">Room %1$d of %2$d</string>
+    <string name="vaults_clock">%1$.1fs</string>
+    <string name="vaults_score">%1$d points</string>
+    <string name="vaults_finished_title">Out of the vaults</string>
+    <string name="vaults_finished_summary">%1$.1fs · %2$d deaths</string>
+    <string name="vaults_again">Again</string>
 </resources>

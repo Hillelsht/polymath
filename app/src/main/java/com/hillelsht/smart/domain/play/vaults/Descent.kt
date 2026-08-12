@@ -80,6 +80,27 @@ object DescentRules {
         }
     }
 
+    /**
+     * A run that gets nowhere quickly must never outscore one that got further.
+     *
+     * `SmartRepository.bestScore` keeps the maximum, so the score has to rise with progress rather
+     * than fall with time — depth first, speed only as a tie-break within it. Making time the
+     * headline number would be the speedrunner's framing and the wrong one for a Play tab, where
+     * most runs end partway down and should still read as better than the last one.
+     */
+    const val ROOM_VALUE = 1_000
+
+    /** Finishing inside this earns the full speed bonus; slower still finishes, for less. */
+    const val PAR_SECONDS = 90.0
+
+    fun score(descent: Descent): Int {
+        val depth = descent.roomsCleared * ROOM_VALUE
+        val speed = if (!descent.finished) 0 else {
+            ((PAR_SECONDS - descent.elapsedSeconds).coerceAtLeast(0.0) * 10).toInt()
+        }
+        return depth + speed
+    }
+
     /** Whether enough frames have passed since dying to put the runner back at the entrance. */
     fun readyToRespawn(descent: Descent, framesSinceDeath: Int): Boolean =
         descent.runner.phase == Phase.DEAD && framesSinceDeath >= DEATH_PAUSE_FRAMES

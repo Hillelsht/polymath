@@ -236,4 +236,18 @@
     <string name="gambit_outcome_draw">Ничья</string>
     <string name="gambit_moves_played">Сделано ходов: %1$d</string>
     <string name="gambit_new_game_button">Новая игра</string>
+
+    <!-- Подземелья -->
+    <string name="game_vaults_title">Подземелья</string>
+    <string name="game_vaults_blurb">Бегите, прыгайте и цепляйтесь за уступы. Без вопросов — только спуск и часы.</string>
+    <string name="play_vaults_never">Ещё не спускались</string>
+    <string name="play_vaults_summary">%1$d залов пройдено · %2$d попыток</string>
+    <string name="play_vaults_cta_start">Спуститься</string>
+    <string name="play_vaults_cta_again">Спуститься снова</string>
+    <string name="vaults_room_of">Зал %1$d из %2$d</string>
+    <string name="vaults_clock">%1$.1f с</string>
+    <string name="vaults_score">%1$d очков</string>
+    <string name="vaults_finished_title">Вы выбрались</string>
+    <string name="vaults_finished_summary">%1$.1f с · смертей: %2$d</string>
+    <string name="vaults_again">Ещё раз</string>
 </resources>

@@ -2,14 +2,15 @@
 
 # The Play tab
 
-Four games in the app, all drawing questions from the same fact corpus, plus
-[The Vaults](#the-vaults) — built and playable, not yet wired into the tab. The decision that makes them belong
-in this app rather than a separate one: **a question you miss in a game is pushed into your
-review queue.** Playing is another door into the spaced-repetition engine. Without that, Play is
-a toy bolted to the side.
+Five games. Four of them draw questions from the same fact corpus, and the decision that makes
+those belong in this app rather than a separate one is: **a question you miss in a game is pushed
+into your review queue.** Playing is another door into the spaced-repetition engine. Without that,
+Play is a toy bolted to the side.
+
+[The Vaults](#the-vaults) is the deliberate exception, for reasons in its own section.
 
 Every game's rules live in `domain/play/` as pure Kotlin and are tested headlessly — most of the
-299 engine tests are game rules. The UI draws with Compose vectors; there are no sprite sheets
+302 engine tests are game rules. The UI draws with Compose vectors; there are no sprite sheets
 and no game engine dependency, so none of this grows the APK.
 
 `recordGameMiss()` has two deliberate refusals: it skips facts still in `Phase.NEW` (grading a
@@ -84,9 +85,11 @@ players never ends.
 ## The Vaults
 
 A side-scrolling platformer in the *Prince of Persia* tradition, and the replacement for Palace.
-**No questions during play.** Studying stocks your pack before you descend — reviews become a
-flask, a streak keeps your checkpoint, accuracy buys a shortcut key — but once you are in the
-vaults it is a game, not a quiz with jumping between the questions.
+**No questions during play**, which makes it the one game here that is not a door into the
+scheduler. That is deliberate: it is the game you reach for when you do not want to be asked
+anything. The intended link is an *economy* rather than a gate — studying would stock your pack
+before you descend, with reviews becoming a flask and a streak keeping your checkpoint — and none
+of that is built yet. Until it is, The Vaults earns its place by being worth playing.
 
 It is original work. Prince of Persia itself cannot be shipped (it is Ubisoft's, and every open
 port needs the original's copyrighted data files), so the level design and physics are this
@@ -165,7 +168,29 @@ that is `MotionTest`'s job. And `solve` *searches*; finding nothing means the se
 not that a room is impossible, so the gate fails closed. Neither number alone is proof of
 playability, and treating one as proof is the mistake below.
 
-### Playing it
+### In the app
+
+`ui/play/vaults/VaultsScreen.kt` is the Android front end, and it is deliberately thin: it draws
+rectangles and forwards button state. Two details are load-bearing, both of them Palace's mistakes
+inverted.
+
+**A fixed timestep.** Palace advanced physics by the real frame delta, which quietly makes it a
+different game on a 90Hz or 120Hz phone. The screen here accumulates elapsed time and spends it in
+whole `Tuning.DT` steps, so a run is the same run everywhere — and the same one the tests and the
+browser play. A gap longer than 200ms means the app was backgrounded and is discarded rather than
+simulated, or the runner would teleport through a wall on resume.
+
+**A jump latch.** A tap can begin and end between two frames, and a press no frame ever sees is a
+press that did not happen — a second route to the silence that made Palace unplayable. The
+ViewModel therefore reports jump as held for at least two frames after a press. It does *no* other
+input bookkeeping: buffering belongs to `Motion`, which is where it can be tested.
+
+Scoring is `DescentRules.score`: rooms cleared are worth a thousand each, and finishing inside par
+adds a speed bonus on top. Depth dominates speed on purpose — `bestScore` keeps the maximum, and a
+fast failure in room one must never outrank a run that nearly finished. Leaving partway down still
+records the run.
+
+### Playing it in a browser
 
 `webplay/` compiles the same `domain/play/vaults` sources to JavaScript and renders them on a
 canvas with live tuning sliders; `tools/playtest/play.js` drives it in Chromium. See

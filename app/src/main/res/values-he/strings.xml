@@ -236,4 +236,18 @@
     <string name="gambit_outcome_draw">תיקו</string>
     <string name="gambit_moves_played">בוצעו %1$d מהלכים</string>
     <string name="gambit_new_game_button">משחק חדש</string>
+
+    <!-- המרתפים -->
+    <string name="game_vaults_title">המרתפים</string>
+    <string name="game_vaults_blurb">רוצו, קפצו והיאחזו במדפים. בלי שאלות — רק הירידה, והשעון.</string>
+    <string name="play_vaults_never">עוד לא ירדתם</string>
+    <string name="play_vaults_summary">%1$d חדרים · %2$d ריצות</string>
+    <string name="play_vaults_cta_start">לרדת</string>
+    <string name="play_vaults_cta_again">לרדת שוב</string>
+    <string name="vaults_room_of">חדר %1$d מתוך %2$d</string>
+    <string name="vaults_clock">%1$.1f שנ׳</string>
+    <string name="vaults_score">%1$d נקודות</string>
+    <string name="vaults_finished_title">יצאתם מהמרתפים</string>
+    <string name="vaults_finished_summary">%1$.1f שנ׳ · %2$d מיתות</string>
+    <string name="vaults_again">שוב</string>
 </resources>

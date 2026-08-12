@@ -10,7 +10,7 @@
 
 Android trivia-teaching app: Kotlin, Compose, Material 3, Room, MVVM. Spaced repetition (SM-2)
 over a curriculum of 4,000+ facts, plus a Watch tab of allowlisted YouTube channels and a Play
-tab of four games. English, Russian and Hebrew.
+tab of five games. English, Russian and Hebrew.
 
 Detailed references live in `docs/` — see the map at the bottom. Read this file first.
 
@@ -109,7 +109,7 @@ packs/        generated content, served to installed apps from raw.githubusercon
 | Room schema, migrations, JSON pack shapes, seeding | `docs/data-model.md` |
 | The Python tools, the six workflows, what commits to `main` | `docs/content-pipeline.md` |
 | Adding a language; why Hebrew has two string files | `docs/localization.md` |
-| The four games and their rules | `docs/games.md` |
+| The five games and their rules | `docs/games.md` |
 | Playing The Vaults in a browser; why feel is testable now | `webplay/README.md` |
 | Building, verifying and shipping without a compiler | `docs/development.md` |
 | Things that must stay true, and what broke when they didn't | `docs/invariants.md` |

@@ -51,6 +51,7 @@ import com.hillelsht.smart.ui.play.PlayScreen
 import com.hillelsht.smart.ui.play.chains.ChainsScreen
 import com.hillelsht.smart.ui.play.climb.ClimbScreen
 import com.hillelsht.smart.ui.play.gambit.ChessScreen
+import com.hillelsht.smart.ui.play.vaults.VaultsScreen
 import com.hillelsht.smart.ui.quiz.QuizScreen
 import com.hillelsht.smart.ui.review.ReviewScreen
 import com.hillelsht.smart.ui.settings.SettingsScreen
@@ -72,6 +73,7 @@ object Routes {
     const val CLIMB = "play/climb"
     const val CHAINS = "play/chains"
     const val GAMBIT = "play/gambit"
+    const val VAULTS = "play/vaults"
     const val SETTINGS = "settings"
 
     fun quiz(category: Category? = null, factIds: List<String> = emptyList()) =
@@ -199,6 +201,7 @@ fun SmartApp(repository: SmartRepository) {
                         onClimb = { navController.navigate(Routes.CLIMB) },
                         onChains = { navController.navigate(Routes.CHAINS) },
                         onGambit = { navController.navigate(Routes.GAMBIT) },
+                        onVaults = { navController.navigate(Routes.VAULTS) },
                         onQuiz = { navController.navigate(Routes.quiz()) },
                     )
                 }
@@ -232,6 +235,13 @@ fun SmartApp(repository: SmartRepository) {
                     exitTransition = { slideOutVertically(tween(220)) { it / 6 } + fadeOut(tween(220)) },
                 ) {
                     ChessScreen(repository = repository, onBack = { navController.popBackStack() })
+                }
+                composable(
+                    Routes.VAULTS,
+                    enterTransition = { slideInVertically(tween(280)) { it / 6 } + fadeIn(tween(280)) },
+                    exitTransition = { slideOutVertically(tween(220)) { it / 6 } + fadeOut(tween(220)) },
+                ) {
+                    VaultsScreen(repository = repository, onBack = { navController.popBackStack() })
                 }
 
                 // Study flows slide up over the tabs, signalling "you are inside something".
