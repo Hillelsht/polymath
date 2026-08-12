@@ -182,14 +182,43 @@ class MotionTest {
 
     @Test
     fun `a fall past the abyss kills`() {
+        // A long runway, so the runner leaves the edge at full speed and is carried out of reach of
+        // its own lip. Stepping off slowly is a different move entirely — see the test below.
         val room = Room(
             id = "pit",
-            ledges = listOf(Ledge("floor", 0.0, 50.0, 0.0)),
-            spawnX = 40.0, spawnY = 0.0, exitX = 999.0, abyssY = 300.0,
+            ledges = listOf(Ledge("floor", 0.0, 200.0, 0.0)),
+            spawnX = 20.0, spawnY = 0.0, exitX = 999.0, abyssY = 300.0,
         )
         var r = Motion.spawn(room, tuning)
         repeat(200) { r = Motion.tick(r, room, Buttons(right = true), tuning) }
         assertEquals(Phase.DEAD, r.phase)
+    }
+
+    @Test
+    fun `stepping off an edge slowly catches it, running off it does not`() {
+        // The grab is a safety net whose width is a *speed* decision rather than a timing one: a
+        // body moving fast is already beyond the lip by the time it has fallen far enough to reach
+        // for it. That is what keeps the net from quietly bridging every gap in the game.
+        val room = Room(
+            id = "lip",
+            ledges = listOf(Ledge("floor", 0.0, 200.0, 0.0)),
+            spawnX = 190.0, spawnY = 0.0, exitX = 999.0, abyssY = 300.0,
+        )
+        // Creeping: tap and coast, the way anyone edges up to a drop. Friction is stronger than
+        // acceleration, so this never builds real speed.
+        var slow = Motion.spawn(room, tuning)
+        repeat(200) { f ->
+            if (!slow.over && slow.phase != Phase.HANGING) {
+                slow = Motion.tick(slow, room, Buttons(right = f % 9 < 2), tuning)
+            }
+        }
+        assertEquals(Phase.HANGING, slow.phase, "a slow step off the lip should catch it")
+
+        // At speed, from far enough back to reach full pace.
+        val long = room.copy(ledges = listOf(Ledge("floor", 0.0, 200.0, 0.0)), spawnX = 20.0)
+        var fast = Motion.spawn(long, tuning)
+        repeat(120) { fast = Motion.tick(fast, long, Buttons(right = true), tuning) }
+        assertTrue(fast.phase != Phase.HANGING, "a full-speed run off the lip must not catch it")
     }
 
     @Test

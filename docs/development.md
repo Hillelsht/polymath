@@ -24,7 +24,7 @@ internals makes a red build unreadable.
 gradle -p enginetests test
 ```
 
-292 tests, no Android SDK needed, seconds to run. `enginetests` is a **separate Gradle build**
+299 tests, no Android SDK needed, seconds to run. `enginetests` is a **separate Gradle build**
 (its own `settings.gradle.kts`) that points `kotlin.srcDirs` straight at the app's
 `domain/` and `data/seed/` directories. It compiles and tests **the exact source that ships** —
 not a copy, not a port.
@@ -40,6 +40,28 @@ Two consequences worth internalising:
 Test resources point at `app/src/main/assets`, so the content tests parse the real shipped
 curriculum. Generated content under `packs/` is read through relative `File("../packs/...")`
 paths instead, because it lives outside assets.
+
+### The browser build — the only thing here that can be played
+
+```bash
+gradle -p webplay bundle                     # -> webplay/build/web/index.html
+NODE_PATH=/opt/node22/lib/node_modules \
+  node tools/playtest/play.js                # plays all seven rooms in Chromium, ~5s
+python3 tools/playtest/inline.py             # fold it into one self-contained file
+```
+
+`webplay/` uses the same trick as `enginetests` — a standalone build pointing `kotlin.srcDirs` at
+`domain/play/vaults` — but targets **JavaScript**, so The Vaults runs on a canvas here. Chromium
+and Playwright are already installed; nothing is downloaded, and the Kotlin/JS toolchain is pointed
+at the system Node and stopped before webpack so npm is never involved.
+
+This exists because the previous game shipped unplayable past a full headless suite: no test had
+ever pressed a button. `play.js` presses them, and re-measures every room's timing margin in the
+browser — those figures matching the JVM's is what proves the two targets have not drifted. The
+extra constraint it buys is in `invariants.md`: `domain/play/vaults` is **stdlib only**, no `java.*`
+either, or this build stops compiling.
+
+Full detail in `webplay/README.md`.
 
 ### The parse check — a compiler stand-in
 
@@ -90,7 +112,9 @@ Cheapest and most informative first:
    pack is caught by the seeder at runtime and logged, not crashed on, which means it fails
    *silently on device*.
 4. `--self-test` — if you touched a generator.
-5. Push, then watch CI. This is the only step that compiles Android.
+5. `node tools/playtest/play.js` — if you touched `domain/play/vaults`. Five seconds, and the only
+   check here that answers "can this be played" rather than "does this compute".
+6. Push, then watch CI. This is the only step that compiles Android.
 
 ## Shipping
 

@@ -2,13 +2,14 @@
 
 # The Play tab
 
-Five games, all drawing questions from the same fact corpus. The decision that makes them belong
+Four games in the app, all drawing questions from the same fact corpus, plus
+[The Vaults](#the-vaults) — built and playable, not yet wired into the tab. The decision that makes them belong
 in this app rather than a separate one: **a question you miss in a game is pushed into your
 review queue.** Playing is another door into the spaced-repetition engine. Without that, Play is
 a toy bolted to the side.
 
-Every game's rules live in `domain/play/` as pure Kotlin and are tested headlessly — 190+ of the
-292 engine tests are game rules. The UI draws with Compose vectors; there are no sprite sheets
+Every game's rules live in `domain/play/` as pure Kotlin and are tested headlessly — most of the
+299 engine tests are game rules. The UI draws with Compose vectors; there are no sprite sheets
 and no game engine dependency, so none of this grows the APK.
 
 `recordGameMiss()` has two deliberate refusals: it skips facts still in `Phase.NEW` (grading a
@@ -93,11 +94,40 @@ project's own.
 
 ### What is built
 
-Movement, and only movement: `Motion.tick` is a pure `(runner, room, buttons) -> runner` step at a
-**fixed 60fps timestep**, so a run is reproducible from its input sequence alone. That is what
-lets a test replay a room, and what lets the browser harness and the phone agree frame for frame.
-Traps, combat and authored acts come after the movement is proven good, which is the sequencing
-Palace never got.
+`Motion.tick` is a pure `(runner, room, buttons) -> runner` step at a **fixed 60fps timestep**, so
+a run is reproducible from its input sequence alone. That is what lets a test replay a room, and
+what lets the browser harness and the phone agree frame for frame — verified bit-identical, and
+re-verified per room every time `tools/playtest/play.js` runs.
+
+Seven rooms, in a teaching order, under one clock:
+
+| | teaches |
+|---|---|
+| the threshold | the jump — its gap is deliberately wider than a ledge-grab can bridge |
+| step-down | height as a resource |
+| loose stones | keep moving; stone that is stood on gives way |
+| first blade | a cycle can be read |
+| two beats | two cycles, out of step |
+| the sill | a blade guarding the lip of a gap |
+| the narrow | all of it, arranged so the lessons argue |
+
+**The ledge-grab** is a safety net rather than a move to be timed: fall past a lip within reach and
+you catch it, then press jump to climb. Its width is a *speed* decision, not a timing one — a body
+running at full pace is already beyond the lip by the time it has fallen far enough to reach, so
+the net catches short jumps and slow steps off an edge without quietly bridging every gap in the
+game. `Playtest.walkOffGrabReach` computes exactly how far it reaches, and the first room asserts
+its gap is wider than that.
+
+**Blades** are a pure function of the frame counter, so a rhythm learned once stays learned. They
+are tall enough that jumping over is not the answer. **Collapsing stone** breaks after
+`collapseFrames` of being stood on and stays broken for the visit, but is restored on respawn — a
+room is a puzzle to re-attempt, not a resource to exhaust by failing at it.
+
+**The clock is the score.** `Descent` runs the rooms in order against one timer that keeps counting
+while you are dead. Deaths are unlimited and free; that single decision is what made *Prince of
+Persia* something people replayed. Dying is not punished — dithering is.
+
+Combat and further acts come after this is proven good, which is the sequencing Palace never got.
 
 Three things are in from the first commit, because a platformer without them feels like it is
 ignoring you no matter how the levels are designed:
@@ -121,14 +151,19 @@ Two checks, deliberately covering different failure modes:
 - **`MotionTest`** asserts that *imperfect* input works — a jump pressed 1 to 8 frames before
   landing still fires, a jump up to 6 frames after leaving an edge still fires, a stale press
   expires rather than firing late, a held button does not bounce.
-- **`RoomsTest`** measures **timing margin**: `Playtest.jumpWindows` replays a room once per
-  candidate jump frame and reports the widest run of frames that complete it. Both current rooms
-  sit at 19 frames (317 ms). A room below `Playtest.MIN_MARGIN_FRAMES` fails the build.
+- **`RoomsTest`** measures **timing margin**. `Playtest.solve` searches the plan space — wait this
+  long, run, press jump at these moments — and `slack` then varies each timing on its own to find
+  how far it could shift and still get through. The smallest such window is the room's margin,
+  because a plan forgiving in every respect but one is only as playable as its tightest moment.
+  Rooms currently run 14 to 81 frames; below `Playtest.MIN_MARGIN_FRAMES` fails the build.
+- Every trap is asserted to be **able to kill**. A blade that catches nobody is scenery, and a
+  margin measured against scenery certifies nothing.
 
-Margin responds to geometry and coyote time — dropping coyote to zero narrows it to 13 frames —
-but is **blind to input buffering**, because it only presses jump while grounded. That case is
-`MotionTest`'s. Neither number alone is proof of playability, and treating one as proof is the
-mistake below.
+Two honest limits, written down rather than assumed. Margin is **blind to input buffering**,
+because it only presses jump from solid ground and so never meets the case buffering exists for —
+that is `MotionTest`'s job. And `solve` *searches*; finding nothing means the search found nothing,
+not that a room is impossible, so the gate fails closed. Neither number alone is proof of
+playability, and treating one as proof is the mistake below.
 
 ### Playing it
 

@@ -38,6 +38,30 @@ data class Tuning(
     /** A fall shorter than this is free; beyond it costs health, and [fatalFall] kills. */
     val safeFall: Double = 96.0,
     val fatalFall: Double = 240.0,
+
+    // --- the ledge grab ---------------------------------------------------------------------
+    // Palace had a grab too, and its capture window was six frames wide, which is why nobody ever
+    // used it on purpose. These are set so the grab is a move you *choose*, not one you luck into:
+    // wide horizontally, and generous below the lip so a late reach still catches.
+    /** How far either side of a lip counts as within arm's reach. */
+    val grabReach: Double = 17.0,
+    /**
+     * How far *below* a lip the runner must already have fallen for a grab to register.
+     *
+     * Without this the grab fires on the first frame off any edge — including the edge just walked
+     * off — and hijacks every jump into a hang. Requiring real downward travel means a body moving
+     * at speed is already out of horizontal reach by the time it qualifies, so only a short jump
+     * or a deliberate slow step off the lip catches.
+     */
+    val grabMinDrop: Double = 10.0,
+    /** Past this depth the lip is out of reach and the fall continues. */
+    val grabMaxDrop: Double = 34.0,
+    /** Frames after letting go during which the same lip cannot be re-caught. */
+    val grabLockoutFrames: Int = 14,
+
+    /** Frames of standing on a collapsing tile before it gives way. */
+    val collapseFrames: Int = 34,
+    val startingHealth: Int = 3,
 ) {
     companion object {
         const val TILE = 32.0

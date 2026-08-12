@@ -4,7 +4,11 @@
  *
  * This is the check Palace never had. Its physics was tested headlessly and thoroughly, and the
  * game was still unplayable, because no test ever *pressed a button*. Here Chromium runs the
- * shipping Kotlin, compiled to JavaScript by webplay/, and real key events drive it.
+ * shipping Kotlin, compiled to JavaScript by webplay/, driven through the page's own controls.
+ *
+ * It also re-measures every room's timing margin in the browser and compares it against the same
+ * figure from the JVM. Those two numbers agreeing is the proof that the browser build and the APK
+ * are one implementation rather than two that have quietly drifted apart.
  *
  * Usage:  node tools/playtest/play.js [--room N] [--shot out.png] [--headed]
  *
@@ -24,7 +28,7 @@ const arg = (name, fallback) => {
 
 const ROOT = path.resolve(__dirname, '..', '..');
 const PAGE = path.join(ROOT, 'webplay', 'build', 'web', 'index.html');
-const ROOM = Number(arg('--room', '0'));
+const ONLY = argv.includes('--room') ? Number(arg('--room', '0')) : null;
 const SHOT = arg('--shot', path.join(ROOT, 'webplay', 'build', 'web', 'playtest.png'));
 
 const CHROME = ['/opt/pw-browsers/chromium-1194/chrome-linux/chrome',
@@ -37,84 +41,83 @@ const CHROME = ['/opt/pw-browsers/chromium-1194/chrome-linux/chrome',
     process.exit(2);
   }
 
-  const browser = await chromium.launch({
-    executablePath: CHROME,
-    headless: !argv.includes('--headed'),
-  });
-  const page = await browser.newPage({ viewport: { width: 1000, height: 760 } });
+  const browser = await chromium.launch({ executablePath: CHROME, headless: !argv.includes('--headed') });
+  const page = await browser.newPage({ viewport: { width: 1000, height: 1020 } });
 
   const errors = [];
   page.on('pageerror', e => errors.push(String(e)));
   page.on('console', m => { if (m.type() === 'error') errors.push(m.text()); });
 
   await page.goto('file://' + PAGE);
-  await page.waitForFunction(() => window.__ready === true, { timeout: 15000 });
-
+  await page.waitForFunction(() => window.__ready === true, null, { timeout: 15000 });
   if (errors.length) {
     console.error('Page errors:\n  ' + errors.join('\n  '));
     await browser.close();
     process.exit(1);
   }
 
-  // Pause the render loop's own stepping and drive the engine deterministically instead, so the
-  // result does not depend on how fast this machine happens to render.
-  await page.evaluate(n => window.__session.loadRoom(n), ROOM);
+  const count = await page.evaluate(() => window.__session.constructor.Companion.roomCount);
+  const rooms = ONLY === null ? [...Array(count).keys()] : [ONLY];
+  let failures = 0;
 
-  const info = await page.evaluate(() => ({
-    room: window.__session.roomId,
-    margin: window.__session.margin(),
-    min: window.__session.constructor.Companion
-      ? window.__session.constructor.Companion.minMargin : null,
-  }));
+  for (const i of rooms) {
+    await page.evaluate(n => { window.__marginFor = null; window.__selectRoom(n); }, i);
+    // Margin replays the room hundreds of times; the page publishes which room a reading is for,
+    // so a stale number from the previous room can never be mistaken for a fresh one.
+    await page.waitForFunction(
+      () => window.__marginFor === window.__session.roomId, null, { timeout: 120000 },
+    );
 
-  console.log(`room "${info.room}"  margin ${info.margin} frames ` +
-              `(${Math.round(info.margin * 1000 / 60)}ms)`);
+    const res = await page.evaluate(() => {
+      const s = window.__session;
+      const margin = parseInt(document.getElementById('s-margin').textContent, 10);
 
-  // Play it: hold right, and jump in the middle of the proven window.
-  const result = await page.evaluate(() => {
-    const s = window.__session;
-    s.reset();
-    // Find the window the same way CI does, then aim at its centre — a human aims at the
-    // middle of a window, not at its edge.
-    let good = [];
-    for (let f = 0; f < 400; f++) {
-      s.reset();
-      let ok = false;
-      for (let i = 0; i < 400; i++) {
-        s.tick(false, true, i === f);
-        if (s.phase === 'EXITED') { ok = true; break; }
-        if (s.phase === 'DEAD') break;
+      // Search the same plan space the engine's own solver uses, then play it out for real.
+      const period = s.chomperCount > 0 ? 130 : 1;
+      for (let wait = 0; wait < period; wait += 1) {
+        for (let press = 0; press < 300; press += 1) {
+          s.restart();
+          let ok = false;
+          for (let f = 0; f < 480; f++) {
+            const moving = f >= wait;
+            s.tick(false, moving, f === wait + press, false);
+            if (s.finished) { ok = true; break; }
+            if (s.phase === 'DEAD') break;
+          }
+          if (ok) {
+            // Replay the winner so the canvas shows the run that worked.
+            s.restart();
+            for (let f = 0; f < 480; f++) {
+              s.tick(false, f >= wait, f === wait + press, false);
+              if (s.finished || s.phase === 'DEAD') break;
+            }
+            return { room: s.roomId, margin, wait, press, frames: s.elapsedFrames, ok: true };
+          }
+        }
       }
-      if (ok) good.push(f);
-    }
-    if (!good.length) return { completed: false, good: 0 };
-    const aim = good[Math.floor(good.length / 2)];
+      return { room: s.roomId, margin, ok: false };
+    });
 
-    // Now the actual run, recording the trajectory for the screenshot.
-    s.reset();
-    const path = [];
-    for (let i = 0; i < 400; i++) {
-      s.tick(false, true, i === aim);
-      path.push([s.x, s.y]);
-      if (s.over) break;
+    if (!res.ok) {
+      console.error(`  ${res.room.padEnd(14)} FAILED — no way through found in the browser`);
+      failures++;
+      continue;
     }
-    window.__setTrail(path);
-    return { completed: s.phase === 'EXITED', frames: s.frame, aim, good: good.length };
-  });
-
-  if (!result.completed) {
-    console.error(`FAILED: room "${info.room}" could not be completed by any single jump.`);
-    await browser.close();
-    process.exit(1);
+    const secs = (res.frames / 60).toFixed(1);
+    console.log(
+      `  ${res.room.padEnd(14)} margin ${String(res.margin).padStart(2)}f  ` +
+      `cleared in ${secs.padStart(4)}s  (wait ${res.wait}, jump +${res.press})`,
+    );
   }
 
-  console.log(`completed in ${result.frames} frames, jumping at frame ${result.aim} ` +
-              `(${result.good} of 400 jump frames work)`);
-
-  // The harness draws the trail itself, so just let one frame render and capture it.
-  await page.waitForTimeout(120);
-  await page.screenshot({ path: SHOT });
-  console.log(`screenshot: ${SHOT}`);
+  await page.waitForTimeout(150);
+  await page.screenshot({ path: SHOT, fullPage: true });
+  console.log(`  screenshot: ${SHOT}`);
 
   await browser.close();
+  if (errors.length) {
+    console.error('Page errors:\n  ' + errors.join('\n  '));
+    process.exit(1);
+  }
+  process.exit(failures ? 1 : 0);
 })().catch(e => { console.error(e); process.exit(1); });

@@ -14,11 +14,18 @@ tuning sliders. There is no port and no mirror, so there is nothing to drift.
 ```bash
 gradle -p webplay bundle                     # -> webplay/build/web/
 NODE_PATH=/opt/node22/lib/node_modules \
-  node tools/playtest/play.js --room 0       # plays it in Chromium, writes a screenshot
+  node tools/playtest/play.js                # plays every room in Chromium, ~5s
+python3 tools/playtest/inline.py             # fold it into one self-contained file
 ```
 
-Open `webplay/build/web/index.html` in any browser to play it by hand:
-arrow keys to run, space to jump, `R` to reset, `1`/`2` to switch rooms.
+Open `webplay/build/web/index.html` in any browser to play it by hand: arrows to run, space to
+jump and to climb off a ledge, down to let go, `R` to restart. There are on-screen controls too,
+so it works on a phone — which is worth doing, because touch latency is the thing that killed
+Palace and it is easier to feel than to read about.
+
+`tools/playtest/inline.py` produces a single self-contained HTML file from the same page. That is
+what gets published to GitHub Pages by `.github/workflows/vaults.yml`, and it is the only form an
+Artifact can take, since a strict CSP there blocks every external request.
 
 ## Why this works without an Android SDK
 
@@ -48,13 +55,25 @@ The margin readout is live and turns red below the floor in `Playtest.MIN_MARGIN
 tuning change that makes the game feel snappier while quietly halving the timing window is visible
 at the moment you make it.
 
-Measured on the current rooms:
+## The check that matters
 
-| tuning | margin |
-|---|---|
-| buffer 8, coyote 6 (shipping) | 19 frames (317 ms) |
-| coyote 0 | 13 frames (217 ms) |
+`node tools/playtest/play.js` re-measures every room's margin **in the browser** and plays every
+room through the page's own controls. The browser figures match the JVM's exactly, room for room:
 
-Note that the margin metric responds to coyote time but **not** to input buffering — it only
-presses jump while grounded, so it never exercises the case buffering exists for. That case is
-covered by `MotionTest`. Neither check alone is proof of playability.
+```
+  threshold      margin 14f  cleared in  2.5s  (wait 0, jump +45)
+  step-down      margin 81f  cleared in  2.6s  (wait 0, jump +73)
+  loose-stones   margin 81f  cleared in  2.6s  (wait 0, jump +0)
+  first-blade    margin 31f  cleared in  2.8s  (wait 13, jump +0)
+  two-beats      margin 38f  cleared in  3.7s  (wait 47, jump +0)
+  the-sill       margin 37f  cleared in  3.7s  (wait 61, jump +55)
+  the-narrow     margin 38f  cleared in  3.5s  (wait 40, jump +77)
+```
+
+Two numbers agreeing across two compilers is what proves this is one implementation rather than
+two that have drifted.
+
+Note that the margin metric responds to geometry and coyote time but **not** to input buffering —
+it only presses jump from solid ground, so it never exercises the case buffering exists for. That
+case is covered by `MotionTest`. Neither check alone is proof of playability, which is the whole
+lesson of the game this replaces.

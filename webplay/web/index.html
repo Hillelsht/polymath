@@ -1,64 +1,164 @@
-<!doctype html>
-<meta charset="utf-8">
-<title>The Vaults — feel harness</title>
+<title>The Vaults</title>
 <style>
-  :root { color-scheme: dark; --ink:#e6e9f0; --dim:#8b93a7; --bg:#14161c; --panel:#1b1f29; }
-  * { box-sizing: border-box; }
-  body { margin:0; background:var(--bg); color:var(--ink);
-         font:14px/1.5 ui-monospace,SFMono-Regular,Menlo,monospace;
-         display:flex; flex-direction:column; align-items:center; gap:14px; padding:18px; }
-  h1 { font-size:15px; font-weight:600; margin:0; letter-spacing:.02em; }
-  h1 span { color:var(--dim); font-weight:400; }
-  canvas { background:#1e2230; border-radius:10px; display:block; max-width:100%; }
-  .row { display:flex; gap:18px; flex-wrap:wrap; justify-content:center; align-items:flex-start; }
-  .panel { background:var(--panel); border-radius:10px; padding:12px 14px; min-width:250px; }
-  .panel h2 { font-size:11px; text-transform:uppercase; letter-spacing:.09em;
-              color:var(--dim); margin:0 0 9px; font-weight:600; }
-  label { display:flex; align-items:center; gap:8px; margin:5px 0; font-size:12px; }
-  label span:first-child { flex:0 0 96px; color:var(--dim); }
-  input[type=range] { flex:1; accent-color:#7aa2ff; min-width:80px; }
-  label output { flex:0 0 52px; text-align:right; }
-  table { border-collapse:collapse; font-size:12px; width:100%; }
-  td { padding:2px 0; } td:first-child { color:var(--dim); } td:last-child { text-align:right; }
-  .good { color:#7ee08a; } .bad { color:#ff8a8a; }
-  kbd { background:#2a3040; border-radius:4px; padding:1px 6px; font-size:11px; }
-  .hint { color:var(--dim); font-size:12px; }
+  /* A deliberate single visual world: torchlit stone, underground. A light theme would contradict
+     the subject, so every colour is painted explicitly and none is left to the host page. */
+  :root {
+    --stone:#15161B; --stone-lit:#1E2029; --stone-edge:#2E3140; --stone-deep:#0F1014;
+    --chalk:#E6E1D6; --chalk-dim:#8A8778;
+    --torch:#E8A33D; --sky:#6E93E0; --verdigris:#5FB89A; --rust:#C4563F;
+    --display: ui-serif, Georgia, "Times New Roman", serif;
+    --mono: ui-monospace, SFMono-Regular, Menlo, Consolas, monospace;
+  }
+  * { box-sizing:border-box; }
+  body {
+    margin:0; background:var(--stone); color:var(--chalk); font-family:var(--mono);
+    font-size:14px; line-height:1.55; padding:26px 18px 52px;
+    display:flex; flex-direction:column; align-items:center; gap:22px;
+    -webkit-text-size-adjust:100%;
+  }
+  .wrap { width:100%; max-width:960px; display:flex; flex-direction:column; gap:22px; }
+
+  header { display:flex; flex-direction:column; gap:6px; }
+  h1 { font-family:var(--display); font-size:clamp(30px,5.5vw,46px); font-weight:600;
+       margin:0; letter-spacing:-.015em; text-wrap:balance; }
+  .sub { color:var(--chalk-dim); max-width:66ch; font-size:13.5px; }
+  .sub b { color:var(--chalk); font-weight:400; }
+
+  /* the run bar sits above the stage: room, clock, deaths, health */
+  .runbar { display:flex; align-items:center; gap:16px; flex-wrap:wrap;
+            font-variant-numeric:tabular-nums; font-size:13px; }
+  .runbar .where { font-family:var(--display); font-size:19px; }
+  .runbar .epi { color:var(--chalk-dim); font-style:italic; font-family:var(--display);
+                 font-size:14px; flex:1 1 220px; }
+  .pips { display:flex; gap:4px; }
+  .pip { width:9px; height:9px; border-radius:2px; background:var(--torch); }
+  .pip.spent { background:var(--stone-edge); }
+  .clock { color:var(--chalk); }
+  .clock b { color:var(--chalk-dim); font-weight:400; }
+
+  .stage { background:var(--stone-deep); border:1px solid var(--stone-edge);
+           border-radius:12px; padding:10px; overflow:hidden; }
+  canvas { display:block; width:100%; height:auto; border-radius:6px; touch-action:none; }
+
+  .pad { display:flex; gap:9px; justify-content:center; flex-wrap:wrap; }
+  button {
+    font-family:var(--mono); font-size:13px; color:var(--chalk); cursor:pointer;
+    background:var(--stone-lit); border:1px solid var(--stone-edge); border-radius:9px;
+    padding:12px 20px; min-width:58px; user-select:none; -webkit-user-select:none;
+    transition:background .12s ease, border-color .12s ease;
+  }
+  button:hover { border-color:#41465A; }
+  button:active, button.on { background:var(--torch); border-color:var(--torch); color:var(--stone); }
+  button:focus-visible { outline:2px solid var(--sky); outline-offset:2px; }
+  #palace.on { background:var(--rust); border-color:var(--rust); color:var(--chalk); }
+  .keys { color:var(--chalk-dim); font-size:12.5px; text-align:center; }
+  kbd { background:var(--stone-lit); border:1px solid var(--stone-edge); border-radius:4px;
+        padding:1px 6px; font-size:11.5px; color:var(--chalk); }
+
+  .grid { display:grid; grid-template-columns:repeat(auto-fit,minmax(290px,1fr)); gap:15px; }
+  .panel { background:var(--stone-lit); border:1px solid var(--stone-edge);
+           border-radius:11px; padding:14px 16px; }
+  .panel h2 { font-family:var(--mono); font-size:10.5px; text-transform:uppercase;
+              letter-spacing:.11em; color:var(--chalk-dim); margin:0 0 11px; font-weight:400; }
+  table { border-collapse:collapse; width:100%; font-variant-numeric:tabular-nums; }
+  td { padding:3px 0; font-size:13px; }
+  td:first-child { color:var(--chalk-dim); }
+  td:last-child { text-align:right; }
+  .chip { display:inline-block; padding:1px 9px; border-radius:20px; font-size:12px;
+          border:1px solid currentColor; }
+  .ok { color:var(--verdigris); } .bad { color:var(--rust); }
+
+  label { display:flex; align-items:center; gap:10px; margin:6px 0; font-size:12.5px; }
+  label > span { flex:0 0 82px; color:var(--chalk-dim); }
+  input[type=range] { flex:1; min-width:70px; accent-color:var(--torch); }
+  label > output { flex:0 0 48px; text-align:right; font-variant-numeric:tabular-nums; }
+
+  .rooms { display:flex; flex-wrap:wrap; gap:6px; }
+  .rooms button { padding:6px 11px; min-width:0; font-size:11.5px; }
+  .note { color:var(--chalk-dim); font-size:12.5px; max-width:70ch; }
+  footer { color:var(--chalk-dim); font-size:12px; border-top:1px solid var(--stone-edge);
+           padding-top:15px; max-width:72ch; }
+  footer b { color:var(--chalk); font-weight:400; }
+  @media (prefers-reduced-motion:reduce) { * { transition:none !important; } }
 </style>
 
-<h1>The Vaults <span>— feel harness</span></h1>
-<div class="hint">
-  <kbd>←</kbd><kbd>→</kbd> run · <kbd>space</kbd> jump · <kbd>R</kbd> reset · <kbd>1</kbd><kbd>2</kbd> room
-</div>
+<div class="wrap">
+  <header>
+    <h1>The Vaults</h1>
+    <p class="sub">
+      Seven rooms under one clock, running the same Kotlin the Android app compiles — recompiled to
+      JavaScript, not reimplemented. Drag a slider and the physics changes under you.
+      <b>Press Palace mode</b> to feel the bug that made the previous game unplayable.
+    </p>
+  </header>
 
-<canvas id="c" width="900" height="300"></canvas>
-
-<div class="row">
-  <div class="panel">
-    <h2>State</h2>
-    <table>
-      <tr><td>room</td><td id="s-room">—</td></tr>
-      <tr><td>frame</td><td id="s-frame">0</td></tr>
-      <tr><td>x / y</td><td id="s-pos">—</td></tr>
-      <tr><td>vx / vy</td><td id="s-vel">—</td></tr>
-      <tr><td>phase</td><td id="s-phase">—</td></tr>
-      <tr><td>jump buffered</td><td id="s-buf">—</td></tr>
-      <tr><td>frames off ground</td><td id="s-off">—</td></tr>
-      <tr><td>margin</td><td id="s-margin">—</td></tr>
-    </table>
+  <div class="runbar">
+    <span class="where" id="s-room">—</span>
+    <span class="epi" id="s-epi"></span>
+    <span class="pips" id="s-health"></span>
+    <span class="clock"><b>time</b> <span id="s-clock">0.0s</span></span>
+    <span class="clock"><b>deaths</b> <span id="s-deaths">0</span></span>
   </div>
-  <div class="panel">
-    <h2>Tuning — live</h2>
-    <label><span>gravity</span><input id="t-gravity" type="range" min="800" max="5000" step="50"><output></output></label>
-    <label><span>run speed</span><input id="t-runSpeed" type="range" min="60" max="600" step="10"><output></output></label>
-    <label><span>accel</span><input id="t-accel" type="range" min="200" max="4000" step="40"><output></output></label>
-    <label><span>friction</span><input id="t-friction" type="range" min="200" max="5000" step="50"><output></output></label>
-    <label><span>jump v</span><input id="t-jumpVelocity" type="range" min="-1200" max="-100" step="10"><output></output></label>
-    <label><span>buffer f</span><input id="t-jumpBufferFrames" type="range" min="0" max="20" step="1"><output></output></label>
-    <label><span>coyote f</span><input id="t-coyoteFrames" type="range" min="0" max="20" step="1"><output></output></label>
-    <div class="hint" style="margin-top:8px">
-      Set buffer and coyote to 0 to feel exactly what Palace shipped.
+
+  <div class="stage"><canvas id="c" width="920" height="280"></canvas></div>
+
+  <div class="pad">
+    <button id="b-left" aria-label="Run left">&#9664;</button>
+    <button id="b-right" aria-label="Run right">&#9654;</button>
+    <button id="b-down" aria-label="Let go">&#9660;</button>
+    <button id="b-jump" aria-label="Jump or climb">JUMP</button>
+    <button id="b-restart">Restart run</button>
+    <button id="palace">Palace mode</button>
+  </div>
+  <p class="keys">
+    <kbd>&#8592;</kbd><kbd>&#8594;</kbd> run &middot; <kbd>space</kbd> jump / climb &middot;
+    <kbd>&#8595;</kbd> let go &middot; <kbd>R</kbd> restart
+  </p>
+
+  <div class="grid">
+    <div class="panel">
+      <h2>Runner</h2>
+      <table>
+        <tr><td>phase</td><td id="s-phase">—</td></tr>
+        <tr><td>position</td><td id="s-pos">—</td></tr>
+        <tr><td>velocity</td><td id="s-vel">—</td></tr>
+        <tr><td>jump held for</td><td id="s-buf">—</td></tr>
+        <tr><td>frames off ground</td><td id="s-off">—</td></tr>
+        <tr><td>rooms cleared</td><td id="s-cleared">0 / 7</td></tr>
+        <tr><td>timing margin</td><td><span id="s-margin" class="chip ok">—</span></td></tr>
+      </table>
+      <p class="note" style="margin:11px 0 0">
+        Margin is how many consecutive frames the deciding input could shift and still get through.
+        Below six, a room reads as broken rather than hard.
+      </p>
+    </div>
+
+    <div class="panel">
+      <h2>Tuning &mdash; live</h2>
+      <label><span>gravity</span><input id="t-gravity" type="range" min="800" max="5000" step="50"><output></output></label>
+      <label><span>run speed</span><input id="t-runSpeed" type="range" min="60" max="600" step="10"><output></output></label>
+      <label><span>accel</span><input id="t-accel" type="range" min="200" max="4000" step="40"><output></output></label>
+      <label><span>friction</span><input id="t-friction" type="range" min="200" max="5000" step="50"><output></output></label>
+      <label><span>jump force</span><input id="t-jumpVelocity" type="range" min="-1200" max="-100" step="10"><output></output></label>
+      <label><span>buffer</span><input id="t-jumpBufferFrames" type="range" min="0" max="20" step="1"><output></output></label>
+      <label><span>coyote</span><input id="t-coyoteFrames" type="range" min="0" max="20" step="1"><output></output></label>
+      <h2 style="margin-top:14px">Jump to a room</h2>
+      <div class="rooms" id="roomlist"></div>
     </div>
   </div>
+
+  <footer>
+    <b>What Palace mode does.</b> It sets buffer and coyote to zero &mdash; the shipped settings of
+    the game this replaces. A jump press was thrown away on any frame the runner was not already on
+    the ground, so a tap arriving mid-air vanished. Android touch latency is three to nine frames,
+    so anticipating a landing never worked; only late taps did. Sixteen tests passed throughout,
+    because they fed the physics the perfect frame a human cannot produce.
+    <br><br>
+    Watch the margin readout while you play in Palace mode: it barely moves, and stays green. That
+    is not a fault in the number &mdash; margin only ever presses jump from solid ground, so it
+    never meets the case buffering exists for. It is the honest reason one green measurement is
+    never proof a game can be played. You have to press the button.
+  </footer>
 </div>
 
 <script src="./kotlin-kotlin-stdlib.js"></script>
@@ -66,137 +166,268 @@
 <script src="./smart-webplay.js"></script>
 <script>
 const V = globalThis['smart-webplay'].com.hillelsht.smart.domain.play.vaults;
-const session = new V.Session(0);
+const session = new V.Session();
+const FPS = V.Session.Companion.fps, MIN = V.Session.Companion.minMargin;
+const ROOMS = V.Session.Companion.roomCount;
 
-const ctx = document.getElementById('c').getContext('2d');
-const W = 900, H = 300;
+const cv = document.getElementById('c'), ctx = cv.getContext('2d');
+const W = 920, H = 280;
+// Rooms run to ~720 units wide and 100 tall; fit the widest with a margin either side.
+const SCALE = 1.2, OX = 22, OY = 112;
+const sx = x => OX + x * SCALE, sy = y => OY + y * SCALE;
 
-// World -> screen. The rooms are ~600 units wide; scale so one fits with margin.
-const SCALE = 1.35, OX = 40, OY = 140;
-const sx = wx => OX + wx * SCALE;
-const sy = wy => OY + wy * SCALE;
+let trail = [], margin = 0, marginDirty = true, lastRoom = '';
+const held = { left:false, right:false, jump:false, down:false };
+let jumpEdge = false;
 
-const held = { left:false, right:false, jump:false };
-let jumpEdge = false;               // a tap becomes one frame of "pressed"
+const restart = () => { session.restart(); trail = []; marginDirty = true; };
+
+// --- keyboard ---
 addEventListener('keydown', e => {
   if (e.repeat) return;
-  if (e.key === 'ArrowLeft'  || e.key === 'a') held.left  = true;
+  if (e.key === 'ArrowLeft'  || e.key === 'a') held.left = true;
   if (e.key === 'ArrowRight' || e.key === 'd') held.right = true;
+  if (e.key === 'ArrowDown'  || e.key === 's') { held.down = true; e.preventDefault(); }
   if (e.key === ' ' || e.key === 'ArrowUp' || e.key === 'w') { held.jump = true; jumpEdge = true; e.preventDefault(); }
-  if (e.key === 'r' || e.key === 'R') rawReset();
-  if (e.key === '1') { session.loadRoom(0); trail = []; refreshMargin(); }
-  if (e.key === '2') { session.loadRoom(1); trail = []; refreshMargin(); }
+  if (e.key === 'r' || e.key === 'R') restart();
 });
 addEventListener('keyup', e => {
-  if (e.key === 'ArrowLeft'  || e.key === 'a') held.left  = false;
+  if (e.key === 'ArrowLeft'  || e.key === 'a') held.left = false;
   if (e.key === 'ArrowRight' || e.key === 'd') held.right = false;
+  if (e.key === 'ArrowDown'  || e.key === 's') held.down = false;
   if (e.key === ' ' || e.key === 'ArrowUp' || e.key === 'w') held.jump = false;
 });
 
-// --- live tuning ---------------------------------------------------------------------
+// --- pointer, because this may well be opened on a phone, where the latency that sank the
+//     previous game is a thing you can feel rather than read about ---
+function hold(id, on, off) {
+  const el = document.getElementById(id);
+  const down = e => { e.preventDefault(); el.classList.add('on'); on(); };
+  const up   = e => { e.preventDefault(); el.classList.remove('on'); off && off(); };
+  el.addEventListener('pointerdown', down);
+  ['pointerup','pointercancel','pointerleave'].forEach(k => el.addEventListener(k, up));
+}
+hold('b-left',  () => held.left = true,  () => held.left = false);
+hold('b-right', () => held.right = true, () => held.right = false);
+hold('b-down',  () => held.down = true,  () => held.down = false);
+hold('b-jump',  () => { held.jump = true; jumpEdge = true; }, () => held.jump = false);
+document.getElementById('b-restart').addEventListener('click', restart);
+
+// --- room shortcuts ---
+// One place owns "the room changed", so trail and margin can never be left describing the room
+// you were in a moment ago. Re-selecting the room you are already in still counts, because that
+// is a restart and the margin may have been invalidated by a tuning change since.
+function selectRoom(i) {
+  if (i < 0) session.playDescent(); else session.playRoom(i);
+  trail = []; marginDirty = true; lastRoom = session.roomId;
+}
+window.__selectRoom = selectRoom;
+
+const list = document.getElementById('roomlist');
+for (let i = 0; i < ROOMS; i++) {
+  const b = document.createElement('button');
+  b.textContent = V.Session.Companion.roomIdAt(i);
+  b.addEventListener('click', () => selectRoom(i));
+  list.appendChild(b);
+}
+const all = document.createElement('button');
+all.textContent = 'full descent';
+all.addEventListener('click', () => selectRoom(-1));
+list.appendChild(all);
+
+// --- tuning ---
 const KNOBS = ['gravity','runSpeed','accel','friction','jumpVelocity','jumpBufferFrames','coyoteFrames'];
-function pushTuning() {
+const knob = k => document.getElementById('t-' + k);
+function push() {
   const v = {};
-  KNOBS.forEach(k => {
-    const el = document.getElementById('t-' + k);
-    v[k] = Number(el.value);
-    el.nextElementSibling.value = v[k];
-  });
+  KNOBS.forEach(k => { v[k] = Number(knob(k).value); knob(k).nextElementSibling.value = v[k]; });
   session.setTuning(v.gravity, v.runSpeed, v.accel, v.friction,
                     v.jumpVelocity, v.jumpBufferFrames, v.coyoteFrames);
-  refreshMargin();
+  marginDirty = true;
+  document.getElementById('palace').classList.toggle(
+    'on', v.jumpBufferFrames === 0 && v.coyoteFrames === 0);
 }
 KNOBS.forEach(k => {
-  const el = document.getElementById('t-' + k);
-  el.value = session[k];
-  el.nextElementSibling.value = session[k];
-  el.addEventListener('input', pushTuning);
+  knob(k).value = session[k];
+  knob(k).nextElementSibling.value = session[k];
+  knob(k).addEventListener('input', push);
 });
 
-let margin = 0;
-function refreshMargin() { margin = session.margin(); }
-
-// The current run's path, cleared on every reset. Exposed so the Playwright driver can seed it
-// with a scripted run and screenshot the result.
-let trail = [];
-window.__setTrail = p => { trail = p; };
-const rawReset = () => { session.reset(); trail = []; };
-refreshMargin();
-
-// --- fixed-timestep loop, matching the engine exactly ----------------------------------
-const DT = 1000 / V.Session.Companion.fps;
-let acc = 0, last = performance.now();
-
-function frame(now) {
-  acc += Math.min(now - last, 100);
-  last = now;
-  while (acc >= DT) {
-    session.tick(held.left, held.right, held.jump || jumpEdge);
-    jumpEdge = false;
-    trail.push([session.x, session.y]);
-    if (trail.length > 600) trail.shift();
-    acc -= DT;
-    if (session.over) { setTimeout(rawReset, 450); break; }
+let saved = null;
+document.getElementById('palace').addEventListener('click', () => {
+  const on = document.getElementById('palace').classList.contains('on');
+  if (on && saved) {
+    knob('jumpBufferFrames').value = saved[0];
+    knob('coyoteFrames').value = saved[1];
+  } else {
+    saved = [knob('jumpBufferFrames').value, knob('coyoteFrames').value];
+    knob('jumpBufferFrames').value = 0;
+    knob('coyoteFrames').value = 0;
   }
+  push(); restart();
+});
+
+// Recomputing margin replays the room hundreds of times — a second or more for a room with a
+// blade, whose whole cycle has to be searched. It runs off the frame loop, and the readout says so
+// rather than leaving the previous room's number sitting there looking current.
+let measuring = false;
+function refreshMargin() {
+  if (!marginDirty) return;
+  marginDirty = false;
+  measuring = true;
+  const forRoom = session.roomId;
+  setTimeout(() => {
+    const m = session.margin();
+    // Discard a result that arrived after the player already moved on.
+    if (session.roomId === forRoom) {
+      margin = m; measuring = false;
+      window.__marginFor = forRoom;   // so a test can tell a fresh reading from a stale one
+    }
+  }, 0);
+}
+
+// --- fixed-timestep loop, identical to the engine's own ---
+const DT = 1000 / FPS;
+// `lastRoom` is tracked by id, not index: soloing a room restarts the descent with a one-room
+// list, so the index is always 0 and an index comparison would never notice the change.
+let acc = 0, last = performance.now();
+function loop(now) {
+  acc += Math.min(now - last, 120); last = now;
+  while (acc >= DT) {
+    session.tick(held.left, held.right, held.jump || jumpEdge, held.down);
+    jumpEdge = false;
+    if (session.roomId !== lastRoom) { lastRoom = session.roomId; trail = []; marginDirty = true; }
+    trail.push([session.x, session.y, session.hanging]);
+    if (trail.length > 900) trail.shift();
+    acc -= DT;
+    if (session.finished) break;
+  }
+  refreshMargin();
   draw();
-  requestAnimationFrame(frame);
+  requestAnimationFrame(loop);
 }
 
 function draw() {
-  ctx.clearRect(0, 0, W, H);
+  ctx.fillStyle = '#0F1014'; ctx.fillRect(0, 0, W, H);
+  ctx.fillStyle = '#0A0B0E'; ctx.fillRect(0, sy(104), W, H - sy(104));
 
-  // abyss
-  ctx.fillStyle = '#171a22';
-  ctx.fillRect(0, sy(60), W, H - sy(60));
-
-  // ledges
+  // ledges — torchlight from above, so the top edge is lit and the body is not
   for (let i = 0; i < session.ledgeCount; i++) {
+    if (session.ledgeBroken(i)) continue;
     const x0 = sx(session.ledgeX0(i)), x1 = sx(session.ledgeX1(i)), y = sy(session.ledgeY(i));
-    ctx.fillStyle = '#39405a';
-    ctx.fillRect(x0, y, x1 - x0, 14);
-    ctx.fillStyle = '#4b5578';
-    ctx.fillRect(x0, y, x1 - x0, 3);
+    const loose = session.ledgeCollapsing(i), strain = session.ledgeStrain(i);
+    ctx.fillStyle = loose ? '#2A2530' : '#22242E';
+    ctx.fillRect(x0, y, x1 - x0, 20);
+    // A tile running out of patience warms toward the torch colour, then to rust.
+    ctx.fillStyle = strain > 0 ? mix('#4A4050', '#C4563F', strain) : (loose ? '#4A4050' : '#3A3E4E');
+    ctx.fillRect(x0, y, x1 - x0, strain > 0 ? 2.5 + 2 * strain : 2.5);
+    if (loose) {
+      ctx.strokeStyle = '#15161B'; ctx.lineWidth = 1;
+      for (let g = x0 + 18; g < x1 - 4; g += 22) {
+        ctx.beginPath(); ctx.moveTo(g, y); ctx.lineTo(g, y + 20); ctx.stroke();
+      }
+    }
   }
 
-  // exit
-  ctx.strokeStyle = '#7ee08a'; ctx.lineWidth = 2;
-  ctx.beginPath(); ctx.moveTo(sx(session.exitX), sy(0) - 46);
-  ctx.lineTo(sx(session.exitX), sy(0)); ctx.stroke();
+  // blades — shut is a solid bar, open is a stub, and the cycle shows as a filling sliver
+  for (let i = 0; i < session.chomperCount; i++) {
+    const bx = sx(session.chomperX(i)), by = sy(session.chomperY(i));
+    const reach = session.chomperReach(i) * SCALE, hw = session.chomperHalfWidth(i) * SCALE;
+    const open = session.chomperOpen(i), ph = session.chomperPhase(i);
+    ctx.fillStyle = open ? '#2E3140' : '#C4563F';
+    const h = open ? reach * 0.16 : reach;
+    ctx.fillRect(bx - hw, by - h, hw * 2, h);
+    // housing, so an open blade still reads as a threat rather than as nothing
+    ctx.strokeStyle = '#3A3E4E'; ctx.lineWidth = 1;
+    ctx.strokeRect(bx - hw - 1.5, by - reach, hw * 2 + 3, reach);
+    ctx.fillStyle = open ? '#5FB89A' : '#C4563F';
+    ctx.fillRect(bx - hw - 1.5, by - reach - 4, (hw * 2 + 3) * ph, 2);
+  }
 
-  // Trail of the run so far. A jump arc is far easier to judge as a shape than as a feeling,
-  // and it is what makes a screenshot of this harness worth reading.
+  // the way out
+  const ex = sx(session.exitX);
+  ctx.strokeStyle = '#5FB89A'; ctx.lineWidth = 2;
+  ctx.beginPath(); ctx.moveTo(ex, sy(0) - 54); ctx.lineTo(ex, sy(0) + 20); ctx.stroke();
+
+  // the path just travelled — an arc is easier to judge as a shape than as a feeling
   if (trail.length > 1) {
-    ctx.strokeStyle = '#ff8ad8'; ctx.lineWidth = 1.5; ctx.setLineDash([4, 3]);
+    ctx.strokeStyle = 'rgba(232,163,61,.34)'; ctx.lineWidth = 1.5; ctx.setLineDash([4, 4]);
     ctx.beginPath();
     trail.forEach(([x, y], i) => (i ? ctx.lineTo(sx(x), sy(y)) : ctx.moveTo(sx(x), sy(y))));
     ctx.stroke(); ctx.setLineDash([]);
   }
 
-  // runner
+  // the runner: amber on the ground, cold blue in the air, green while hanging on
   const px = sx(session.x), py = sy(session.y);
-  ctx.fillStyle = session.grounded ? '#ffd479' : '#7aa2ff';
-  ctx.fillRect(px - 6, py - 26, 12, 26);
-  // a buffered press that has not yet been spent, drawn above the head
-  if (session.jumpBufferedAgo >= 0) {
-    ctx.fillStyle = '#ff8ad8';
-    ctx.fillRect(px - 6, py - 34, 12, 4);
+  const dead = session.phase === 'DEAD';
+  ctx.fillStyle = dead ? '#5A3038' : session.hanging ? '#5FB89A'
+                 : session.grounded ? '#E8A33D' : '#6E93E0';
+  if (session.hanging) {
+    ctx.fillRect(px - 6, py, 12, 26);           // below the lip, holding on
+    ctx.fillRect(px - 9, py - 3, 18, 3);
+  } else if (dead) {
+    ctx.fillRect(px - 13, py - 7, 26, 7);       // face down
+  } else {
+    ctx.fillRect(px - 6, py - 28, 12, 28);
+  }
+  // an unspent press, waiting for a frame it can be used on — the whole fix, made visible
+  if (session.jumpBufferedAgo >= 0 && !dead) {
+    ctx.fillStyle = '#5FB89A';
+    ctx.beginPath(); ctx.arc(px, py - (session.hanging ? -34 : 36), 3.5, 0, 7); ctx.fill();
   }
 
-  // HUD
-  set('s-room', session.roomId);
-  set('s-frame', session.frame);
-  set('s-pos', session.x.toFixed(1) + ' / ' + session.y.toFixed(1));
-  set('s-vel', session.vx.toFixed(0) + ' / ' + session.vy.toFixed(0));
-  set('s-phase', session.phase);
-  set('s-buf', session.jumpBufferedAgo < 0 ? '—' : session.jumpBufferedAgo + 'f ago');
-  set('s-off', session.framesOffGround);
-  const el = document.getElementById('s-margin');
-  el.textContent = margin + 'f (' + Math.round(margin * 1000 / V.Session.Companion.fps) + 'ms)';
-  el.className = margin >= V.Session.Companion.minMargin ? 'good' : 'bad';
-}
-function set(id, v) { document.getElementById(id).textContent = v; }
+  if (session.finished) {
+    ctx.fillStyle = 'rgba(15,16,20,.82)'; ctx.fillRect(0, 0, W, H);
+    ctx.fillStyle = '#E6E1D6'; ctx.textAlign = 'center';
+    ctx.font = '600 30px ui-serif, Georgia, serif';
+    ctx.fillText('Out of the vaults', W / 2, H / 2 - 6);
+    ctx.font = '14px ui-monospace, Menlo, monospace'; ctx.fillStyle = '#8A8778';
+    ctx.fillText((session.elapsedFrames / FPS).toFixed(1) + 's · ' + session.deaths + ' deaths',
+                 W / 2, H / 2 + 22);
+    ctx.textAlign = 'left';
+  }
 
-window.__session = session;   // Playwright drives the game through this
+  hud();
+}
+
+function mix(a, b, t) {
+  const p = h => [1, 3, 5].map(i => parseInt(h.slice(i, i + 2), 16));
+  const [r1, g1, b1] = p(a), [r2, g2, b2] = p(b);
+  return `rgb(${r1 + (r2 - r1) * t | 0},${g1 + (g2 - g1) * t | 0},${b1 + (b2 - b1) * t | 0})`;
+}
+
+const set = (id, v) => { document.getElementById(id).textContent = v; };
+function hud() {
+  set('s-room', session.roomId);
+  set('s-epi', session.epigraph);
+  set('s-clock', (session.elapsedFrames / FPS).toFixed(1) + 's');
+  set('s-deaths', session.deaths);
+  set('s-phase', session.phase.toLowerCase());
+  set('s-pos', session.x.toFixed(0) + ', ' + session.y.toFixed(0));
+  set('s-vel', session.vx.toFixed(0) + ', ' + session.vy.toFixed(0));
+  set('s-buf', session.jumpBufferedAgo < 0 ? '—' : session.jumpBufferedAgo + ' frames');
+  set('s-off', session.framesOffGround);
+  set('s-cleared', session.soloing ? 'one room' : session.roomsCleared + ' / ' + ROOMS);
+
+  const pips = document.getElementById('s-health');
+  if (pips.childElementCount !== 3) {
+    pips.innerHTML = '<i class="pip"></i><i class="pip"></i><i class="pip"></i>';
+  }
+  [...pips.children].forEach((el, i) => el.className = 'pip' + (i < session.health ? '' : ' spent'));
+
+  const m = document.getElementById('s-margin');
+  if (measuring) {
+    m.textContent = 'measuring…';
+    m.className = 'chip';
+    m.style.color = 'var(--chalk-dim)';
+  } else {
+    m.textContent = margin + ' frames · ' + Math.round(margin * 1000 / FPS) + 'ms';
+    m.className = 'chip ' + (margin >= MIN ? 'ok' : 'bad');
+    m.style.color = '';
+  }
+}
+
+window.__session = session;
 window.__ready = true;
-requestAnimationFrame(frame);
+requestAnimationFrame(loop);
 </script>

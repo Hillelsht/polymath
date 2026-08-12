@@ -36,7 +36,8 @@ python3 tools/generate_facts.py --self-test      # offline, as CI runs it
 
 gradle -p webplay bundle                         # The Vaults -> JavaScript, in build/web/
 NODE_PATH=/opt/node22/lib/node_modules \
-  node tools/playtest/play.js --room 0           # plays it in Chromium, writes a screenshot
+  node tools/playtest/play.js                    # plays every room in Chromium, ~5s
+python3 tools/playtest/inline.py --self-test     # the one-file build, offline
 ```
 
 **The Vaults can be played here.** `webplay/` compiles `domain/play/vaults` — the same source the
