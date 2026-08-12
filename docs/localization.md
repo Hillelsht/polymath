@@ -30,7 +30,8 @@ preference and every published path.
 
 1. Add the enum entry — `Language.tag` and a `displayName` **in its own script** (`Русский`,
    `עברית`), never translated.
-2. Create `res/values-<tag>/strings.xml` with all 219 keys. Everything else is enum-driven and
+2. Create `res/values-<tag>/strings.xml` with all 214 keys — every key in `values/` except
+   `app_name`, which is deliberately not translated. Everything else is enum-driven and
    needs no code change: Settings lists `Language.entries`, and the seeder scans
    `assets/packs/<tag>/` for every non-default language automatically.
 3. Add a translated content pack — `packs/<tag>/geography.json` — with a **suffixed `packId` and
@@ -51,8 +52,9 @@ already declares `supportsRtl`, no code overrides `LocalLayoutDirection`, no lay
 `left`/`right` instead of `start`/`end`, and the single directional icon in the app already used
 the `AutoMirrored` variant.
 
-Canvas-drawn UI — the mascot rig, the chess board — uses raw coordinates and is *not* mirrored.
-That is correct: a chess board should not flip.
+Canvas-drawn UI — the mascot rig, the chess board, the Vaults' rooms — uses raw coordinates and
+is *not* mirrored. That is correct: a chess board should not flip, and a platformer whose exit is
+on the right should not put it on the left in Hebrew.
 
 ## The `values-iw` duplicate
 
