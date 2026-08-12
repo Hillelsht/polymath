@@ -28,7 +28,9 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.vector.ImageVector
 import androidx.compose.ui.res.stringResource
+import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.unit.dp
+import androidx.compose.ui.unit.sp
 import androidx.navigation.NavDestination.Companion.hierarchy
 import androidx.navigation.NavGraph.Companion.findStartDestination
 import androidx.navigation.NavHostController
@@ -117,7 +119,22 @@ fun SmartApp(repository: SmartRepository) {
                             selected = selected,
                             onClick = { navController.navigateToTab(tab.route) },
                             icon = { Icon(tab.icon, contentDescription = label) },
-                            label = { Text(label) },
+                            label = {
+                                // Russian labels ("Настройки", "Прогресс") run noticeably
+                                // wider than their English equivalents at this style's default
+                                // size, and a wrapped second line changes this item's height
+                                // relative to its neighbours — the bar visibly jumps as the
+                                // wrapped and unwrapped items swap places while switching tabs.
+                                // A smaller fixed size plus a hard single-line cap keeps every
+                                // item's label the same height regardless of language.
+                                Text(
+                                    label,
+                                    fontSize = 10.sp,
+                                    maxLines = 1,
+                                    softWrap = false,
+                                    overflow = TextOverflow.Ellipsis,
+                                )
+                            },
                             colors = NavigationBarItemDefaults.colors(
                                 selectedIconColor = MaterialTheme.colorScheme.primary,
                                 selectedTextColor = MaterialTheme.colorScheme.primary,
