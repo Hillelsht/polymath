@@ -89,7 +89,7 @@ Two shapes, chosen by what the screen is:
 ## Navigation
 
 `SmartNavHost.kt` holds every route in `object Routes`, plus builders for the three parameterised
-ones (`quiz`, `category`, `player`). Fifteen destinations; six are tabs.
+ones (`quiz`, `category`, `player`). Fourteen destinations; six are tabs.
 
 The bottom bar renders only when the current route is one of the six tabs — study flows and games
 take the whole screen deliberately. Tab labels are pinned to `fontSize = 10.sp, maxLines = 1,
