@@ -215,7 +215,126 @@
    "handle": "TifoSports",
    "category": "sports",
    "displayName": "Tifo Sports by The Athletic"
+  },
+  {
+   "id": "UC101o-vQ2iOj9vr00JUlyKw",
+   "handle": "varlamov",
+   "category": "geography",
+   "displayName": "varlamov",
+   "language": "ru"
+  },
+  {
+   "id": "UClusShJbD5SIMuoF9Ql5hOw",
+   "handle": "Varlamov.Travel",
+   "category": "geography",
+   "displayName": "Varlamov Travel",
+   "language": "ru"
+  },
+  {
+   "id": "UCNYejKoEJ84iGgXPwTBkCCg",
+   "handle": "TamaraEidelman",
+   "category": "history",
+   "displayName": "Уроки истории с Тамарой Эйдельман",
+   "language": "ru"
+  },
+  {
+   "id": "UCVgvnGSFU41kIhEc09aztEg",
+   "handle": "arzamaschannel",
+   "category": "history",
+   "displayName": "Arzamas",
+   "language": "ru"
+  },
+  {
+   "id": "UCsK1oV0PGkcZ1UhFtajx0dg",
+   "handle": "RedRoomLIMB",
+   "category": "history",
+   "displayName": "Redroom",
+   "language": "ru"
+  },
+  {
+   "id": "UC2Ru64PHqW4FxoP0xhQRvJg",
+   "handle": "toplesofficial",
+   "category": "science",
+   "displayName": "ТОПЛЕС",
+   "language": "ru"
+  },
+  {
+   "id": "UCaY08MNW5C097-0je7xT6fA",
+   "handle": "nowchpok",
+   "category": "science",
+   "displayName": "Научпок",
+   "language": "ru"
+  },
+  {
+   "id": "UCSPd93is2UQsd_jZ6yHBfqQ",
+   "handle": "postnauka",
+   "category": "science",
+   "displayName": "ПостНаука",
+   "language": "ru"
+  },
+  {
+   "id": "UCzWnF-3UWAGNeK5fIkBmahg",
+   "handle": "SimpleScienceRU",
+   "category": "science",
+   "displayName": "Простая наука",
+   "language": "ru"
+  },
+  {
+   "id": "UCK-5TknjBdBZjwVHRfByPFQ",
+   "handle": "nauka_tv",
+   "category": "science",
+   "displayName": "Телеканал НАУКА",
+   "language": "ru"
+  },
+  {
+   "id": "UCCJR2fHtwpHs5eYirnbCNQA",
+   "handle": "stg",
+   "category": "arts",
+   "displayName": "Третьяковская галерея",
+   "language": "ru"
+  },
+  {
+   "id": "UCy3tWK2zjcYzDb39mClSZfw",
+   "handle": "pushkinmuseum",
+   "category": "arts",
+   "displayName": "Государственный музей А. С. Пушкина",
+   "language": "ru"
+  },
+  {
+   "id": "UC4tlrTXCBw6NPZ9nCA3_s9w",
+   "handle": "kinopoisk",
+   "category": "culture",
+   "displayName": "Кинопоиск",
+   "language": "ru"
+  },
+  {
+   "id": "UCrP1MDH8LYBU6Xld34YwHWQ",
+   "handle": "kinopoiskpodcasts",
+   "category": "culture",
+   "displayName": "Подкасты Кинопоиска",
+   "language": "ru"
+  },
+  {
+   "id": "UCoRAnB8KixJiszlSpMHa-SA",
+   "handle": "KRASAVAvlog",
+   "category": "sports",
+   "displayName": "КраСава",
+   "language": "ru"
+  },
+  {
+   "id": "UCtetJiD_llxdGL4Uh5-Oe2w",
+   "handle": "matchtv",
+   "category": "sports",
+   "displayName": "Матч ТВ",
+   "language": "ru"
+  },
+  {
+   "id": "UCeAK3Ievttv9gCGeUrSPqZQ",
+   "handle": "fc.matchtv",
+   "category": "sports",
+   "displayName": "ФК Матч ТВ",
+   "language": "ru"
   }
  ],
- "version": "2028d1447498"
+ "version": "08d5af843798"
 }
