@@ -4,7 +4,6 @@ import com.hillelsht.smart.data.local.ActivityDao
 import com.hillelsht.smart.data.local.BlockedVideoDao
 import com.hillelsht.smart.data.local.BlockedVideoEntity
 import com.hillelsht.smart.data.local.ChannelDao
-import com.hillelsht.smart.data.local.ChannelEntity
 import com.hillelsht.smart.data.local.ContentSeeder
 import com.hillelsht.smart.data.local.DailyActivityEntity
 import com.hillelsht.smart.data.local.FactDao
@@ -565,12 +564,16 @@ class SmartRepository(
         val installed = channelDao.all()
         if (installed.isEmpty()) return false
 
-        // A Russian speaker gets the Russian channels, not English ones they cannot follow.
-        // Falling back to the whole list rather than showing an empty shelf matters: a
-        // language whose channels have not been probed yet — or that were all dropped for
-        // blocking embedding — should still leave something to watch.
+        // Strictly the selected language. This used to fall back to the whole allowlist when
+        // the filter matched nothing, which sounds forgiving and is not: it turns "your
+        // language has no channels" into a shelf of videos you cannot follow, and hides the
+        // real fault instead of showing it. An empty shelf is the honest answer.
         val wanted = currentLanguage().tag
-        val channels = installed.filter { it.language == wanted }.ifEmpty { installed }
+        val channels = installed.filter { it.language == wanted }
+        if (channels.isEmpty()) {
+            videoDao.replaceShelf(emptyList())
+            return true
+        }
 
         val feeds = feedService.fetchAll(channels.map { it.id })
         if (feeds.isEmpty()) return false
@@ -668,16 +671,7 @@ class SmartRepository(
 
         packStorage.save("channels.json", raw)
         channelDao.clear()
-        channelDao.insertAll(
-            parsed.channels.map {
-                ChannelEntity(
-                    id = it.id,
-                    handle = it.handle,
-                    categoryId = it.category.id,
-                    displayName = it.displayName,
-                )
-            },
-        )
+        channelDao.insertAll(parsed.channels.map { it.toEntity() })
         return true
     }
 

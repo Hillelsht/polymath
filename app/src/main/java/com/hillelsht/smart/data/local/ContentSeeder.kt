@@ -85,17 +85,7 @@ class ContentSeeder(
         if (installed != null && installed.version == parsed.version) return
 
         channelDao.clear()
-        channelDao.insertAll(
-            parsed.channels.map {
-                ChannelEntity(
-                    id = it.id,
-                    handle = it.handle,
-                    categoryId = it.category.id,
-                    displayName = it.displayName,
-                    language = it.language.tag,
-                )
-            },
-        )
+        channelDao.insertAll(parsed.channels.map { it.toEntity() })
         packDao.upsert(
             PackEntity(
                 id = CHANNELS_PACK,

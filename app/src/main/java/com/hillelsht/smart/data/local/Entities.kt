@@ -5,6 +5,7 @@ import androidx.room.Entity
 import androidx.room.Index
 import androidx.room.PrimaryKey
 import androidx.room.TypeConverter
+import com.hillelsht.smart.data.seed.WatchChannel
 import com.hillelsht.smart.domain.model.Category
 import com.hillelsht.smart.domain.model.Fact
 import com.hillelsht.smart.domain.model.Language
@@ -77,9 +78,15 @@ data class ChannelEntity(
     val handle: String,
     val categoryId: String,
     val displayName: String,
-    /** [Language.tag]. Every channel that predates languages is English — see the migration. */
+    /**
+     * [Language.tag]. Deliberately has **no Kotlin default**, so every construction site is
+     * forced to say which language it means. It had one, and the second of the two places
+     * that build this entity quietly took it — storing all 53 channels as English, which made
+     * the Russian shelf fall back to the English one. The Room default below is a different
+     * thing: it backfills existing rows during the v6→v7 migration.
+     */
     @ColumnInfo(defaultValue = "en")
-    val language: String = Language.default.tag,
+    val language: String,
 )
 
 /**
@@ -247,6 +254,19 @@ fun Fact.toEntity(): FactEntity = FactEntity(
     imageUrl = imageUrl,
     pageUrl = pageUrl,
     packId = packId,
+    language = language.tag,
+)
+
+/**
+ * The single mapping from a parsed channel to its row.
+ *
+ * There were two, written weeks apart, and only one of them learned about languages.
+ */
+fun WatchChannel.toEntity(): ChannelEntity = ChannelEntity(
+    id = id,
+    handle = handle,
+    categoryId = category.id,
+    displayName = displayName,
     language = language.tag,
 )
 
