@@ -47,12 +47,15 @@ import androidx.compose.ui.graphics.StrokeCap
 import androidx.compose.ui.graphics.drawscope.Stroke
 import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.platform.LocalContext
+import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.Dp
 import androidx.compose.ui.unit.dp
 import coil.compose.SubcomposeAsyncImage
+import com.hillelsht.smart.R
 import com.hillelsht.smart.domain.model.Category
+import com.hillelsht.smart.domain.model.LengthClass
 import com.hillelsht.smart.ui.LocalImageResolver
 import com.hillelsht.smart.ui.theme.SmartPalette
 
@@ -62,6 +65,46 @@ fun Category.accent(): Color = Color(android.graphics.Color.parseColor(accentHex
 fun Category.secondary(): Color = Color(android.graphics.Color.parseColor(secondaryHex))
 
 fun Category.gradient(): Brush = Brush.linearGradient(listOf(accent(), secondary()))
+
+/**
+ * [Category.displayName] and [Category.blurb] live in the domain layer as plain English, since
+ * that layer is shared verbatim with `enginetests` and cannot reference generated Android
+ * resources. These resolve the same category to the current locale's text, the same way
+ * [accent] resolves [Category.accentHex] into a Compose [Color].
+ */
+@Composable
+fun Category.localizedName(): String = stringResource(
+    when (this) {
+        Category.GEOGRAPHY -> R.string.category_geography_name
+        Category.HISTORY -> R.string.category_history_name
+        Category.SCIENCE -> R.string.category_science_name
+        Category.ARTS -> R.string.category_arts_name
+        Category.SPORTS -> R.string.category_sports_name
+        Category.CULTURE -> R.string.category_culture_name
+    },
+)
+
+@Composable
+fun Category.localizedBlurb(): String = stringResource(
+    when (this) {
+        Category.GEOGRAPHY -> R.string.category_geography_blurb
+        Category.HISTORY -> R.string.category_history_blurb
+        Category.SCIENCE -> R.string.category_science_blurb
+        Category.ARTS -> R.string.category_arts_blurb
+        Category.SPORTS -> R.string.category_sports_blurb
+        Category.CULTURE -> R.string.category_culture_blurb
+    },
+)
+
+/** Same adaptation as [Category.localizedName], for the Watch tab's Short/Medium/Long filter. */
+@Composable
+fun LengthClass.localizedLabel(): String = stringResource(
+    when (this) {
+        LengthClass.SHORT -> R.string.length_short
+        LengthClass.MEDIUM -> R.string.length_medium
+        LengthClass.LONG -> R.string.length_long
+    },
+)
 
 /** The app's standard raised panel. */
 @Composable
@@ -226,7 +269,7 @@ fun CategoryChip(
                 .background(category.accent()),
         )
         Text(
-            text = category.displayName,
+            text = category.localizedName(),
             style = MaterialTheme.typography.labelMedium,
             color = category.accent(),
             modifier = Modifier.padding(start = 8.dp),
@@ -342,7 +385,9 @@ fun GoDeeper(
         if (details != null) {
             TextButton(onClick = { expanded = !expanded }) {
                 Text(
-                    text = if (expanded) "Show less" else "Go deeper",
+                    text = stringResource(
+                        if (expanded) R.string.go_deeper_show_less else R.string.go_deeper_expand,
+                    ),
                     style = MaterialTheme.typography.labelLarge,
                     color = accent,
                 )
@@ -371,7 +416,7 @@ fun GoDeeper(
                 },
             ) {
                 Text(
-                    text = "Read on Wikipedia",
+                    text = stringResource(R.string.go_deeper_read_wikipedia),
                     style = MaterialTheme.typography.labelLarge,
                     color = MaterialTheme.colorScheme.onSurfaceVariant,
                 )

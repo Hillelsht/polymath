@@ -24,6 +24,7 @@ import androidx.compose.runtime.getValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
+import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
@@ -31,6 +32,7 @@ import androidx.lifecycle.viewModelScope
 import androidx.lifecycle.viewmodel.compose.viewModel
 import androidx.lifecycle.viewmodel.initializer
 import androidx.lifecycle.viewmodel.viewModelFactory
+import com.hillelsht.smart.R
 import com.hillelsht.smart.data.SmartRepository
 import com.hillelsht.smart.data.local.QuizResultEntity
 import com.hillelsht.smart.domain.CategoryMastery
@@ -39,6 +41,7 @@ import com.hillelsht.smart.domain.Streak
 import com.hillelsht.smart.ui.components.SmartCard
 import com.hillelsht.smart.ui.components.StatTile
 import com.hillelsht.smart.ui.components.accent
+import com.hillelsht.smart.ui.components.localizedName
 import kotlinx.coroutines.flow.SharingStarted
 import kotlinx.coroutines.flow.combine
 import kotlinx.coroutines.flow.stateIn
@@ -95,7 +98,7 @@ fun StatsScreen(repository: SmartRepository) {
     ) {
         item {
             Text(
-                text = "Progress",
+                text = stringResource(R.string.tab_progress),
                 style = MaterialTheme.typography.displayMedium,
                 color = MaterialTheme.colorScheme.onBackground,
             )
@@ -109,17 +112,17 @@ fun StatsScreen(repository: SmartRepository) {
                 ) {
                     StatTile(
                         value = "${(state.overall * 100).toInt()}%",
-                        caption = "Mastery",
+                        caption = stringResource(R.string.stats_mastery_caption),
                         modifier = Modifier.weight(1f),
                     )
                     StatTile(
                         value = state.mastered.toString(),
-                        caption = "Facts mastered",
+                        caption = stringResource(R.string.stats_facts_mastered_caption),
                         modifier = Modifier.weight(1f),
                     )
                     StatTile(
                         value = state.streak.current.toString(),
-                        caption = "Day streak",
+                        caption = stringResource(R.string.stats_day_streak_caption),
                         modifier = Modifier.weight(1f),
                     )
                 }
@@ -130,22 +133,32 @@ fun StatsScreen(repository: SmartRepository) {
             SmartCard(Modifier.fillMaxWidth()) {
                 Column {
                     Text(
-                        text = "Quiz accuracy",
+                        text = stringResource(R.string.stats_quiz_accuracy_title),
                         style = MaterialTheme.typography.titleMedium,
                         color = MaterialTheme.colorScheme.onSurface,
                     )
                     Spacer(Modifier.height(6.dp))
                     Text(
                         text = state.quizAccuracy
-                            ?.let { "${(it * 100).toInt()}% across ${state.quizzes.size} quizzes" }
-                            ?: "Take your first quiz to start tracking this.",
+                            ?.let {
+                                stringResource(
+                                    R.string.stats_quiz_accuracy_value,
+                                    (it * 100).toInt(),
+                                    state.quizzes.size,
+                                )
+                            }
+                            ?: stringResource(R.string.stats_quiz_accuracy_empty),
                         style = MaterialTheme.typography.bodyMedium,
                         color = MaterialTheme.colorScheme.onSurfaceVariant,
                     )
                     Spacer(Modifier.height(6.dp))
                     Text(
-                        text = "Longest streak: ${state.streak.longest} days · " +
-                            "${state.seen} of ${state.total} facts encountered",
+                        text = stringResource(
+                            R.string.stats_longest_streak,
+                            state.streak.longest,
+                            state.seen,
+                            state.total,
+                        ),
                         style = MaterialTheme.typography.labelMedium,
                         color = MaterialTheme.colorScheme.onSurfaceVariant,
                     )
@@ -155,7 +168,7 @@ fun StatsScreen(repository: SmartRepository) {
 
         item {
             Text(
-                text = "Mastery by subject",
+                text = stringResource(R.string.stats_mastery_by_subject),
                 style = MaterialTheme.typography.headlineSmall,
                 color = MaterialTheme.colorScheme.onBackground,
             )
@@ -182,12 +195,12 @@ private fun MasteryBar(entry: CategoryMastery) {
             verticalAlignment = Alignment.Bottom,
         ) {
             Text(
-                text = entry.category.displayName,
+                text = entry.category.localizedName(),
                 style = MaterialTheme.typography.titleMedium,
                 color = MaterialTheme.colorScheme.onSurface,
             )
             Text(
-                text = "${entry.masteredFacts}/${entry.totalFacts}",
+                text = stringResource(R.string.stats_fraction, entry.masteredFacts, entry.totalFacts),
                 style = MaterialTheme.typography.labelMedium,
                 color = MaterialTheme.colorScheme.onSurfaceVariant,
             )

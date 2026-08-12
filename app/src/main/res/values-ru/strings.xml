@@ -40,4 +40,101 @@
     <string name="home_action_read_subtitle">Изучить всё</string>
     <string name="home_action_watch_subtitle">Новые видео</string>
     <string name="home_action_play_subtitle">Игры и головоломки</string>
+
+    <!-- Category names and blurbs (shared across Read, Watch, Play, Progress) -->
+    <string name="category_geography_name">География</string>
+    <string name="category_geography_blurb">Страны, столицы, реки и очертания мира</string>
+    <string name="category_history_name">История</string>
+    <string name="category_history_blurb">События, империи и люди, которые всё это запустили</string>
+    <string name="category_science_name">Наука</string>
+    <string name="category_science_blurb">Физика, химия, биология и законы, по которым живёт реальность</string>
+    <string name="category_arts_name">Искусство и литература</string>
+    <string name="category_arts_blurb">Картины, романы, композиторы и классика, которую стоит знать</string>
+    <string name="category_sports_name">Спорт и игры</string>
+    <string name="category_sports_blurb">Рекорды, правила и моменты, создавшие легенд</string>
+    <string name="category_culture_name">Поп-культура</string>
+    <string name="category_culture_blurb">Кино, музыка, телевидение и цитаты, которые знают все</string>
+    <string name="category_unknown">Неизвестная категория</string>
+
+    <!-- Shared -->
+    <string name="action_back">Назад</string>
+    <string name="go_deeper_show_less">Свернуть</string>
+    <string name="go_deeper_expand">Узнать больше</string>
+    <string name="go_deeper_read_wikipedia">Читать в Википедии</string>
+
+    <!-- Watch length filter -->
+    <string name="length_short">Короткие</string>
+    <string name="length_medium">Средние</string>
+    <string name="length_long">Длинные</string>
+
+    <!-- Read / Library -->
+    <string name="library_tagline">Всё, чему может научить это приложение</string>
+    <string name="library_mastered_of_total">Освоено: %1$d · всего фактов: %2$d</string>
+    <string name="library_fact_count">Фактов: %1$d</string>
+    <string name="library_quiz_category_cd">Тест по этой категории</string>
+    <string name="library_review_status_singular">Повтор через %1$d дн. · показано %2$d раз</string>
+    <string name="library_review_status_plural">Повтор через %1$d дн. · показано %2$d раз</string>
+
+    <!-- Watch -->
+    <string name="watch_status_fetching">Загружаем последние видео…</string>
+    <string name="watch_status_offline">Нет сети — не удалось подключиться к YouTube</string>
+    <string name="watch_status_fresh">Свежее с этих каналов при каждом открытии</string>
+    <string name="watch_refresh">Обновить</string>
+    <string name="watch_empty_loading_title">Загружаем подборку…</string>
+    <string name="watch_empty_offline_title">Нет соединения</string>
+    <string name="watch_empty_nomatch_title">Ничего не найдено</string>
+    <string name="watch_empty_loading_body">Смотрим, что опубликовали эти каналы.</string>
+    <string name="watch_empty_offline_body">Вкладка «Смотреть» загружает видео в реальном времени, поэтому нужна связь. Всё остальное в приложении работает офлайн.</string>
+    <string name="watch_empty_nomatch_body">Пока нет видео с таким сочетанием фильтров. Попробуйте сбросить фильтр.</string>
+    <string name="watch_watched_cd">Просмотрено</string>
+    <string name="watch_minutes">%1$d мин</string>
+    <string name="watch_channel_and_category">%1$s · %2$s</string>
+
+    <!-- Play tab -->
+    <string name="play_tagline">Всё, что вы знаете, — в деле</string>
+    <string name="game_climb_title">Восхождение</string>
+    <string name="game_climb_blurb">Поднимайтесь по башне, используя свои знания. Собирайте реликвии, испытывайте удачу.</string>
+    <string name="game_chains_title">Цепи</string>
+    <string name="game_chains_blurb">Шестнадцать плиток, четыре скрытые группы. Одна сетка в день, одна для всех.</string>
+    <string name="game_gambit_title">Гамбит</string>
+    <string name="game_gambit_blurb">Шахматы против движка, который слабеет по мере ваших знаний. Отвечайте между ходами.</string>
+    <string name="game_palace_title">Дворец Арье</string>
+    <string name="game_palace_blurb">Бегите, прыгайте и цепляйтесь за уступы в залах дворца. Отвечайте у каждых ворот.</string>
+    <string name="game_quiz_title">Тест</string>
+    <string name="game_quiz_blurb">Быстрый раунд по тому, что вы изучали.</string>
+    <string name="play_climb_never">Вы ещё не поднимались</string>
+    <string name="play_climb_summary">Лучший результат: %1$d · попыток: %2$d</string>
+    <string name="play_climb_cta_start">Начать восхождение</string>
+    <string name="play_climb_cta_again">Подняться снова</string>
+    <string name="play_chains_none">Сегодня сетки нет</string>
+    <string name="play_chains_done">Готово на сегодня</string>
+    <string name="play_chains_done_with_streak">Готово на сегодня · серия: %1$d дн.</string>
+    <string name="play_chains_waiting">Сегодняшняя сетка ждёт</string>
+    <string name="play_chains_waiting_with_streak">Сегодняшняя сетка ждёт · серия: %1$d дн.</string>
+    <string name="play_chains_cta_see">Посмотреть сегодняшнюю сетку</string>
+    <string name="play_chains_cta_play">Играть в сегодняшнюю сетку</string>
+    <string name="play_gambit_never">Вы ещё не играли</string>
+    <string name="play_gambit_summary_won">Сыграно партий: %1$d · есть победа</string>
+    <string name="play_gambit_summary">Сыграно партий: %1$d</string>
+    <string name="play_gambit_cta_start">Начать партию</string>
+    <string name="play_gambit_cta_resume">Продолжить или начать заново</string>
+    <string name="play_palace_never">Вы ещё не исследовали</string>
+    <string name="play_palace_summary_won">Попыток: %1$d · дворец пройден</string>
+    <string name="play_palace_summary">Попыток: %1$d</string>
+    <string name="play_palace_cta_start">Войти</string>
+    <string name="play_palace_cta_again">Пройти снова</string>
+    <string name="play_quiz_footnote">Десять вопросов по тому, что вы изучали</string>
+    <string name="play_quiz_cta">Пройти тест</string>
+    <string name="play_cta_disabled">Пока нет</string>
+
+    <!-- Progress -->
+    <string name="stats_mastery_caption">Освоено</string>
+    <string name="stats_facts_mastered_caption">Фактов освоено</string>
+    <string name="stats_day_streak_caption">Серия дней</string>
+    <string name="stats_quiz_accuracy_title">Точность тестов</string>
+    <string name="stats_quiz_accuracy_value">%1$d%% по %2$d тестам</string>
+    <string name="stats_quiz_accuracy_empty">Пройдите первый тест, чтобы начать отслеживать это.</string>
+    <string name="stats_longest_streak">Самая длинная серия: %1$d дн. · встречено фактов: %2$d из %3$d</string>
+    <string name="stats_mastery_by_subject">Освоение по темам</string>
+    <string name="stats_fraction">%1$d/%2$d</string>
 </resources>

@@ -36,6 +36,7 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.Brush
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
@@ -43,6 +44,7 @@ import androidx.lifecycle.viewModelScope
 import androidx.lifecycle.viewmodel.compose.viewModel
 import androidx.lifecycle.viewmodel.initializer
 import androidx.lifecycle.viewmodel.viewModelFactory
+import com.hillelsht.smart.R
 import com.hillelsht.smart.data.SmartRepository
 import com.hillelsht.smart.domain.CategoryMastery
 import com.hillelsht.smart.domain.LibraryKeys
@@ -56,6 +58,8 @@ import com.hillelsht.smart.ui.components.GoDeeper
 import com.hillelsht.smart.ui.components.MasteryRing
 import com.hillelsht.smart.ui.components.SmartCard
 import com.hillelsht.smart.ui.components.accent
+import com.hillelsht.smart.ui.components.localizedBlurb
+import com.hillelsht.smart.ui.components.localizedName
 import com.hillelsht.smart.ui.components.secondary
 import kotlinx.coroutines.flow.SharingStarted
 import kotlinx.coroutines.flow.combine
@@ -99,12 +103,12 @@ fun LibraryScreen(repository: SmartRepository, onCategory: (Category) -> Unit) {
         item {
             Column {
                 Text(
-                    text = "Read",
+                    text = stringResource(R.string.tab_read),
                     style = MaterialTheme.typography.displayMedium,
                     color = MaterialTheme.colorScheme.onBackground,
                 )
                 Text(
-                    text = "Everything the app can teach you",
+                    text = stringResource(R.string.library_tagline),
                     style = MaterialTheme.typography.bodyMedium,
                     color = MaterialTheme.colorScheme.onSurfaceVariant,
                 )
@@ -153,20 +157,24 @@ private fun CategoryRow(entry: CategoryMastery, onClick: () -> Unit) {
         Spacer(Modifier.width(16.dp))
         Column(Modifier.weight(1f)) {
             Text(
-                text = category.displayName,
+                text = category.localizedName(),
                 style = MaterialTheme.typography.titleMedium,
                 color = MaterialTheme.colorScheme.onSurface,
             )
             Spacer(Modifier.height(2.dp))
             Text(
-                text = category.blurb,
+                text = category.localizedBlurb(),
                 style = MaterialTheme.typography.bodyMedium,
                 color = MaterialTheme.colorScheme.onSurfaceVariant,
                 maxLines = 2,
             )
             Spacer(Modifier.height(6.dp))
             Text(
-                text = "${entry.masteredFacts} mastered · ${entry.totalFacts} facts",
+                text = stringResource(
+                    R.string.library_mastered_of_total,
+                    entry.masteredFacts,
+                    entry.totalFacts,
+                ),
                 style = MaterialTheme.typography.labelMedium,
                 color = category.accent(),
             )
@@ -217,7 +225,7 @@ fun CategoryScreen(
 ) {
     if (category == null) {
         Box(Modifier.fillMaxSize(), contentAlignment = Alignment.Center) {
-            Text("Unknown category", color = MaterialTheme.colorScheme.onBackground)
+            Text(stringResource(R.string.category_unknown), color = MaterialTheme.colorScheme.onBackground)
         }
         return
     }
@@ -243,19 +251,19 @@ fun CategoryScreen(
                 IconButton(onClick = onBack) {
                     Icon(
                         Icons.AutoMirrored.Rounded.ArrowBack,
-                        contentDescription = "Back",
+                        contentDescription = stringResource(R.string.action_back),
                         tint = MaterialTheme.colorScheme.onSurfaceVariant,
                     )
                 }
                 Spacer(Modifier.width(4.dp))
                 Column(Modifier.weight(1f)) {
                     Text(
-                        text = category.displayName,
+                        text = category.localizedName(),
                         style = MaterialTheme.typography.headlineMedium,
                         color = MaterialTheme.colorScheme.onBackground,
                     )
                     Text(
-                        text = "${facts.size} facts",
+                        text = stringResource(R.string.library_fact_count, facts.size),
                         style = MaterialTheme.typography.bodyMedium,
                         color = MaterialTheme.colorScheme.onSurfaceVariant,
                     )
@@ -263,7 +271,7 @@ fun CategoryScreen(
                 IconButton(onClick = { onQuiz(category) }) {
                     Icon(
                         Icons.Rounded.Quiz,
-                        contentDescription = "Quiz this category",
+                        contentDescription = stringResource(R.string.library_quiz_category_cd),
                         tint = category.accent(),
                     )
                 }
@@ -335,9 +343,15 @@ private fun FactRow(
                 state?.let {
                     Spacer(Modifier.height(10.dp))
                     Text(
-                        text = "Next review in ${it.intervalDays} " +
-                            (if (it.intervalDays == 1) "day" else "days") +
-                            " · seen ${it.totalReviews} times",
+                        text = stringResource(
+                            if (it.intervalDays == 1) {
+                                R.string.library_review_status_singular
+                            } else {
+                                R.string.library_review_status_plural
+                            },
+                            it.intervalDays,
+                            it.totalReviews,
+                        ),
                         style = MaterialTheme.typography.labelMedium,
                         color = MaterialTheme.colorScheme.onSurfaceVariant,
                     )

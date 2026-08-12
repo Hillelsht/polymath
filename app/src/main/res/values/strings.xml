@@ -42,4 +42,101 @@
     <string name="home_action_read_subtitle">Browse everything</string>
     <string name="home_action_watch_subtitle">Fresh videos waiting</string>
     <string name="home_action_play_subtitle">Games and puzzles</string>
+
+    <!-- Category names and blurbs (shared across Read, Watch, Play, Progress) -->
+    <string name="category_geography_name">Geography</string>
+    <string name="category_geography_blurb">Countries, capitals, rivers, and the shape of the world</string>
+    <string name="category_history_name">History</string>
+    <string name="category_history_blurb">The events, empires, and people that set everything in motion</string>
+    <string name="category_science_name">Science</string>
+    <string name="category_science_blurb">Physics, chemistry, biology, and the rules reality runs on</string>
+    <string name="category_arts_name">Arts &amp; Literature</string>
+    <string name="category_arts_blurb">Paintings, novels, composers, and the canon worth knowing</string>
+    <string name="category_sports_name">Sports &amp; Games</string>
+    <string name="category_sports_blurb">Records, rules, and the moments that made legends</string>
+    <string name="category_culture_name">Pop Culture</string>
+    <string name="category_culture_blurb">Film, music, television, and the references everyone quotes</string>
+    <string name="category_unknown">Unknown category</string>
+
+    <!-- Shared -->
+    <string name="action_back">Back</string>
+    <string name="go_deeper_show_less">Show less</string>
+    <string name="go_deeper_expand">Go deeper</string>
+    <string name="go_deeper_read_wikipedia">Read on Wikipedia</string>
+
+    <!-- Watch length filter -->
+    <string name="length_short">Short</string>
+    <string name="length_medium">Medium</string>
+    <string name="length_long">Long</string>
+
+    <!-- Read / Library -->
+    <string name="library_tagline">Everything the app can teach you</string>
+    <string name="library_mastered_of_total">%1$d mastered · %2$d facts</string>
+    <string name="library_fact_count">%1$d facts</string>
+    <string name="library_quiz_category_cd">Quiz this category</string>
+    <string name="library_review_status_singular">Next review in %1$d day · seen %2$d times</string>
+    <string name="library_review_status_plural">Next review in %1$d days · seen %2$d times</string>
+
+    <!-- Watch -->
+    <string name="watch_status_fetching">Fetching the latest uploads…</string>
+    <string name="watch_status_offline">Offline — could not reach YouTube</string>
+    <string name="watch_status_fresh">Fresh from these channels, every time you open</string>
+    <string name="watch_refresh">Refresh</string>
+    <string name="watch_empty_loading_title">Loading the shelf…</string>
+    <string name="watch_empty_offline_title">No connection</string>
+    <string name="watch_empty_nomatch_title">Nothing matches</string>
+    <string name="watch_empty_loading_body">Reading what these channels have published.</string>
+    <string name="watch_empty_offline_body">The Watch tab pulls videos live, so it needs a connection. Everything else in the app works offline.</string>
+    <string name="watch_empty_nomatch_body">No videos in this combination yet. Try clearing a filter.</string>
+    <string name="watch_watched_cd">Watched</string>
+    <string name="watch_minutes">%1$d min</string>
+    <string name="watch_channel_and_category">%1$s · %2$s</string>
+
+    <!-- Play tab -->
+    <string name="play_tagline">Everything you know, put to work</string>
+    <string name="game_climb_title">The Climb</string>
+    <string name="game_climb_blurb">Fight your way up a tower with what you know. Collect relics, push your luck.</string>
+    <string name="game_chains_title">Chains</string>
+    <string name="game_chains_blurb">Sixteen tiles, four hidden groups. One grid a day, the same one for everybody.</string>
+    <string name="game_gambit_title">Gambit</string>
+    <string name="game_gambit_blurb">Chess against an engine that gets weaker the more you know. Answer between moves.</string>
+    <string name="game_palace_title">Aryeh\'s Palace</string>
+    <string name="game_palace_blurb">Run, leap and hang your way through the halls. Answer at every gate.</string>
+    <string name="game_quiz_title">Quiz</string>
+    <string name="game_quiz_blurb">A quick round on what you have been learning.</string>
+    <string name="play_climb_never">Never climbed</string>
+    <string name="play_climb_summary">Best %1$d · %2$d runs</string>
+    <string name="play_climb_cta_start">Start climbing</string>
+    <string name="play_climb_cta_again">Climb again</string>
+    <string name="play_chains_none">No grid today</string>
+    <string name="play_chains_done">Done for today</string>
+    <string name="play_chains_done_with_streak">Done for today · %1$d day streak</string>
+    <string name="play_chains_waiting">Today\'s grid is waiting</string>
+    <string name="play_chains_waiting_with_streak">Today\'s grid is waiting · %1$d day streak</string>
+    <string name="play_chains_cta_see">See today\'s grid</string>
+    <string name="play_chains_cta_play">Play today\'s grid</string>
+    <string name="play_gambit_never">Never played</string>
+    <string name="play_gambit_summary_won">%1$d games played · you\'ve won one</string>
+    <string name="play_gambit_summary">%1$d games played</string>
+    <string name="play_gambit_cta_start">Start a game</string>
+    <string name="play_gambit_cta_resume">Resume or start again</string>
+    <string name="play_palace_never">Never explored</string>
+    <string name="play_palace_summary_won">%1$d runs · you\'ve reached the end</string>
+    <string name="play_palace_summary">%1$d runs</string>
+    <string name="play_palace_cta_start">Step inside</string>
+    <string name="play_palace_cta_again">Run it again</string>
+    <string name="play_quiz_footnote">Ten questions from what you have been learning</string>
+    <string name="play_quiz_cta">Take a quiz</string>
+    <string name="play_cta_disabled">Not yet</string>
+
+    <!-- Progress -->
+    <string name="stats_mastery_caption">Mastery</string>
+    <string name="stats_facts_mastered_caption">Facts mastered</string>
+    <string name="stats_day_streak_caption">Day streak</string>
+    <string name="stats_quiz_accuracy_title">Quiz accuracy</string>
+    <string name="stats_quiz_accuracy_value">%1$d%% across %2$d quizzes</string>
+    <string name="stats_quiz_accuracy_empty">Take your first quiz to start tracking this.</string>
+    <string name="stats_longest_streak">Longest streak: %1$d days · %2$d of %3$d facts encountered</string>
+    <string name="stats_mastery_by_subject">Mastery by subject</string>
+    <string name="stats_fraction">%1$d/%2$d</string>
 </resources>

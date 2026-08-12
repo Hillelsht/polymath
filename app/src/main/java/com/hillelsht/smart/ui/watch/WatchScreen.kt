@@ -37,6 +37,7 @@ import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.Brush
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.layout.ContentScale
+import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
@@ -45,6 +46,7 @@ import androidx.lifecycle.viewmodel.compose.viewModel
 import androidx.lifecycle.viewmodel.initializer
 import androidx.lifecycle.viewmodel.viewModelFactory
 import coil.compose.AsyncImage
+import com.hillelsht.smart.R
 import com.hillelsht.smart.data.SmartRepository
 import com.hillelsht.smart.domain.ShelfFilter
 import com.hillelsht.smart.domain.model.Category
@@ -52,6 +54,8 @@ import com.hillelsht.smart.domain.model.LengthClass
 import com.hillelsht.smart.domain.model.Video
 import com.hillelsht.smart.ui.components.EmptyState
 import com.hillelsht.smart.ui.components.accent
+import com.hillelsht.smart.ui.components.localizedLabel
+import com.hillelsht.smart.ui.components.localizedName
 import com.hillelsht.smart.ui.components.secondary
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.SharingStarted
@@ -184,16 +188,16 @@ fun WatchScreen(repository: SmartRepository, onPlay: (Video) -> Unit) {
         item {
             Column {
                 Text(
-                    text = "Watch",
+                    text = stringResource(R.string.tab_watch),
                     style = MaterialTheme.typography.displayMedium,
                     color = MaterialTheme.colorScheme.onBackground,
                 )
                 Row(verticalAlignment = Alignment.CenterVertically) {
                     Text(
                         text = when {
-                            state.refreshing -> "Fetching the latest uploads…"
-                            state.offline -> "Offline — could not reach YouTube"
-                            else -> "Fresh from these channels, every time you open"
+                            state.refreshing -> stringResource(R.string.watch_status_fetching)
+                            state.offline -> stringResource(R.string.watch_status_offline)
+                            else -> stringResource(R.string.watch_status_fresh)
                         },
                         style = MaterialTheme.typography.bodyMedium,
                         color = MaterialTheme.colorScheme.onSurfaceVariant,
@@ -201,7 +205,7 @@ fun WatchScreen(repository: SmartRepository, onPlay: (Video) -> Unit) {
                     )
                     if (!state.refreshing) {
                         Text(
-                            text = "Refresh",
+                            text = stringResource(R.string.watch_refresh),
                             style = MaterialTheme.typography.labelMedium,
                             color = MaterialTheme.colorScheme.primary,
                             modifier = Modifier
@@ -218,7 +222,7 @@ fun WatchScreen(repository: SmartRepository, onPlay: (Video) -> Unit) {
             LazyRow(horizontalArrangement = Arrangement.spacedBy(8.dp)) {
                 items(Category.entries.toList(), key = { "watch-cat:${it.id}" }) { category ->
                     FilterChip(
-                        label = category.displayName,
+                        label = category.localizedName(),
                         selected = state.category == category,
                         accent = category.accent(),
                         onClick = { viewModel.selectCategory(category) },
@@ -232,7 +236,7 @@ fun WatchScreen(repository: SmartRepository, onPlay: (Video) -> Unit) {
                 Row(horizontalArrangement = Arrangement.spacedBy(8.dp)) {
                     LengthClass.entries.forEach { length ->
                         FilterChip(
-                            label = length.label,
+                            label = length.localizedLabel(),
                             selected = state.length == length,
                             accent = MaterialTheme.colorScheme.primary,
                             onClick = { viewModel.selectLength(length) },
@@ -247,17 +251,15 @@ fun WatchScreen(repository: SmartRepository, onPlay: (Video) -> Unit) {
             item {
                 EmptyState(
                     title = when {
-                        !state.loaded || state.refreshing -> "Loading the shelf…"
-                        state.offline -> "No connection"
-                        else -> "Nothing matches"
+                        !state.loaded || state.refreshing -> stringResource(R.string.watch_empty_loading_title)
+                        state.offline -> stringResource(R.string.watch_empty_offline_title)
+                        else -> stringResource(R.string.watch_empty_nomatch_title)
                     },
                     body = when {
                         !state.loaded || state.refreshing ->
-                            "Reading what these channels have published."
-                        state.offline ->
-                            "The Watch tab pulls videos live, so it needs a connection. " +
-                                "Everything else in the app works offline."
-                        else -> "No videos in this combination yet. Try clearing a filter."
+                            stringResource(R.string.watch_empty_loading_body)
+                        state.offline -> stringResource(R.string.watch_empty_offline_body)
+                        else -> stringResource(R.string.watch_empty_nomatch_body)
                     },
                 )
             }
@@ -336,7 +338,7 @@ private fun VideoCard(video: Video, watched: Boolean, onClick: () -> Unit) {
                     )
                     Spacer(Modifier.width(4.dp))
                     Text(
-                        text = "$minutes min",
+                        text = stringResource(R.string.watch_minutes, minutes),
                         style = MaterialTheme.typography.labelSmall,
                         color = Color.White,
                     )
@@ -357,7 +359,7 @@ private fun VideoCard(video: Video, watched: Boolean, onClick: () -> Unit) {
                     Spacer(Modifier.width(8.dp))
                     Icon(
                         Icons.Rounded.CheckCircle,
-                        contentDescription = "Watched",
+                        contentDescription = stringResource(R.string.watch_watched_cd),
                         tint = video.category.accent(),
                         modifier = Modifier.size(20.dp),
                     )
@@ -365,7 +367,11 @@ private fun VideoCard(video: Video, watched: Boolean, onClick: () -> Unit) {
             }
             Spacer(Modifier.height(4.dp))
             Text(
-                text = "${video.channel} · ${video.category.displayName}",
+                text = stringResource(
+                    R.string.watch_channel_and_category,
+                    video.channel,
+                    video.category.localizedName(),
+                ),
                 style = MaterialTheme.typography.bodyMedium,
                 color = MaterialTheme.colorScheme.onSurfaceVariant,
             )

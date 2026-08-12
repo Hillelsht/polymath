@@ -28,6 +28,7 @@ import androidx.compose.ui.draw.clip
 import androidx.compose.ui.geometry.Offset
 import androidx.compose.ui.graphics.Brush
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
@@ -37,6 +38,7 @@ import androidx.lifecycle.viewModelScope
 import androidx.lifecycle.viewmodel.compose.viewModel
 import androidx.lifecycle.viewmodel.initializer
 import androidx.lifecycle.viewmodel.viewModelFactory
+import com.hillelsht.smart.R
 import com.hillelsht.smart.data.SmartRepository
 import com.hillelsht.smart.domain.play.GameId
 import com.hillelsht.smart.ui.components.SmartCard
@@ -155,13 +157,13 @@ fun PlayScreen(
         item {
             Column {
                 Text(
-                    "Play",
+                    stringResource(R.string.tab_play),
                     style = MaterialTheme.typography.displaySmall,
                     fontWeight = FontWeight.Bold,
                     color = MaterialTheme.colorScheme.onBackground,
                 )
                 Text(
-                    "Everything you know, put to work",
+                    stringResource(R.string.play_tagline),
                     style = MaterialTheme.typography.bodyLarge,
                     color = MaterialTheme.colorScheme.onSurfaceVariant,
                 )
@@ -170,13 +172,15 @@ fun PlayScreen(
 
         item {
             GameCard(
-                title = GameId.CLIMB.title,
-                blurb = GameId.CLIMB.blurb,
+                title = GameId.CLIMB.localizedTitle(),
+                blurb = GameId.CLIMB.localizedBlurb(),
                 footnote = when {
-                    state.climbRuns == 0 -> "Never climbed"
-                    else -> "Best ${state.climbBest} · ${state.climbRuns} runs"
+                    state.climbRuns == 0 -> stringResource(R.string.play_climb_never)
+                    else -> stringResource(R.string.play_climb_summary, state.climbBest, state.climbRuns)
                 },
-                callToAction = if (state.climbRuns == 0) "Start climbing" else "Climb again",
+                callToAction = stringResource(
+                    if (state.climbRuns == 0) R.string.play_climb_cta_start else R.string.play_climb_cta_again,
+                ),
                 gradient = listOf(SmartPalette.Iris, SmartPalette.IrisBright),
                 onClick = onClimb,
             ) { ClimbGlyph() }
@@ -184,17 +188,24 @@ fun PlayScreen(
 
         item {
             GameCard(
-                title = GameId.CHAINS.title,
-                blurb = GameId.CHAINS.blurb,
+                title = GameId.CHAINS.localizedTitle(),
+                blurb = GameId.CHAINS.localizedBlurb(),
                 footnote = when {
-                    !state.chainsAvailable -> "No grid today"
-                    state.chainsPlayedToday -> "Done for today" +
-                        if (state.chainsStreak > 1) " · ${state.chainsStreak} day streak" else ""
+                    !state.chainsAvailable -> stringResource(R.string.play_chains_none)
+                    state.chainsPlayedToday -> if (state.chainsStreak > 1) {
+                        stringResource(R.string.play_chains_done_with_streak, state.chainsStreak)
+                    } else {
+                        stringResource(R.string.play_chains_done)
+                    }
 
-                    state.chainsStreak > 0 -> "Today's grid is waiting · ${state.chainsStreak} day streak"
-                    else -> "Today's grid is waiting"
+                    state.chainsStreak > 0 ->
+                        stringResource(R.string.play_chains_waiting_with_streak, state.chainsStreak)
+
+                    else -> stringResource(R.string.play_chains_waiting)
                 },
-                callToAction = if (state.chainsPlayedToday) "See today's grid" else "Play today's grid",
+                callToAction = stringResource(
+                    if (state.chainsPlayedToday) R.string.play_chains_cta_see else R.string.play_chains_cta_play,
+                ),
                 gradient = listOf(SmartPalette.Mint, SmartPalette.Success),
                 enabled = state.chainsAvailable,
                 onClick = onChains,
@@ -203,14 +214,18 @@ fun PlayScreen(
 
         item {
             GameCard(
-                title = GameId.GAMBIT.title,
-                blurb = GameId.GAMBIT.blurb,
+                title = GameId.GAMBIT.localizedTitle(),
+                blurb = GameId.GAMBIT.localizedBlurb(),
                 footnote = when {
-                    state.gambitGames == 0 -> "Never played"
-                    state.gambitEverWon -> "${state.gambitGames} games played · you've won one"
-                    else -> "${state.gambitGames} games played"
+                    state.gambitGames == 0 -> stringResource(R.string.play_gambit_never)
+                    state.gambitEverWon ->
+                        stringResource(R.string.play_gambit_summary_won, state.gambitGames)
+
+                    else -> stringResource(R.string.play_gambit_summary, state.gambitGames)
                 },
-                callToAction = if (state.gambitGames == 0) "Start a game" else "Resume or start again",
+                callToAction = stringResource(
+                    if (state.gambitGames == 0) R.string.play_gambit_cta_start else R.string.play_gambit_cta_resume,
+                ),
                 gradient = listOf(Color(0xFF56A0FF), SmartPalette.Iris),
                 onClick = onGambit,
             ) { GambitGlyph() }
@@ -218,14 +233,18 @@ fun PlayScreen(
 
         item {
             GameCard(
-                title = GameId.PALACE.title,
-                blurb = GameId.PALACE.blurb,
+                title = GameId.PALACE.localizedTitle(),
+                blurb = GameId.PALACE.localizedBlurb(),
                 footnote = when {
-                    state.palaceRuns == 0 -> "Never explored"
-                    state.palaceEverWon -> "${state.palaceRuns} runs · you've reached the end"
-                    else -> "${state.palaceRuns} runs"
+                    state.palaceRuns == 0 -> stringResource(R.string.play_palace_never)
+                    state.palaceEverWon ->
+                        stringResource(R.string.play_palace_summary_won, state.palaceRuns)
+
+                    else -> stringResource(R.string.play_palace_summary, state.palaceRuns)
                 },
-                callToAction = if (state.palaceRuns == 0) "Step inside" else "Run it again",
+                callToAction = stringResource(
+                    if (state.palaceRuns == 0) R.string.play_palace_cta_start else R.string.play_palace_cta_again,
+                ),
                 gradient = listOf(SmartPalette.Warning, Color(0xFFB9741C)),
                 onClick = onPalace,
             ) { PalaceGlyph() }
@@ -233,16 +252,44 @@ fun PlayScreen(
 
         item {
             GameCard(
-                title = GameId.QUIZ.title,
-                blurb = GameId.QUIZ.blurb,
-                footnote = "Ten questions from what you have been learning",
-                callToAction = "Take a quiz",
+                title = GameId.QUIZ.localizedTitle(),
+                blurb = GameId.QUIZ.localizedBlurb(),
+                footnote = stringResource(R.string.play_quiz_footnote),
+                callToAction = stringResource(R.string.play_quiz_cta),
                 gradient = listOf(SmartPalette.Warning, Color(0xFFFF9F5A)),
                 onClick = onQuiz,
             ) { QuizGlyph() }
         }
     }
 }
+
+/**
+ * [GameId.title] and [GameId.blurb] live in the domain layer as plain English, since that layer
+ * is shared verbatim with `enginetests` and cannot reference generated Android resources. These
+ * resolve the same game to the current locale's text. Kept local to this file because GameId is
+ * only ever displayed here.
+ */
+@Composable
+private fun GameId.localizedTitle(): String = stringResource(
+    when (this) {
+        GameId.CLIMB -> R.string.game_climb_title
+        GameId.CHAINS -> R.string.game_chains_title
+        GameId.GAMBIT -> R.string.game_gambit_title
+        GameId.PALACE -> R.string.game_palace_title
+        GameId.QUIZ -> R.string.game_quiz_title
+    },
+)
+
+@Composable
+private fun GameId.localizedBlurb(): String = stringResource(
+    when (this) {
+        GameId.CLIMB -> R.string.game_climb_blurb
+        GameId.CHAINS -> R.string.game_chains_blurb
+        GameId.GAMBIT -> R.string.game_gambit_blurb
+        GameId.PALACE -> R.string.game_palace_blurb
+        GameId.QUIZ -> R.string.game_quiz_blurb
+    },
+)
 
 @Composable
 private fun GameCard(
@@ -305,7 +352,7 @@ private fun GameCard(
                         color = MaterialTheme.colorScheme.onSurfaceVariant,
                     )
                     Text(
-                        if (enabled) callToAction else "Not yet",
+                        if (enabled) callToAction else stringResource(R.string.play_cta_disabled),
                         style = MaterialTheme.typography.labelLarge,
                         fontWeight = FontWeight.Bold,
                         color = if (enabled) {
