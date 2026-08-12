@@ -77,6 +77,9 @@ data class ChannelEntity(
     val handle: String,
     val categoryId: String,
     val displayName: String,
+    /** [Language.tag]. Every channel that predates languages is English — see the migration. */
+    @ColumnInfo(defaultValue = "en")
+    val language: String = Language.default.tag,
 )
 
 /**

@@ -1,5 +1,5 @@
 {
- "note": "The allowlist that defines the Watch tab. Videos are never hand-listed by id — the CI pipeline discovers real uploads from these channels. Adding a channel here is the only way a video can enter the app.",
+ "note": "The allowlist that defines the Watch tab. Videos are never hand-listed by id — the CI pipeline discovers real uploads from these channels. Adding a channel here is the only way a video can enter the app. 'language' is the language the channel teaches in and defaults to 'en'; the Watch tab shows only channels matching the selected language. 'id' is an optional pinned UC id used as a fallback when a handle stops resolving — the prober still resolves the handle first, and still verifies embedding either way.",
  "channels": [
   {
    "handle": "GreatArtExplained",
@@ -144,6 +144,127 @@
   {
    "handle": "TifoSports",
    "category": "sports"
+  },
+  {
+   "handle": "varlamov",
+   "category": "geography",
+   "language": "ru",
+   "id": "UC101o-vQ2iOj9vr00JUlyKw",
+   "displayName": "varlamov"
+  },
+  {
+   "handle": "Varlamov.Travel",
+   "category": "geography",
+   "language": "ru",
+   "displayName": "Varlamov Travel"
+  },
+  {
+   "handle": "TamaraEidelman",
+   "category": "history",
+   "language": "ru",
+   "id": "UCNYejKoEJ84iGgXPwTBkCCg",
+   "displayName": "Уроки истории с Тамарой Эйдельман"
+  },
+  {
+   "handle": "arzamaschannel",
+   "category": "history",
+   "language": "ru",
+   "id": "UCVgvnGSFU41kIhEc09aztEg",
+   "displayName": "Arzamas"
+  },
+  {
+   "handle": "RedRoomLIMB",
+   "category": "history",
+   "language": "ru",
+   "displayName": "Redroom"
+  },
+  {
+   "handle": "toplesofficial",
+   "category": "science",
+   "language": "ru",
+   "id": "UC2Ru64PHqW4FxoP0xhQRvJg",
+   "displayName": "ТОПЛЕС"
+  },
+  {
+   "handle": "nowchpok",
+   "category": "science",
+   "language": "ru",
+   "id": "UCaY08MNW5C097-0je7xT6fA",
+   "displayName": "Научпок"
+  },
+  {
+   "handle": "postnauka",
+   "category": "science",
+   "language": "ru",
+   "displayName": "ПостНаука"
+  },
+  {
+   "handle": "SimpleScienceRU",
+   "category": "science",
+   "language": "ru",
+   "id": "UCzWnF-3UWAGNeK5fIkBmahg",
+   "displayName": "Простая наука"
+  },
+  {
+   "handle": "GetAClass",
+   "category": "science",
+   "language": "ru",
+   "id": "UCFnf8z994tsocrAexJU1t4A",
+   "displayName": "GetAClass — Просто наука"
+  },
+  {
+   "handle": "nauka_tv",
+   "category": "science",
+   "language": "ru",
+   "id": "UCK-5TknjBdBZjwVHRfByPFQ",
+   "displayName": "Телеканал НАУКА"
+  },
+  {
+   "handle": "stg",
+   "category": "arts",
+   "language": "ru",
+   "id": "UCCJR2fHtwpHs5eYirnbCNQA",
+   "displayName": "Третьяковская галерея"
+  },
+  {
+   "handle": "pushkinmuseum",
+   "category": "arts",
+   "language": "ru",
+   "id": "UCw-SvnADFRiC87aKAuzZcXQ",
+   "displayName": "ГМИИ им. А.С. Пушкина"
+  },
+  {
+   "handle": "kinopoisk",
+   "category": "culture",
+   "language": "ru",
+   "displayName": "Кинопоиск"
+  },
+  {
+   "handle": "kinopoiskpodcasts",
+   "category": "culture",
+   "language": "ru",
+   "id": "UCrP1MDH8LYBU6Xld34YwHWQ",
+   "displayName": "Подкасты Кинопоиска"
+  },
+  {
+   "handle": "KRASAVAvlog",
+   "category": "sports",
+   "language": "ru",
+   "displayName": "КраСава"
+  },
+  {
+   "handle": "matchtv",
+   "category": "sports",
+   "language": "ru",
+   "id": "UCtetJiD_llxdGL4Uh5-Oe2w",
+   "displayName": "Матч ТВ"
+  },
+  {
+   "handle": "fc.matchtv",
+   "category": "sports",
+   "language": "ru",
+   "id": "UCeAK3Ievttv9gCGeUrSPqZQ",
+   "displayName": "ФК Матч ТВ"
   }
  ]
 }

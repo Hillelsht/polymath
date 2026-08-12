@@ -44,6 +44,10 @@ SAMPLE_SIZE = 3
 MIN_CHANNELS = 12
 MIN_PER_CATEGORY = 3
 CATEGORIES = ("geography", "history", "science", "arts", "sports", "culture")
+# The language a channel teaches in. Entries without one are English, which is every channel
+# this allowlist held before Russian was added — so the guards below, and the published file,
+# stay exactly as they were for the English shelf.
+DEFAULT_LANGUAGE = "en"
 
 
 def fetch(url, timeout=25):
@@ -125,8 +129,17 @@ def main():
     usable, dropped = [], []
     for entry in allowlist:
         handle, category = entry["handle"], entry["category"]
+        language = entry.get("language", DEFAULT_LANGUAGE)
 
         channel_id, display_name = resolve_channel(handle)
+        if not channel_id and entry.get("id"):
+            # A pinned id is the fallback, not the first choice: handles get renamed, ids do
+            # not, so an entry that ships a known-good id survives a rename that would
+            # otherwise drop the channel. Resolution still runs first, because it is also
+            # where the live display name comes from.
+            channel_id = entry["id"]
+            display_name = entry.get("displayName") or handle
+            print(f"  @{handle} did not resolve; using its pinned id {channel_id}")
         if not channel_id:
             dropped.append(f"@{handle}: handle did not resolve")
             time.sleep(0.4)
@@ -148,15 +161,19 @@ def main():
             )
             continue
 
-        usable.append(
-            {
-                "id": channel_id,
-                "handle": handle,
-                "category": category,
-                "displayName": display_name or handle,
-            }
-        )
-        print(f"[{category}] @{handle} -> {channel_id} ({passes}/{len(samples)} embeddable)")
+        channel = {
+            "id": channel_id,
+            "handle": handle,
+            "category": category,
+            "displayName": display_name or handle,
+        }
+        # Omitted for English so the published file keeps the exact shape (and bytes) it had
+        # before languages existed; ChannelParser defaults a missing value to English.
+        if language != DEFAULT_LANGUAGE:
+            channel["language"] = language
+        usable.append(channel)
+        print(f"[{language}/{category}] @{handle} -> {channel_id} "
+              f"({passes}/{len(samples)} embeddable)")
 
     print(f"\nUsable channels: {len(usable)}/{len(allowlist)}")
     if dropped:
@@ -164,14 +181,32 @@ def main():
         for line in dropped:
             print("  -", line)
 
-    if len(usable) < MIN_CHANNELS:
-        print(f"FAIL: only {len(usable)} channels usable — YouTube may be blocking the runner")
+    # The size guards below judge the English shelf only. A second language starts thin by
+    # definition — one channel in a category on its first day — and a new language must never
+    # be able to turn the build red for the shelf that was already shipping. Its coverage is
+    # printed instead, so thin subjects are visible without being fatal.
+    english = [c for c in usable if c.get("language", DEFAULT_LANGUAGE) == DEFAULT_LANGUAGE]
+    by_language = {}
+    for channel in usable:
+        language = channel.get("language", DEFAULT_LANGUAGE)
+        by_language.setdefault(language, []).append(channel)
+
+    for language, channels in sorted(by_language.items()):
+        counts = {c: 0 for c in CATEGORIES}
+        for channel in channels:
+            counts[channel["category"]] = counts.get(channel["category"], 0) + 1
+        thin_note = "" if language == DEFAULT_LANGUAGE else "  (not gated)"
+        print(f"Per category [{language}]: "
+              + ", ".join(f"{k}={v}" for k, v in sorted(counts.items())) + thin_note)
+
+    if len(english) < MIN_CHANNELS:
+        print(f"FAIL: only {len(english)} English channels usable — "
+              "YouTube may be blocking the runner")
         return 1
 
     per_category = {c: 0 for c in CATEGORIES}
-    for channel in usable:
+    for channel in english:
         per_category[channel["category"]] = per_category.get(channel["category"], 0) + 1
-    print("Per category:", ", ".join(f"{k}={v}" for k, v in sorted(per_category.items())))
 
     payload = {"channels": usable}
     body = json.dumps(payload, ensure_ascii=False, indent=1)
@@ -198,7 +233,7 @@ def main():
     thin = {c: n for c, n in per_category.items() if n < MIN_PER_CATEGORY}
     if thin:
         print(
-            "FAIL: too few usable channels for "
+            "FAIL: too few usable English channels for "
             + ", ".join(f"{c} ({n})" for c, n in sorted(thin.items()))
             + f" — each subject needs at least {MIN_PER_CATEGORY}. "
             "Add replacements to assets/content/channels.json."

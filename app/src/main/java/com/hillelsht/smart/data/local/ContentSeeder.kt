@@ -91,6 +91,7 @@ class ContentSeeder(
                     handle = it.handle,
                     categoryId = it.category.id,
                     displayName = it.displayName,
+                    language = it.language.tag,
                 )
             },
         )

@@ -1,6 +1,7 @@
 package com.hillelsht.smart.data.seed
 
 import com.hillelsht.smart.domain.model.Category
+import com.hillelsht.smart.domain.model.Language
 import kotlinx.serialization.Serializable
 import kotlinx.serialization.json.Json
 
@@ -24,6 +25,11 @@ data class SeedChannel(
     val handle: String,
     val category: String,
     val displayName: String? = null,
+    /**
+     * The language this channel teaches in. Absent means English — which every channel in this
+     * allowlist was before Russian existed, so an older published file still parses correctly.
+     */
+    val language: String = Language.default.tag,
 )
 
 /** A channel the Watch tab may draw from. */
@@ -32,6 +38,7 @@ data class WatchChannel(
     val handle: String,
     val category: Category,
     val displayName: String,
+    val language: Language = Language.default,
 )
 
 object ChannelParser {
@@ -55,6 +62,7 @@ object ChannelParser {
                 handle = seed.handle,
                 category = category,
                 displayName = seed.displayName?.takeIf { it.isNotBlank() } ?: seed.handle,
+                language = Language.fromTag(seed.language),
             )
         }
 

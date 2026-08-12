@@ -25,7 +25,7 @@ import androidx.sqlite.db.SupportSQLiteDatabase
         GameProgressEntity::class,
         GameDailyEntity::class,
     ],
-    version = 6,
+    version = 7,
     exportSchema = true,
 )
 @TypeConverters(Converters::class)
@@ -176,11 +176,28 @@ abstract class SmartDatabase : RoomDatabase() {
             }
         }
 
+        /**
+         * v6 → v7: Watch channels learn what language they broadcast in, so the shelf can show
+         * a Russian speaker Russian channels. Every channel already installed is English —
+         * the only kind the allowlist has ever held — so the default backfills it, and the
+         * seeder replaces the table wholesale on the next launch anyway.
+         */
+        private val MIGRATION_6_7 = object : Migration(6, 7) {
+            override fun migrate(db: SupportSQLiteDatabase) {
+                db.execSQL(
+                    "ALTER TABLE watch_channels ADD COLUMN language TEXT NOT NULL DEFAULT 'en'",
+                )
+            }
+        }
+
         fun build(context: Context): SmartDatabase =
             // Schemas are exported to app/schemas so that future releases can keep shipping
             // real migrations — review history must survive every update.
             Room.databaseBuilder(context, SmartDatabase::class.java, "smart.db")
-                .addMigrations(MIGRATION_1_2, MIGRATION_2_3, MIGRATION_3_4, MIGRATION_4_5, MIGRATION_5_6)
+                .addMigrations(
+                    MIGRATION_1_2, MIGRATION_2_3, MIGRATION_3_4, MIGRATION_4_5,
+                    MIGRATION_5_6, MIGRATION_6_7,
+                )
                 .build()
     }
 }

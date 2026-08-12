@@ -562,8 +562,15 @@ class SmartRepository(
      * an empty shelf.
      */
     suspend fun refreshShelf(): Boolean {
-        val channels = channelDao.all()
-        if (channels.isEmpty()) return false
+        val installed = channelDao.all()
+        if (installed.isEmpty()) return false
+
+        // A Russian speaker gets the Russian channels, not English ones they cannot follow.
+        // Falling back to the whole list rather than showing an empty shelf matters: a
+        // language whose channels have not been probed yet — or that were all dropped for
+        // blocking embedding — should still leave something to watch.
+        val wanted = currentLanguage().tag
+        val channels = installed.filter { it.language == wanted }.ifEmpty { installed }
 
         val feeds = feedService.fetchAll(channels.map { it.id })
         if (feeds.isEmpty()) return false
