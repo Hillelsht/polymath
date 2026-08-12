@@ -81,8 +81,8 @@ channel list all follow. Hebrew lays out right-to-left.
 - **Chains** — sixteen tiles, four hidden groups. One grid a day, the same one for everybody.
 - **Gambit** — chess against an engine that gets weaker the more you answer. Bank *tempo* between
   moves and spend it on a hint, a takeback, or a level of the engine's search depth.
-- **Aryeh's Palace** — a side-scrolling platformer with collapsing floors and gates that open only
-  when you answer.
+- **The Vaults** — a side-scrolling descent in the *Prince of Persia* tradition. Ledge grabs,
+  floors that give way, blades on a cycle. No questions: just the descent, against one clock.
 - **Quiz** — ten questions on what you've been studying.
 
 Every game is drawn with Compose vectors rather than sprite sheets, so none of them grow the APK.

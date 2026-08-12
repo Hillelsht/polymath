@@ -22,6 +22,13 @@ Wikidata, Wikipedia or YouTube. Every tool is stdlib-only Python; there is no
 | `build_chains.py` | `packs/play/chains/` — daily puzzle grids | `play.yml`, monthly |
 | `probe_durations.py` | nothing — findings only | `probe.yml`, manual |
 | `probe_wikidata.py` | nothing — findings only | `probe.yml`, manual |
+| `playtest/play.js` | nothing — plays The Vaults in Chromium, screenshots | `vaults.yml` |
+| `playtest/inline.py` | one self-contained HTML file of The Vaults | `vaults.yml` |
+
+`tools/playtest/` is the odd one out: it produces no content, and `play.js` is the only Node script
+here rather than Python, because it drives a browser. It exists because Aryeh's Palace shipped
+unplayable past a full suite of headless tests — nothing had ever pressed a button. See
+`docs/games.md`.
 
 The two probes are reconnaissance scripts whose **results are recorded in their own docstrings**.
 `probe_durations.py` establishes that neither the channel RSS feed nor the embed page carries a
@@ -57,7 +64,7 @@ facts and published none of them, vetoed by two templates that yielded one fact 
 
 ## The workflows
 
-Six, of which **four commit back to `main`**.
+Seven, of which **four commit back to `main`**.
 
 | Workflow | Trigger | Commits | Runs tests |
 |---|---|---|---|
@@ -67,6 +74,7 @@ Six, of which **four commit back to `main`**.
 | `library.yml` | monthly, or dispatch | `packs/library/` | yes, before committing |
 | `play.yml` | monthly, or dispatch | `packs/play/` | yes, before committing |
 | `probe.yml` | manual only | nothing | no |
+| `vaults.yml` | push / PR touching the game, or dispatch | no — publishes to GitHub Pages | yes, and plays it |
 
 Shared idioms, each of which is load-bearing:
 

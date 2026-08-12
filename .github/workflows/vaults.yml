@@ -1,0 +1,89 @@
+name: Vaults
+
+on:
+  push:
+    branches: [main]
+    paths:
+      - 'app/src/main/java/com/hillelsht/smart/domain/play/vaults/**'
+      - 'webplay/**'
+      - 'tools/playtest/**'
+      - '.github/workflows/vaults.yml'
+  pull_request:
+    paths:
+      - 'app/src/main/java/com/hillelsht/smart/domain/play/vaults/**'
+      - 'webplay/**'
+      - 'tools/playtest/**'
+  workflow_dispatch:
+
+permissions:
+  contents: read
+  pages: write
+  id-token: write
+
+# A queued deploy should replace a running one rather than fight it, but never cancel a deploy
+# half-way through publishing.
+concurrency:
+  group: pages
+  cancel-in-progress: false
+
+jobs:
+  play:
+    name: Play it in a browser
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-java@v4
+        with:
+          distribution: temurin
+          java-version: 17
+
+      - uses: gradle/actions/setup-gradle@v4
+
+      # The margin gate. A room that can only be crossed with frame-perfect timing fails here,
+      # which is the check Aryeh's Palace never had — see docs/games.md.
+      - name: Room margins and movement rules
+        run: ./gradlew -p enginetests test --tests '*vaults*'
+
+      - name: Compile the Vaults to JavaScript
+        run: ./gradlew -p webplay bundle
+
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 22
+
+      # Actually presses the buttons. Palace passed every headless test it had and was still
+      # unplayable, because nothing ever drove it through a real input path.
+      - name: Play every room in Chromium
+        run: |
+          npm install --no-save playwright@1.49.1
+          npx playwright install --with-deps chromium
+          node tools/playtest/play.js
+
+      - uses: actions/upload-artifact@v4
+        if: always()
+        with:
+          name: playtest-screenshot
+          path: webplay/build/web/playtest.png
+          if-no-files-found: warn
+
+      - name: Assemble the published page
+        run: python3 tools/playtest/inline.py --out webplay/build/site/index.html
+
+      - uses: actions/upload-pages-artifact@v3
+        with:
+          path: webplay/build/site
+
+  deploy:
+    name: Publish to Pages
+    # Only from main: a pull request should be able to prove the game still plays without
+    # replacing what is currently published.
+    if: github.ref == 'refs/heads/main'
+    needs: play
+    runs-on: ubuntu-latest
+    environment:
+      name: github-pages
+      url: ${{ steps.deploy.outputs.page_url }}
+    steps:
+      - id: deploy
+        uses: actions/deploy-pages@v4

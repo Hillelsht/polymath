@@ -100,8 +100,6 @@
     <string name="game_chains_blurb">Sixteen tiles, four hidden groups. One grid a day, the same one for everybody.</string>
     <string name="game_gambit_title">Gambit</string>
     <string name="game_gambit_blurb">Chess against an engine that gets weaker the more you know. Answer between moves.</string>
-    <string name="game_palace_title">Aryeh\'s Palace</string>
-    <string name="game_palace_blurb">Run, leap and hang your way through the halls. Answer at every gate.</string>
     <string name="game_quiz_title">Quiz</string>
     <string name="game_quiz_blurb">A quick round on what you have been learning.</string>
     <string name="play_climb_never">Never climbed</string>
@@ -120,11 +118,6 @@
     <string name="play_gambit_summary">%1$d games played</string>
     <string name="play_gambit_cta_start">Start a game</string>
     <string name="play_gambit_cta_resume">Resume or start again</string>
-    <string name="play_palace_never">Never explored</string>
-    <string name="play_palace_summary_won">%1$d runs · you\'ve reached the end</string>
-    <string name="play_palace_summary">%1$d runs</string>
-    <string name="play_palace_cta_start">Step inside</string>
-    <string name="play_palace_cta_again">Run it again</string>
     <string name="play_quiz_footnote">Ten questions from what you have been learning</string>
     <string name="play_quiz_cta">Take a quiz</string>
     <string name="play_cta_disabled">Not yet</string>
@@ -246,14 +239,17 @@
     <string name="gambit_moves_played">%1$d moves played</string>
     <string name="gambit_new_game_button">New game</string>
 
-    <!-- Aryeh's Palace -->
-    <string name="palace_empty_title">Nothing to ask about yet</string>
-    <string name="palace_empty_body">Learn a few facts and the palace\'s gates will have questions to ask.</string>
-    <string name="palace_gate_title">A gate blocks the way</string>
-    <string name="palace_outcome_won">You made it through</string>
-    <string name="palace_outcome_lost">Out of lives</string>
-    <string name="palace_try_again_button">Try again</string>
-    <string name="palace_control_up">Up</string>
-    <string name="palace_control_drop">Drop</string>
-    <string name="palace_control_jump">Jump</string>
+    <!-- The Vaults -->
+    <string name="game_vaults_title">The Vaults</string>
+    <string name="game_vaults_blurb">Run, leap and hang your way down. No questions — just the descent, and a clock.</string>
+    <string name="play_vaults_never">Never descended</string>
+    <string name="play_vaults_summary">%1$d rooms deep · %2$d runs</string>
+    <string name="play_vaults_cta_start">Go down</string>
+    <string name="play_vaults_cta_again">Descend again</string>
+    <string name="vaults_room_of">Room %1$d of %2$d</string>
+    <string name="vaults_clock">%1$.1fs</string>
+    <string name="vaults_score">%1$d points</string>
+    <string name="vaults_finished_title">Out of the vaults</string>
+    <string name="vaults_finished_summary">%1$.1fs · %2$d deaths</string>
+    <string name="vaults_again">Again</string>
 </resources>

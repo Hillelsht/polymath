@@ -41,6 +41,7 @@ import androidx.lifecycle.viewmodel.viewModelFactory
 import com.hillelsht.smart.R
 import com.hillelsht.smart.data.SmartRepository
 import com.hillelsht.smart.domain.play.GameId
+import com.hillelsht.smart.domain.play.vaults.DescentRules
 import com.hillelsht.smart.ui.components.SmartCard
 import com.hillelsht.smart.ui.theme.SmartPalette
 import kotlinx.coroutines.flow.MutableStateFlow
@@ -61,8 +62,8 @@ data class PlayUiState(
      * and everything else 0, so the running best across games is exactly this, with no need for
      * a dedicated wins counter. */
     val gambitEverWon: Boolean = false,
-    val palaceRuns: Int = 0,
-    val palaceEverWon: Boolean = false,
+    val vaultsRuns: Int = 0,
+    val vaultsBest: Int = 0,
 )
 
 class PlayViewModel(private val repository: SmartRepository) : ViewModel() {
@@ -74,15 +75,16 @@ class PlayViewModel(private val repository: SmartRepository) : ViewModel() {
         repository.runCount(GameId.CLIMB),
         repository.recentDailies(GameId.CHAINS),
         chainsToday,
+        // Nested because `combine` tops out at five flows and there are more games than that.
         combine(
             repository.runCount(GameId.GAMBIT),
             repository.bestScore(GameId.GAMBIT),
-            repository.runCount(GameId.PALACE),
-            repository.bestScore(GameId.PALACE),
-        ) { gambitGames, gambitBest, palaceRuns, palaceBest ->
-            (gambitGames to (gambitBest > 0)) to (palaceRuns to (palaceBest > 0))
+            repository.runCount(GameId.VAULTS),
+            repository.bestScore(GameId.VAULTS),
+        ) { gambitGames, gambitBest, vaultsRuns, vaultsBest ->
+            (gambitGames to (gambitBest > 0)) to (vaultsRuns to vaultsBest)
         },
-    ) { best, runs, dailies, (available, played), (gambit, palace) ->
+    ) { best, runs, dailies, (available, played), (gambit, vaults) ->
         PlayUiState(
             climbBest = best,
             climbRuns = runs,
@@ -91,8 +93,8 @@ class PlayViewModel(private val repository: SmartRepository) : ViewModel() {
             chainsStreak = dailyStreak(dailies.map { it.date }),
             gambitGames = gambit.first,
             gambitEverWon = gambit.second,
-            palaceRuns = palace.first,
-            palaceEverWon = palace.second,
+            vaultsRuns = vaults.first,
+            vaultsBest = vaults.second,
         )
     }.stateIn(viewModelScope, SharingStarted.WhileSubscribed(5_000), PlayUiState())
 
@@ -140,7 +142,7 @@ fun PlayScreen(
     onClimb: () -> Unit,
     onChains: () -> Unit,
     onGambit: () -> Unit,
-    onPalace: () -> Unit,
+    onVaults: () -> Unit,
     onQuiz: () -> Unit,
 ) {
     val viewModel: PlayViewModel = viewModel(factory = PlayViewModel.factory(repository))
@@ -233,21 +235,22 @@ fun PlayScreen(
 
         item {
             GameCard(
-                title = GameId.PALACE.localizedTitle(),
-                blurb = GameId.PALACE.localizedBlurb(),
+                title = GameId.VAULTS.localizedTitle(),
+                blurb = GameId.VAULTS.localizedBlurb(),
                 footnote = when {
-                    state.palaceRuns == 0 -> stringResource(R.string.play_palace_never)
-                    state.palaceEverWon ->
-                        stringResource(R.string.play_palace_summary_won, state.palaceRuns)
-
-                    else -> stringResource(R.string.play_palace_summary, state.palaceRuns)
+                    state.vaultsRuns == 0 -> stringResource(R.string.play_vaults_never)
+                    else -> stringResource(
+                        R.string.play_vaults_summary,
+                        state.vaultsBest / DescentRules.ROOM_VALUE,
+                        state.vaultsRuns,
+                    )
                 },
                 callToAction = stringResource(
-                    if (state.palaceRuns == 0) R.string.play_palace_cta_start else R.string.play_palace_cta_again,
+                    if (state.vaultsRuns == 0) R.string.play_vaults_cta_start else R.string.play_vaults_cta_again,
                 ),
-                gradient = listOf(SmartPalette.Warning, Color(0xFFB9741C)),
-                onClick = onPalace,
-            ) { PalaceGlyph() }
+                gradient = listOf(Color(0xFFE8A33D), Color(0xFF8C4A2F)),
+                onClick = onVaults,
+            ) { VaultsGlyph() }
         }
 
         item {
@@ -275,7 +278,7 @@ private fun GameId.localizedTitle(): String = stringResource(
         GameId.CLIMB -> R.string.game_climb_title
         GameId.CHAINS -> R.string.game_chains_title
         GameId.GAMBIT -> R.string.game_gambit_title
-        GameId.PALACE -> R.string.game_palace_title
+        GameId.VAULTS -> R.string.game_vaults_title
         GameId.QUIZ -> R.string.game_quiz_title
     },
 )
@@ -286,7 +289,7 @@ private fun GameId.localizedBlurb(): String = stringResource(
         GameId.CLIMB -> R.string.game_climb_blurb
         GameId.CHAINS -> R.string.game_chains_blurb
         GameId.GAMBIT -> R.string.game_gambit_blurb
-        GameId.PALACE -> R.string.game_palace_blurb
+        GameId.VAULTS -> R.string.game_vaults_blurb
         GameId.QUIZ -> R.string.game_quiz_blurb
     },
 )
@@ -412,15 +415,20 @@ private fun GambitGlyph() {
 }
 
 @Composable
-private fun PalaceGlyph() {
-    // A doorway — the shape every gate in the level shares, rendered once here as the card's icon.
-    Box(
-        Modifier
-            .width(34.dp)
-            .height(50.dp)
-            .clip(RoundedCornerShape(topStart = 17.dp, topEnd = 17.dp))
-            .background(Color.White.copy(alpha = 0.28f)),
-    )
+private fun VaultsGlyph() {
+    // Three steps going down. The descent is the whole shape of the game, and it reads at a glance
+    // in a way a doorway or a running figure does not.
+    Row(verticalAlignment = Alignment.Bottom, horizontalArrangement = Arrangement.spacedBy(3.dp)) {
+        listOf(46, 32, 18).forEach { h ->
+            Box(
+                Modifier
+                    .width(16.dp)
+                    .height(h.dp)
+                    .clip(RoundedCornerShape(topStart = 3.dp, topEnd = 3.dp))
+                    .background(Color.White.copy(alpha = 0.30f)),
+            )
+        }
+    }
 }
 
 @Composable

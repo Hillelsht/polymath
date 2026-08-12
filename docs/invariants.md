@@ -85,6 +85,20 @@ schemas on open and fails if they disagree.
 
 ## Tests
 
+**A green test suite is not proof a game is playable.** Aryeh's Palace had sixteen passing tests
+and could not be played at all. They passed by handing the physics `jump = true` on exactly the
+frame the player was grounded — the perfect input a human cannot produce — while the shipped
+ViewModel destroyed any press that arrived mid-air.
+→ For anything with real-time input, assert that *imperfect* input works: presses that arrive
+early, presses that arrive late. And measure the **timing margin** — the width of the window of
+inputs that succeed — because "a solution exists" and "a person can execute one" are different
+claims. `Playtest.margin` is the number; `docs/games.md` has the post-mortem.
+
+**`domain/play/vaults/` is Kotlin stdlib only — no `java.*`, not just no `android.*`.**
+→ That is what lets `webplay/` compile the same source to JavaScript, so the game can be played
+and tuned in a browser instead of only on a device. A single `java.time` import ends it. The rest
+of `domain/` is held only to the weaker no-Android rule.
+
 **Assert invariants, not snapshots.** A test that encodes today's data is a landmine with a
 timer on it.
 → `ChannelLanguageTest` once asserted that every published channel was English. True the hour it
