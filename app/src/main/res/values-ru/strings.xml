@@ -1,0 +1,15 @@
+<resources>
+    <!-- Tab bar -->
+    <string name="tab_today">Сегодня</string>
+    <string name="tab_read">Читать</string>
+    <string name="tab_watch">Смотреть</string>
+    <string name="tab_play">Играть</string>
+    <string name="tab_progress">Прогресс</string>
+    <string name="tab_settings">Настройки</string>
+
+    <!-- Settings -->
+    <string name="settings_title">Настройки</string>
+    <string name="settings_tagline">Настройте приложение под себя</string>
+    <string name="settings_language_heading">Язык</string>
+    <string name="settings_language_blurb">Меняет текст приложения и материал, который оно преподаёт.</string>
+</resources>

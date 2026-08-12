@@ -20,7 +20,7 @@ object MascotDirector {
      * reason he is absent from Learn and Review, and more so in a game where he is meant to be
      * the one climbing.
      */
-    enum class Surface { TODAY, LIBRARY, WATCH, PLAY, PROGRESS }
+    enum class Surface { TODAY, LIBRARY, WATCH, PLAY, PROGRESS, SETTINGS }
 
     enum class Activity {
         /** Ambling along the bottom of the screen. */
@@ -55,6 +55,7 @@ object MascotDirector {
         // He is restless where the games are, which is the point of the tab.
         Surface.PLAY to listOf(Activity.POUNCE, Activity.WANDER, Activity.POUNCE, Activity.NAP),
         Surface.PROGRESS to listOf(Activity.WANDER, Activity.READ, Activity.NAP),
+        Surface.SETTINGS to listOf(Activity.WANDER, Activity.NAP),
     )
 
     private val durationMs: Map<Activity, LongRange> = mapOf(

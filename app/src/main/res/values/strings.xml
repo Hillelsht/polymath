@@ -1,3 +1,17 @@
 <resources>
     <string name="app_name">Smart</string>
+
+    <!-- Tab bar -->
+    <string name="tab_today">Today</string>
+    <string name="tab_read">Read</string>
+    <string name="tab_watch">Watch</string>
+    <string name="tab_play">Play</string>
+    <string name="tab_progress">Progress</string>
+    <string name="tab_settings">Settings</string>
+
+    <!-- Settings -->
+    <string name="settings_title">Settings</string>
+    <string name="settings_tagline">Make the app your own</string>
+    <string name="settings_language_heading">Language</string>
+    <string name="settings_language_blurb">Changes the app\'s text and the trivia it teaches.</string>
 </resources>

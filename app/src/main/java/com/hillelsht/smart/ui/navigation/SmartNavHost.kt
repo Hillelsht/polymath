@@ -13,6 +13,7 @@ import androidx.compose.material.icons.rounded.Home
 import androidx.compose.material.icons.rounded.Insights
 import androidx.compose.material.icons.rounded.MenuBook
 import androidx.compose.material.icons.rounded.PlayCircle
+import androidx.compose.material.icons.rounded.Settings
 import androidx.compose.material.icons.rounded.SportsEsports
 import androidx.compose.material3.Icon
 import androidx.compose.material3.MaterialTheme
@@ -26,6 +27,7 @@ import androidx.compose.runtime.getValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.vector.ImageVector
+import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
 import androidx.navigation.NavDestination.Companion.hierarchy
 import androidx.navigation.NavGraph.Companion.findStartDestination
@@ -34,6 +36,7 @@ import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.compose.currentBackStackEntryAsState
 import androidx.navigation.compose.rememberNavController
+import com.hillelsht.smart.R
 import com.hillelsht.smart.data.SmartRepository
 import com.hillelsht.smart.domain.MascotDirector.Surface
 import com.hillelsht.smart.domain.model.Category
@@ -49,6 +52,7 @@ import com.hillelsht.smart.ui.play.gambit.ChessScreen
 import com.hillelsht.smart.ui.play.palace.PalaceScreen
 import com.hillelsht.smart.ui.quiz.QuizScreen
 import com.hillelsht.smart.ui.review.ReviewScreen
+import com.hillelsht.smart.ui.settings.SettingsScreen
 import com.hillelsht.smart.ui.stats.StatsScreen
 import com.hillelsht.smart.ui.watch.VideoPlayerScreen
 import com.hillelsht.smart.ui.watch.WatchScreen
@@ -68,6 +72,7 @@ object Routes {
     const val CHAINS = "play/chains"
     const val GAMBIT = "play/gambit"
     const val PALACE = "play/palace"
+    const val SETTINGS = "settings"
 
     fun quiz(category: Category? = null, factIds: List<String> = emptyList()) =
         "quiz?category=${category?.id ?: ""}&facts=${factIds.joinToString(",")}"
@@ -76,14 +81,17 @@ object Routes {
     fun player(videoId: String) = "player/$videoId"
 }
 
-private data class Tab(val route: String, val label: String, val icon: ImageVector)
+// The label is a string resource id, not resolved text — this list is built once at file scope,
+// outside any composition, and stringResource() only works from inside one.
+private data class Tab(val route: String, val labelRes: Int, val icon: ImageVector)
 
 private val tabs = listOf(
-    Tab(Routes.HOME, "Today", Icons.Rounded.Home),
-    Tab(Routes.LIBRARY, "Read", Icons.Rounded.MenuBook),
-    Tab(Routes.WATCH, "Watch", Icons.Rounded.PlayCircle),
-    Tab(Routes.PLAY, "Play", Icons.Rounded.SportsEsports),
-    Tab(Routes.STATS, "Progress", Icons.Rounded.Insights),
+    Tab(Routes.HOME, R.string.tab_today, Icons.Rounded.Home),
+    Tab(Routes.LIBRARY, R.string.tab_read, Icons.Rounded.MenuBook),
+    Tab(Routes.WATCH, R.string.tab_watch, Icons.Rounded.PlayCircle),
+    Tab(Routes.PLAY, R.string.tab_play, Icons.Rounded.SportsEsports),
+    Tab(Routes.STATS, R.string.tab_progress, Icons.Rounded.Insights),
+    Tab(Routes.SETTINGS, R.string.tab_settings, Icons.Rounded.Settings),
 )
 
 @Composable
@@ -104,11 +112,12 @@ fun SmartApp(repository: SmartRepository) {
                     val destination = backStackEntry?.destination
                     tabs.forEach { tab ->
                         val selected = destination?.hierarchy?.any { it.route == tab.route } == true
+                        val label = stringResource(tab.labelRes)
                         NavigationBarItem(
                             selected = selected,
                             onClick = { navController.navigateToTab(tab.route) },
-                            icon = { Icon(tab.icon, contentDescription = tab.label) },
-                            label = { Text(tab.label) },
+                            icon = { Icon(tab.icon, contentDescription = label) },
+                            label = { Text(label) },
                             colors = NavigationBarItemDefaults.colors(
                                 selectedIconColor = MaterialTheme.colorScheme.primary,
                                 selectedTextColor = MaterialTheme.colorScheme.primary,
@@ -137,6 +146,7 @@ fun SmartApp(repository: SmartRepository) {
                 // The picker only. Inside a run he would be a lion wandering across a fight.
                 Routes.PLAY -> Surface.PLAY
                 Routes.STATS -> Surface.PROGRESS
+                Routes.SETTINGS -> Surface.SETTINGS
                 else -> null
             }
             NavHost(
@@ -180,6 +190,9 @@ fun SmartApp(repository: SmartRepository) {
                 }
                 composable(Routes.STATS) {
                     StatsScreen(repository = repository)
+                }
+                composable(Routes.SETTINGS) {
+                    SettingsScreen()
                 }
 
                 // Games take over the screen exactly as the study flows do — the tab bar is
