@@ -1,4 +1,4 @@
-<!-- covers: build.gradle.kts, settings.gradle.kts, gradle.properties, app/build.gradle.kts, gradle/libs.versions.toml, enginetests/**, tools/parsecheck/**, tools/compile_scan.py, tools/import_audit.py -->
+<!-- covers: build.gradle.kts, settings.gradle.kts, gradle.properties, app/build.gradle.kts, gradle/libs.versions.toml, enginetests/**, webplay/**, tools/playtest/**, tools/parsecheck/**, tools/compile_scan.py, tools/import_audit.py -->
 
 # Working in this repository
 

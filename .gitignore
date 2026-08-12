@@ -13,6 +13,9 @@ local.properties
 enginetests/build/
 enginetests/.gradle/
 enginetests/.kotlin/
+webplay/build/
+webplay/.gradle/
+webplay/.kotlin/
 
 # Python bytecode from tools/ — regenerated on every run, never source.
 __pycache__/

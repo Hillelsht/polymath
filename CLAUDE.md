@@ -33,7 +33,16 @@ gradle -p tools/parsecheck compileKotlin 2>&1 | tee /tmp/parse.log
 python3 tools/compile_scan.py /tmp/parse.log     # filters ~3,200 expected errors, shows the rest
 python3 tools/import_audit.py                    # forgotten imports
 python3 tools/generate_facts.py --self-test      # offline, as CI runs it
+
+gradle -p webplay bundle                         # The Vaults -> JavaScript, in build/web/
+NODE_PATH=/opt/node22/lib/node_modules \
+  node tools/playtest/play.js --room 0           # plays it in Chromium, writes a screenshot
 ```
+
+**The Vaults can be played here.** `webplay/` compiles `domain/play/vaults` — the same source the
+APK ships — to JS and renders it on a canvas with live tuning sliders. Feel is testable in seconds
+rather than being a round trip through a human, which is what Aryeh's Palace died of. See
+`webplay/README.md`.
 
 **`gradle -p enginetests test` is mandatory after touching `domain/` or `data/seed/`.** That
 build compiles those two directories *verbatim* — it tests the exact source that ships, so a
@@ -73,6 +82,8 @@ Full list with the story behind each: `docs/invariants.md`.
   re-downloaded.
 - **`domain/` and `data/seed/` must not import anything Android** — that is what keeps
   `enginetests` compiling.
+- **`domain/play/vaults/` must not import `java.*` either** — stdlib only. That is what keeps
+  `webplay` compiling to JavaScript, and one `java.time` import would end it.
 - **Bot-authored pushes cannot trigger workflows.** A pipeline commit will never start a Build
   run on its own; dispatch it manually.
 - **Assert invariants in tests, not snapshots.** A test encoding today's data is a landmine.
@@ -98,5 +109,6 @@ packs/        generated content, served to installed apps from raw.githubusercon
 | The Python tools, the six workflows, what commits to `main` | `docs/content-pipeline.md` |
 | Adding a language; why Hebrew has two string files | `docs/localization.md` |
 | The four games and their rules | `docs/games.md` |
+| Playing The Vaults in a browser; why feel is testable now | `webplay/README.md` |
 | Building, verifying and shipping without a compiler | `docs/development.md` |
 | Things that must stay true, and what broke when they didn't | `docs/invariants.md` |

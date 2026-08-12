@@ -1,0 +1,202 @@
+<!doctype html>
+<meta charset="utf-8">
+<title>The Vaults — feel harness</title>
+<style>
+  :root { color-scheme: dark; --ink:#e6e9f0; --dim:#8b93a7; --bg:#14161c; --panel:#1b1f29; }
+  * { box-sizing: border-box; }
+  body { margin:0; background:var(--bg); color:var(--ink);
+         font:14px/1.5 ui-monospace,SFMono-Regular,Menlo,monospace;
+         display:flex; flex-direction:column; align-items:center; gap:14px; padding:18px; }
+  h1 { font-size:15px; font-weight:600; margin:0; letter-spacing:.02em; }
+  h1 span { color:var(--dim); font-weight:400; }
+  canvas { background:#1e2230; border-radius:10px; display:block; max-width:100%; }
+  .row { display:flex; gap:18px; flex-wrap:wrap; justify-content:center; align-items:flex-start; }
+  .panel { background:var(--panel); border-radius:10px; padding:12px 14px; min-width:250px; }
+  .panel h2 { font-size:11px; text-transform:uppercase; letter-spacing:.09em;
+              color:var(--dim); margin:0 0 9px; font-weight:600; }
+  label { display:flex; align-items:center; gap:8px; margin:5px 0; font-size:12px; }
+  label span:first-child { flex:0 0 96px; color:var(--dim); }
+  input[type=range] { flex:1; accent-color:#7aa2ff; min-width:80px; }
+  label output { flex:0 0 52px; text-align:right; }
+  table { border-collapse:collapse; font-size:12px; width:100%; }
+  td { padding:2px 0; } td:first-child { color:var(--dim); } td:last-child { text-align:right; }
+  .good { color:#7ee08a; } .bad { color:#ff8a8a; }
+  kbd { background:#2a3040; border-radius:4px; padding:1px 6px; font-size:11px; }
+  .hint { color:var(--dim); font-size:12px; }
+</style>
+
+<h1>The Vaults <span>— feel harness</span></h1>
+<div class="hint">
+  <kbd>←</kbd><kbd>→</kbd> run · <kbd>space</kbd> jump · <kbd>R</kbd> reset · <kbd>1</kbd><kbd>2</kbd> room
+</div>
+
+<canvas id="c" width="900" height="300"></canvas>
+
+<div class="row">
+  <div class="panel">
+    <h2>State</h2>
+    <table>
+      <tr><td>room</td><td id="s-room">—</td></tr>
+      <tr><td>frame</td><td id="s-frame">0</td></tr>
+      <tr><td>x / y</td><td id="s-pos">—</td></tr>
+      <tr><td>vx / vy</td><td id="s-vel">—</td></tr>
+      <tr><td>phase</td><td id="s-phase">—</td></tr>
+      <tr><td>jump buffered</td><td id="s-buf">—</td></tr>
+      <tr><td>frames off ground</td><td id="s-off">—</td></tr>
+      <tr><td>margin</td><td id="s-margin">—</td></tr>
+    </table>
+  </div>
+  <div class="panel">
+    <h2>Tuning — live</h2>
+    <label><span>gravity</span><input id="t-gravity" type="range" min="800" max="5000" step="50"><output></output></label>
+    <label><span>run speed</span><input id="t-runSpeed" type="range" min="60" max="600" step="10"><output></output></label>
+    <label><span>accel</span><input id="t-accel" type="range" min="200" max="4000" step="40"><output></output></label>
+    <label><span>friction</span><input id="t-friction" type="range" min="200" max="5000" step="50"><output></output></label>
+    <label><span>jump v</span><input id="t-jumpVelocity" type="range" min="-1200" max="-100" step="10"><output></output></label>
+    <label><span>buffer f</span><input id="t-jumpBufferFrames" type="range" min="0" max="20" step="1"><output></output></label>
+    <label><span>coyote f</span><input id="t-coyoteFrames" type="range" min="0" max="20" step="1"><output></output></label>
+    <div class="hint" style="margin-top:8px">
+      Set buffer and coyote to 0 to feel exactly what Palace shipped.
+    </div>
+  </div>
+</div>
+
+<script src="./kotlin-kotlin-stdlib.js"></script>
+<script src="./kotlin_org_jetbrains_kotlin_kotlin_dom_api_compat.js"></script>
+<script src="./smart-webplay.js"></script>
+<script>
+const V = globalThis['smart-webplay'].com.hillelsht.smart.domain.play.vaults;
+const session = new V.Session(0);
+
+const ctx = document.getElementById('c').getContext('2d');
+const W = 900, H = 300;
+
+// World -> screen. The rooms are ~600 units wide; scale so one fits with margin.
+const SCALE = 1.35, OX = 40, OY = 140;
+const sx = wx => OX + wx * SCALE;
+const sy = wy => OY + wy * SCALE;
+
+const held = { left:false, right:false, jump:false };
+let jumpEdge = false;               // a tap becomes one frame of "pressed"
+addEventListener('keydown', e => {
+  if (e.repeat) return;
+  if (e.key === 'ArrowLeft'  || e.key === 'a') held.left  = true;
+  if (e.key === 'ArrowRight' || e.key === 'd') held.right = true;
+  if (e.key === ' ' || e.key === 'ArrowUp' || e.key === 'w') { held.jump = true; jumpEdge = true; e.preventDefault(); }
+  if (e.key === 'r' || e.key === 'R') rawReset();
+  if (e.key === '1') { session.loadRoom(0); trail = []; refreshMargin(); }
+  if (e.key === '2') { session.loadRoom(1); trail = []; refreshMargin(); }
+});
+addEventListener('keyup', e => {
+  if (e.key === 'ArrowLeft'  || e.key === 'a') held.left  = false;
+  if (e.key === 'ArrowRight' || e.key === 'd') held.right = false;
+  if (e.key === ' ' || e.key === 'ArrowUp' || e.key === 'w') held.jump = false;
+});
+
+// --- live tuning ---------------------------------------------------------------------
+const KNOBS = ['gravity','runSpeed','accel','friction','jumpVelocity','jumpBufferFrames','coyoteFrames'];
+function pushTuning() {
+  const v = {};
+  KNOBS.forEach(k => {
+    const el = document.getElementById('t-' + k);
+    v[k] = Number(el.value);
+    el.nextElementSibling.value = v[k];
+  });
+  session.setTuning(v.gravity, v.runSpeed, v.accel, v.friction,
+                    v.jumpVelocity, v.jumpBufferFrames, v.coyoteFrames);
+  refreshMargin();
+}
+KNOBS.forEach(k => {
+  const el = document.getElementById('t-' + k);
+  el.value = session[k];
+  el.nextElementSibling.value = session[k];
+  el.addEventListener('input', pushTuning);
+});
+
+let margin = 0;
+function refreshMargin() { margin = session.margin(); }
+
+// The current run's path, cleared on every reset. Exposed so the Playwright driver can seed it
+// with a scripted run and screenshot the result.
+let trail = [];
+window.__setTrail = p => { trail = p; };
+const rawReset = () => { session.reset(); trail = []; };
+refreshMargin();
+
+// --- fixed-timestep loop, matching the engine exactly ----------------------------------
+const DT = 1000 / V.Session.Companion.fps;
+let acc = 0, last = performance.now();
+
+function frame(now) {
+  acc += Math.min(now - last, 100);
+  last = now;
+  while (acc >= DT) {
+    session.tick(held.left, held.right, held.jump || jumpEdge);
+    jumpEdge = false;
+    trail.push([session.x, session.y]);
+    if (trail.length > 600) trail.shift();
+    acc -= DT;
+    if (session.over) { setTimeout(rawReset, 450); break; }
+  }
+  draw();
+  requestAnimationFrame(frame);
+}
+
+function draw() {
+  ctx.clearRect(0, 0, W, H);
+
+  // abyss
+  ctx.fillStyle = '#171a22';
+  ctx.fillRect(0, sy(60), W, H - sy(60));
+
+  // ledges
+  for (let i = 0; i < session.ledgeCount; i++) {
+    const x0 = sx(session.ledgeX0(i)), x1 = sx(session.ledgeX1(i)), y = sy(session.ledgeY(i));
+    ctx.fillStyle = '#39405a';
+    ctx.fillRect(x0, y, x1 - x0, 14);
+    ctx.fillStyle = '#4b5578';
+    ctx.fillRect(x0, y, x1 - x0, 3);
+  }
+
+  // exit
+  ctx.strokeStyle = '#7ee08a'; ctx.lineWidth = 2;
+  ctx.beginPath(); ctx.moveTo(sx(session.exitX), sy(0) - 46);
+  ctx.lineTo(sx(session.exitX), sy(0)); ctx.stroke();
+
+  // Trail of the run so far. A jump arc is far easier to judge as a shape than as a feeling,
+  // and it is what makes a screenshot of this harness worth reading.
+  if (trail.length > 1) {
+    ctx.strokeStyle = '#ff8ad8'; ctx.lineWidth = 1.5; ctx.setLineDash([4, 3]);
+    ctx.beginPath();
+    trail.forEach(([x, y], i) => (i ? ctx.lineTo(sx(x), sy(y)) : ctx.moveTo(sx(x), sy(y))));
+    ctx.stroke(); ctx.setLineDash([]);
+  }
+
+  // runner
+  const px = sx(session.x), py = sy(session.y);
+  ctx.fillStyle = session.grounded ? '#ffd479' : '#7aa2ff';
+  ctx.fillRect(px - 6, py - 26, 12, 26);
+  // a buffered press that has not yet been spent, drawn above the head
+  if (session.jumpBufferedAgo >= 0) {
+    ctx.fillStyle = '#ff8ad8';
+    ctx.fillRect(px - 6, py - 34, 12, 4);
+  }
+
+  // HUD
+  set('s-room', session.roomId);
+  set('s-frame', session.frame);
+  set('s-pos', session.x.toFixed(1) + ' / ' + session.y.toFixed(1));
+  set('s-vel', session.vx.toFixed(0) + ' / ' + session.vy.toFixed(0));
+  set('s-phase', session.phase);
+  set('s-buf', session.jumpBufferedAgo < 0 ? '—' : session.jumpBufferedAgo + 'f ago');
+  set('s-off', session.framesOffGround);
+  const el = document.getElementById('s-margin');
+  el.textContent = margin + 'f (' + Math.round(margin * 1000 / V.Session.Companion.fps) + 'ms)';
+  el.className = margin >= V.Session.Companion.minMargin ? 'good' : 'bad';
+}
+function set(id, v) { document.getElementById(id).textContent = v; }
+
+window.__session = session;   // Playwright drives the game through this
+window.__ready = true;
+requestAnimationFrame(frame);
+</script>

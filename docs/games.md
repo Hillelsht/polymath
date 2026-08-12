@@ -80,6 +80,63 @@ Threefold repetition detection exists because of a self-play test: two engines s
 deep have nothing better to do than repeat themselves, and without it a match between two weak
 players never ends.
 
+## The Vaults
+
+A side-scrolling platformer in the *Prince of Persia* tradition, and the replacement for Palace.
+**No questions during play.** Studying stocks your pack before you descend — reviews become a
+flask, a streak keeps your checkpoint, accuracy buys a shortcut key — but once you are in the
+vaults it is a game, not a quiz with jumping between the questions.
+
+It is original work. Prince of Persia itself cannot be shipped (it is Ubisoft's, and every open
+port needs the original's copyrighted data files), so the level design and physics are this
+project's own.
+
+### What is built
+
+Movement, and only movement: `Motion.tick` is a pure `(runner, room, buttons) -> runner` step at a
+**fixed 60fps timestep**, so a run is reproducible from its input sequence alone. That is what
+lets a test replay a room, and what lets the browser harness and the phone agree frame for frame.
+Traps, combat and authored acts come after the movement is proven good, which is the sequencing
+Palace never got.
+
+Three things are in from the first commit, because a platformer without them feels like it is
+ignoring you no matter how the levels are designed:
+
+| | |
+|---|---|
+| **Input buffering** | a press is held for `jumpBufferFrames` and cleared only when spent or expired — never silently dropped |
+| **Coyote time** | `coyoteFrames` of grace to still jump after walking off an edge |
+| **Momentum** | acceleration and friction rather than snapping between 0 and full speed, so a run is a commitment and a careful step is possible |
+
+`Tuning` is a data class rather than a bag of constants, so a room, a test or the harness can run
+the same physics at different settings; it will move to `packs/play/vaults/tuning.json` so a feel
+fix ships as content. `Rooms` is Kotlin for now, on purpose — geometry is still moving while the
+physics is being tuned, and there is no sense building a publishing pipeline around numbers that
+change hourly.
+
+### How it is verified
+
+Two checks, deliberately covering different failure modes:
+
+- **`MotionTest`** asserts that *imperfect* input works — a jump pressed 1 to 8 frames before
+  landing still fires, a jump up to 6 frames after leaving an edge still fires, a stale press
+  expires rather than firing late, a held button does not bounce.
+- **`RoomsTest`** measures **timing margin**: `Playtest.jumpWindows` replays a room once per
+  candidate jump frame and reports the widest run of frames that complete it. Both current rooms
+  sit at 19 frames (317 ms). A room below `Playtest.MIN_MARGIN_FRAMES` fails the build.
+
+Margin responds to geometry and coyote time — dropping coyote to zero narrows it to 13 frames —
+but is **blind to input buffering**, because it only presses jump while grounded. That case is
+`MotionTest`'s. Neither number alone is proof of playability, and treating one as proof is the
+mistake below.
+
+### Playing it
+
+`webplay/` compiles the same `domain/play/vaults` sources to JavaScript and renders them on a
+canvas with live tuning sliders; `tools/playtest/play.js` drives it in Chromium. See
+`webplay/README.md`. This is the round trip through a human that the Palace entry below said was
+unavoidable — it was not.
+
 ## Aryeh's Palace — removed, and why it matters
 
 Palace was a side-scrolling platformer. It shipped unplayable and was removed. It is worth
