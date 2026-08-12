@@ -1,0 +1,265 @@
+<!--
+  Identical to values-he/. Android's resource-qualifier matching for Hebrew has never fully
+  settled on "he" over the deprecated "iw" — RTL layout and Locale-based logic recognize "he"
+  fine, since those go through a different, string-tag-based check, but on-device testing found
+  values-he/strings.xml itself not resolving: every UI string fell back to English while
+  Hebrew content (facts, video titles) from JSON assets, unaffected by this, displayed correctly.
+  Shipping both costs one small duplicated file and removes the ambiguity outright.
+-->
+<resources>
+    <!-- Tab bar -->
+    <string name="tab_today">היום</string>
+    <string name="tab_read">קריאה</string>
+    <string name="tab_watch">צפייה</string>
+    <string name="tab_play">משחק</string>
+    <string name="tab_progress">התקדמות</string>
+    <string name="tab_settings">הגדרות</string>
+
+    <!-- Settings -->
+    <string name="settings_title">הגדרות</string>
+    <string name="settings_tagline">התאימו את האפליקציה אליכם</string>
+    <string name="settings_language_heading">שפה</string>
+    <string name="settings_language_blurb">משנה את הטקסט באפליקציה ואת החומר שהיא מלמדת.</string>
+
+    <!-- Home / Today -->
+    <string name="home_crash_title">האפליקציה קרסה בפעם הקודמת</string>
+    <string name="home_crash_copy_report">העתקת הדוח</string>
+    <string name="home_crash_dismiss">סגירה</string>
+    <string name="home_greeting_morning">בוקר טוב</string>
+    <string name="home_greeting_afternoon">צהריים טובים</string>
+    <string name="home_greeting_evening">ערב טוב</string>
+    <string name="home_tagline">בואו נהיה חכמים יותר</string>
+    <string name="home_streak_description">הרצף הנוכחי</string>
+    <string name="home_today_label">המפגש של היום</string>
+    <string name="home_today_preparing">מכינים את התוכנית שלך…</string>
+    <string name="home_today_all_caught_up">הכול מעודכן. אין מה לחזור עליו.</string>
+    <string name="home_today_due_and_new">%1$d לחזרה · %2$d חדשות</string>
+    <string name="home_today_quiz_hint">ענו על שאלון כדי לשמור על הידע חד.</string>
+    <string name="home_today_estimate_minutes">כ-%1$d דקות.</string>
+    <string name="home_review_button">חזרה על %1$d</string>
+    <string name="home_learn_button">ללמוד</string>
+    <string name="home_learn_new_button">ללמוד %1$d חדשות</string>
+    <string name="home_start_quiz_button">התחלת שאלון</string>
+    <string name="home_mastery_title">שליטה בידע</string>
+    <string name="home_facts_locked_in">%1$d מתוך %2$d עובדות הוטמעו</string>
+    <string name="home_seen_so_far">%1$d נצפו עד כה</string>
+    <string name="home_action_quiz_title">לבחון אותי</string>
+    <string name="home_action_quiz_subtitle">10 שאלות</string>
+    <string name="home_action_read_subtitle">לעיין בהכול</string>
+    <string name="home_action_watch_subtitle">סרטונים חדשים מחכים</string>
+    <string name="home_action_play_subtitle">משחקים וחידות</string>
+
+    <!-- Category names and blurbs (shared across Read, Watch, Play, Progress) -->
+    <string name="category_geography_name">גאוגרפיה</string>
+    <string name="category_geography_blurb">מדינות, בירות, נהרות וצורתו של העולם</string>
+    <string name="category_history_name">היסטוריה</string>
+    <string name="category_history_blurb">האירועים, האימפריות והאנשים שהניעו הכול</string>
+    <string name="category_science_name">מדע</string>
+    <string name="category_science_blurb">פיזיקה, כימיה, ביולוגיה והחוקים שלפיהם פועלת המציאות</string>
+    <string name="category_arts_name">אמנות וספרות</string>
+    <string name="category_arts_blurb">ציורים, רומנים, מלחינים והקאנון שכדאי להכיר</string>
+    <string name="category_sports_name">ספורט ומשחקים</string>
+    <string name="category_sports_blurb">שיאים, כללים והרגעים שיצרו אגדות</string>
+    <string name="category_culture_name">תרבות פופולרית</string>
+    <string name="category_culture_blurb">קולנוע, מוזיקה, טלוויזיה והציטוטים שכולם מכירים</string>
+    <string name="category_unknown">קטגוריה לא ידועה</string>
+
+    <!-- Shared -->
+    <string name="action_back">חזרה</string>
+    <string name="go_deeper_show_less">לצמצם</string>
+    <string name="go_deeper_expand">להעמיק</string>
+    <string name="go_deeper_read_wikipedia">לקרוא בוויקיפדיה</string>
+
+    <!-- Watch length filter -->
+    <string name="length_short">קצרים</string>
+    <string name="length_medium">בינוניים</string>
+    <string name="length_long">ארוכים</string>
+
+    <!-- Read / Library -->
+    <string name="library_tagline">כל מה שהאפליקציה יכולה ללמד אתכם</string>
+    <string name="library_mastered_of_total">נשלטו: %1$d · סה״כ עובדות: %2$d</string>
+    <string name="library_fact_count">%1$d עובדות</string>
+    <string name="library_quiz_category_cd">שאלון בקטגוריה הזו</string>
+    <string name="library_review_status_singular">חזרה בעוד %1$d יום · נצפה %2$d פעמים</string>
+    <string name="library_review_status_plural">חזרה בעוד %1$d ימים · נצפה %2$d פעמים</string>
+
+    <!-- Watch -->
+    <string name="watch_status_fetching">טוענים את ההעלאות האחרונות…</string>
+    <string name="watch_status_offline">אין חיבור – לא ניתן היה להתחבר ל-YouTube</string>
+    <string name="watch_status_fresh">תוכן טרי מהערוצים האלה בכל פתיחה</string>
+    <string name="watch_refresh">רענון</string>
+    <string name="watch_empty_loading_title">טוענים את המדף…</string>
+    <string name="watch_empty_offline_title">אין חיבור</string>
+    <string name="watch_empty_nomatch_title">שום דבר לא תואם</string>
+    <string name="watch_empty_loading_body">בודקים מה הערוצים האלה פרסמו.</string>
+    <string name="watch_empty_offline_body">לשונית הצפייה טוענת סרטונים בזמן אמת, ולכן היא זקוקה לחיבור. כל השאר באפליקציה פועל גם באופליין.</string>
+    <string name="watch_empty_nomatch_body">אין עדיין סרטונים בשילוב הזה. נסו לנקות מסנן.</string>
+    <string name="watch_watched_cd">נצפה</string>
+    <string name="watch_minutes">%1$d דק׳</string>
+    <string name="watch_channel_and_category">%1$s · %2$s</string>
+
+    <!-- Play tab -->
+    <string name="play_tagline">כל מה שלמדתם, לפעולה</string>
+    <string name="game_climb_title">הטיפוס</string>
+    <string name="game_climb_blurb">הילחמו אל פסגת המגדל בעזרת הידע שלכם. אספו שרידים, ונסו את מזלכם.</string>
+    <string name="game_chains_title">שרשראות</string>
+    <string name="game_chains_blurb">שש עשרה משבצות, ארבע קבוצות נסתרות. לוח אחד ביום, אותו הלוח לכולם.</string>
+    <string name="game_gambit_title">גמביט</string>
+    <string name="game_gambit_blurb">שחמט מול מנוע שנחלש ככל שתדעו יותר. ענו על שאלות בין המהלכים.</string>
+    <string name="game_palace_title">הארמון של אריה</string>
+    <string name="game_palace_blurb">רוצו, קפצו והיתלו דרך האולמות. ענו בכל שער.</string>
+    <string name="game_quiz_title">שאלון</string>
+    <string name="game_quiz_blurb">סבב מהיר על מה שאתם לומדים לאחרונה.</string>
+    <string name="play_climb_never">עדיין לא טיפסתם</string>
+    <string name="play_climb_summary">השיא: %1$d · %2$d ניסיונות</string>
+    <string name="play_climb_cta_start">להתחיל לטפס</string>
+    <string name="play_climb_cta_again">לטפס שוב</string>
+    <string name="play_chains_none">אין לוח היום</string>
+    <string name="play_chains_done">סיימתם להיום</string>
+    <string name="play_chains_done_with_streak">סיימתם להיום · רצף של %1$d ימים</string>
+    <string name="play_chains_waiting">הלוח של היום מחכה</string>
+    <string name="play_chains_waiting_with_streak">הלוח של היום מחכה · רצף של %1$d ימים</string>
+    <string name="play_chains_cta_see">לצפות בלוח של היום</string>
+    <string name="play_chains_cta_play">לשחק בלוח של היום</string>
+    <string name="play_gambit_never">עדיין לא שיחקתם</string>
+    <string name="play_gambit_summary_won">%1$d משחקים · ניצחתם באחד מהם</string>
+    <string name="play_gambit_summary">שיחקתם %1$d משחקים</string>
+    <string name="play_gambit_cta_start">להתחיל משחק</string>
+    <string name="play_gambit_cta_resume">להמשיך או להתחיל מחדש</string>
+    <string name="play_palace_never">עדיין לא חקרתם</string>
+    <string name="play_palace_summary_won">%1$d ניסיונות · הגעתם עד הסוף</string>
+    <string name="play_palace_summary">%1$d ניסיונות</string>
+    <string name="play_palace_cta_start">להיכנס פנימה</string>
+    <string name="play_palace_cta_again">לנסות שוב</string>
+    <string name="play_quiz_footnote">עשר שאלות על מה שאתם לומדים לאחרונה</string>
+    <string name="play_quiz_cta">לענות על שאלון</string>
+    <string name="play_cta_disabled">עוד לא</string>
+
+    <!-- Progress -->
+    <string name="stats_mastery_caption">שליטה</string>
+    <string name="stats_facts_mastered_caption">עובדות שנשלטו</string>
+    <string name="stats_day_streak_caption">רצף ימים</string>
+    <string name="stats_quiz_accuracy_title">דיוק בשאלונים</string>
+    <string name="stats_quiz_accuracy_value">%1$d%% מתוך %2$d שאלונים</string>
+    <string name="stats_quiz_accuracy_empty">ענו על השאלון הראשון שלכם כדי להתחיל לעקוב אחר זה.</string>
+    <string name="stats_longest_streak">הרצף הארוך ביותר: %1$d ימים · %2$d מתוך %3$d עובדות נצפו</string>
+    <string name="stats_mastery_by_subject">שליטה לפי נושא</string>
+    <string name="stats_fraction">%1$d/%2$d</string>
+
+    <!-- Shared generic actions -->
+    <string name="action_close">סגירה</string>
+    <string name="action_done">סיום</string>
+    <string name="action_continue">המשך</string>
+    <string name="action_next">הבא</string>
+    <string name="action_clear">ניקוי</string>
+    <string name="action_submit">שליחה</string>
+    <string name="play_leave_button">יציאה</string>
+    <string name="memory_hook_label">וו זיכרון</string>
+
+    <!-- The Climb -->
+    <string name="climb_empty_title">עדיין אין מספיק חומר לשאלות</string>
+    <string name="climb_empty_body">למדו עוד כמה עובדות, והמגדל ימצא מה לזרוק עליכם.</string>
+    <string name="climb_floor">קומה %1$d</string>
+    <string name="climb_points">%1$d נקודות</string>
+    <string name="climb_points_with_streak">%1$d נקודות  ·  רצף פי %2$d</string>
+    <string name="climb_hp">%1$d / %2$d</string>
+    <string name="climb_hp_with_shield">%1$d / %2$d   מגן: %3$d</string>
+    <string name="climb_doors_single">ישר קדימה</string>
+    <string name="climb_doors_multiple">בחרו את דרככם למעלה</string>
+    <string name="node_duel_title">מתחרה</string>
+    <string name="node_elite_title">משהו גדול יותר</string>
+    <string name="node_cache_title">מטמון</string>
+    <string name="node_rest_title">חדר שקט</string>
+    <string name="node_boss_title">שומר הסף</string>
+    <string name="node_duel_blurb">קרב רגיל. בערך %1$d שאלות.</string>
+    <string name="node_elite_blurb">קשה יותר, ושווה יותר תובנה.</string>
+    <string name="node_cache_blurb">בחרו שריד אחד מתוך שלושה.</string>
+    <string name="node_rest_blurb">החלימו %1$d%% מהבריאות שלכם והמשיכו הלאה.</string>
+    <string name="node_boss_blurb">אין דרך אחרת חוץ מלהילחם.</string>
+    <string name="climb_cache_title">מטמון. קחו אחד.</string>
+    <string name="climb_summary_stats">%1$d נענו · %2$d הוחמצו</string>
+    <string name="climb_missed_note">השאלות שהחמצתם יופיעו בחזרות של מחר.</string>
+    <string name="climb_insight_banked">נצברה תובנה: %1$d</string>
+
+    <!-- Chains -->
+    <string name="chains_unavailable_body">החידה של היום עוד לא פורסמה, או שלא הצלחנו לטעון אותה. נסו שוב כשתהיו מחוברים לאינטרנט.</string>
+    <string name="chains_tagline">מצאו ארבע קבוצות של ארבע</string>
+    <string name="chains_solved">נפתר עם %1$d טעויות.</string>
+    <string name="chains_lost">נגמרו הניחושים – הנה הלוח המלא.</string>
+    <string name="chains_one_away">חסר רק אחד.</string>
+    <string name="chains_wrong">זו לא קבוצה.</string>
+    <string name="chains_already_tried">כבר ניסיתם את זה.</string>
+    <string name="chains_readonly">כבר שיחקתם בלוח של היום.</string>
+
+    <!-- Learn -->
+    <string name="learn_done_title">עבודה יפה</string>
+    <string name="learn_done_body_singular">למדתם %1$d עובדה חדשה.</string>
+    <string name="learn_done_body_plural">למדתם %1$d עובדות חדשות.</string>
+    <string name="learn_empty_title">אין חדש היום</string>
+    <string name="learn_empty_body">הגעתם למגבלת החומר החדש להיום. חזרו מחר, או תרגלו את מה שאתם כבר יודעים.</string>
+    <string name="learn_got_it_button">הבנתי</string>
+
+    <!-- Review -->
+    <string name="review_remaining">נותרו %1$d</string>
+    <string name="review_complete_title">החזרה הושלמה</string>
+    <string name="review_nothing_due_title">אין מה לחזור עליו</string>
+    <string name="review_complete_body_singular">סיימתם %1$d כרטיס. הוא יחזור בדיוק כשתתחילו לשכוח אותו.</string>
+    <string name="review_complete_body_plural">סיימתם %1$d כרטיסים. הם יחזרו בדיוק כשתתחילו לשכוח אותם.</string>
+    <string name="review_nothing_due_body">שום דבר לא מתוזמן לחזרה כרגע. למדו משהו חדש במקום.</string>
+    <string name="review_show_answer_button">הצגת התשובה</string>
+    <string name="rating_forgot">שכחתי</string>
+    <string name="rating_hard">קשה</string>
+    <string name="rating_good">טוב</string>
+    <string name="rating_easy">קל</string>
+
+    <!-- Quiz -->
+    <string name="quiz_building_title">בונים את השאלון שלכם</string>
+    <string name="quiz_building_body">אוספים שאלות מהתוכנית…</string>
+    <string name="quiz_verdict_outstanding">מצוין</string>
+    <string name="quiz_verdict_solid">עבודה טובה</string>
+    <string name="quiz_verdict_getting_there">כמעט שם</string>
+    <string name="quiz_verdict_another_look">כדאי לחזור על זה</string>
+    <string name="quiz_correct_label">נכון</string>
+    <string name="quiz_clean_sweep">תוצאה מושלמת.</string>
+    <string name="quiz_missed_added_to_review">%1$d השאלות שהחמצתם נוספו בחזרה לתור החזרות שלכם.</string>
+    <string name="quiz_finish_button">סיום</string>
+
+    <!-- Video player -->
+    <string name="video_unavailable_title">הסרטון לא זמין</string>
+    <string name="video_unavailable_body">הסרטון הזה כבר לא נמצא בקטלוג.</string>
+    <string name="video_quiz_me_on_this">לבחון אותי על זה</string>
+    <string name="video_quiz_me_on_category">לבחון אותי על %1$s</string>
+    <string name="video_quiz_footnote">כל מה שתחמיצו יצטרף לתור החזרות שלכם.</string>
+    <string name="video_handed_off_title">מתנגן ב-YouTube</string>
+    <string name="video_handed_off_refused">הסרטון הזה לא מתנגן בתוך אפליקציות. הוא הוסר מהמדף שלכם.</string>
+    <string name="video_handed_off_app_rejected">YouTube סירב להפעיל אותו כאן. הוא יישאר במדף שלכם.</string>
+    <string name="video_handed_off_silent">הוא לא הצליח להתחיל כאן. הוא יישאר במדף שלכם.</string>
+    <string name="video_related_facts_label">מה זה מלמד</string>
+
+    <!-- Gambit (chess) -->
+    <string name="gambit_tempo_banked">נצבר טמפו: %1$d</string>
+    <string name="gambit_hint_prefix">רמז: %1$s</string>
+    <string name="gambit_engine_thinking">המנוע חושב…</string>
+    <string name="gambit_action_weaken">החלשה</string>
+    <string name="gambit_action_hint">רמז</string>
+    <string name="gambit_action_takeback">ביטול מהלך</string>
+    <string name="gambit_action_with_cost">%1$s · %2$d</string>
+    <string name="gambit_answer_for_tempo">לענות תמורת טמפו</string>
+    <string name="gambit_skip_button">לדלג – בלי טמפו</string>
+    <string name="gambit_outcome_won">ניצחתם</string>
+    <string name="gambit_outcome_lost">המנוע ניצח</string>
+    <string name="gambit_outcome_draw">תיקו</string>
+    <string name="gambit_moves_played">בוצעו %1$d מהלכים</string>
+    <string name="gambit_new_game_button">משחק חדש</string>
+
+    <!-- Aryeh's Palace -->
+    <string name="palace_empty_title">עדיין אין על מה לשאול</string>
+    <string name="palace_empty_body">למדו כמה עובדות, ולשערי הארמון יהיו שאלות בשבילכם.</string>
+    <string name="palace_gate_title">שער חוסם את הדרך</string>
+    <string name="palace_outcome_won">הצלחתם לעבור</string>
+    <string name="palace_outcome_lost">נגמרו החיים</string>
+    <string name="palace_try_again_button">לנסות שוב</string>
+    <string name="palace_control_up">למעלה</string>
+    <string name="palace_control_drop">צניחה</string>
+    <string name="palace_control_jump">קפיצה</string>
+</resources>
