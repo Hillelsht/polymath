@@ -10,7 +10,7 @@ Play is a toy bolted to the side.
 [The Vaults](#the-vaults) is the deliberate exception, for reasons in its own section.
 
 Every game's rules live in `domain/play/` as pure Kotlin and are tested headlessly — most of the
-302 engine tests are game rules. The UI draws with Compose vectors; there are no sprite sheets
+306 engine tests are game rules. The UI draws with Compose vectors; there are no sprite sheets
 and no game engine dependency, so none of this grows the APK.
 
 `recordGameMiss()` has two deliberate refusals: it skips facts still in `Phase.NEW` (grading a
@@ -54,8 +54,41 @@ is checked afterwards anyway, because a rule worth relying on is worth proving. 
 then re-validates every published grid using the device's own `ChainsRules` before CI commits it,
 and `SmartRepository` validates once more at load time.
 
+The overlap rule is not the only way a grid can be wrong, which is what shipping the daily on the
+web made obvious. **A group's label can lie about the tiles under it.** "Countries" went out
+containing Xinjiang and the Maghreb; "Authors" went out containing Moses. Every one of those grids
+passed every check above, because the overlap rule asks whether a tile fits *two* groups and has
+nothing to say about a tile that fits its own group badly — and a solver who knows the Maghreb is
+not a country is told they are wrong by a puzzle that is itself wrong, which is the same injury
+the overlap rule exists to prevent. Fifty-nine tiles across four published months were like this.
+
+`build_chains.py` now removes them with a rule that survives being applied to the whole corpus: a
+real country is something this corpus writes facts *about*, and a region mislabelled as one is
+not. That only holds where the corpus writes about the kind of thing at all — it has facts about
+countries and athletes, none about currencies or chemical symbols, where being absent means
+nothing — so the test runs per answerType and only where the type as a whole clears half. The
+measured split is not close (countries 78%, athletes 100% against mountain ranges 15%, currencies
+2%) and nothing sits between 32% and 61%.
+
+It is deliberately biased toward removal. Tolkien and Lewis Carroll go with Moses, because this
+corpus holds no fact about either man, and **Authors and Musicians drop below the pool floor and
+stop appearing at all**. Eleven good authors beat eighteen with Moses among them; the way to get
+the category back is more content, not a lower bar.
+
+A second rule drops facts whose subject sits far below the corpus median importance, where one is
+stated: "What is the chemical symbol for unquadoctium?" scored 8 against tantalum's 146, because
+unquadoctium is a hypothetical element nobody has made and its symbol is a naming convention
+rather than a fact. Hand-authored facts state no importance and are exempt.
+
 Four mistakes allowed. Score is `1000 - 150 × mistakes` on a win, or 100 per solved group on a
 loss.
+
+Played on the web at `chains.html`, driven end-to-end in Chromium by `tools/playtest/daily.js`.
+That page is why `ChainsState` carries `guesses` — an ordered list of what was submitted, with
+each guess's tiles in tap order. `attempts` cannot stand in for it, being a set of sets whose only
+job is "have I seen this combination before", and a shared result grid is one row per guess. The
+same list is the saved game: replaying it through `ChainsRules` rebuilds a part-finished grid
+exactly, so nothing derived is stored and nothing derived can fall out of step.
 
 ## Gambit
 
