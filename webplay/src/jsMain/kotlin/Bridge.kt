@@ -22,9 +22,26 @@ class Session {
     /** Set to play a single room on repeat instead of the whole descent, or -1 for the descent. */
     private var soloRoom: Int = -1
 
+    /**
+     * Every frame's buttons, in order — which is the whole run, because the engine is
+     * deterministic. See [Ghost]. Raw player input is recorded even on frames spent dead, when it
+     * is ignored: [Ghost.replay] ignores those frames in exactly the same way, and dropping them
+     * here would leave a replay a death out of step with the run it came from.
+     */
+    private val recorded = mutableListOf<Buttons>()
+
+    private var ghost: MutableList<Buttons> = mutableListOf()
+    private var ghostDescent: Descent? = null
+    private var ghostFrame: Int = 0
+    private var ghostSinceDeath: Int = 0
+
     // --- the run ---------------------------------------------------------------------------
 
     fun tick(left: Boolean, right: Boolean, jump: Boolean, down: Boolean) {
+        val buttons = Buttons(left, right, jump, down)
+        if (recorded.size < Ghost.MAX_FRAMES) recorded += buttons
+        stepGhost()
+
         if (descent.runner.phase == Phase.DEAD) {
             framesSinceDeath++
             descent = DescentRules.tick(descent, Buttons(), tuning)
@@ -34,16 +51,18 @@ class Session {
             }
             return
         }
-        descent = DescentRules.tick(descent, Buttons(left, right, jump, down), tuning)
+        descent = DescentRules.tick(descent, buttons, tuning)
     }
 
     fun restart() {
         framesSinceDeath = 0
+        recorded.clear()
         descent = if (soloRoom >= 0) {
             DescentRules.start(listOf(Rooms.all[soloRoom]), tuning)
         } else {
             DescentRules.start(Rooms.all, tuning)
         }
+        rewindGhost()
     }
 
     /** Jump to a room and stay there, for working on one piece of geometry. */
@@ -56,6 +75,76 @@ class Session {
         soloRoom = -1
         restart()
     }
+
+    // --- ghosts ------------------------------------------------------------------------------
+    //
+    // A race against a link. The opponent is not simulated or approximated: their button stream is
+    // replayed through the same rules on the same room, so what you are watching is the run they
+    // actually had. Nothing about it needs a server, which is the point.
+
+    /** The run just played, as text short enough to put in a URL. Empty if nothing was played. */
+    fun recording(): String = Ghost.encode(recorded)
+
+    val recordedFrames: Int get() = recorded.size
+
+    /** Loads a shared run. False — and no ghost — if the text is not one. */
+    fun loadGhost(text: String): Boolean {
+        val frames = Ghost.decode(text) ?: return false
+        ghost = frames.toMutableList()
+        rewindGhost()
+        return true
+    }
+
+    fun clearGhost() {
+        ghost = mutableListOf()
+        ghostDescent = null
+    }
+
+    private fun rewindGhost() {
+        ghostFrame = 0
+        ghostSinceDeath = 0
+        ghostDescent = if (ghost.isEmpty()) null else {
+            DescentRules.start(if (soloRoom >= 0) listOf(Rooms.all[soloRoom]) else Rooms.all, tuning)
+        }
+    }
+
+    /**
+     * One frame of the ghost, in lockstep with the live run.
+     *
+     * The death handling is a copy of [Ghost.replay]'s rather than a call to it, because that
+     * function replays a whole run at once and this has to stop after each frame so the runner can
+     * be drawn. `GhostTest` is what keeps the two honest: it asserts a replayed run matches the
+     * one it came from frame for frame, deaths included.
+     */
+    private fun stepGhost() {
+        val current = ghostDescent ?: return
+        if (ghostFrame >= ghost.size || current.finished) return
+        val buttons = ghost[ghostFrame]
+        ghostFrame++
+        if (current.runner.phase == Phase.DEAD) {
+            ghostSinceDeath++
+            val ticked = DescentRules.tick(current, Buttons(), tuning)
+            ghostDescent = if (DescentRules.readyToRespawn(ticked, ghostSinceDeath)) {
+                ghostSinceDeath = 0
+                DescentRules.respawn(ticked, tuning)
+            } else {
+                ticked
+            }
+            return
+        }
+        ghostDescent = DescentRules.tick(current, buttons, tuning)
+    }
+
+    val hasGhost: Boolean get() = ghostDescent != null
+    val ghostX: Double get() = ghostDescent?.runner?.x ?: 0.0
+    val ghostY: Double get() = ghostDescent?.runner?.y ?: 0.0
+    val ghostHanging: Boolean get() = ghostDescent?.runner?.hanging ?: false
+    val ghostDead: Boolean get() = ghostDescent?.runner?.phase == Phase.DEAD
+    val ghostFinished: Boolean get() = ghostDescent?.finished ?: false
+    val ghostElapsedFrames: Int get() = ghostDescent?.elapsedFrames ?: 0
+
+    /** True once the ghost's own recording runs out, so a page can stop drawing a frozen figure. */
+    val ghostSpent: Boolean get() = ghostDescent != null && ghostFrame >= ghost.size
 
     // --- what the renderer draws -------------------------------------------------------------
 

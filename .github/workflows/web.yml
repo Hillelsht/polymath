@@ -65,12 +65,13 @@ jobs:
       # unplayable, because nothing ever drove it through a real input path; the daily has the
       # same exposure one layer up, where a board that forgets itself on reload is invisible to
       # every unit test in the repo.
-      - name: Play every room, and the daily, in Chromium
+      - name: Play every room, both dailies, and a ghost race, in Chromium
         run: |
           npm install --no-save playwright@1.49.1
           npx playwright install --with-deps chromium
           node tools/playtest/play.js
           node tools/playtest/daily.js
+          node tools/playtest/ghost.js
 
       - name: The standalone one-file build still assembles
         run: |

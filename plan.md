@@ -40,6 +40,10 @@ at `hillelsht.github.io/smart`, from a single constant in `webplay/web/polymath.
   buttons over http — sixteen tiles, a wrong guess costing exactly one life, a part-played grid
   surviving a reload, the share grid's rows matching the guesses, two days running reading as a
   streak of two. It caught a result panel that was showing before there was a result.
+- **The Vaults has a daily too**, at `descent.html`, and it shares as a **ghost link**: the run's
+  own inputs in the URL fragment, eight characters for a clean first room, replayed beside you
+  frame for frame. No server, and none possible to need — the engine is deterministic, so the
+  inputs *are* the run.
 - **`vaults.yml` became `web.yml`**, building and publishing the whole portal.
 
 ### What shipped in the working session before this one (merged to `main` via PR #1)
@@ -146,9 +150,13 @@ Grow `webplay/` from a Vaults harness into a small daily portal at a real domain
    before any links spread; `polymath.js` holds the one constant to change.
 2. ~~**Daily Chains in the browser**~~ — done. Compiled from the shipping source, played with
    `ChainsRules`, shared as a Wordle-style emoji grid via the clipboard or the system share sheet.
-3. **Daily Vaults room**: one counted attempt per day; share as a **ghost link** — the run's
-   inputs base64-encoded in the URL fragment; opening replays the ghost to race against. Not
-   started. The Vaults page is still the open-ended harness.
+3. ~~**Daily Vaults room** + **ghost link**~~ — done, at `descent.html`. One room a day, chosen by
+   day number so everyone gets the same one; your time is the first run you finish, and the room
+   stays open to practise on afterwards. A finished run shares as a link carrying the run itself
+   in the URL fragment — **a whole clearance of the first room is eight characters** — and opening
+   it replays that attempt beside you, frame for frame. `Ghost` lives in `domain/play/vaults/`, so
+   the format is tested by `enginetests` and compiled to JS from the same source; the round trip
+   is gated end-to-end in Chromium by `tools/playtest/ghost.js`.
 4. ~~Streak + history in localStorage; result survives refresh~~ — done, and gated in Chromium.
 5. ~~Extend the Pages workflow into the portal deploy~~ — done; it is `web.yml` now.
 6. App: deep links `/daily/chains`, `/daily/vaults` into existing screens
@@ -169,7 +177,7 @@ Grow `webplay/` from a Vaults harness into a small daily portal at a real domain
 
 Ships when: page loads fast on a phone; emoji share pastes correctly; a ghost link round-trips;
 streak survives restart; the Chromium playtest drives the daily end-to-end in CI; and the grids
-are worth showing a stranger. **Only the ghost link is outstanding.**
+are worth showing a stranger. **Shipped, except the domain, the app deep links and the counter.**
 
 ### Wedge 2 (~weeks 3–6): Provably-fair generated rooms + language parity
 - Room generator gated by `Playtest.solve` in CI (margin band → publish to
@@ -198,9 +206,10 @@ ads in the ritual, no new games until the dailies are excellent.
 
 1. Read `CLAUDE.md` (root) — build constraints, working commands, git rules, invariants map.
 2. Read this file for strategy and state.
-3. The immediate task is the rest of **Wedge 1**: **step 3**, the ghost link — the most
-   distinctive thing in this plan and impossible for a competitor without a deterministic engine
-   — then steps 6 and 7. Buying the domain is the user's to do.
+3. Wedge 1 is essentially done. What is left in it: **step 6** (app deep links into
+   `SmartNavHost.kt` and `AndroidManifest.xml` — needs CI to compile) and **step 7** (one
+   privacy-friendly counter). Buying the domain is the user's to do. After that, **Wedge 2**:
+   generated rooms gated by `Playtest.solve`, and a `generate_facts.py` run for RU/HE parity.
    Two content follow-ups worth doing when convenient: the `author` and `musician` pools need
    more facts before those categories can return to the daily, and a device that already
    downloaded the placeholder-element facts keeps them, because library shards only ever add and

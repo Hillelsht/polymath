@@ -1,0 +1,275 @@
+<title>The Vaults — Polymath</title>
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="description" content="Today's room under the vaults. One clock, free deaths, and a link that races your ghost.">
+<link rel="icon" href="./favicon.svg">
+<link rel="stylesheet" href="./polymath.css">
+<style>
+  /* The room is the game's own world — torchlit stone — sitting inside the portal's shell. */
+  .stage { background:#0F1014; border:1px solid var(--pm-edge); border-radius:12px; padding:10px; }
+  canvas { display:block; width:100%; height:auto; border-radius:6px; touch-action:none; }
+  .runbar { display:flex; align-items:baseline; gap:18px; flex-wrap:wrap;
+            font-variant-numeric:tabular-nums; font-size:13px; }
+  .runbar b { color:var(--pm-dim); font-weight:400; }
+  .runbar .big { font-size:19px; font-family:var(--pm-display); }
+  .ghosted { color:#8FA6D8; }
+  .pad { display:flex; gap:9px; justify-content:center; flex-wrap:wrap; }
+  .pad .pm-btn { min-width:62px; padding:14px 20px; }
+  .pad .pm-btn.on { background:var(--pm-gold); border-color:var(--pm-gold); color:var(--pm-ink); }
+  .keys { color:var(--pm-dim); font-size:12.5px; text-align:center; }
+  kbd { background:var(--pm-panel-lit); border:1px solid var(--pm-edge); border-radius:4px;
+        padding:1px 6px; font-size:11.5px; color:var(--pm-text); }
+</style>
+
+<div class="pm-wrap wide">
+  <div class="pm-nav">
+    <a class="pm-mark" href="./index.html">Poly<span>math</span></a>
+    <nav>
+      <a href="./chains.html">Chains</a>
+      <a href="./descent.html" aria-current="page">The Vaults</a>
+    </nav>
+  </div>
+
+  <header class="pm-head">
+    <h1><span class="pm-sub" id="v-when">—</span>The Vaults</h1>
+    <p class="pm-lede">
+      One room a day, one clock. <b>Deaths are free</b> — you restart at the entrance and the clock
+      keeps running, so dying costs you only the thing you cannot get back. Finish it and you can
+      send the run itself as a link: your friend races the attempt you actually had.
+    </p>
+  </header>
+
+  <div class="runbar">
+    <span class="big" id="v-room">—</span>
+    <span><b>time</b> <span id="v-clock">0.0s</span></span>
+    <span><b>deaths</b> <span id="v-deaths">0</span></span>
+    <span class="ghosted" id="v-ghost" hidden><b>ghost</b> <span id="v-ghost-time">—</span></span>
+  </div>
+
+  <div class="stage"><canvas id="c" width="920" height="280"></canvas></div>
+
+  <div class="pad">
+    <button class="pm-btn" id="b-left" aria-label="Run left">&#9664;</button>
+    <button class="pm-btn" id="b-right" aria-label="Run right">&#9654;</button>
+    <button class="pm-btn" id="b-down" aria-label="Let go">&#9660;</button>
+    <button class="pm-btn" id="b-jump" aria-label="Jump or climb">JUMP</button>
+    <button class="pm-btn" id="b-restart">Restart</button>
+  </div>
+  <p class="keys">
+    <kbd>&#8592;</kbd><kbd>&#8594;</kbd> run &middot; <kbd>space</kbd> jump / climb &middot;
+    <kbd>&#8595;</kbd> let go &middot; <kbd>R</kbd> restart
+  </p>
+
+  <div class="pm-result" id="v-result" hidden>
+    <h2 id="v-verdict">—</h2>
+    <p class="pm-meta" id="v-summary"></p>
+    <div class="pm-controls" style="justify-content:flex-start">
+      <button class="pm-btn primary" id="v-share">Share your ghost</button>
+    </div>
+    <p class="pm-meta" id="v-shared" role="status" aria-live="polite"></p>
+  </div>
+
+  <footer class="pm-foot">
+    Your time today is the first run you finish; after that the room stays open to practise on.
+    A shared link carries the run itself — every button you pressed, a few dozen characters of it —
+    and nothing else, because the physics is deterministic and the rest can be recomputed. There is
+    no server keeping any of this. The
+    <a href="./vaults.html">tuning harness</a> is the same game with the dials exposed.
+  </footer>
+</div>
+
+<script src="./kotlin-kotlin-stdlib.js"></script>
+<script src="./kotlin_org_jetbrains_kotlin_kotlin_dom_api_compat.js"></script>
+<script src="./smart-webplay.js"></script>
+<script src="./vaults-draw.js"></script>
+<script src="./polymath.js"></script>
+<script>
+const V = globalThis['smart-webplay'].com.hillelsht.smart.domain.play.vaults;
+const session = new V.Session();
+const FPS = V.Session.Companion.fps;
+const ROOMS = V.Session.Companion.roomCount;
+
+const el = id => document.getElementById(id);
+const view = VaultView(el('c'));
+
+/**
+ * A ghost link carries the day it was run on as well as the run, in the fragment.
+ *
+ * The fragment rather than the query because a fragment is never sent to a server, never lands in
+ * a log and never leaks through a referrer — which matters more here than usual, since the run is
+ * the only thing this site ever produces that belongs to a person.
+ */
+const fragment = new URLSearchParams(location.hash.slice(1));
+const TODAY = PM.today();
+const DATE = /^\d{4}-\d{2}-\d{2}$/.test(fragment.get('d') || '') ? fragment.get('d') : TODAY;
+const COUNTS = DATE === TODAY;                 // an old day's room is practice, not today's attempt
+const NUMBER = PM.dayNumber(DATE);
+
+// Everyone gets the same room on the same day, because a shared time means nothing otherwise.
+const ROOM = ((NUMBER - 1) % ROOMS + ROOMS) % ROOMS;
+session.playRoom(ROOM);
+
+let done = PM.load('vaults', DATE);            // today's locked-in time, if there is one
+let started = false;                           // the clock waits for the first input
+let racing = false;
+
+const held = { left: false, right: false, jump: false, down: false };
+let jumpEdge = false;
+
+// --- setting up ---------------------------------------------------------------------------------
+
+el('v-when').textContent =
+  `${PM.pretty(DATE)} · no. ${NUMBER}` + (COUNTS ? '' : ' · practice');
+el('v-room').textContent = V.Session.Companion.roomIdAt(ROOM);
+
+const ghostText = fragment.get('g');
+if (ghostText && session.loadGhost(ghostText)) {
+  racing = true;
+  el('v-ghost').hidden = false;
+} else if (ghostText) {
+  // Refused rather than raced: a half-read ghost would be an attempt nobody had.
+  el('v-ghost').hidden = false;
+  el('v-ghost-time').textContent = 'that link is not a run';
+}
+
+if (done) finish(done.frames, done.deaths, done.ghost);
+
+// --- input ---------------------------------------------------------------------------------------
+
+const begin = () => { started = true; };
+
+addEventListener('keydown', e => {
+  if (e.repeat) return;
+  if (e.key === 'ArrowLeft' || e.key === 'a') { held.left = true; begin(); }
+  if (e.key === 'ArrowRight' || e.key === 'd') { held.right = true; begin(); }
+  if (e.key === 'ArrowDown' || e.key === 's') { held.down = true; begin(); e.preventDefault(); }
+  if (e.key === ' ' || e.key === 'ArrowUp' || e.key === 'w') {
+    held.jump = true; jumpEdge = true; begin(); e.preventDefault();
+  }
+  if (e.key === 'r' || e.key === 'R') restart();
+});
+addEventListener('keyup', e => {
+  if (e.key === 'ArrowLeft' || e.key === 'a') held.left = false;
+  if (e.key === 'ArrowRight' || e.key === 'd') held.right = false;
+  if (e.key === 'ArrowDown' || e.key === 's') held.down = false;
+  if (e.key === ' ' || e.key === 'ArrowUp' || e.key === 'w') held.jump = false;
+});
+
+// Touch matters more than usual here: latency on a phone is what made the previous game
+// unplayable, and it is the thing a desktop test can never tell you about.
+function hold(id, on, off) {
+  const b = el(id);
+  const down = e => { e.preventDefault(); b.classList.add('on'); begin(); on(); };
+  const up = e => { e.preventDefault(); b.classList.remove('on'); off && off(); };
+  b.addEventListener('pointerdown', down);
+  ['pointerup', 'pointercancel', 'pointerleave'].forEach(k => b.addEventListener(k, up));
+}
+hold('b-left', () => held.left = true, () => held.left = false);
+hold('b-right', () => held.right = true, () => held.right = false);
+hold('b-down', () => held.down = true, () => held.down = false);
+hold('b-jump', () => { held.jump = true; jumpEdge = true; }, () => held.jump = false);
+el('b-restart').addEventListener('click', () => restart());
+
+function restart() {
+  session.restart();
+  if (racing) session.loadGhost(ghostText);
+  view.reset();
+  started = false;
+  el('v-shared').textContent = '';
+}
+
+// --- the run --------------------------------------------------------------------------------------
+
+const DT = 1000 / FPS;
+let acc = 0, last = performance.now();
+
+function loop(now) {
+  acc += Math.min(now - last, 120);
+  last = now;
+  while (acc >= DT) {
+    acc -= DT;
+    if (!started || session.finished) continue;
+    session.tick(held.left, held.right, held.jump || jumpEdge, held.down);
+    jumpEdge = false;
+    view.record(session);
+    if (session.finished) cleared();
+  }
+  draw();
+  requestAnimationFrame(loop);
+}
+
+function cleared() {
+  const frames = session.elapsedFrames, deaths = session.deaths, ghost = session.recording();
+  // The first finish of the day is the one that counts. Later runs are practice, so the room
+  // stays open — being locked out after one attempt would be a poor trade for a game that is
+  // mostly muscle memory.
+  if (COUNTS && !done) {
+    done = { v: 1, frames, deaths, ghost, won: true };
+    PM.save('vaults', DATE, done);
+  }
+  finish(frames, deaths, ghost);
+}
+
+function finish(frames, deaths, ghost) {
+  el('v-result').hidden = false;
+  el('v-verdict').textContent = deaths === 0 ? 'Out clean.' : 'Out of the vaults.';
+  const streak = PM.streak('vaults', DATE);
+  const parts = [`${(frames / FPS).toFixed(1)}s`, `${deaths} death${deaths === 1 ? '' : 's'}`];
+  if (streak > 1) parts.push(`streak ${streak}`);
+  if (!COUNTS) parts.push('practice — today is a different room');
+  el('v-summary').textContent = parts.join(' · ');
+  el('v-share').dataset.ghost = ghost;
+  el('v-share').dataset.frames = frames;
+  el('v-share').dataset.deaths = deaths;
+}
+
+function draw() {
+  view.draw(session);
+  if (!started && !session.finished) {
+    view.banner('Today’s room', racing ? 'move to start · racing a ghost' : 'move to start');
+  } else if (session.finished) {
+    view.banner(
+      'Out of the vaults',
+      (session.elapsedFrames / FPS).toFixed(1) + 's · ' + session.deaths + ' deaths',
+    );
+  }
+  el('v-clock').textContent = (session.elapsedFrames / FPS).toFixed(1) + 's';
+  el('v-deaths').textContent = session.deaths;
+  if (racing) {
+    el('v-ghost-time').textContent = session.ghostFinished
+      ? (session.ghostElapsedFrames / FPS).toFixed(1) + 's'
+      : session.ghostSpent ? 'never made it'
+      : (session.ghostElapsedFrames / FPS).toFixed(1) + 's…';
+  }
+}
+
+// --- sharing ----------------------------------------------------------------------------------------
+
+function shareText() {
+  const b = el('v-share').dataset;
+  const link = `${location.origin}${location.pathname}#d=${DATE}&g=${b.ghost}`;
+  const deaths = Number(b.deaths);
+  return `Polymath · The Vaults no. ${NUMBER}\n` +
+    `${(Number(b.frames) / FPS).toFixed(1)}s · ${deaths} death${deaths === 1 ? '' : 's'}\n` +
+    `Race my ghost: ${link}`;
+}
+
+el('v-share').addEventListener('click', async () => {
+  const how = await PM.share(shareText());
+  el('v-shared').textContent = {
+    shared: '', cancelled: '', copied: 'Copied — the link replays your run, button for button.',
+    failed: 'Could not copy it.',
+  }[how];
+});
+
+// Pasting a ghost link into the address bar while already on this page is a same-document
+// navigation: the browser changes the fragment and runs nothing. Without this, the link that is
+// the whole point of the feature silently does nothing for anyone who already had the page open.
+addEventListener('hashchange', () => location.reload());
+
+// So the browser playtest can drive a real run rather than a mock of one.
+window.__vaults = () => session;
+window.__shareText = () => shareText();
+window.__begin = () => { started = true; };
+window.__ready = true;
+requestAnimationFrame(loop);
+</script>

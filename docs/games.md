@@ -223,12 +223,35 @@ adds a speed bonus on top. Depth dominates speed on purpose — `bestScore` keep
 fast failure in room one must never outrank a run that nearly finished. Leaving partway down still
 records the run.
 
-### Playing it in a browser
+### Playing it in a browser, and the ghost link
 
 `webplay/` compiles the same `domain/play/vaults` sources to JavaScript and renders them on a
 canvas with live tuning sliders; `tools/playtest/play.js` drives it in Chromium. See
 `webplay/README.md`. This is the round trip through a human that the Palace entry below said was
 unavoidable — it was not.
+
+It is also **the daily** at `descent.html`: one room a day, chosen by day number so everyone gets
+the same one, under one clock with free deaths. Your time is the first run you finish; the room
+then stays open to practise on, because locking someone out after a single attempt is a poor trade
+for a game that is mostly muscle memory.
+
+`Ghost` is what makes that shareable without a server. The engine is deterministic, so **the
+inputs are the run** — nothing else needs recording, and a whole clearance of the first room is
+eight characters. The stream is stored as runs of identical frames (a player holds *right* for two
+seconds rather than changing what they hold sixty times a second), with one alphabet for the
+button mask and another for the length, so a token is self-delimiting and a corrupted link fails
+to parse instead of quietly replaying something else. `Ghost.decode` returns null rather than
+throwing or half-reading: it is the one input in this package a stranger controls.
+
+The link travels in the URL **fragment**, which is never sent to a server, never lands in a log
+and never leaks through a referrer.
+
+`GhostTest` proves the round trip and that a replay matches the run it came from, deaths included.
+`tools/playtest/ghost.js` proves the rest of the claim — it clears today's room in Chromium, takes
+the link the page offers, opens it in a fresh page, and checks the ghost that comes back finishes
+in the same number of frames. That check immediately caught a link that did nothing when pasted
+while the page was already open, a same-document navigation the browser answers by running
+nothing.
 
 Chains is compiled to JavaScript by the same build and published as **the daily** at
 `chains.html`, driven end-to-end in Chromium by `tools/playtest/daily.js`. That page is the reason

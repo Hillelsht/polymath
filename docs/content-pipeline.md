@@ -25,6 +25,7 @@ Wikidata, Wikipedia or YouTube. Every tool is stdlib-only Python; there is no
 | `probe_wikidata.py` | nothing — findings only | `probe.yml`, manual |
 | `playtest/play.js` | nothing — plays The Vaults in Chromium, screenshots | `web.yml` |
 | `playtest/daily.js` | nothing — plays the daily grid in Chromium, screenshots | `web.yml` |
+| `playtest/ghost.js` | nothing — runs the daily room, then races the link it produces | `web.yml` |
 | `playtest/serve.js` | nothing — a static server, so `daily.js` gets a real origin | `web.yml` |
 | `playtest/inline.py` | one self-contained HTML file of The Vaults | `web.yml` |
 

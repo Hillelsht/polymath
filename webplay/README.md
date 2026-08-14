@@ -16,13 +16,35 @@ and no mirror, so there is nothing to drift.
 
 | Page | What it is |
 |---|---|
-| `index.html` | The front door. Today's date, where you stand on today's grid, your streak. |
-| `chains.html` | **The daily**: sixteen things, four hidden groups, four mistakes, one shareable result. |
-| `vaults.html` | The descent, on a canvas, with the live tuning sliders this build was created for. |
+| `index.html` | The front door. Today's date, where you stand on today's games, your streak. |
+| `chains.html` | **The daily grid**: sixteen things, four hidden groups, four mistakes, one shareable result. |
+| `descent.html` | **The daily room**: one room, one clock, free deaths, and a link that races your ghost. |
+| `vaults.html` | The tuning harness — the same game with the dials exposed. Not in the nav. |
 
-Three pages, one JavaScript bundle and one stylesheet between them, so the second page a visitor
+Four pages, one JavaScript bundle and one stylesheet between them, so the second page a visitor
 opens costs them nothing. `polymath.css` prefixes every custom property `--pm-`, because the Vaults
-page carries its own palette under bare names and the two must not fight.
+harness carries its own palette under bare names and the two must not fight. The room itself is
+drawn by `vaults-draw.js`, shared by the daily and the harness — two drawings of the same room
+drift, and the drift is invisible until someone is racing a ghost that stands on a ledge their own
+runner falls through.
+
+## The ghost link
+
+The engine is deterministic, so **the inputs are the run**: the same room, the same tuning and the
+same buttons produce the same attempt, frame for frame. Nothing else has to be recorded, and
+nothing has to be stored anywhere — a shared run is a few dozen characters in a URL fragment, and
+the receiving browser reconstructs the attempt exactly.
+
+A whole clearance of the first room is **eight characters**. `Ghost` (in `domain/play/vaults/`,
+so both targets share it) stores the stream as runs of identical frames, because a player holds
+*right* for two seconds rather than changing what they hold sixty times a second. The text uses one
+alphabet for the button mask and another for the length, so a token is self-delimiting, the whole
+string is URL-safe without escaping, and a corrupted link fails to parse instead of quietly
+replaying something else.
+
+The fragment rather than the query string because a fragment is never sent to a server, never
+lands in a log and never leaks through a referrer — which matters here, since the run is the only
+thing this site produces that belongs to a person.
 
 ## Running it
 
@@ -32,7 +54,9 @@ gradle -p webplay site                       # the same, without source maps or 
 NODE_PATH=/opt/node22/lib/node_modules \
   node tools/playtest/play.js                # plays every Vaults room in Chromium, ~5s
 NODE_PATH=/opt/node22/lib/node_modules \
-  node tools/playtest/daily.js               # plays the daily through its own buttons
+  node tools/playtest/daily.js               # plays the daily grid through its own buttons
+NODE_PATH=/opt/node22/lib/node_modules \
+  node tools/playtest/ghost.js               # runs the room, shares the link, races what comes back
 python3 tools/playtest/inline.py             # fold The Vaults into one self-contained file
 ```
 
@@ -109,6 +133,16 @@ room through the page's own controls. The browser figures match the JVM's exactl
 
 Two numbers agreeing across two compilers is what proves this is one implementation rather than
 two that have drifted.
+
+`node tools/playtest/ghost.js` is the same argument again, for the claim a ghost link makes.
+`GhostTest` proves on the JVM that the format round-trips and that a replayed run matches the one
+it came from. That is necessary and it is not what a player is told, which is *paste this to a
+friend and they see the attempt you had* — and between the two sit a URL fragment, a page load, a
+decoder and a render loop. So the test clears today's room for real, takes the link the page
+offers, opens it in a fresh page and checks the ghost that comes back finishes in exactly the same
+number of frames. It has already earned its keep: pasting a ghost link while the page is already
+open is a same-document navigation, so the browser changed the fragment and ran nothing, and the
+link silently did nothing at all.
 
 `node tools/playtest/daily.js` applies the same lesson one layer up. `ChainsRules` is thoroughly
 tested and every published grid is validated by `enginetests`, and none of that would notice a
