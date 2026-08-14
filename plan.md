@@ -154,15 +154,22 @@ Grow `webplay/` from a Vaults harness into a small daily portal at a real domain
 6. App: deep links `/daily/chains`, `/daily/vaults` into existing screens
    (`SmartNavHost.kt`, `AndroidManifest.xml`). Not started — needs CI to compile it.
 7. One privacy-friendly counter (Plausible-class) — the only metrics infrastructure. Not started.
-8. **Quality pass on Chains grids** — valid ≠ fun, and this is now the visible flagship rather
-   than a tab in an app. Real examples from today's published packs: *Countries* containing
-   "Xinjiang" and "Maghreb"; *Authors* containing "Moses". The grids are provably well-formed —
-   `enginetests` sees to that — and still sometimes wrong-headed. Tile-taste heuristics belong in
-   `tools/build_chains.py`. **This is the highest-value thing left in Wedge 1.**
+8. ~~**Quality pass on Chains grids**~~ — done. Two classes of wrongness the overlap rule could
+   never see, both fixed and both documented in `docs/games.md`:
+   - **A label lying about its tiles** — *Countries* containing "Xinjiang" and "Maghreb",
+     *Authors* containing "Moses". 59 tiles across four published months, now 0. The rule: a real
+     country is something the corpus writes facts *about*; applied per answerType and only where
+     the type as a whole clears half, which is what stops it deleting every currency.
+     **Authors and Musicians dropped below the pool floor and no longer appear** — eleven good
+     authors beat eighteen with Moses among them, and the way to get them back is more content,
+     not a lower bar.
+   - **Questions about things that do not exist** — the app was asking "What is the chemical
+     symbol for unquadoctium?", element 148, never made. 46 facts, fixed at source in
+     `generate_facts.py` and stripped from the published shards so the daily is clean now.
 
 Ships when: page loads fast on a phone; emoji share pastes correctly; a ghost link round-trips;
 streak survives restart; the Chromium playtest drives the daily end-to-end in CI; and the grids
-are worth showing a stranger.
+are worth showing a stranger. **Only the ghost link is outstanding.**
 
 ### Wedge 2 (~weeks 3–6): Provably-fair generated rooms + language parity
 - Room generator gated by `Playtest.solve` in CI (margin band → publish to
@@ -191,10 +198,13 @@ ads in the ritual, no new games until the dailies are excellent.
 
 1. Read `CLAUDE.md` (root) — build constraints, working commands, git rules, invariants map.
 2. Read this file for strategy and state.
-3. The immediate task is the rest of **Wedge 1**. In order of value: **step 8** (grid quality —
-   the daily is the shop window now and some grids embarrass it), then **step 3** (the ghost
-   link, the most distinctive thing in this plan and impossible for a competitor without a
-   deterministic engine), then steps 6 and 7. Buying the domain is the user's to do.
+3. The immediate task is the rest of **Wedge 1**: **step 3**, the ghost link — the most
+   distinctive thing in this plan and impossible for a competitor without a deterministic engine
+   — then steps 6 and 7. Buying the domain is the user's to do.
+   Two content follow-ups worth doing when convenient: the `author` and `musician` pools need
+   more facts before those categories can return to the daily, and a device that already
+   downloaded the placeholder-element facts keeps them, because library shards only ever add and
+   update — deliberately, since deleting facts destroys review history.
 4. Branch discipline: work on a feature branch, verify Compose changes by dispatching `build.yml`
    on the branch (this environment cannot compile Android), merge to `main` via PR — merges to
    `main` auto-publish the APK release and the Pages site.

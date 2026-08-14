@@ -205,9 +205,9 @@
    "id": "library-science-003",
    "name": "Science \u00b7 more facts",
    "category": "science",
-   "version": "9202d64d4ea2",
-   "facts": 150,
-   "bytes": 149172,
+   "version": "d348639dddb5",
+   "facts": 149,
+   "bytes": 148108,
    "file": "library/science-003.json",
    "shard": 3
   },
@@ -215,21 +215,11 @@
    "id": "library-science-004",
    "name": "Science \u00b7 more facts",
    "category": "science",
-   "version": "e16fc4ff8b93",
-   "facts": 150,
-   "bytes": 152400,
+   "version": "e901844d5cac",
+   "facts": 109,
+   "bytes": 108475,
    "file": "library/science-004.json",
    "shard": 4
-  },
-  {
-   "id": "library-science-005",
-   "name": "Science \u00b7 more facts",
-   "category": "science",
-   "version": "19da4621a4ff",
-   "facts": 4,
-   "bytes": 4422,
-   "file": "library/science-005.json",
-   "shard": 5
   },
   {
    "id": "library-sports-000",

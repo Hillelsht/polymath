@@ -122,7 +122,8 @@ UNQUALIFIED = (
 class Template:
     """One property, one question shape. Written once, yields thousands of facts."""
 
-    def __init__(self, key, category, answer_type, title, question, statement, where, floor=0):
+    def __init__(self, key, category, answer_type, title, question, statement, where, floor=0,
+                 valid=None):
         self.key = key
         self.category = category
         self.answer_type = answer_type
@@ -131,6 +132,10 @@ class Template:
         self.statement = statement
         self.where = where
         self.floor = floor
+        # An optional last word on the answer, for the cases a SPARQL constraint cannot express
+        # and sitelinks do not catch. Kept in Python rather than in the query so it can be tested
+        # here, offline, instead of only being found out by a harvest that takes forty minutes.
+        self.valid = valid
 
 
 TEMPLATES = [
@@ -160,10 +165,16 @@ TEMPLATES = [
              "?s wdt:P4552 ?o .", floor=30),
 
     # --- Science ------------------------------------------------------------------------
+    # Every element that exists has a one- or two-letter symbol. A three-letter one is always an
+    # IUPAC systematic placeholder — Uue, Ubn — standing in for an element nobody has made, whose
+    # "symbol" is a naming convention rather than a discovery. Wikidata types those exactly like
+    # the real ones, and some carry enough sitelinks to clear any sensible importance floor, so
+    # the length is the only thing that separates them. They were reaching players: the app asked
+    # "What is the chemical symbol for unquadoctium?" and the daily grid put Ubp on a tile.
     Template("element-symbol", "science", "chemical symbol",
              "Symbol for {s}", "What is the chemical symbol for {s}?",
              "The chemical symbol for {s} is {o}.",
-             "?s wdt:P246 ?o ."),
+             "?s wdt:P246 ?o .", valid=lambda symbol: len(symbol) <= 2),
     # No P31 constraint. Q2537 resolves to "natural satellite" — the preflight confirmed that —
     # but pinning P31 to it yielded a single fact, because real moons are typed as something
     # more specific and inherit natural-satellite-hood through subclassing. The property alone
@@ -583,6 +594,8 @@ def make_facts(template, rows, language=DEFAULT_LANGUAGE):
             continue
         row, subject = entry["row"], entry["subject"]
         answer = next(iter(entry["answers"]))
+        if template.valid and not template.valid(answer):
+            continue
         title = wiki_title(row.get("article", {}).get("value"))
         if not title:
             continue
@@ -893,6 +906,16 @@ def self_test():
           any("duplicate" in p for p in validate(thin + [dict(thin[0])])))
     varied = [dict(f, id=f"y{i}", answer=f"a{i}") for i, f in enumerate(thin)]
     check("a healthy corpus passes", validate(varied) == [])
+
+    # A template's last word on its own answers. Not hypothetical: the published library asked
+    # "What is the chemical symbol for unquadoctium?", an element nobody has made, and the daily
+    # grid put its placeholder symbol on a tile.
+    symbols = next(t for t in TEMPLATES if t.key == "element-symbol")
+    check("a real element's symbol is accepted", symbols.valid("Ta") and symbols.valid("W"))
+    check("a placeholder symbol for an element nobody has made is not",
+          not symbols.valid("Uue") and not symbols.valid("Ubp"))
+    check("templates without an opinion accept anything",
+          all(t.valid is None or t.valid("anything") in (True, False) for t in TEMPLATES))
 
     # The rule that cost a 3,223-fact run: one thin template must not veto every other one.
     def corpus(answer_type, count, start=0):

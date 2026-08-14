@@ -20,6 +20,7 @@ Wikidata, Wikipedia or YouTube. Every tool is stdlib-only Python; there is no
 | `enrich_videos.py` | `packs/channels.json` — the probed Watch allowlist | `content.yml` |
 | `fetch_durations.py` | `packs/durations.json` — video lengths, via the YouTube API | `durations.yml`, hourly |
 | `build_chains.py` | `packs/play/chains/` — daily puzzle grids | `play.yml`, monthly |
+| ↳ | *also decides which answers are fit to be tiles — see `docs/games.md`* | |
 | `probe_durations.py` | nothing — findings only | `probe.yml`, manual |
 | `probe_wikidata.py` | nothing — findings only | `probe.yml`, manual |
 | `playtest/play.js` | nothing — plays The Vaults in Chromium, screenshots | `web.yml` |
@@ -57,6 +58,16 @@ Three constraints found by probing rather than reasoning, all of which shape the
   template that silently yields zero.
 - **Wikidata labels come back in base form only.** No case, no declension. This is what shapes
   the translated phrasings — see `localization.md`.
+
+**True by construction is not the same as worth asking.** The library shipped "What is the
+chemical symbol for unquadoctium?" — element 148, which nobody has made. Wikidata holds the claim
+and types it exactly like tantalum's, so every guard above passed it; a few of these even carry
+enough sitelinks to clear any sensible importance floor. The only thing that separates them is
+that every element which exists has a one- or two-letter symbol, so a three-letter one is always
+an IUPAC placeholder. A `Template` can therefore carry a `valid` predicate — its last word on its
+own answers, for what a SPARQL constraint cannot express and sitelinks do not catch. It lives in
+Python rather than in the query so it is tested here, offline, in a second, instead of being
+found out by a forty-minute harvest.
 
 Publishing is guarded. It refuses if fewer than 400 facts survive, or if the total drops below
 60% of the previous run, or if any answerType is too thin to hold a quiz (fewer than 8 facts or

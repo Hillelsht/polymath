@@ -44,7 +44,27 @@ MAX_TILE_CHARS = 18
 # Below this a group would be drawn from the same handful of answers every time it appeared.
 MIN_POOL_PER_TYPE = 12
 
+# When at least this proportion of a type's answers are things the corpus writes facts *about*,
+# the ones that are not are treated as miscategorised and dropped. See `written_about_types`.
+#
+# The measured split is not close: countries 78%, athletes 100%, elements 100% on one side;
+# mountain ranges 15%, currencies 2%, chemical symbols 0% on the other. Nothing sits between 32%
+# and 61%, so the threshold is placed in open ground rather than fitted to the data.
+TRUSTED_TYPE_FRACTION = 0.5
+
 NOT_A_PACK = {"channels.json", "durations.json", "manifest.json", "index.json"}
+
+# A fact whose subject is this far below the corpus's own median is not a hard question, it is a
+# question about something the world has not written about. "What is the chemical symbol for
+# unquadoctium?" scores 8 where tantalum scores 146 — unquadoctium is a hypothetical element that
+# has never been made, and its symbol is a naming convention rather than a fact.
+#
+# 15 is where the cliff is, not a preference: it removes 34 facts, 33 of them these placeholder
+# elements. At 18 the count triples and starts taking real sculptors and real countries with it.
+#
+# Facts with no stated importance are hand-authored — the Mona Lisa, Guernica — and are exempt.
+# They are the best content in the corpus and a naive floor would delete all of it.
+MIN_SUBJECT_IMPORTANCE = 15
 
 # What a group of four is called once it is revealed. An answerType with no entry here falls
 # back to its own name, which reads acceptably ("composer") but not well.
@@ -69,6 +89,13 @@ LABELS = {
     "genus": "Genera",
     "birthplace": "Birthplaces",
     "writing system": "Writing systems",
+    # These four were falling through to the fallback, which capitalises the type's own name and
+    # leaves it singular. A group revealed as "Historical-figure" — hyphen and all — reads as a
+    # database field rather than as an answer, and the reveal is the moment the grid is judged.
+    "historical-figure": "Historical figures",
+    "athlete": "Athletes",
+    "musician": "Musicians",
+    "element": "Elements",
 }
 
 
@@ -86,8 +113,11 @@ def load_facts():
             except Exception:
                 continue
             for fact in body.get("facts", []):
-                if fact.get("answer") and fact.get("answerType"):
-                    facts.append(fact)
+                if not (fact.get("answer") and fact.get("answerType")):
+                    continue
+                if 0 < float(fact.get("importance") or 0) < MIN_SUBJECT_IMPORTANCE:
+                    continue
+                facts.append(fact)
     return facts
 
 
@@ -153,11 +183,51 @@ def eligible_answers(facts):
             continue
         pools[next(iter(types))].append((answer, fame(answer)))
 
+    # Drop the answers that were filed under a type they do not belong to. Measured on the whole
+    # pool, before the size cut below, so a type is judged on everything it has.
+    trusted, subjects = written_about_types(facts, pools)
+    pools = {
+        answer_type: [e for e in entries if answer_type not in trusted or e[0] in subjects]
+        for answer_type, entries in pools.items()
+    }
+
     return {
         answer_type: sorted(entries)
         for answer_type, entries in pools.items()
         if len(entries) >= MIN_POOL_PER_TYPE
     }
+
+
+def written_about_types(facts, pools):
+    """The answer types whose members are the kind of thing this corpus has facts *about*.
+
+    This exists to stop a group's label lying about its members. "Countries" shipped containing
+    Xinjiang and the Maghreb; "Authors" shipped containing Moses. Every one of those grids passed
+    every check there was, because the overlap rule only asks whether a tile fits *two* groups —
+    it has nothing to say about a tile that fits its own group badly. A solver who knows the
+    Maghreb is not a country is being told they are wrong by a puzzle that is itself wrong, which
+    is the same failure the overlap rule exists to prevent, arriving by a different door.
+
+    The signal is that a real country is something the corpus writes about, and a region that was
+    mislabelled as one is not. That only holds where the corpus writes about that kind of thing
+    at all: it has facts about countries and athletes, and none about currencies or chemical
+    symbols, where being absent means nothing. So the test is applied per type and only where the
+    type as a whole clears [TRUSTED_TYPE_FRACTION] — which is what stops it deleting every
+    currency in the corpus.
+
+    It is deliberately biased. Tolkien and Lewis Carroll are dropped from the authors along with
+    Moses, because this corpus happens to hold no fact about either man. Losing a good tile costs
+    a puzzle nothing anyone can see; shipping "Countries: Maghreb" is the kind of mistake a player
+    only needs to meet once.
+    """
+    subjects = {(fact.get("wikiTitle") or "").strip() for fact in facts}
+    subjects.discard("")
+    trusted = set()
+    for answer_type, entries in pools.items():
+        written = sum(1 for answer, _ in entries if answer in subjects)
+        if written >= TRUSTED_TYPE_FRACTION * len(entries):
+            trusted.add(answer_type)
+    return trusted, subjects
 
 
 def label_for(answer_type):
@@ -252,6 +322,16 @@ def self_test():
         if not condition:
             failures.append(name)
 
+    # --- facts about nothing ----------------------------------------------------------------
+    # load_facts reads from disk, so this exercises the rule directly rather than through it.
+    keep = {"answer": "Ta", "answerType": "chemical symbol", "importance": 146}
+    drop = {"answer": "Uqo", "answerType": "chemical symbol", "importance": 8}
+    hand = {"answer": "Mona Lisa", "answerType": "painting"}
+    usable = lambda f: not (0 < float(f.get("importance") or 0) < MIN_SUBJECT_IMPORTANCE)
+    check("a fact about a well-known subject is kept", usable(keep))
+    check("a fact about a subject nobody has written about is dropped", not usable(drop))
+    check("a hand-authored fact, which states no importance, is exempt", usable(hand))
+
     facts = [
         {"answer": "Paris", "answerType": "capital", "difficulty": 1},
         {"answer": "Lisbon", "answerType": "capital", "difficulty": 1},
@@ -269,6 +349,31 @@ def self_test():
         "a type with too few answers to vary is dropped",
         eligible_answers([{"answer": f"A{i}", "answerType": "thin", "difficulty": 1}
                           for i in range(MIN_POOL_PER_TYPE - 1)]) == {},
+    )
+
+    # --- the label has to tell the truth about the members ------------------------------------
+    # A type the corpus writes about, with one answer filed under it that it does not write about.
+    # That answer is the Maghreb filed under "country", and it is what this rule exists to remove.
+    countries = ["Chad", "Peru", "Fiji", "Oman", "Malta", "Nepal", "Togo", "Cuba",
+                 "Kenya", "Ghana", "Laos", "Iran"]
+    corpus = (
+        [{"answer": c, "answerType": "country", "difficulty": 1} for c in countries + ["Maghreb"]]
+        # Each country is also written about, which is what makes the type trustworthy. The
+        # Maghreb is not, which is what singles it out.
+        + [{"answer": "x", "answerType": "other", "wikiTitle": c, "difficulty": 1}
+           for c in countries]
+    )
+    pool = [a for a, _ in eligible_answers(corpus).get("country", [])]
+    check("a type the corpus writes about keeps the answers it writes about", set(pool) == set(countries))
+    check("and drops the one it does not, which was filed under the wrong type", "Maghreb" not in pool)
+
+    # The same shape, with nothing written about at all: currencies and chemical symbols are
+    # never anybody's subject, so absence carries no information and must not delete the type.
+    untouched = [{"answer": f"currency{chr(97 + i)}", "answerType": "currency", "difficulty": 1}
+                 for i in range(MIN_POOL_PER_TYPE + 1)]
+    check(
+        "a type the corpus never writes about is left alone",
+        len(eligible_answers(untouched).get("currency", [])) == MIN_POOL_PER_TYPE + 1,
     )
 
     long_name = "A" * (MAX_TILE_CHARS + 1)
