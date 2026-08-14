@@ -11,6 +11,19 @@ data class ChainsState(
     val verdict: Verdict = Verdict.NONE,
     /** Every combination already submitted, so the same wrong guess is not punished twice. */
     val attempts: Set<Set<String>> = emptySet(),
+    /**
+     * The same guesses as [attempts], but in the order they were made and with each guess's own
+     * tiles in the order they were tapped.
+     *
+     * [attempts] cannot answer either question — it is a set of sets, deliberately, because its
+     * job is only ever "have I seen this combination before". Both orderings are what a shared
+     * result grid is made of: one row per guess, in the order the solver found their way through
+     * the grid. A set would render the same run as a different picture every time.
+     *
+     * It is also the whole saved game. Replaying these guesses through [ChainsRules] rebuilds any
+     * state exactly, so nothing that can be derived has to be stored twice and then kept in step.
+     */
+    val guesses: List<List<String>> = emptyList(),
 ) {
     val won: Boolean get() = solved.size == ChainsPuzzle.GROUP_COUNT
     val lost: Boolean get() = mistakes >= ChainsRules.MAX_MISTAKES && !won
@@ -64,6 +77,10 @@ object ChainsRules {
         // Wrapped deliberately: `attempts + selected` would resolve to the element-wise overload
         // and splice the four tile names in individually rather than recording one guess.
         val attempts = state.attempts + setOf(state.selected)
+        // `selected` is built by `Set.plus`, which returns a LinkedHashSet, so this list is in tap
+        // order. That is asserted in ChainsTest rather than left as folklore, because the shared
+        // result grid reads straight off it.
+        val guesses = state.guesses + listOf(state.selected.toList())
         val match = state.puzzle.groups.firstOrNull { it.members.toSet() == state.selected }
         if (match != null) {
             return state.copy(
@@ -71,6 +88,7 @@ object ChainsRules {
                 selected = emptySet(),
                 verdict = Verdict.SOLVED,
                 attempts = attempts,
+                guesses = guesses,
             )
         }
 
@@ -82,6 +100,7 @@ object ChainsRules {
             verdict = if (closest == ChainsPuzzle.GROUP_SIZE - 1) Verdict.ONE_AWAY else Verdict.WRONG,
             selected = state.selected,
             attempts = attempts,
+            guesses = guesses,
         )
     }
 
