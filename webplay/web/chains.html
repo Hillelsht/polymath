@@ -1,0 +1,276 @@
+<title>Chains — Polymath</title>
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="description" content="Polymath's daily grid: sixteen things, four hidden groups, four mistakes.">
+<link rel="icon" href="./favicon.svg">
+<link rel="stylesheet" href="./polymath.css">
+
+<div class="pm-wrap">
+  <div class="pm-nav">
+    <a class="pm-mark" href="./index.html">Poly<span>math</span></a>
+    <nav>
+      <a href="./chains.html" aria-current="page">Chains</a>
+      <a href="./vaults.html">The Vaults</a>
+    </nav>
+  </div>
+
+  <header class="pm-head">
+    <h1><span class="pm-sub" id="c-when">—</span>Chains</h1>
+    <p class="pm-lede">
+      Sixteen things, four hidden groups of four. <b>Four mistakes</b> — and a guess with three of a
+      group right is told so, because otherwise being wrong teaches you nothing.
+    </p>
+  </header>
+
+  <div id="c-play" hidden>
+    <div class="pm-board">
+      <div id="c-groups"></div>
+      <div class="pm-grid" id="c-grid"></div>
+    </div>
+
+    <div class="pm-status" style="margin-top:14px">
+      <span class="pm-lives" id="c-lives" aria-label="Mistakes remaining"></span>
+      <span class="pm-say" id="c-say" role="status" aria-live="polite"></span>
+    </div>
+
+    <div class="pm-controls" style="margin-top:12px">
+      <button class="pm-btn" id="c-shuffle">Shuffle</button>
+      <button class="pm-btn" id="c-clear" disabled>Deselect</button>
+      <button class="pm-btn primary" id="c-submit" disabled>Submit</button>
+    </div>
+  </div>
+
+  <div class="pm-result" id="c-result" hidden>
+    <h2 id="c-verdict">—</h2>
+    <pre class="pm-emoji" id="c-emoji"></pre>
+    <p class="pm-meta" id="c-streak"></p>
+    <div class="pm-controls" style="justify-content:flex-start">
+      <button class="pm-btn primary" id="c-share">Share result</button>
+    </div>
+    <p class="pm-meta" id="c-shared" role="status" aria-live="polite"></p>
+  </div>
+
+  <p class="pm-lede" id="c-missing" hidden>
+    There is no grid for this day yet. The packs are generated a month at a time — try
+    <a href="./index.html">today's</a>.
+  </p>
+
+  <footer class="pm-foot">
+    The grid is the same one everybody else got today: tile order is published with the puzzle
+    rather than shuffled on your device, so a shared result describes a board your friend will
+    recognise. Shuffling here only rearranges what is on your screen.
+  </footer>
+</div>
+
+<script src="./kotlin-kotlin-stdlib.js"></script>
+<script src="./kotlin_org_jetbrains_kotlin_kotlin_dom_api_compat.js"></script>
+<script src="./smart-webplay.js"></script>
+<script src="./dailies.js"></script>
+<script src="./polymath.js"></script>
+<script>
+const C = globalThis['smart-webplay'].com.hillelsht.smart.domain.play.chains;
+const GROUPS = C.ChainsSession.Companion.groupCount;
+const SIZE = C.ChainsSession.Companion.groupSize;
+const LIVES = C.ChainsSession.Companion.maxMistakes;
+
+// Matched to --pm-d1..--pm-d4 in the stylesheet, so a pasted result and the board itself are
+// recognisably the same four colours.
+const SQUARES = ['⬛', '\u{1F7E8}', '\u{1F7E9}', '\u{1F7E6}', '\u{1F7EA}'];
+
+const DATE = PM.today();
+const el = id => document.getElementById(id);
+
+let session = null;
+let order = [];          // display order of the tiles still on the board; Shuffle permutes this
+let saying = '';
+
+// --- setting up ------------------------------------------------------------------------------
+
+(async function begin() {
+  el('c-when').textContent = `${PM.pretty(DATE)} · no. ${PM.dayNumber(DATE)}`;
+
+  const day = await PM.puzzle('chains', DATE);
+  if (!day) { el('c-missing').hidden = false; window.__ready = true; return; }
+
+  session = new C.ChainsSession(day.date);
+  day.tiles.forEach(t => session.addTile(t));
+  day.groups.forEach(g =>
+    session.addGroup(g.id, g.label, g.difficulty, g.members[0], g.members[1], g.members[2], g.members[3]));
+
+  // The same check the content pipeline runs. A grid where one tile fits two groups has no single
+  // right answer, and the solver who spots the wrong-but-defensible grouping is told they are
+  // wrong by a puzzle that is itself wrong. Better to show nothing than to show that.
+  const problems = session.begin();
+  if (problems) {
+    session = null;
+    el('c-missing').hidden = false;
+    el('c-missing').textContent = "Today's grid did not pass its own checks, so it is not being served.";
+    console.error('grid rejected:\n' + problems);
+    window.__ready = true;
+    return;
+  }
+
+  // A part-played grid is rebuilt by replaying its guesses through the rules rather than by
+  // restoring a snapshot of the board. Nothing derived is stored, so nothing derived can rot.
+  (PM.load('chains', DATE)?.guesses || []).forEach(g => session.replay(g));
+
+  el('c-play').hidden = false;
+  order = null;
+  render();
+  window.__ready = true;
+})();
+
+// --- playing -----------------------------------------------------------------------------------
+
+function tap(tile) {
+  if (session.over) return;
+  session.select(tile);
+  saying = '';
+  render();
+}
+
+function submit() {
+  if (session.selectedCount !== SIZE) return;
+  const before = session.rowCount;
+  session.submit();
+
+  saying = {
+    SOLVED: '', WRONG: 'Not a group.', ONE_AWAY: 'One away…',
+    ALREADY_TRIED: 'Already tried that one.', NONE: '',
+  }[session.verdict] || '';
+
+  // ALREADY_TRIED costs nothing and is not recorded, so there is nothing new to save.
+  if (session.verdict !== 'ALREADY_TRIED') persist();
+  if (session.verdict === 'WRONG' || session.verdict === 'ONE_AWAY') shake();
+  if (session.rowCount !== before) order = null;   // the board shrank; re-derive its layout
+  render();
+}
+
+function persist() {
+  const guesses = [];
+  for (let g = 0; g < session.guessCount; g++) {
+    guesses.push(Array.from({ length: SIZE }, (_, t) => session.guessTile(g, t)));
+  }
+  // `guesses` is the saved game; `won` and `mistakes` are a summary the streak can be read from
+  // without replaying thirty days through the rules.
+  PM.save('chains', DATE, { v: 1, guesses, won: session.won, mistakes: session.mistakes });
+}
+
+function shake() {
+  [...el('c-grid').children].forEach(b => {
+    if (b.getAttribute('aria-pressed') === 'true') {
+      b.classList.remove('shake');
+      void b.offsetWidth;                 // restart the animation rather than skip it
+      b.classList.add('shake');
+    }
+  });
+}
+
+// --- drawing --------------------------------------------------------------------------------------
+
+function render() {
+  const groups = el('c-groups');
+  groups.replaceChildren(...Array.from({ length: session.rowCount }, (_, i) => {
+    const row = document.createElement('div');
+    row.className = `pm-group d${session.rowDifficulty(i)}` + (session.rowMissed(i) ? ' missed' : '');
+    const label = document.createElement('div');
+    label.className = 'pm-label';
+    label.textContent = session.rowLabel(i);
+    const members = document.createElement('div');
+    members.className = 'pm-members';
+    members.textContent = Array.from({ length: SIZE }, (_, j) => session.rowMember(i, j)).join(', ');
+    row.append(label, members);
+    return row;
+  }));
+
+  const board = Array.from({ length: session.tileCount }, (_, i) => session.tileAt(i));
+  // Keep whatever shuffle the player chose, minus anything that has since been solved.
+  order = order ? order.filter(t => board.includes(t)) : board.slice();
+  board.forEach(t => { if (!order.includes(t)) order.push(t); });
+
+  el('c-grid').replaceChildren(...order.map(tile => {
+    const b = document.createElement('button');
+    b.className = 'pm-tile';
+    b.type = 'button';
+    b.textContent = tile;
+    b.setAttribute('aria-pressed', String(session.isSelected(tile)));
+    b.disabled = session.over;
+    b.addEventListener('click', () => tap(tile));
+    return b;
+  }));
+
+  el('c-lives').replaceChildren(...Array.from({ length: LIVES }, (_, i) => {
+    const dot = document.createElement('i');
+    dot.className = 'pm-life' + (i < session.mistakes ? ' spent' : '');
+    return dot;
+  }));
+
+  const say = el('c-say');
+  say.textContent = session.over ? '' : saying;
+  say.className = 'pm-say' + (saying === 'One away…' ? ' warn' : '');
+
+  el('c-clear').disabled = session.over || session.selectedCount === 0;
+  el('c-submit').disabled = session.over || session.selectedCount !== SIZE;
+  el('c-shuffle').disabled = session.over;
+
+  if (session.over) finish();
+}
+
+function finish() {
+  el('c-result').hidden = false;
+  el('c-verdict').textContent = session.won
+    ? (session.mistakes === 0 ? 'Perfect.' : 'Solved.')
+    : 'Out of guesses.';
+  el('c-emoji').textContent = emoji();
+
+  const streak = PM.streak('chains', DATE);
+  const parts = [`${session.guessCount} guess${session.guessCount === 1 ? '' : 'es'}`];
+  if (session.won) parts.push(`${LIVES - session.mistakes} of ${LIVES} lives left`);
+  if (streak > 0) parts.push(`streak ${streak}`);
+  el('c-streak').textContent = parts.join(' · ') + ' · back tomorrow.';
+}
+
+/** One row per guess, coloured by the group each tile really belonged to. */
+function emoji() {
+  return Array.from({ length: session.guessCount }, (_, g) =>
+    Array.from({ length: SIZE }, (_, t) => SQUARES[session.guessTileDifficulty(g, t)]).join(''),
+  ).join('\n');
+}
+
+function shareText() {
+  const streak = PM.streak('chains', DATE);
+  const head = `Polymath · Chains no. ${PM.dayNumber(DATE)}` +
+    (session.won ? (session.mistakes === 0 ? ' · perfect' : '') : ' · beat me');
+  const tail = streak > 1 ? `streak ${streak} · ${PM.SITE}` : PM.SITE;
+  return `${head}\n${emoji()}\n${tail}`;
+}
+
+// --- controls ---------------------------------------------------------------------------------------
+
+el('c-clear').addEventListener('click', () => { session.clear(); saying = ''; render(); });
+el('c-submit').addEventListener('click', submit);
+el('c-shuffle').addEventListener('click', () => {
+  for (let i = order.length - 1; i > 0; i--) {
+    const j = Math.floor(Math.random() * (i + 1));
+    [order[i], order[j]] = [order[j], order[i]];
+  }
+  render();
+});
+
+el('c-share').addEventListener('click', async () => {
+  const how = await PM.share(shareText());
+  el('c-shared').textContent = {
+    shared: '', copied: 'Copied — paste it anywhere.', cancelled: '',
+    failed: 'Could not copy it; the grid above can be selected by hand.',
+  }[how];
+});
+
+addEventListener('keydown', e => {
+  if (e.target.tagName === 'BUTTON' && e.key === ' ') return;   // let a focused button take it
+  if (e.key === 'Enter') { submit(); e.preventDefault(); }
+  if (e.key === 'Escape' && session && !session.over) { session.clear(); render(); }
+});
+
+// So the browser playtest can drive a real game rather than a mock of one.
+window.__chains = () => session;
+window.__shareText = () => shareText();
+</script>

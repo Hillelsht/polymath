@@ -1,18 +1,24 @@
-name: Vaults
+# This was `vaults.yml` while the site was a single game. It now builds and publishes the whole
+# Polymath portal — the daily and The Vaults — so it is named for what it does.
+name: Web
 
 on:
   push:
     branches: [main]
     paths:
       - 'app/src/main/java/com/hillelsht/smart/domain/play/vaults/**'
+      - 'app/src/main/java/com/hillelsht/smart/domain/play/chains/**'
       - 'webplay/**'
       - 'tools/playtest/**'
-      - '.github/workflows/vaults.yml'
+      - 'packs/play/chains/**'
+      - '.github/workflows/web.yml'
   pull_request:
     paths:
       - 'app/src/main/java/com/hillelsht/smart/domain/play/vaults/**'
+      - 'app/src/main/java/com/hillelsht/smart/domain/play/chains/**'
       - 'webplay/**'
       - 'tools/playtest/**'
+      - 'packs/play/chains/**'
   workflow_dispatch:
 
 permissions:
@@ -40,35 +46,43 @@ jobs:
 
       - uses: gradle/actions/setup-gradle@v4
 
-      # The margin gate. A room that can only be crossed with frame-perfect timing fails here,
-      # which is the check Aryeh's Palace never had — see docs/games.md.
-      - name: Room margins and movement rules
-        run: ./gradlew -p enginetests test --tests '*vaults*'
+      # The rules, headless — the whole suite rather than a filter, because the checks this site
+      # depends on live in three different packages: the margin gate that fails any room only
+      # crossable with frame-perfect timing (the check Aryeh's Palace never had, see
+      # docs/games.md), the Chains rules, and the content gate that refuses any published grid
+      # where one tile fits two groups.
+      - name: Game rules and published grids
+        run: ./gradlew -p enginetests test
 
-      - name: Compile the Vaults to JavaScript
-        run: ./gradlew -p webplay bundle
+      - name: Compile the games to JavaScript
+        run: ./gradlew -p webplay site
 
       - uses: actions/setup-node@v4
         with:
           node-version: 22
 
       # Actually presses the buttons. Palace passed every headless test it had and was still
-      # unplayable, because nothing ever drove it through a real input path.
-      - name: Play every room in Chromium
+      # unplayable, because nothing ever drove it through a real input path; the daily has the
+      # same exposure one layer up, where a board that forgets itself on reload is invisible to
+      # every unit test in the repo.
+      - name: Play every room, and the daily, in Chromium
         run: |
           npm install --no-save playwright@1.49.1
           npx playwright install --with-deps chromium
           node tools/playtest/play.js
+          node tools/playtest/daily.js
+
+      - name: The standalone one-file build still assembles
+        run: |
+          python3 tools/playtest/inline.py --self-test
+          python3 tools/playtest/inline.py --page vaults.html
 
       - uses: actions/upload-artifact@v4
         if: always()
         with:
-          name: playtest-screenshot
-          path: webplay/build/web/playtest.png
+          name: playtest-screenshots
+          path: webplay/build/web/*.png
           if-no-files-found: warn
-
-      - name: Assemble the published page
-        run: python3 tools/playtest/inline.py --out webplay/build/site/index.html
 
       - uses: actions/upload-pages-artifact@v3
         with:
@@ -76,7 +90,7 @@ jobs:
 
   deploy:
     name: Publish to Pages
-    # Only from main: a pull request should be able to prove the game still plays without
+    # Only from main: a pull request should be able to prove the games still play without
     # replacing what is currently published.
     if: github.ref == 'refs/heads/main'
     needs: play

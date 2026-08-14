@@ -1,13 +1,48 @@
 # The startup plan, and where we stand
 
-*Written 2026-08-14. This is the handoff document: a new working session should read `CLAUDE.md`
-first (build constraints, commands, invariants), then this file for strategy and current state.*
+*Written 2026-08-14, updated the same day. This is the handoff document: a new working session
+should read `CLAUDE.md` first (build constraints, commands, invariants), then this file for
+strategy and current state.*
 
 ---
 
 ## Part 1 — Where we stand right now
 
-### What shipped in the last working session (all merged to `main` via PR #1)
+### The name is decided: **Polymath**
+
+The word is the pitch — someone who knows many things — and it survives transliteration into the
+other two languages (Полимат / פולימת), which "Smart" and any English wordplay would not. The
+rename is **the web brand only**, on purpose: page titles, share text and docs say Polymath, while
+the Kotlin package stays `com.hillelsht.smart` and the repo stays `smart`. Renaming the
+`applicationId` would make every existing install a different app and throw away its review
+history, which is the one thing here that cannot be re-downloaded. That is a trade worth making
+when there are users to keep, not before. **The domain is still unbought** — the share text points
+at `hillelsht.github.io/smart`, from a single constant in `webplay/web/polymath.js`.
+
+### What shipped in this working session
+
+- **The daily is live on the web.** `webplay/` grew from a one-game harness into the Polymath
+  portal: a front door, `chains.html` (the daily grid) and `vaults.html` (the descent). Three
+  pages, one JavaScript bundle and one stylesheet between them.
+- **Chains compiles to JavaScript**, from the same `domain/play/chains` the APK ships — verified
+  stdlib-clean, same trick as Vaults. `ChainsBridge.kt` hands the page numbers, booleans and
+  strings and nothing else.
+- **Shareable results.** `ChainsState` now carries `guesses`: what was submitted, in order, with
+  each guess's tiles in tap order. That is what a Wordle-style emoji grid is made of, and
+  `attempts` (a set of sets) structurally cannot answer either question. The same list is the
+  saved game — replaying it through `ChainsRules` rebuilds a part-finished grid exactly, so no
+  derived state is stored and none of it can rot.
+- **Streaks, offline, no backend.** Grids are baked into the build (`dailies` Gradle task) so the
+  page paints with no network and works over `file://`; it falls back to the published pack for a
+  month it was not built with, which it must, because a bot's pack push cannot trigger a rebuild.
+  Streak and history are `localStorage`.
+- **The daily is gated in a real browser.** `tools/playtest/daily.js` plays it through its own
+  buttons over http — sixteen tiles, a wrong guess costing exactly one life, a part-played grid
+  surviving a reload, the share grid's rows matching the guesses, two days running reading as a
+  streak of two. It caught a result panel that was showing before there was a result.
+- **`vaults.yml` became `web.yml`**, building and publishing the whole portal.
+
+### What shipped in the working session before this one (merged to `main` via PR #1)
 
 - **Aryeh's Palace was removed.** It shipped unplayable behind sixteen passing tests; the root
   cause (an unspent jump press cleared every frame) and the post-mortem live in `docs/games.md`.
@@ -26,16 +61,19 @@ first (build constraints, commands, invariants), then this file for strategy and
   with fixed-timestep stepping and a jump latch — both of Palace's UI mistakes inverted.
 - **Everything is live**: rolling APK at the `latest` release includes The Vaults; the browser
   build deploys to GitHub Pages at **https://hillelsht.github.io/smart/** via
-  `.github/workflows/vaults.yml` on every merge to `main` that touches the game. Pages source is
-  set to "GitHub Actions" in repo settings (done). 302 engine tests green.
+  `.github/workflows/vaults.yml` (renamed `web.yml` since) on every merge to `main` that touches
+  the game. Pages source is set to "GitHub Actions" in repo settings (done). 302 engine tests
+  green.
 
 ### How to verify the current state (in a fresh environment)
 
 ```bash
-gradle -p enginetests test                      # 302 tests, seconds
-gradle -p webplay bundle                        # The Vaults -> JavaScript
+gradle -p enginetests test                      # 306 tests, seconds
+gradle -p webplay bundle                        # both games -> JavaScript
 NODE_PATH=/opt/node22/lib/node_modules \
   node tools/playtest/play.js                   # plays all 7 rooms in Chromium, ~5s
+NODE_PATH=/opt/node22/lib/node_modules \
+  node tools/playtest/daily.js                  # plays the daily through its own buttons
 ```
 
 Remember: **this environment cannot compile Android** — CI is the only compiler for `ui/` code.
@@ -59,7 +97,7 @@ actually teaches you.** Free dailies on the web install the habit; the app keeps
 3. **AI topic packs as the core hook, gated** — "type a topic, get a daily" is the headline, but
    facts must trace to Wikidata claims; the LLM phrases, never invents.
 4. **Rename now** — "Smart" is ungoogleable. Name + domain chosen before any links spread.
-   **← this decision is still open: no name has been picked yet.**
+   **← the name is settled (Polymath, web brand only); the domain is not bought yet.**
 
 ### Why this can win — the empty intersection
 
@@ -100,27 +138,31 @@ pipeline attacks the first; daily ritual + shareable results attack the second.
 
 ## Part 3 — The roadmap (next work, in order)
 
-### Wedge 1 (~weeks 1–3): The Daily, on the web, shareable  ← START HERE
+### Wedge 1 (~weeks 1–3): The Daily, on the web, shareable  ← IN PROGRESS
 
 Grow `webplay/` from a Vaults harness into a small daily portal at a real domain:
 
-1. **Pick the name + domain** (open decision — ask the user first).
-2. **Daily Chains in the browser**: add `../app/src/main/java/com/hillelsht/smart/domain/play/chains`
-   to the srcDirs in `webplay/build.gradle.kts` (same trick as vaults; verified JS-clean), fetch
-   this month's grid JSON, play with `ChainsRules`, share as a Wordle-style emoji grid via
-   clipboard.
+1. ~~Pick the name~~ — **Polymath**, decided. **The domain is not bought yet**, and should be
+   before any links spread; `polymath.js` holds the one constant to change.
+2. ~~**Daily Chains in the browser**~~ — done. Compiled from the shipping source, played with
+   `ChainsRules`, shared as a Wordle-style emoji grid via the clipboard or the system share sheet.
 3. **Daily Vaults room**: one counted attempt per day; share as a **ghost link** — the run's
-   inputs base64-encoded in the URL fragment; opening replays the ghost to race against.
-4. Streak + history in localStorage; result survives refresh.
-5. Extend `.github/workflows/vaults.yml` into the portal deploy (Pages already proven live).
+   inputs base64-encoded in the URL fragment; opening replays the ghost to race against. Not
+   started. The Vaults page is still the open-ended harness.
+4. ~~Streak + history in localStorage; result survives refresh~~ — done, and gated in Chromium.
+5. ~~Extend the Pages workflow into the portal deploy~~ — done; it is `web.yml` now.
 6. App: deep links `/daily/chains`, `/daily/vaults` into existing screens
-   (`SmartNavHost.kt`, `AndroidManifest.xml`).
-7. One privacy-friendly counter (Plausible-class) — the only metrics infrastructure.
-8. **Quality pass on Chains grids** — valid ≠ fun; tile-taste heuristics in
-   `tools/build_chains.py` before the daily is the flagship.
+   (`SmartNavHost.kt`, `AndroidManifest.xml`). Not started — needs CI to compile it.
+7. One privacy-friendly counter (Plausible-class) — the only metrics infrastructure. Not started.
+8. **Quality pass on Chains grids** — valid ≠ fun, and this is now the visible flagship rather
+   than a tab in an app. Real examples from today's published packs: *Countries* containing
+   "Xinjiang" and "Maghreb"; *Authors* containing "Moses". The grids are provably well-formed —
+   `enginetests` sees to that — and still sometimes wrong-headed. Tile-taste heuristics belong in
+   `tools/build_chains.py`. **This is the highest-value thing left in Wedge 1.**
 
 Ships when: page loads fast on a phone; emoji share pastes correctly; a ghost link round-trips;
-streak survives restart; the Chromium playtest drives the daily end-to-end in CI.
+streak survives restart; the Chromium playtest drives the daily end-to-end in CI; and the grids
+are worth showing a stranger.
 
 ### Wedge 2 (~weeks 3–6): Provably-fair generated rooms + language parity
 - Room generator gated by `Playtest.solve` in CI (margin band → publish to
@@ -149,14 +191,17 @@ ads in the ritual, no new games until the dailies are excellent.
 
 1. Read `CLAUDE.md` (root) — build constraints, working commands, git rules, invariants map.
 2. Read this file for strategy and state.
-3. The immediate task is **Wedge 1**, starting with the name/domain decision (ask the user),
-   then step 2 (Daily Chains in the browser).
+3. The immediate task is the rest of **Wedge 1**. In order of value: **step 8** (grid quality —
+   the daily is the shop window now and some grids embarrass it), then **step 3** (the ghost
+   link, the most distinctive thing in this plan and impossible for a competitor without a
+   deterministic engine), then steps 6 and 7. Buying the domain is the user's to do.
 4. Branch discipline: work on a feature branch, verify Compose changes by dispatching `build.yml`
    on the branch (this environment cannot compile Android), merge to `main` via PR — merges to
    `main` auto-publish the APK release and the Pages site.
-5. Keep the existing gates green: `enginetests` (302 tests), `tools/playtest/play.js` margins,
-   the docs-freshness pre-push hook (update `docs/` when code contradicts it — it will tell you).
+5. Keep the existing gates green: `enginetests` (306 tests), `tools/playtest/play.js` margins,
+   `tools/playtest/daily.js`, the docs-freshness pre-push hook (update `docs/` when code
+   contradicts it — it will tell you).
 
-Reference links: live game **https://hillelsht.github.io/smart/** · rolling APK
+Reference links: live site (Polymath) **https://hillelsht.github.io/smart/** · rolling APK
 **https://github.com/Hillelsht/smart/releases/tag/latest** · post-mortem & game design
 `docs/games.md` · browser build `webplay/README.md`.

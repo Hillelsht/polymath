@@ -197,6 +197,14 @@ canvas with live tuning sliders; `tools/playtest/play.js` drives it in Chromium.
 `webplay/README.md`. This is the round trip through a human that the Palace entry below said was
 unavoidable — it was not.
 
+Chains is compiled to JavaScript by the same build and published as **the daily** at
+`chains.html`, driven end-to-end in Chromium by `tools/playtest/daily.js`. That page is the reason
+`ChainsState` carries `guesses`: an ordered list of what was submitted, in the order the tiles were
+tapped. `attempts` cannot stand in for it — it is a set of sets, because its only job is "have I
+seen this combination before" — and the shared result grid is one row per guess, drawn straight off
+`guesses`. The same list is the saved game: replaying it through `ChainsRules` rebuilds a
+part-finished grid exactly, so nothing derived is stored and nothing derived can fall out of step.
+
 ## Aryeh's Palace — removed, and why it matters
 
 Palace was a side-scrolling platformer. It shipped unplayable and was removed. It is worth

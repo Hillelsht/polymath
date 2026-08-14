@@ -44,22 +44,34 @@ paths instead, because it lives outside assets.
 ### The browser build — the only thing here that can be played
 
 ```bash
-gradle -p webplay bundle                     # -> webplay/build/web/index.html
+gradle -p webplay bundle                     # -> webplay/build/web/  (portal + games)
+gradle -p webplay site                       # the same, minus source maps and screenshots
 NODE_PATH=/opt/node22/lib/node_modules \
-  node tools/playtest/play.js                # plays all seven rooms in Chromium, ~5s
-python3 tools/playtest/inline.py             # fold it into one self-contained file
+  node tools/playtest/play.js                # plays all seven Vaults rooms in Chromium, ~5s
+NODE_PATH=/opt/node22/lib/node_modules \
+  node tools/playtest/daily.js               # plays the daily grid through its own buttons
+python3 tools/playtest/inline.py             # fold The Vaults into one self-contained file
 ```
 
 `webplay/` uses the same trick as `enginetests` — a standalone build pointing `kotlin.srcDirs` at
-`domain/play/vaults` — but targets **JavaScript**, so The Vaults runs on a canvas here. Chromium
-and Playwright are already installed; nothing is downloaded, and the Kotlin/JS toolchain is pointed
-at the system Node and stopped before webpack so npm is never involved.
+`domain/play/vaults` and `domain/play/chains` — but targets **JavaScript**, so both games run
+here. Chromium and Playwright are already installed; nothing is downloaded, and the Kotlin/JS
+toolchain is pointed at the system Node and stopped before webpack so npm is never involved.
+
+It builds three pages sharing one bundle and one stylesheet: `index.html` (Polymath, the front
+door), `chains.html` (the daily grid) and `vaults.html` (the descent, with its tuning harness).
+The day's grids are baked into `dailies.js` by the `dailies` task rather than fetched, which is
+what lets the page work offline and over `file://`; the page still falls back to the published
+pack for a month it was not built with, because a pack refreshed by a bot cannot trigger a rebuild
+of this site.
 
 This exists because the previous game shipped unplayable past a full headless suite: no test had
 ever pressed a button. `play.js` presses them, and re-measures every room's timing margin in the
-browser — those figures matching the JVM's is what proves the two targets have not drifted. The
-extra constraint it buys is in `invariants.md`: `domain/play/vaults` is **stdlib only**, no `java.*`
-either, or this build stops compiling.
+browser — those figures matching the JVM's is what proves the two targets have not drifted.
+`daily.js` does the same job one layer up, over http rather than `file://` because a daily is made
+of things a `file://` origin does not have: `localStorage`, and therefore a streak that survives a
+reload. The extra constraint all this buys is in `invariants.md`: `domain/play/vaults` and
+`domain/play/chains` are **stdlib only**, no `java.*` either, or this build stops compiling.
 
 Full detail in `webplay/README.md`.
 
