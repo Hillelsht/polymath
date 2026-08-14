@@ -149,6 +149,52 @@ class ChainsTest {
         assertEquals(state, ChainsRules.submit(state))
     }
 
+    // --- what was guessed, and in what order ----------------------------------------------------
+
+    @Test
+    fun `every guess is kept in the order it was made`() {
+        var state = ChainsRules.submit(ChainsRules.start(puzzle).pick("Paris", "Nile", "Goya", "Argon"))
+        state = ChainsRules.submit(ChainsRules.clear(state).pick(*capitals.members.toTypedArray()))
+        assertEquals(2, state.guesses.size)
+        assertEquals(setOf("Paris", "Nile", "Goya", "Argon"), state.guesses[0].toSet())
+        assertEquals(capitals.members.toSet(), state.guesses[1].toSet())
+    }
+
+    @Test
+    fun `a guess keeps the order the tiles were tapped in`() {
+        // The shared result grid is one row per guess, drawn straight off this list. Tap order is
+        // a property of Set.plus rather than of anything written down, so it is asserted here.
+        val state = ChainsRules.submit(ChainsRules.start(puzzle).pick("Goya", "Paris", "Argon", "Nile"))
+        assertEquals(listOf("Goya", "Paris", "Argon", "Nile"), state.guesses.single())
+    }
+
+    @Test
+    fun `a repeated guess is not recorded a second time`() {
+        val once = ChainsRules.submit(ChainsRules.start(puzzle).pick("Paris", "Lisbon", "Nile", "Goya"))
+        val twice = ChainsRules.submit(ChainsRules.clear(once).pick("Paris", "Lisbon", "Nile", "Goya"))
+        assertEquals(Verdict.ALREADY_TRIED, twice.verdict)
+        assertEquals(1, twice.guesses.size)
+    }
+
+    @Test
+    fun `replaying the guesses rebuilds the same game`() {
+        // This is what lets a half-finished grid survive a refresh without storing derived state
+        // that can fall out of step with the rules: the guess list *is* the saved game.
+        var played = ChainsRules.start(puzzle)
+        played = ChainsRules.submit(played.pick("Paris", "Nile", "Goya", "Argon"))
+        played = ChainsRules.submit(ChainsRules.clear(played).pick(*rivers.members.toTypedArray()))
+        played = ChainsRules.submit(ChainsRules.clear(played).pick("Paris", "Lisbon", "Oslo", "Goya"))
+
+        val replayed = played.guesses.fold(ChainsRules.start(puzzle)) { state, guess ->
+            ChainsRules.submit(guess.fold(ChainsRules.clear(state)) { s, t -> ChainsRules.select(s, t) })
+        }
+        assertEquals(played.solved, replayed.solved)
+        assertEquals(played.mistakes, replayed.mistakes)
+        assertEquals(played.guesses, replayed.guesses)
+        assertEquals(played.attempts, replayed.attempts)
+        assertEquals(played.remaining, replayed.remaining)
+    }
+
     // --- selection ------------------------------------------------------------------------------
 
     @Test

@@ -34,15 +34,18 @@ python3 tools/compile_scan.py /tmp/parse.log     # filters ~3,200 expected error
 python3 tools/import_audit.py                    # forgotten imports
 python3 tools/generate_facts.py --self-test      # offline, as CI runs it
 
-gradle -p webplay bundle                         # The Vaults -> JavaScript, in build/web/
+gradle -p webplay bundle                         # the games -> JavaScript, in build/web/
 NODE_PATH=/opt/node22/lib/node_modules \
-  node tools/playtest/play.js                    # plays every room in Chromium, ~5s
+  node tools/playtest/play.js                    # plays every Vaults room in Chromium, ~5s
+NODE_PATH=/opt/node22/lib/node_modules \
+  node tools/playtest/daily.js                   # plays the daily grid in Chromium, ~10s
 python3 tools/playtest/inline.py --self-test     # the one-file build, offline
 ```
 
-**The Vaults can be played here.** `webplay/` compiles `domain/play/vaults` — the same source the
-APK ships — to JS and renders it on a canvas with live tuning sliders. Feel is testable in seconds
-rather than being a round trip through a human, which is what Aryeh's Palace died of. See
+**The games can be played here.** `webplay/` compiles `domain/play/vaults` and
+`domain/play/chains` — the same source the APK ships — to JS and serves them as **Polymath**, the
+daily portal published at <https://hillelsht.github.io/smart/>. Feel is testable in seconds rather
+than being a round trip through a human, which is what Aryeh's Palace died of. See
 `webplay/README.md`.
 
 **`gradle -p enginetests test` is mandatory after touching `domain/` or `data/seed/`.** That
@@ -83,8 +86,9 @@ Full list with the story behind each: `docs/invariants.md`.
   re-downloaded.
 - **`domain/` and `data/seed/` must not import anything Android** — that is what keeps
   `enginetests` compiling.
-- **`domain/play/vaults/` must not import `java.*` either** — stdlib only. That is what keeps
-  `webplay` compiling to JavaScript, and one `java.time` import would end it.
+- **`domain/play/vaults/` and `domain/play/chains/` must not import `java.*` either** — stdlib
+  only. That is what keeps `webplay` compiling to JavaScript, and one `java.time` import would
+  end it.
 - **Bot-authored pushes cannot trigger workflows.** A pipeline commit will never start a Build
   run on its own; dispatch it manually.
 - **Assert invariants in tests, not snapshots.** A test encoding today's data is a landmine.
@@ -110,7 +114,7 @@ packs/        generated content, served to installed apps from raw.githubusercon
 | The Python tools, the six workflows, what commits to `main` | `docs/content-pipeline.md` |
 | Adding a language; why Hebrew has two string files | `docs/localization.md` |
 | The five games and their rules | `docs/games.md` |
-| Playing The Vaults in a browser; why feel is testable now | `webplay/README.md` |
+| The web portal, the daily, playing the games in a browser | `webplay/README.md` |
 | Building, verifying and shipping without a compiler | `docs/development.md` |
 | The startup plan, current status, and what to build next | `plan.md` |
 | Things that must stay true, and what broke when they didn't | `docs/invariants.md` |

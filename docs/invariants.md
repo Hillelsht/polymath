@@ -94,10 +94,12 @@ early, presses that arrive late. And measure the **timing margin** — the width
 inputs that succeed — because "a solution exists" and "a person can execute one" are different
 claims. `Playtest.margin` is the number; `docs/games.md` has the post-mortem.
 
-**`domain/play/vaults/` is Kotlin stdlib only — no `java.*`, not just no `android.*`.**
-→ That is what lets `webplay/` compile the same source to JavaScript, so the game can be played
-and tuned in a browser instead of only on a device. A single `java.time` import ends it. The rest
-of `domain/` is held only to the weaker no-Android rule.
+**`domain/play/vaults/` and `domain/play/chains/` are Kotlin stdlib only — no `java.*`, not just
+no `android.*`.**
+→ That is what lets `webplay/` compile the same source to JavaScript, so the games can be played
+and tuned in a browser instead of only on a device — and, since the portal went up, so the daily
+on the web and the daily in the app are one implementation rather than two. A single `java.time`
+import ends it. The rest of `domain/` is held only to the weaker no-Android rule.
 
 **Assert invariants, not snapshots.** A test that encodes today's data is a landmine with a
 timer on it.

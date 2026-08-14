@@ -1,0 +1,155 @@
+/*
+  The portal's shell: everything outside a game's own canvas.
+
+  Every custom property is prefixed `--pm-` because The Vaults page carries its own palette under
+  bare names (--stone, --chalk, --torch) and the two must not fight. The colours are deliberately
+  the same family — this is one product, and the game the site already had sets its look.
+
+  A single dark theme, painted explicitly rather than inherited: the subject is a lamplit desk at
+  night, and a half-light half-dark portal would read as two sites.
+*/
+:root {
+  --pm-ink:#14151A; --pm-panel:#1D1F27; --pm-panel-lit:#242733; --pm-edge:#2C2F3C;
+  --pm-text:#E8E3D8; --pm-dim:#8E8B7E;
+  --pm-gold:#E8A33D; --pm-green:#5FB89A; --pm-blue:#6E93E0; --pm-rust:#C4563F;
+
+  /* The four difficulties, easiest first. The share grid's emoji are chosen to match these, so a
+     pasted result and the board a friend then plays are recognisably the same four colours. */
+  --pm-d1:#D9A441; --pm-d2:#6FAE6A; --pm-d3:#5B8ED6; --pm-d4:#9B72C7;
+
+  --pm-display: ui-serif, Georgia, "Times New Roman", serif;
+  --pm-mono: ui-monospace, SFMono-Regular, Menlo, Consolas, monospace;
+}
+
+* { box-sizing:border-box; }
+
+/* The `hidden` attribute is only `display:none` in the user-agent stylesheet, so any author rule
+   that sets `display` outranks it — and several below do. Without this the result panel is on
+   screen, empty, before there is a result to put in it. */
+[hidden] { display:none !important; }
+
+body {
+  margin:0; background:var(--pm-ink); color:var(--pm-text); font-family:var(--pm-mono);
+  font-size:14px; line-height:1.55; padding:22px 16px 56px;
+  display:flex; flex-direction:column; align-items:center;
+  -webkit-text-size-adjust:100%;
+}
+
+.pm-wrap { width:100%; max-width:720px; display:flex; flex-direction:column; gap:22px; }
+.pm-wrap.wide { max-width:960px; }
+
+/* --- the bar every page carries ------------------------------------------------------------- */
+
+.pm-nav {
+  display:flex; align-items:baseline; gap:16px; flex-wrap:wrap;
+  border-bottom:1px solid var(--pm-edge); padding-bottom:11px;
+}
+.pm-mark {
+  font-family:var(--pm-display); font-size:19px; font-weight:600; letter-spacing:-.01em;
+  color:var(--pm-text); text-decoration:none;
+}
+.pm-mark span { color:var(--pm-gold); }
+.pm-nav nav { display:flex; gap:14px; margin-left:auto; font-size:13px; }
+.pm-nav nav a { color:var(--pm-dim); text-decoration:none; border-bottom:1px solid transparent; }
+.pm-nav nav a:hover { color:var(--pm-text); }
+.pm-nav nav a[aria-current="page"] { color:var(--pm-text); border-bottom-color:var(--pm-gold); }
+
+/* --- headings and prose ---------------------------------------------------------------------- */
+
+.pm-head { display:flex; flex-direction:column; gap:6px; }
+h1 {
+  font-family:var(--pm-display); font-size:clamp(28px,5.5vw,44px); font-weight:600;
+  margin:0; letter-spacing:-.015em; text-wrap:balance;
+}
+h1 .pm-sub { display:block; font-family:var(--pm-mono); font-size:12px; font-weight:400;
+              color:var(--pm-dim); letter-spacing:.09em; text-transform:uppercase; margin-bottom:7px; }
+.pm-lede { color:var(--pm-dim); max-width:64ch; font-size:13.5px; margin:0; }
+.pm-lede b { color:var(--pm-text); font-weight:400; }
+
+/* --- cards ------------------------------------------------------------------------------------ */
+
+.pm-cards { display:grid; grid-template-columns:repeat(auto-fit,minmax(260px,1fr)); gap:14px; }
+.pm-card {
+  display:flex; flex-direction:column; gap:9px; text-decoration:none; color:inherit;
+  background:var(--pm-panel); border:1px solid var(--pm-edge); border-radius:12px; padding:16px 17px;
+  transition:border-color .12s ease, background .12s ease;
+}
+a.pm-card:hover { border-color:#40465C; background:var(--pm-panel-lit); }
+.pm-card h2 { font-family:var(--pm-display); font-size:22px; font-weight:600; margin:0; }
+.pm-card p { margin:0; color:var(--pm-dim); font-size:13px; }
+.pm-card .pm-state { margin-top:auto; padding-top:4px; font-size:12.5px; color:var(--pm-gold); }
+.pm-card .pm-state.done { color:var(--pm-green); }
+.pm-card .pm-state.missed { color:var(--pm-rust); }
+
+/* --- buttons ---------------------------------------------------------------------------------- */
+
+.pm-btn {
+  font-family:var(--pm-mono); font-size:13px; color:var(--pm-text); cursor:pointer;
+  background:var(--pm-panel-lit); border:1px solid var(--pm-edge); border-radius:9px;
+  padding:11px 20px; user-select:none; -webkit-user-select:none;
+  transition:background .12s ease, border-color .12s ease, opacity .12s ease;
+}
+.pm-btn:hover:not(:disabled) { border-color:#40465C; }
+.pm-btn:disabled { opacity:.4; cursor:default; }
+.pm-btn:focus-visible { outline:2px solid var(--pm-blue); outline-offset:2px; }
+.pm-btn.primary { background:var(--pm-gold); border-color:var(--pm-gold); color:var(--pm-ink); }
+.pm-btn.primary:hover:not(:disabled) { background:#F0B255; border-color:#F0B255; }
+
+/* --- Chains ----------------------------------------------------------------------------------- */
+
+.pm-board { display:flex; flex-direction:column; gap:8px; }
+
+/* A found group. Tiles collapse into one row so the board visibly shrinks as it is solved. */
+.pm-group {
+  border-radius:10px; padding:11px 13px; text-align:center; color:#16171C;
+  animation:pm-settle .22s ease-out;
+}
+.pm-group .pm-label { font-family:var(--pm-display); font-size:16px; font-weight:600; }
+.pm-group .pm-members { font-size:12.5px; opacity:.82; }
+.pm-group.missed { outline:2px dashed rgba(20,21,26,.45); outline-offset:-5px; }
+.d1 { background:var(--pm-d1); } .d2 { background:var(--pm-d2); }
+.d3 { background:var(--pm-d3); } .d4 { background:var(--pm-d4); }
+
+.pm-grid { display:grid; grid-template-columns:repeat(4,1fr); gap:8px; }
+.pm-tile {
+  font-family:var(--pm-mono); color:var(--pm-text); cursor:pointer;
+  background:var(--pm-panel-lit); border:1px solid var(--pm-edge); border-radius:9px;
+  /* The label is Wikidata's, so it can be one short word or four long ones. The box is fixed and
+     the type shrinks to fit rather than the row heights jumping about between grids. */
+  min-height:70px; padding:6px 5px; display:flex; align-items:center; justify-content:center;
+  text-align:center; font-size:clamp(9px,2.5vw,13px); line-height:1.25; overflow-wrap:anywhere;
+  transition:background .1s ease, border-color .1s ease, transform .1s ease;
+}
+.pm-tile:hover:not(:disabled) { border-color:#40465C; }
+.pm-tile[aria-pressed="true"] { background:var(--pm-gold); border-color:var(--pm-gold); color:var(--pm-ink); }
+.pm-tile:focus-visible { outline:2px solid var(--pm-blue); outline-offset:2px; }
+.pm-tile.shake { animation:pm-shake .32s ease-in-out; }
+
+.pm-controls { display:flex; gap:9px; justify-content:center; flex-wrap:wrap; }
+
+.pm-status { display:flex; align-items:center; justify-content:center; gap:11px; min-height:26px;
+             font-size:13px; flex-wrap:wrap; }
+.pm-lives { display:flex; gap:5px; align-items:center; }
+.pm-life { width:10px; height:10px; border-radius:50%; background:var(--pm-gold); }
+.pm-life.spent { background:var(--pm-edge); }
+.pm-say { color:var(--pm-dim); }
+.pm-say.warn { color:var(--pm-gold); }
+
+/* --- the shared result -------------------------------------------------------------------------- */
+
+.pm-result { background:var(--pm-panel); border:1px solid var(--pm-edge); border-radius:12px;
+             padding:16px 17px; display:flex; flex-direction:column; gap:12px; }
+.pm-result h2 { font-family:var(--pm-display); font-size:21px; margin:0; font-weight:600; }
+.pm-emoji { font-size:19px; line-height:1.35; letter-spacing:2px; margin:0;
+            font-family:"Apple Color Emoji","Segoe UI Emoji","Noto Color Emoji",sans-serif; }
+.pm-meta { color:var(--pm-dim); font-size:12.5px; }
+
+footer.pm-foot { color:var(--pm-dim); font-size:12px; border-top:1px solid var(--pm-edge);
+                 padding-top:14px; max-width:70ch; }
+footer.pm-foot a { color:var(--pm-dim); }
+
+@keyframes pm-settle { from { transform:translateY(-5px); opacity:.35; } }
+@keyframes pm-shake {
+  25% { transform:translateX(-5px); } 50% { transform:translateX(5px); } 75% { transform:translateX(-3px); }
+}
+@media (prefers-reduced-motion:reduce) { *, *::before, *::after { animation:none !important; transition:none !important; } }

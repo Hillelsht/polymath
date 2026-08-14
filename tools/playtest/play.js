@@ -27,7 +27,7 @@ const arg = (name, fallback) => {
 };
 
 const ROOT = path.resolve(__dirname, '..', '..');
-const PAGE = path.join(ROOT, 'webplay', 'build', 'web', 'index.html');
+const PAGE = path.join(ROOT, 'webplay', 'build', 'web', 'vaults.html');
 const ONLY = argv.includes('--room') ? Number(arg('--room', '0')) : null;
 const SHOT = arg('--shot', path.join(ROOT, 'webplay', 'build', 'web', 'playtest.png'));
 
