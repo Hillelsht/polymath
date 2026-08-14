@@ -112,4 +112,5 @@ packs/        generated content, served to installed apps from raw.githubusercon
 | The five games and their rules | `docs/games.md` |
 | Playing The Vaults in a browser; why feel is testable now | `webplay/README.md` |
 | Building, verifying and shipping without a compiler | `docs/development.md` |
+| The startup plan, current status, and what to build next | `plan.md` |
 | Things that must stay true, and what broke when they didn't | `docs/invariants.md` |
