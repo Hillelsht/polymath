@@ -85,6 +85,25 @@ Nothing else is stored anywhere but the visitor's own browser. A streak is deriv
 `ChainsRules`** rather than by restoring a snapshot of the board — so no derived state is saved,
 and none of it can rot.
 
+## What is measured
+
+Nothing, today. `polymath.js` carries a `COUNTER` constant and a `count()` that loads a
+Plausible-class script when it is filled in — no cookies, no profile, no consent banner — and
+until it is, **this site makes no third-party request at all**. It ships off because enabling it
+needs an account this repository does not have, and because switching it on is a decision about
+someone else's data rather than a default.
+
+If you turn it on, the footers on `index.html` and `descent.html` tell visitors there is no server
+keeping any of this. Make that stay true, or change the words.
+
+## Opening a daily in the app
+
+`Routes.CHAINS_LINKS` and `Routes.VAULTS_LINKS` in `SmartNavHost.kt` claim `polymath://daily/…`
+and the two `https://` daily pages, mirrored by intent-filters in the manifest. The custom scheme
+works as soon as the app is installed; the https ones are declared with `autoVerify` and stay
+inert until `.well-known/assetlinks.json` is published here with the release signing fingerprint.
+See `docs/architecture.md`.
+
 ## Why this works without an Android SDK
 
 The same trick `enginetests/` uses: a standalone Gradle build whose `kotlin.srcDirs` points at the

@@ -159,9 +159,18 @@ Grow `webplay/` from a Vaults harness into a small daily portal at a real domain
    is gated end-to-end in Chromium by `tools/playtest/ghost.js`.
 4. ~~Streak + history in localStorage; result survives refresh~~ — done, and gated in Chromium.
 5. ~~Extend the Pages workflow into the portal deploy~~ — done; it is `web.yml` now.
-6. App: deep links `/daily/chains`, `/daily/vaults` into existing screens
-   (`SmartNavHost.kt`, `AndroidManifest.xml`). Not started — needs CI to compile it.
-7. One privacy-friendly counter (Plausible-class) — the only metrics infrastructure. Not started.
+6. ~~**App deep links**~~ — done. `Routes.CHAINS_LINKS` / `VAULTS_LINKS` claim
+   `polymath://daily/chains|vaults` and the two `https://` daily pages, attached with
+   `navDeepLink` and mirrored by manifest intent-filters. The custom scheme works on install; the
+   https ones are declared with `autoVerify` and **stay inert until
+   `.well-known/assetlinks.json` is published with the release signing fingerprint** — Android
+   12+ ignores an unverified https filter outright. That file is the only step left, and it needs
+   a release keystore rather than the debug one.
+7. **A privacy-friendly counter** — the switch is built and **off**. `polymath.js` carries
+   `COUNTER` and `count()`; filling in two strings loads a Plausible-class script, and until then
+   the site makes no third-party request at all. This one cannot be finished here: it needs an
+   account and a domain, both of which are yours to create. Turning it on also makes the "no
+   server keeping any of this" line in two footers untrue, so change the words with it.
 8. ~~**Quality pass on Chains grids**~~ — done. Two classes of wrongness the overlap rule could
    never see, both fixed and both documented in `docs/games.md`:
    - **A label lying about its tiles** — *Countries* containing "Xinjiang" and "Maghreb",
@@ -177,7 +186,8 @@ Grow `webplay/` from a Vaults harness into a small daily portal at a real domain
 
 Ships when: page loads fast on a phone; emoji share pastes correctly; a ghost link round-trips;
 streak survives restart; the Chromium playtest drives the daily end-to-end in CI; and the grids
-are worth showing a stranger. **Shipped, except the domain, the app deep links and the counter.**
+are worth showing a stranger. **Shipped.** What remains is not code: a domain, an assetlinks file
+and a counter account.
 
 ### Wedge 2 (~weeks 3–6): Provably-fair generated rooms + language parity
 - Room generator gated by `Playtest.solve` in CI (margin band → publish to
@@ -206,10 +216,13 @@ ads in the ritual, no new games until the dailies are excellent.
 
 1. Read `CLAUDE.md` (root) — build constraints, working commands, git rules, invariants map.
 2. Read this file for strategy and state.
-3. Wedge 1 is essentially done. What is left in it: **step 6** (app deep links into
-   `SmartNavHost.kt` and `AndroidManifest.xml` — needs CI to compile) and **step 7** (one
-   privacy-friendly counter). Buying the domain is the user's to do. After that, **Wedge 2**:
-   generated rooms gated by `Playtest.solve`, and a `generate_facts.py` run for RU/HE parity.
+3. **Wedge 1 is done**, except three things that are not code and are the user's to do: buy the
+   domain, publish `.well-known/assetlinks.json` with a release signing fingerprint (which makes
+   the https deep links live), and create a counter account (which makes step 7 live).
+   Next is **Wedge 2**: generated rooms gated by `Playtest.solve` in CI, and a `generate_facts.py`
+   run to bring RU and HE toward parity — the same daily in three languages is the story NYT
+   structurally cannot copy. The `author` and `musician` pools also want more facts before those
+   categories can return to the daily.
    Two content follow-ups worth doing when convenient: the `author` and `musician` pools need
    more facts before those categories can return to the daily, and a device that already
    downloaded the placeholder-element facts keeps them, because library shards only ever add and

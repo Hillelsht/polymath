@@ -38,6 +38,7 @@ import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.compose.currentBackStackEntryAsState
 import androidx.navigation.compose.rememberNavController
+import androidx.navigation.navDeepLink
 import com.hillelsht.smart.R
 import com.hillelsht.smart.data.SmartRepository
 import com.hillelsht.smart.domain.MascotDirector.Surface
@@ -75,6 +76,25 @@ object Routes {
     const val GAMBIT = "play/gambit"
     const val VAULTS = "play/vaults"
     const val SETTINGS = "settings"
+
+    /**
+     * Where a link from Polymath lands.
+     *
+     * Two schemes, deliberately. `polymath://` works the moment the app is installed, with no
+     * verification and no server agreement — which is what a sideloaded build actually has. The
+     * `https://` patterns are the real prize, because they turn a shared daily into a link that
+     * opens the app for someone who has it and the site for someone who does not; they stay inert
+     * until `.well-known/assetlinks.json` on the site carries the release signing fingerprint, so
+     * they are here waiting rather than working. Android 12 and later will not even offer an
+     * unverified https link, so nothing about this is a half-open door.
+     *
+     * The `https` paths are the pages the site actually serves, not tidier ones invented here: the
+     * link people will have in their hands is the one they copied out of the address bar.
+     */
+    const val SITE = "hillelsht.github.io/smart"
+
+    val CHAINS_LINKS = listOf("polymath://daily/chains", "https://$SITE/chains.html")
+    val VAULTS_LINKS = listOf("polymath://daily/vaults", "https://$SITE/descent.html")
 
     fun quiz(category: Category? = null, factIds: List<String> = emptyList()) =
         "quiz?category=${category?.id ?: ""}&facts=${factIds.joinToString(",")}"
@@ -224,6 +244,10 @@ fun SmartApp(repository: SmartRepository) {
                 }
                 composable(
                     Routes.CHAINS,
+                    // Arriving from a link lands here rather than on the Play tab, because someone
+                    // who tapped today's grid asked for today's grid. Back still walks out to
+                    // wherever they came from, which for a deep link is the app's start.
+                    deepLinks = Routes.CHAINS_LINKS.map { navDeepLink { uriPattern = it } },
                     enterTransition = { slideInVertically(tween(280)) { it / 6 } + fadeIn(tween(280)) },
                     exitTransition = { slideOutVertically(tween(220)) { it / 6 } + fadeOut(tween(220)) },
                 ) {
@@ -238,6 +262,7 @@ fun SmartApp(repository: SmartRepository) {
                 }
                 composable(
                     Routes.VAULTS,
+                    deepLinks = Routes.VAULTS_LINKS.map { navDeepLink { uriPattern = it } },
                     enterTransition = { slideInVertically(tween(280)) { it / 6 } + fadeIn(tween(280)) },
                     exitTransition = { slideOutVertically(tween(220)) { it / 6 } + fadeOut(tween(220)) },
                 ) {

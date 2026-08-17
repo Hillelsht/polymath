@@ -131,7 +131,40 @@ const PM = (() => {
     return await copy(text) ? 'copied' : 'failed';
   }
 
-  return { SITE, EPOCH, today, dayNumber, shift, pretty, load, save, streak, puzzle, copy, share };
+  // --- the only measurement, and it is off ----------------------------------------------------
+
+  /**
+   * A privacy-friendly page counter, disabled until someone fills this in.
+   *
+   * Wedge 1 asks for exactly one measurement — enough to see whether the share loop works — and
+   * nothing else. This is the whole of it: a Plausible-class counter takes no cookies, builds no
+   * profile and needs no consent banner, and turning it on is setting two strings.
+   *
+   * It ships off rather than on because enabling it needs an account this repository does not
+   * have, and because switching it on is a decision about someone else's data, not a default.
+   * Until then this site makes no third-party request at all.
+   *
+   * If you do enable it: the footers on `index.html` and `descent.html` currently tell visitors
+   * there is no server keeping any of this. Make that stay true, or change the words.
+   */
+  const COUNTER = { host: '', domain: '' };   // e.g. { host: 'plausible.io', domain: 'polymath.games' }
+
+  function count() {
+    if (!COUNTER.host || !COUNTER.domain) return false;
+    const tag = document.createElement('script');
+    tag.defer = true;
+    tag.src = `https://${COUNTER.host}/js/script.js`;
+    tag.setAttribute('data-domain', COUNTER.domain);
+    document.head.appendChild(tag);
+    return true;
+  }
+
+  return {
+    SITE, EPOCH, today, dayNumber, shift, pretty, load, save, streak, puzzle, copy, share,
+    COUNTER, count,
+  };
 })();
+
+PM.count();
 
 globalThis.PM = PM;
