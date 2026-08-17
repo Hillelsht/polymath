@@ -97,8 +97,24 @@ softWrap = false`: Russian and Hebrew labels run wider than English, and a wrapp
 changes one item's height relative to its neighbours, so the whole bar visibly jumps as you
 switch tabs.
 
-**There are no deep links.** The manifest carries only MAIN/LAUNCHER. All parameterised
-navigation is in-app.
+**Two destinations take deep links**, both dailies: `Routes.CHAINS_LINKS` and
+`Routes.VAULTS_LINKS` are attached to their `composable`s with `navDeepLink`, and mirrored by
+intent-filters in the manifest — the manifest cannot read Kotlin, so changing one without the
+other is the trap.
+
+Each has two schemes, doing different jobs. **`polymath://daily/chains`** works the moment the app
+is installed: a custom scheme needs no verification and no agreement with any server, which is
+exactly what a sideloaded build has. **`https://hillelsht.github.io/smart/chains.html`** is the one
+that matters — it makes a shared daily open the app for someone who has it and the site for
+someone who does not — and it is **inert today**. Android 12 and later ignore an unverified https
+filter outright, and verification needs `.well-known/assetlinks.json` on the site carrying the
+release signing fingerprint, which no debug build has. It is declared with `autoVerify="true"` so
+that publishing that file is the only remaining step.
+
+The https paths are the pages the site actually serves rather than tidier ones invented for the
+manifest, because the link someone has in their hand is the one they copied from the address bar.
+
+Everything else is in-app; all parameterised navigation still is.
 
 ## UI conventions
 

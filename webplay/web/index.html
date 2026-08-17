@@ -9,7 +9,7 @@
     <a class="pm-mark" href="./index.html">Poly<span>math</span></a>
     <nav>
       <a href="./chains.html">Chains</a>
-      <a href="./vaults.html">The Vaults</a>
+      <a href="./descent.html">The Vaults</a>
     </nav>
   </div>
 
@@ -28,10 +28,11 @@
       <p>Sixteen things, four hidden groups, four mistakes. The same grid everybody else got.</p>
       <span class="pm-state" id="p-chains">Not played yet</span>
     </a>
-    <a class="pm-card" href="./vaults.html">
+    <a class="pm-card" href="./descent.html">
       <h2>The Vaults</h2>
-      <p>Seven rooms under one clock. Blades on cycles, stone that will not hold you twice.</p>
-      <span class="pm-state">Open run · beat the clock</span>
+      <p>One room under one clock. Blades on cycles, stone that will not hold you twice, and
+         deaths that cost you nothing but time.</p>
+      <span class="pm-state" id="p-vaults">Not run yet</span>
     </a>
   </div>
 
@@ -62,6 +63,13 @@ if (played?.won) {
   card.textContent = played.won === false && played.mistakes >= 4
     ? 'Finished today — no luck' : `In progress · ${played.guesses.length} guesses`;
   card.className = 'pm-state' + (played.mistakes >= 4 ? ' missed' : '');
+}
+
+const ran = PM.load('vaults', DATE);
+if (ran) {
+  const card = document.getElementById('p-vaults');
+  card.textContent = `Out in ${(ran.frames / 60).toFixed(1)}s today`;
+  card.className = 'pm-state done';
 }
 
 const streak = PM.streak('chains', DATE);

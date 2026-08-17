@@ -92,7 +92,7 @@
     <a class="pm-mark" href="./index.html">Poly<span>math</span></a>
     <nav>
       <a href="./chains.html">Chains</a>
-      <a href="./vaults.html" aria-current="page">The Vaults</a>
+      <a href="./descent.html">The Vaults</a>
     </nav>
   </div>
 
@@ -177,23 +177,22 @@
 <script src="./kotlin-kotlin-stdlib.js"></script>
 <script src="./kotlin_org_jetbrains_kotlin_kotlin_dom_api_compat.js"></script>
 <script src="./smart-webplay.js"></script>
+<script src="./vaults-draw.js"></script>
 <script>
 const V = globalThis['smart-webplay'].com.hillelsht.smart.domain.play.vaults;
 const session = new V.Session();
 const FPS = V.Session.Companion.fps, MIN = V.Session.Companion.minMargin;
 const ROOMS = V.Session.Companion.roomCount;
 
-const cv = document.getElementById('c'), ctx = cv.getContext('2d');
-const W = 920, H = 280;
-// Rooms run to ~720 units wide and 100 tall; fit the widest with a margin either side.
-const SCALE = 1.2, OX = 22, OY = 112;
-const sx = x => OX + x * SCALE, sy = y => OY + y * SCALE;
+// The room is drawn by vaults-draw.js, which the daily uses too. One implementation, because two
+// drawings of the same room drift and the drift is invisible until it matters.
+const view = VaultView(document.getElementById('c'));
 
-let trail = [], margin = 0, marginDirty = true, lastRoom = '';
+let margin = 0, marginDirty = true, lastRoom = '';
 const held = { left:false, right:false, jump:false, down:false };
 let jumpEdge = false;
 
-const restart = () => { session.restart(); trail = []; marginDirty = true; };
+const restart = () => { session.restart(); view.reset(); marginDirty = true; };
 
 // --- keyboard ---
 addEventListener('keydown', e => {
@@ -232,7 +231,7 @@ document.getElementById('b-restart').addEventListener('click', restart);
 // is a restart and the margin may have been invalidated by a tuning change since.
 function selectRoom(i) {
   if (i < 0) session.playDescent(); else session.playRoom(i);
-  trail = []; marginDirty = true; lastRoom = session.roomId;
+  view.reset(); marginDirty = true; lastRoom = session.roomId;
 }
 window.__selectRoom = selectRoom;
 
@@ -309,9 +308,8 @@ function loop(now) {
   while (acc >= DT) {
     session.tick(held.left, held.right, held.jump || jumpEdge, held.down);
     jumpEdge = false;
-    if (session.roomId !== lastRoom) { lastRoom = session.roomId; trail = []; marginDirty = true; }
-    trail.push([session.x, session.y, session.hanging]);
-    if (trail.length > 900) trail.shift();
+    if (session.roomId !== lastRoom) { lastRoom = session.roomId; view.reset(); marginDirty = true; }
+    view.record(session);
     acc -= DT;
     if (session.finished) break;
   }
@@ -321,92 +319,14 @@ function loop(now) {
 }
 
 function draw() {
-  ctx.fillStyle = '#0F1014'; ctx.fillRect(0, 0, W, H);
-  ctx.fillStyle = '#0A0B0E'; ctx.fillRect(0, sy(104), W, H - sy(104));
-
-  // ledges — torchlight from above, so the top edge is lit and the body is not
-  for (let i = 0; i < session.ledgeCount; i++) {
-    if (session.ledgeBroken(i)) continue;
-    const x0 = sx(session.ledgeX0(i)), x1 = sx(session.ledgeX1(i)), y = sy(session.ledgeY(i));
-    const loose = session.ledgeCollapsing(i), strain = session.ledgeStrain(i);
-    ctx.fillStyle = loose ? '#2A2530' : '#22242E';
-    ctx.fillRect(x0, y, x1 - x0, 20);
-    // A tile running out of patience warms toward the torch colour, then to rust.
-    ctx.fillStyle = strain > 0 ? mix('#4A4050', '#C4563F', strain) : (loose ? '#4A4050' : '#3A3E4E');
-    ctx.fillRect(x0, y, x1 - x0, strain > 0 ? 2.5 + 2 * strain : 2.5);
-    if (loose) {
-      ctx.strokeStyle = '#15161B'; ctx.lineWidth = 1;
-      for (let g = x0 + 18; g < x1 - 4; g += 22) {
-        ctx.beginPath(); ctx.moveTo(g, y); ctx.lineTo(g, y + 20); ctx.stroke();
-      }
-    }
-  }
-
-  // blades — shut is a solid bar, open is a stub, and the cycle shows as a filling sliver
-  for (let i = 0; i < session.chomperCount; i++) {
-    const bx = sx(session.chomperX(i)), by = sy(session.chomperY(i));
-    const reach = session.chomperReach(i) * SCALE, hw = session.chomperHalfWidth(i) * SCALE;
-    const open = session.chomperOpen(i), ph = session.chomperPhase(i);
-    ctx.fillStyle = open ? '#2E3140' : '#C4563F';
-    const h = open ? reach * 0.16 : reach;
-    ctx.fillRect(bx - hw, by - h, hw * 2, h);
-    // housing, so an open blade still reads as a threat rather than as nothing
-    ctx.strokeStyle = '#3A3E4E'; ctx.lineWidth = 1;
-    ctx.strokeRect(bx - hw - 1.5, by - reach, hw * 2 + 3, reach);
-    ctx.fillStyle = open ? '#5FB89A' : '#C4563F';
-    ctx.fillRect(bx - hw - 1.5, by - reach - 4, (hw * 2 + 3) * ph, 2);
-  }
-
-  // the way out
-  const ex = sx(session.exitX);
-  ctx.strokeStyle = '#5FB89A'; ctx.lineWidth = 2;
-  ctx.beginPath(); ctx.moveTo(ex, sy(0) - 54); ctx.lineTo(ex, sy(0) + 20); ctx.stroke();
-
-  // the path just travelled — an arc is easier to judge as a shape than as a feeling
-  if (trail.length > 1) {
-    ctx.strokeStyle = 'rgba(232,163,61,.34)'; ctx.lineWidth = 1.5; ctx.setLineDash([4, 4]);
-    ctx.beginPath();
-    trail.forEach(([x, y], i) => (i ? ctx.lineTo(sx(x), sy(y)) : ctx.moveTo(sx(x), sy(y))));
-    ctx.stroke(); ctx.setLineDash([]);
-  }
-
-  // the runner: amber on the ground, cold blue in the air, green while hanging on
-  const px = sx(session.x), py = sy(session.y);
-  const dead = session.phase === 'DEAD';
-  ctx.fillStyle = dead ? '#5A3038' : session.hanging ? '#5FB89A'
-                 : session.grounded ? '#E8A33D' : '#6E93E0';
-  if (session.hanging) {
-    ctx.fillRect(px - 6, py, 12, 26);           // below the lip, holding on
-    ctx.fillRect(px - 9, py - 3, 18, 3);
-  } else if (dead) {
-    ctx.fillRect(px - 13, py - 7, 26, 7);       // face down
-  } else {
-    ctx.fillRect(px - 6, py - 28, 12, 28);
-  }
-  // an unspent press, waiting for a frame it can be used on — the whole fix, made visible
-  if (session.jumpBufferedAgo >= 0 && !dead) {
-    ctx.fillStyle = '#5FB89A';
-    ctx.beginPath(); ctx.arc(px, py - (session.hanging ? -34 : 36), 3.5, 0, 7); ctx.fill();
-  }
-
+  view.draw(session);
   if (session.finished) {
-    ctx.fillStyle = 'rgba(15,16,20,.82)'; ctx.fillRect(0, 0, W, H);
-    ctx.fillStyle = '#E6E1D6'; ctx.textAlign = 'center';
-    ctx.font = '600 30px ui-serif, Georgia, serif';
-    ctx.fillText('Out of the vaults', W / 2, H / 2 - 6);
-    ctx.font = '14px ui-monospace, Menlo, monospace'; ctx.fillStyle = '#8A8778';
-    ctx.fillText((session.elapsedFrames / FPS).toFixed(1) + 's · ' + session.deaths + ' deaths',
-                 W / 2, H / 2 + 22);
-    ctx.textAlign = 'left';
+    view.banner(
+      'Out of the vaults',
+      (session.elapsedFrames / FPS).toFixed(1) + 's \u00b7 ' + session.deaths + ' deaths',
+    );
   }
-
   hud();
-}
-
-function mix(a, b, t) {
-  const p = h => [1, 3, 5].map(i => parseInt(h.slice(i, i + 2), 16));
-  const [r1, g1, b1] = p(a), [r2, g2, b2] = p(b);
-  return `rgb(${r1 + (r2 - r1) * t | 0},${g1 + (g2 - g1) * t | 0},${b1 + (b2 - b1) * t | 0})`;
 }
 
 const set = (id, v) => { document.getElementById(id).textContent = v; };

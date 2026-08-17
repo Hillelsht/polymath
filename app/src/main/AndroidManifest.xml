@@ -24,6 +24,35 @@
                 <action android:name="android.intent.action.MAIN" />
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
+
+            <!--
+                Polymath's dailies, opening in the app instead of the browser. The patterns are
+                declared once in Routes.CHAINS_LINKS / VAULTS_LINKS and repeated here because the
+                manifest cannot read Kotlin; changing one without the other is the trap.
+
+                The custom scheme works the moment the app is installed. The https filter does
+                not, and is not meant to yet: Android 12 and later ignore an unverified https
+                filter entirely, and verification needs .well-known/assetlinks.json on the site
+                carrying the release signing fingerprint — which a sideloaded debug build does not
+                have. It is declared now so that publishing that file is the only step left, and
+                autoVerify is set so the system actually attempts it once the file exists.
+            -->
+            <intent-filter>
+                <action android:name="android.intent.action.VIEW" />
+                <category android:name="android.intent.category.DEFAULT" />
+                <category android:name="android.intent.category.BROWSABLE" />
+                <data android:scheme="polymath" android:host="daily" />
+            </intent-filter>
+
+            <intent-filter android:autoVerify="true">
+                <action android:name="android.intent.action.VIEW" />
+                <category android:name="android.intent.category.DEFAULT" />
+                <category android:name="android.intent.category.BROWSABLE" />
+                <data android:scheme="https" android:host="hillelsht.github.io"
+                      android:path="/smart/chains.html" />
+                <data android:scheme="https" android:host="hillelsht.github.io"
+                      android:path="/smart/descent.html" />
+            </intent-filter>
         </activity>
     </application>
 

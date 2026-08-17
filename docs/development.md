@@ -24,7 +24,7 @@ internals makes a red build unreadable.
 gradle -p enginetests test
 ```
 
-302 tests, no Android SDK needed, seconds to run. `enginetests` is a **separate Gradle build**
+317 tests, no Android SDK needed, seconds to run. `enginetests` is a **separate Gradle build**
 (its own `settings.gradle.kts`) that points `kotlin.srcDirs` straight at the app's
 `domain/` and `data/seed/` directories. It compiles and tests **the exact source that ships** —
 not a copy, not a port.
@@ -50,6 +50,8 @@ NODE_PATH=/opt/node22/lib/node_modules \
   node tools/playtest/play.js                # plays all seven Vaults rooms in Chromium, ~5s
 NODE_PATH=/opt/node22/lib/node_modules \
   node tools/playtest/daily.js               # plays the daily grid through its own buttons
+NODE_PATH=/opt/node22/lib/node_modules \
+  node tools/playtest/ghost.js               # races a shared run, end to end
 python3 tools/playtest/inline.py             # fold The Vaults into one self-contained file
 ```
 
@@ -58,8 +60,9 @@ python3 tools/playtest/inline.py             # fold The Vaults into one self-con
 here. Chromium and Playwright are already installed; nothing is downloaded, and the Kotlin/JS
 toolchain is pointed at the system Node and stopped before webpack so npm is never involved.
 
-It builds three pages sharing one bundle and one stylesheet: `index.html` (Polymath, the front
-door), `chains.html` (the daily grid) and `vaults.html` (the descent, with its tuning harness).
+It builds four pages sharing one bundle and one stylesheet: `index.html` (Polymath, the front
+door), `chains.html` (the daily grid), `descent.html` (the daily room, with ghost racing) and
+`vaults.html` (the tuning harness). The room is drawn by `vaults-draw.js`, shared by the last two.
 The day's grids are baked into `dailies.js` by the `dailies` task rather than fetched, which is
 what lets the page work offline and over `file://`; the page still falls back to the published
 pack for a month it was not built with, because a pack refreshed by a bot cannot trigger a rebuild
@@ -124,8 +127,9 @@ Cheapest and most informative first:
    pack is caught by the seeder at runtime and logged, not crashed on, which means it fails
    *silently on device*.
 4. `--self-test` — if you touched a generator.
-5. `node tools/playtest/play.js` — if you touched `domain/play/vaults`. Five seconds, and the only
-   check here that answers "can this be played" rather than "does this compute".
+5. `node tools/playtest/play.js`, then `daily.js` and `ghost.js` — if you touched
+   `domain/play/`, `webplay/web/` or a pack. Seconds each, and the only checks here that answer
+   "can this be played" and "does the link work" rather than "does this compute".
 6. Push, then watch CI. This is the only step that compiles Android.
 
 ## Shipping
