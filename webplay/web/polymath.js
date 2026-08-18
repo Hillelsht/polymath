@@ -9,12 +9,12 @@
 const PM = (() => {
 
   /** Where a shared result points. One constant, so a real domain is a one-line change. */
-  const SITE = 'hillelsht.github.io/smart';
+  const SITE = 'hillelsht.github.io/polymath';
 
   /** Grid #1. The first published Chains pack starts here, so the numbering never has a gap. */
   const EPOCH = '2026-08-01';
 
-  const RAW = 'https://raw.githubusercontent.com/Hillelsht/smart/main/packs/play';
+  const RAW = 'https://raw.githubusercontent.com/Hillelsht/polymath/main/packs/play';
 
   const pad = n => String(n).padStart(2, '0');
   const iso = d => `${d.getFullYear()}-${pad(d.getMonth() + 1)}-${pad(d.getDate())}`;

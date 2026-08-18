@@ -49,9 +49,9 @@
                 <category android:name="android.intent.category.DEFAULT" />
                 <category android:name="android.intent.category.BROWSABLE" />
                 <data android:scheme="https" android:host="hillelsht.github.io"
-                      android:path="/smart/chains.html" />
+                      android:path="/polymath/chains.html" />
                 <data android:scheme="https" android:host="hillelsht.github.io"
-                      android:path="/smart/descent.html" />
+                      android:path="/polymath/descent.html" />
             </intent-filter>
         </activity>
     </application>

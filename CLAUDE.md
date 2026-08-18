@@ -46,7 +46,7 @@ python3 tools/playtest/inline.py --self-test     # the one-file build, offline
 
 **The games can be played here.** `webplay/` compiles `domain/play/vaults` and
 `domain/play/chains` — the same source the APK ships — to JS and serves them as **Polymath**, the
-daily portal published at <https://hillelsht.github.io/smart/>. Feel is testable in seconds rather
+daily portal published at <https://hillelsht.github.io/polymath/>. Feel is testable in seconds rather
 than being a round trip through a human, which is what Aryeh's Palace died of. See
 `webplay/README.md`.
 
@@ -91,6 +91,9 @@ Full list with the story behind each: `docs/invariants.md`.
 - **`domain/play/vaults/` and `domain/play/chains/` must not import `java.*` either** — stdlib
   only. That is what keeps `webplay` compiling to JavaScript, and one `java.time` import would
   end it.
+- **Never create a new repository called `smart`.** The repo was renamed to `polymath`; GitHub
+  still serves the old name, which is what keeps pre-rename installs receiving content. A new repo
+  with that name kills the alias silently.
 - **Bot-authored pushes cannot trigger workflows.** A pipeline commit will never start a Build
   run on its own; dispatch it manually.
 - **Assert invariants in tests, not snapshots.** A test encoding today's data is a landmine.

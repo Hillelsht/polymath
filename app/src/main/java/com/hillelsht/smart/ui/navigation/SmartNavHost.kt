@@ -91,7 +91,7 @@ object Routes {
      * The `https` paths are the pages the site actually serves, not tidier ones invented here: the
      * link people will have in their hands is the one they copied out of the address bar.
      */
-    const val SITE = "hillelsht.github.io/smart"
+    const val SITE = "hillelsht.github.io/polymath"
 
     val CHAINS_LINKS = listOf("polymath://daily/chains", "https://$SITE/chains.html")
     val VAULTS_LINKS = listOf("polymath://daily/vaults", "https://$SITE/descent.html")

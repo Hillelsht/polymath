@@ -136,7 +136,7 @@ Cheapest and most informative first:
 
 Every push to `main` triggers `build.yml`, which runs the engine tests, assembles the debug APK,
 and republishes the rolling `latest` GitHub release. Installing is: open
-`github.com/Hillelsht/smart/releases/latest` on the phone, download `smart.apk`, tap.
+`github.com/Hillelsht/polymath/releases/latest` on the phone, download `smart.apk`, tap.
 
 **Verify a release by its artifact, not by the workflow's conclusion.** Check
 `get_release_by_tag` for `latest` and confirm the asset's id, upload timestamp and sha256 digest

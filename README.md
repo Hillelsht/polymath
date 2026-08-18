@@ -2,7 +2,7 @@
 
 An Android app that teaches you general knowledge until you are genuinely good at trivia.
 
-**[Download `smart.apk`](https://github.com/Hillelsht/smart/releases/latest)** on your phone and
+**[Download `smart.apk`](https://github.com/Hillelsht/polymath/releases/latest)** on your phone and
 tap to install (allow installs from your browser if asked). Android 8.0+. Every push to `main`
 refreshes that release automatically.
 
