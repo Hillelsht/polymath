@@ -93,7 +93,7 @@ Seven, of which **four commit back to `main`**.
 | `build.yml` | push / PR | no — publishes the `latest` release | yes |
 | `content.yml` | push to `assets/content/**`, weekly | `packs/`, assets mirror | no |
 | `durations.yml` | hourly | `packs/durations.json` | no |
-| `library.yml` | monthly, or dispatch | `packs/library/` | yes, before committing |
+| `library.yml` | monthly, or dispatch | `packs/library/`, `packs/<tag>/library/` | yes, before committing |
 | `play.yml` | monthly, dispatch, or a change to the room grammar | `packs/play/` | yes, before committing |
 | `probe.yml` | manual only | nothing | no |
 | `web.yml` | push / PR touching a game or its packs, or dispatch | no — publishes the portal to GitHub Pages | yes, and plays both |
@@ -107,15 +107,24 @@ Shared idioms, each of which is load-bearing:
   fails in seconds rather than after a 40-minute harvest.
 - **Engine tests gate publication.** `library.yml` and `play.yml` run `gradle -p enginetests test`
   against the content they just generated, *before* committing it. `GeneratedLibraryTest` parses
-  new shards with the app's real parser, `PlayContentTest` applies the device's own rules to
-  every grid, and `DailyRoomsTest` re-measures every published room's timing slack against the
-  physics that build ships — so schema drift, an ambiguous puzzle or a room whose difficulty label
-  has quietly become a fiction cannot reach a phone.
+  new shards with the app's real parser, `TranslatedLibraryTest` does the same for every other
+  language and additionally refuses a fact id missing its language suffix — such an id installs
+  *over* the English fact and takes its review history with it — `PlayContentTest` applies the
+  device's own rules to every grid, and `DailyRoomsTest` re-measures every published room's timing
+  slack against the physics that build ships. Schema drift, a fact id that would eat another, an
+  ambiguous puzzle or a room whose difficulty label has quietly become a fiction all fail before
+  the commit rather than after it.
 - **The content pipeline rebases and retries its push, three times.** A human push landing
   mid-run once made the push a non-fast-forward and threw away a full probe of 54 channels.
 - **`enrich_videos.py` is `continue-on-error`.** YouTube sometimes refuses datacenter IPs. The
   prober writes nothing unless it got a usable answer, so a bad run leaves the previous allowlist
   intact — and must not hold back the Wikipedia enrichment that already succeeded.
+
+`library.yml` runs **one language at a time** — a matrix with `max-parallel: 1`, because each job
+commits to `main` and three racing would spend the run rebasing each other, and `fail-fast: false`,
+because a Russian timeout must not cancel a Hebrew harvest that was going to succeed. Each job
+commits only its own language's directory and rebases-and-retries its push three times, since a
+forty-minute harvest is too expensive to throw away over a non-fast-forward.
 
 **Bot commits cannot trigger other workflows.** See `invariants.md` — this is a GitHub
 anti-recursion rule, and it means a Build run for a pipeline commit needs a manual dispatch.

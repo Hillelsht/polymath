@@ -39,7 +39,7 @@ preference and every published path.
    ships nowhere. See `invariants.md`.
 4. Add channels to `assets/content/channels.json` with `"language": "<tag>"`, covering all six
    categories. CI's prober resolves the handles.
-5. Optionally add generator phrasings (below).
+5. Add generator phrasings for all eighteen templates (below). The self-test requires them.
 
 `ChannelLanguageTest` enforces that every language offered in Settings has a Watch channel in
 every category — a language with an empty category is a dead filter chip, where the user taps
@@ -97,10 +97,24 @@ literal:
   construction anyway, which needs no inflection on either side and works regardless of gender or
   number.
 
-Only the five Geography templates are translated so far. `templates_for(language)` drops any
-template with no phrasing for that language, so a run in Russian or Hebrew publishes fewer
-categories rather than half-English facts. Adding a phrasing is the only work needed to extend
-coverage.
+Beyond Geography both languages meet the same second problem, from opposite directions: **a verb
+agreeing with something the template has never seen**. Russian's «открыл» agrees with the
+discoverer, Hebrew's «נשפך» with the subject, and a painter's or a moon's gender is not a thing a
+label carries. Both tables solve it the same way — keep the sentence's grammatical subject a noun
+written *here* (`Автор картины`, `המחבר`, `הקרב`), with the Wikidata label quoted beside it or in a
+`של` phrase. The sentence then agrees with a word whose gender is known, and the label is slotted
+in exactly as given.
+
+**All eighteen templates are translated into both languages**, so a Russian or Hebrew run covers
+the same six categories English does. The self-test asserts that parity rather than leaving it to
+be noticed — add an English template without translating it and `--self-test` fails by name. The
+graceful path still exists underneath: `templates_for(language)` drops any template with no
+phrasing, so a language could publish fewer categories rather than half-English facts.
+
+A phrasing must never put `{o}` in the title or the question. That is the one mistake that turns a
+fact into an anti-fact — the quiz would print the correct answer inside its own question and mark
+three distractors wrong for no reason — and it is impossible to spot by reading a language you do
+not have, so the self-test checks every phrasing in every language.
 
 Language-suffixed ids apply here too: `wd-capital-Q142` in English,
 `wd-capital-Q142-he` in Hebrew. English keeps its exact historical id shape so nothing already

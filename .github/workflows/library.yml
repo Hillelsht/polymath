@@ -1,6 +1,6 @@
 name: Library
 
-# Generates the unbounded fact library from Wikidata.
+# Generates the unbounded fact library from Wikidata, in every language the app ships.
 #
 # This is the only place the generator can run. The sandbox the app is developed in has no
 # route to query.wikidata.org, so every Q-number and P-number in tools/generate_facts.py is
@@ -9,6 +9,10 @@ name: Library
 #
 # Monthly, not hourly. Wikidata's most-linked items barely move, and each full run writes
 # several megabytes of shards.
+#
+# One language at a time, deliberately. Each job commits to `main`, and three of them racing
+# would spend the run rebasing each other; the languages are also independent, so `fail-fast`
+# is off — a Russian timeout must not cancel a Hebrew harvest that was going to succeed.
 on:
   schedule:
     - cron: "41 4 3 * *"
@@ -17,6 +21,9 @@ on:
       - "tools/generate_facts.py"
   workflow_dispatch:
     inputs:
+      languages:
+        description: "Which languages to publish, comma separated"
+        default: "en,ru,he"
       limit:
         description: "Facts per template (small = fast smoke run)"
         default: "400"
@@ -32,11 +39,37 @@ permissions:
   contents: write
 
 jobs:
+  plan:
+    name: Which languages
+    runs-on: ubuntu-latest
+    outputs:
+      languages: ${{ steps.pick.outputs.languages }}
+    steps:
+      - id: pick
+        # A matrix cannot be built from a comma-separated string directly, so it is turned into
+        # JSON here. Unknown tags are left in rather than filtered: the generator's own
+        # `choices` rejects them by name, which is a clearer failure than a language silently
+        # not running.
+        run: |
+          python3 - <<'PY' >> "$GITHUB_OUTPUT"
+          import json, os
+          raw = os.environ.get("LANGUAGES") or "en,ru,he"
+          print("languages=" + json.dumps([t.strip() for t in raw.split(",") if t.strip()]))
+          PY
+        env:
+          LANGUAGES: ${{ github.event.inputs.languages }}
+
   generate:
-    name: Generate facts from Wikidata
+    name: Generate ${{ matrix.language }} facts from Wikidata
+    needs: plan
     runs-on: ubuntu-latest
     # The pipeline's own commit must not retrigger the pipeline.
     if: "!contains(github.event.head_commit.message, '[library]')"
+    strategy:
+      max-parallel: 1
+      fail-fast: false
+      matrix:
+        language: ${{ fromJSON(needs.plan.outputs.languages) }}
     # The generator bounds itself to --budget-minutes of harvesting plus one last template and
     # the Wikipedia extracts. This is the outer backstop, with room for those two tails.
     timeout-minutes: 75
@@ -46,12 +79,15 @@ jobs:
       # timed-out job loses the buffer entirely, taking the per-template yields with it. The
       # CI log is the only window into a run that cannot happen anywhere else.
       PYTHONUNBUFFERED: "1"
+      PUBLISHING: ${{ github.event_name != 'push' && github.event.inputs.dry_run != 'true' }}
     steps:
       - uses: actions/checkout@v4
 
       - name: Self-test the generator
         # Everything that needs no network. Runs first so a logic bug fails in seconds rather
-        # than after forty minutes of harvesting.
+        # than after forty minutes of harvesting. It also asserts every template is asked in
+        # every language, so a template added in English alone is caught here rather than by
+        # someone noticing a Russian library that holds four categories instead of six.
         run: python3 tools/generate_facts.py --self-test
 
       - name: Generate
@@ -60,36 +96,52 @@ jobs:
         # what the schedule and a deliberate dispatch are for.
         run: |
           python3 tools/generate_facts.py \
+            --language "${{ matrix.language }}" \
             --limit "${{ github.event.inputs.limit || 400 }}" \
             --budget-minutes "${{ github.event.inputs.budget_minutes || 40 }}" \
             ${{ (github.event_name == 'push' || github.event.inputs.dry_run == 'true') && '--dry-run' || '' }}
 
       - uses: actions/setup-java@v4
-        if: github.event_name != 'push' && github.event.inputs.dry_run != 'true'
+        if: env.PUBLISHING == 'true'
         with:
           distribution: temurin
           java-version: 17
 
       - uses: gradle/actions/setup-gradle@v4
-        if: github.event_name != 'push' && github.event.inputs.dry_run != 'true'
+        if: env.PUBLISHING == 'true'
 
       - name: Check the app can read what was generated
-        if: github.event_name != 'push' && github.event.inputs.dry_run != 'true'
-        # GeneratedLibraryTest runs the app's real parser over the shards just written. Without
-        # this the regeneration commits straight to main and any schema drift — a renamed field,
-        # a missing category header — lands first and turns the build red afterwards, having
-        # already replaced a library that worked.
+        if: env.PUBLISHING == 'true'
+        # GeneratedLibraryTest runs the app's real parser over the English shards just written,
+        # and TranslatedLibraryTest over any other language's — including the check that every
+        # translated fact id carries its language suffix, because a fact id reused from English
+        # installs *over* the English fact and takes its review history with it. Without this the
+        # regeneration commits straight to main and any such damage lands first, having already
+        # replaced a library that worked.
         run: ./gradlew -p enginetests test
 
       - name: Commit the library
-        if: github.event_name != 'push' && github.event.inputs.dry_run != 'true'
+        if: env.PUBLISHING == 'true'
+        # English publishes at the path this pipeline has always used; every other language sits
+        # under its own tag, which is the convention PackService resolves on the device.
         run: |
+          set -euo pipefail
+          lang="${{ matrix.language }}"
+          dir=$([ "$lang" = "en" ] && echo "packs/library" || echo "packs/$lang/library")
           git config user.name "github-actions[bot]"
           git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
-          git add packs/library
+          git add "$dir"
           if git diff --cached --quiet; then
-            echo "Library unchanged"
-          else
-            git commit -m "[library] Regenerate the fact library from Wikidata"
-            git push
+            echo "Library unchanged for $lang"
+            exit 0
           fi
+          git commit -m "[library] Regenerate the $lang fact library from Wikidata"
+          # Another language's job, or a human, may have landed a commit while this one was
+          # harvesting for forty minutes. Rebasing and retrying is cheaper than throwing the
+          # harvest away, which is what a plain non-fast-forward failure would do.
+          for attempt in 1 2 3; do
+            if git push; then exit 0; fi
+            echo "push rejected, rebasing (attempt $attempt)"
+            git pull --rebase origin main
+          done
+          git push

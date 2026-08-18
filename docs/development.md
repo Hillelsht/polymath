@@ -24,7 +24,7 @@ internals makes a red build unreadable.
 gradle -p enginetests test
 ```
 
-327 tests, no Android SDK needed, seconds to run. `enginetests` is a **separate Gradle build**
+331 tests, no Android SDK needed, seconds to run. `enginetests` is a **separate Gradle build**
 (its own `settings.gradle.kts`) that points `kotlin.srcDirs` straight at the app's
 `domain/` and `data/seed/` directories. It compiles and tests **the exact source that ships** —
 not a copy, not a port.

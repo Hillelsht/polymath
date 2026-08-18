@@ -222,8 +222,24 @@ and a counter account.
    red build. `play.yml` curates monthly alongside the Chains grids, and **never rewrites a
    published day** — a ghost link carries a date rather than a room.
 
-2. **Language parity** — run `generate_facts.py` to bring RU/HE up from ~10 facts each against
-   4,018 English; ship the language toggle. The same daily in three languages is the story NYT
+2. **Language parity** — the pipeline is ready, the harvest has not run. All **eighteen**
+   templates are now phrased in Russian and Hebrew (five were, all Geography), so a run in either
+   language covers the same six categories English does; `library.yml` generates and publishes one
+   language at a time; and `TranslatedLibraryTest` refuses a translated fact id that is missing its
+   language suffix, which is the failure that would install a Russian fact **over** an English one
+   and take its review history with it.
+
+   Two grammar problems shaped the phrasings and are worth knowing before adding a nineteenth
+   template. Wikidata hands back labels in base form only, so Russian cannot decline them —
+   every phrasing quotes the name in guillemets and is built to need the nominative. And past
+   Geography both languages hit the same second problem from opposite directions: a verb agreeing
+   with a painter's or a moon's gender, which no label carries. Both tables keep the sentence's
+   grammatical subject a noun written in the file, with the label beside it.
+
+   **The facts themselves still have to be harvested**, and only CI can do it — this sandbox has no
+   route to `query.wikidata.org`. Dispatch `library.yml` with `languages: ru,he` and read the
+   preflight table before trusting the run. RU and HE hold ~10 facts each today against 4,018
+   English. After that, the language toggle: the same daily in three languages is the story NYT
    structurally cannot copy.
 
 ### Wedge 3 (~weeks 6–10): "About anything"
@@ -250,10 +266,11 @@ ads in the ritual, no new games until the dailies are excellent.
 3. **Wedge 1 is done**, except three things that are not code and are the user's to do: buy the
    domain, publish `.well-known/assetlinks.json` with a release signing fingerprint (which makes
    the https deep links live), and create a counter account (which makes step 7 live).
-   **Wedge 2 is half done**: the generated rooms ship, gated three ways and published monthly.
-   What is left is language parity — a `generate_facts.py` run to bring RU and HE up from ~10 facts
-   each, and the language toggle. The `author` and `musician` pools also want more facts before
-   those categories can return to the Chains daily.
+   **Wedge 2's rooms are done** — generated, gated three ways, published monthly. Language parity
+   is *ready but unharvested*: all eighteen templates are translated and the workflow publishes one
+   language at a time, but the facts need a `library.yml` dispatch with `languages: ru,he`, which
+   only CI can run. Then the language toggle. The `author` and `musician` pools also want more
+   facts before those categories can return to the Chains daily.
    Two content follow-ups worth doing when convenient: the `author` and `musician` pools need
    more facts before those categories can return to the daily, and a device that already
    downloaded the placeholder-element facts keeps them, because library shards only ever add and
@@ -261,7 +278,7 @@ ads in the ritual, no new games until the dailies are excellent.
 4. Branch discipline: work on a feature branch, verify Compose changes by dispatching `build.yml`
    on the branch (this environment cannot compile Android), merge to `main` via PR — merges to
    `main` auto-publish the APK release and the Pages site.
-5. Keep the existing gates green: `enginetests` (327 tests), `tools/playtest/play.js` margins,
+5. Keep the existing gates green: `enginetests` (331 tests), `tools/playtest/play.js` margins,
    `tools/playtest/daily.js`, `tools/playtest/ghost.js`, the docs-freshness pre-push hook (update
    `docs/` when code contradicts it — it will tell you).
 
