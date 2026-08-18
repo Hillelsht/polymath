@@ -1,11 +1,13 @@
 name: Play
 
-# Keeps the daily Chains grids topped up.
+# Keeps both dailies topped up: the Chains grids and the Vaults rooms.
 #
-# Grids are built here rather than on the phone because the whole appeal of a daily puzzle is
-# that it is the same one everybody else got, and devices hold different subsets of the library
-# once the top-up has been running. A phone shuffling its own grid would be playing a different
-# puzzle to the person it is being compared with.
+# Neither is built on the phone, for the same reason. A daily's whole appeal is that it is the one
+# everybody else got, and a device cannot know that: phones hold different subsets of the library
+# once the top-up has been running, so a phone shuffling its own grid would be playing a different
+# puzzle to the person it is being compared with. The rooms have a second reason — choosing one
+# means replaying it a few thousand times through the margin solver, which is a minute of a
+# runner's time and would be a minute of a player's.
 #
 # Monthly, a few months ahead, so a run that fails is noticed long before anyone opens the app
 # to find nothing waiting.
@@ -16,6 +18,10 @@ on:
     paths:
       - "tools/build_chains.py"
       - "packs/play/climb.json"
+      # A change to the grammar or to the physics means every published seed decodes to a
+      # different room, so the rooms are rebuilt rather than left to disagree with their labels.
+      - "app/src/main/java/com/hillelsht/smart/domain/play/vaults/RoomGen.kt"
+      - "app/src/main/java/com/hillelsht/smart/domain/play/vaults/Tuning.kt"
   workflow_dispatch:
     inputs:
       months:
@@ -26,8 +32,8 @@ permissions:
   contents: write
 
 jobs:
-  chains:
-    name: Publish the daily grids
+  dailies:
+    name: Publish the dailies
     runs-on: ubuntu-latest
     if: "!contains(github.event.head_commit.message, '[play]')"
     env:
@@ -50,22 +56,30 @@ jobs:
       - name: Build the grids
         run: python3 tools/build_chains.py --months "${{ github.event.inputs.months || 4 }}"
 
-      - name: Check the app would accept every grid
+      # Rooms nobody has played, kept only if the margin solver says a person could. Reruns fill
+      # gaps rather than rewriting days: the room someone played on Tuesday has to still be
+      # Tuesday's room when they come back, and a ghost link carries a date rather than a room.
+      - name: Curate the daily rooms
+        run: ./gradlew -p enginetests publishRooms -Pmonths="${{ github.event.inputs.months || 4 }}"
+
+      - name: Check the app would accept every grid and room
         # PlayContentTest applies the device's own rules to what was just written: that no tile
         # is in two groups, that each grid can be solved by submitting its own answer, and that
-        # every relic names an effect this build can grant. A grid that fails these is a day
-        # with no puzzle for everyone who has the app, which is why it is checked before the
-        # commit rather than after.
+        # every relic names an effect this build can grant. DailyRoomsTest does the same for the
+        # rooms, re-measuring each one's timing slack against this build's physics rather than
+        # trusting the number that was just written next to it. A grid or a room that fails these
+        # is a day with no daily for everyone who has the app, which is why it is checked before
+        # the commit rather than after.
         run: ./gradlew -p enginetests test
 
-      - name: Commit the grids
+      - name: Commit the dailies
         run: |
           git config user.name "github-actions[bot]"
           git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
           git add packs/play
           if git diff --cached --quiet; then
-            echo "Grids unchanged"
+            echo "Dailies unchanged"
           else
-            git commit -m "[play] Publish daily Chains grids"
+            git commit -m "[play] Publish the daily grids and rooms"
             git push
           fi

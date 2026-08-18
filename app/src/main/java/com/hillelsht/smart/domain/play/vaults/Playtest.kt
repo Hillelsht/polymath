@@ -222,9 +222,15 @@ object Playtest {
      * a room whose gap is inside this distance can be crossed by walking off the edge and climbing
      * up the other side, which is a fine route to allow but a poor way to *teach* jumping. Rooms
      * that exist to teach the jump assert their gap is wider than this.
+     *
+     * [drop] is how much lower the far lip sits, and it matters more than it looks: falling further
+     * buys more time in the air, so the net gets wider the further down the far side is. That is
+     * why `Rooms.stepDown` measures as one of the most forgiving rooms in the descent despite an
+     * 80-unit gap — at a 64-unit drop the net reaches 86, so its jump is optional. [RoomGen] sizes
+     * every generated gap against this, at that gap's own drop.
      */
-    fun walkOffGrabReach(tuning: Tuning = Tuning()): Double {
-        val fallTime = kotlin.math.sqrt(2.0 * tuning.grabMaxDrop / tuning.gravity)
+    fun walkOffGrabReach(tuning: Tuning = Tuning(), drop: Double = 0.0): Double {
+        val fallTime = kotlin.math.sqrt(2.0 * (drop + tuning.grabMaxDrop) / tuning.gravity)
         return tuning.runSpeed * fallTime + tuning.grabReach
     }
 

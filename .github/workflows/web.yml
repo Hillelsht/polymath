@@ -11,6 +11,7 @@ on:
       - 'webplay/**'
       - 'tools/playtest/**'
       - 'packs/play/chains/**'
+      - 'packs/play/vaults/**'
       - '.github/workflows/web.yml'
   pull_request:
     paths:
@@ -19,6 +20,7 @@ on:
       - 'webplay/**'
       - 'tools/playtest/**'
       - 'packs/play/chains/**'
+      - 'packs/play/vaults/**'
   workflow_dispatch:
 
 permissions:

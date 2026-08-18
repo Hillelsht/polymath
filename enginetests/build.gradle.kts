@@ -37,3 +37,21 @@ tasks.test {
         showStandardStreams = true
     }
 }
+
+/**
+ * Curates the daily Vaults rooms and writes them to `packs/play/vaults/`.
+ *
+ * `gradle -p enginetests publishRooms -Pmonths=4`
+ *
+ * A `JavaExec` over the test classpath rather than a test, because it writes files: a test that
+ * edits the repository is a test you cannot run twice with confidence. `DailyRoomsTest` is the
+ * half that belongs in the suite, and it re-measures every day this task published.
+ */
+tasks.register<JavaExec>("publishRooms") {
+    group = "content"
+    description = "Curate and publish the daily Vaults rooms"
+    classpath = sourceSets.test.get().runtimeClasspath
+    mainClass.set("com.hillelsht.smart.domain.play.vaults.PublishRoomsKt")
+    args("--months", (project.findProperty("months") as String? ?: "4"))
+    if (project.hasProperty("from")) args("--from", project.property("from") as String)
+}

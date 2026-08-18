@@ -44,6 +44,7 @@ from pathlib import Path
 IGNORED = (
     "packs/library/*",
     "packs/play/chains/*",
+    "packs/play/vaults/*",
     "packs/durations.json",
     "app/src/main/assets/packs/*",
 )
