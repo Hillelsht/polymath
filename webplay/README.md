@@ -6,7 +6,7 @@ excuse at the time — feel "needs a real device, which is a round trip through 
 through CI". This removes the round trip.
 
 It has since grown from a Vaults harness into the portal itself: **Polymath**, the daily games
-site published at <https://hillelsht.github.io/smart/>.
+site published at <https://hillelsht.github.io/polymath/>.
 
 `webplay` compiles `app/src/main/java/com/hillelsht/smart/domain/play/vaults` and
 `.../domain/play/chains` — the same Kotlin that ships in the APK — to JavaScript. There is no port

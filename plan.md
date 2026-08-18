@@ -12,12 +12,19 @@ strategy and current state.*
 
 The word is the pitch — someone who knows many things — and it survives transliteration into the
 other two languages (Полимат / פולימת), which "Smart" and any English wordplay would not. The
-rename is **the web brand only**, on purpose: page titles, share text and docs say Polymath, while
-the Kotlin package stays `com.hillelsht.smart` and the repo stays `smart`. Renaming the
+rename is **the web brand only**, on purpose: page titles, share text, the repo and docs say
+Polymath, while the Kotlin package stays `com.hillelsht.smart`. Renaming the
 `applicationId` would make every existing install a different app and throw away its review
 history, which is the one thing here that cannot be re-downloaded. That is a trade worth making
 when there are users to keep, not before. **The domain is still unbought** — the share text points
-at `hillelsht.github.io/smart`, from a single constant in `webplay/web/polymath.js`.
+at `hillelsht.github.io/polymath`, from a single constant in `webplay/web/polymath.js`.
+
+**Deferred deliberately, not forgotten.** A domain waits until a share loop is visible: the site is
+free on GitHub Pages, the ghost link already follows whatever host serves it, and the Chains share
+reads one constant, so moving later is a ten-minute job. The one commitment that comes with waiting
+is that **the GitHub Pages site must never be deleted** once links circulate — keep it as a
+redirect, or every result anyone pasted into a chat becomes a dead end, and the share loop is the
+whole growth mechanism.
 
 ### What shipped in this working session
 
@@ -64,7 +71,7 @@ at `hillelsht.github.io/smart`, from a single constant in `webplay/web/polymath.
 - **The Vaults is in the Android Play tab** (`GameId.VAULTS`, `ui/play/vaults/VaultsScreen.kt`),
   with fixed-timestep stepping and a jump latch — both of Palace's UI mistakes inverted.
 - **Everything is live**: rolling APK at the `latest` release includes The Vaults; the browser
-  build deploys to GitHub Pages at **https://hillelsht.github.io/smart/** via
+  build deploys to GitHub Pages at **https://hillelsht.github.io/polymath/** via
   `.github/workflows/vaults.yml` (renamed `web.yml` since) on every merge to `main` that touches
   the game. Pages source is set to "GitHub Actions" in repo settings (done). 302 engine tests
   green.
@@ -234,6 +241,6 @@ ads in the ritual, no new games until the dailies are excellent.
    `tools/playtest/daily.js`, the docs-freshness pre-push hook (update `docs/` when code
    contradicts it — it will tell you).
 
-Reference links: live site (Polymath) **https://hillelsht.github.io/smart/** · rolling APK
-**https://github.com/Hillelsht/smart/releases/tag/latest** · post-mortem & game design
+Reference links: live site (Polymath) **https://hillelsht.github.io/polymath/** · rolling APK
+**https://github.com/Hillelsht/polymath/releases/tag/latest** · post-mortem & game design
 `docs/games.md` · browser build `webplay/README.md`.

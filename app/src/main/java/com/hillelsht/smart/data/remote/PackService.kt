@@ -140,7 +140,11 @@ class PackService(
     }
 
     private companion object {
-        const val BASE = "https://raw.githubusercontent.com/Hillelsht/smart/main/packs"
+        // Follows the repository name. GitHub keeps serving a renamed repo's old URL, so the
+        // previous `.../Hillelsht/smart/...` still resolves and installs shipped before the
+        // rename keep working — but that alias dies the moment a new repository claims the old
+        // name, so it is not something to leave a released app depending on.
+        const val BASE = "https://raw.githubusercontent.com/Hillelsht/polymath/main/packs"
         const val CHANNELS_FILE = "channels.json"
         const val DURATIONS_FILE = "durations.json"
         const val LIBRARY_INDEX = "library/index.json"

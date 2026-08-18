@@ -101,6 +101,13 @@ and tuned in a browser instead of only on a device — and, since the portal wen
 on the web and the daily in the app are one implementation rather than two. A single `java.time`
 import ends it. The rest of `domain/` is held only to the weaker no-Android rule.
 
+**Never create a new repository called `smart`.**
+→ The repo was renamed `smart` → `polymath`. GitHub keeps serving the old name, so
+`raw.githubusercontent.com/Hillelsht/smart/...` still resolves and every app installed before the
+rename still receives content. That alias dies the instant a new repository claims the name, and
+the failure is silent: old installs simply stop getting packs, with no error anyone would see. The
+same applies to the Pages path — links people have already shared point at `/smart/`.
+
 **Assert invariants, not snapshots.** A test that encodes today's data is a landmine with a
 timer on it.
 → `ChannelLanguageTest` once asserted that every published channel was English. True the hour it

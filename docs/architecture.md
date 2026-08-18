@@ -104,7 +104,7 @@ other is the trap.
 
 Each has two schemes, doing different jobs. **`polymath://daily/chains`** works the moment the app
 is installed: a custom scheme needs no verification and no agreement with any server, which is
-exactly what a sideloaded build has. **`https://hillelsht.github.io/smart/chains.html`** is the one
+exactly what a sideloaded build has. **`https://hillelsht.github.io/polymath/chains.html`** is the one
 that matters — it makes a shared daily open the app for someone who has it and the site for
 someone who does not — and it is **inert today**. Android 12 and later ignore an unverified https
 filter outright, and verification needs `.well-known/assetlinks.json` on the site carrying the
