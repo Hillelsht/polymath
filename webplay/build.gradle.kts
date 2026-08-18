@@ -33,7 +33,8 @@ rootProject.plugins.withType<org.jetbrains.kotlin.gradle.targets.js.nodejs.NodeJ
 }
 
 /**
- * Bakes the published Chains grids into a script the page can read with no network at all.
+ * Bakes both published dailies — the Chains grids and the Vaults rooms — into one script the page
+ * can read with no network at all.
  *
  * The obvious design is to fetch this month's JSON. It does not survive contact with how this
  * project is actually checked: `tools/playtest/play.js` opens the page over `file://`, where a
@@ -44,29 +45,38 @@ rootProject.plugins.withType<org.jetbrains.kotlin.gradle.targets.js.nodejs.NodeJ
  * pack refreshed by a bot cannot trigger a rebuild of this site (bot pushes do not start
  * workflows), so a deploy left alone for long enough would otherwise run out of days.
  *
- * The window starts one month back so yesterday's grid is always available — a streak is read
+ * The window starts one month back so yesterday's daily is always available — a streak is read
  * from the days around today, not from today alone.
  */
 val dailies by tasks.registering {
-    val packs = layout.projectDirectory.dir("../packs/play/chains")
-    val out = layout.buildDirectory.file("generated/dailies.js")
-    inputs.dir(packs)
-    outputs.file(out)
+    // One file per game rather than one between them: the grids run to a few hundred kilobytes of
+    // Wikidata labels and the rooms to a few dozen numbers, and the descent has no use for the
+    // grids. Each page pays for its own daily and nobody else's.
+    val games = mapOf(
+        "dailies.js" to ("POLYMATH_CHAINS" to layout.projectDirectory.dir("../packs/play/chains")),
+        "rooms.js" to ("POLYMATH_VAULTS" to layout.projectDirectory.dir("../packs/play/vaults")),
+    )
+    val outDir = layout.buildDirectory.dir("generated")
+    games.values.forEach { inputs.dir(it.second) }
+    outputs.dir(outDir)
     doLast {
         val from = YearMonth.now().minusMonths(1).toString()
-        val months = (packs.asFile.listFiles().orEmpty())
-            .filter { it.name.endsWith(".json") && it.nameWithoutExtension >= from }
-            .sortedBy { it.name }
-        months.forEach { month ->
-            // A closing script tag would end the page's <script> early and truncate the day's
-            // grid into something that still parses. Content comes from Wikidata labels, so this
-            // is unlikely rather than impossible, and silent corruption here is very hard to spot.
-            require("</script" !in month.readText().lowercase()) { "${month.name} cannot be inlined" }
+        games.forEach { (name, game) ->
+            val (global, packs) = game
+            val months = (packs.asFile.listFiles().orEmpty())
+                .filter { it.name.endsWith(".json") && it.nameWithoutExtension >= from }
+                .sortedBy { it.name }
+            months.forEach { month ->
+                // A closing script tag would end the page's <script> early and truncate the day
+                // into something that still parses. Chains content comes from Wikidata labels, so
+                // this is unlikely rather than impossible, and silent corruption is hard to spot.
+                require("</script" !in month.readText().lowercase()) { "${month.name} cannot be inlined" }
+            }
+            val body = months.joinToString(",\n  ") { "\"${it.nameWithoutExtension}\": ${it.readText()}" }
+            outDir.get().file(name).asFile.apply { parentFile.mkdirs() }
+                .writeText("globalThis.$global = {\n  $body\n};\n")
+            logger.lifecycle("$name: ${months.size} month(s) from $from")
         }
-        val body = months.joinToString(",\n  ") { "\"${it.nameWithoutExtension}\": ${it.readText()}" }
-        out.get().asFile.apply { parentFile.mkdirs() }
-            .writeText("globalThis.POLYMATH_CHAINS = {\n  $body\n};\n")
-        logger.lifecycle("dailies.js: ${months.size} month(s) from $from")
     }
 }
 

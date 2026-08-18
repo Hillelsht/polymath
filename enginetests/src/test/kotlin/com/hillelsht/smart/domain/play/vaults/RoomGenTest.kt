@@ -69,6 +69,19 @@ class RoomGenTest {
                 room.ledges.all { room.abyssY > it.y + tuning.fatalFall },
                 "${room.id} floats a floor over the abyss line, so a fall would end on it",
             )
+
+            // A room is drawn whole, on one screen, with no camera — that is what makes a blade's
+            // rhythm readable before you commit to it. The browser scales to fit, so a wider room
+            // is not clipped; it is simply too small to read, which is worse than being cut off
+            // because nothing tells you it happened.
+            assertTrue(
+                ledges.last().x1 <= 1_300.0,
+                "${room.id} is ${ledges.last().x1} units wide — too wide to read at a glance",
+            )
+            assertTrue(
+                ledges.maxOf { it.y } <= 200.0,
+                "${room.id} descends ${ledges.maxOf { it.y }} units, deeper than one screen holds",
+            )
         }
     }
 

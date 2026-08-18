@@ -67,18 +67,30 @@ Palace and it is easier to feel than to read about.
 
 `?date=YYYY-MM-DD` opens any published day's grid, which is how the playtest drives a specific one.
 
-## Where the day's grid comes from
+## Where the day comes from
 
 The obvious design is to fetch this month's pack. It does not survive contact with how this project
 is checked: `play.js` opens its page over `file://`, where fetching a sibling file is refused as a
-cross-origin request. So the `dailies` Gradle task **bakes the grids into `dailies.js`** at build
-time — a window starting one month back, so yesterday is always available and the file cannot grow
-without bound. The daily then paints with no network at all.
+cross-origin request. So the `dailies` Gradle task **bakes both packs in** at build time — the
+grids into `dailies.js`, the rooms into `rooms.js` — over a window starting one month back, so
+yesterday is always available and neither file can grow without bound. Each daily then paints with
+no network at all.
 
-The page still falls back to the published pack over the network for a month it was not built with,
-and it has to: packs are refreshed by a bot, and **a bot push cannot trigger a workflow**, so the
-site is not rebuilt when new grids land. Without the fallback a deploy left alone long enough would
-simply run out of days.
+One file per game rather than one between them: the grids run to a few hundred kilobytes of
+Wikidata labels and the rooms to a few dozen numbers, so each page pays for its own daily and
+nobody else's.
+
+Either page still falls back to the published pack over the network for a month it was not built
+with, and it has to: packs are refreshed by a bot, and **a bot push cannot trigger a workflow**, so
+the site is not rebuilt when new days land. Without the fallback a deploy left alone long enough
+would simply run out of days.
+
+**The Vaults pack carries a seed, not a room.** `descent.html` hands the seed to `Session.playSeed`
+and the geometry is rebuilt in the browser by the same `RoomGen` that built it when its timing
+slack was measured — so the difficulty word printed beside the room is a measurement of the room
+being played, not a label attached to one. A date the packs do not cover falls back to an authored
+room by day number. See `docs/games.md` for the grammar, the weekday bands, and why a published day
+is never rewritten.
 
 Nothing else is stored anywhere but the visitor's own browser. A streak is derived from what is in
 `localStorage`, and a part-played grid is rebuilt by **replaying its guesses through

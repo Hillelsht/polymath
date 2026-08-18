@@ -176,9 +176,9 @@ ignoring you no matter how the levels are designed:
 
 `Tuning` is a data class rather than a bag of constants, so a room, a test or the harness can run
 the same physics at different settings; it will move to `packs/play/vaults/tuning.json` so a feel
-fix ships as content. `Rooms` is Kotlin for now, on purpose — geometry is still moving while the
-physics is being tuned, and there is no sense building a publishing pipeline around numbers that
-change hourly.
+fix ships as content. The seven rooms in `Rooms` stay Kotlin: they are the teaching order, they are
+read by a person, and they change when the physics does. **The daily is generated instead** — see
+below.
 
 ### How it is verified
 
@@ -191,7 +191,7 @@ Two checks, deliberately covering different failure modes:
   long, run, press jump at these moments — and `slack` then varies each timing on its own to find
   how far it could shift and still get through. The smallest such window is the room's margin,
   because a plan forgiving in every respect but one is only as playable as its tightest moment.
-  Rooms currently run 14 to 81 frames; below `Playtest.MIN_MARGIN_FRAMES` fails the build.
+  Authored rooms run 14 to 81 frames; below `Playtest.MIN_MARGIN_FRAMES` fails the build.
 - Every trap is asserted to be **able to kill**. A blade that catches nobody is scenery, and a
   margin measured against scenery certifies nothing.
 
@@ -200,6 +200,62 @@ because it only presses jump from solid ground and so never meets the case buffe
 that is `MotionTest`'s job. And `solve` *searches*; finding nothing means the search found nothing,
 not that a room is impossible, so the gate fails closed. Neither number alone is proof of
 playability, and treating one as proof is the mistake below.
+
+### The daily room, and how it is chosen
+
+A daily that cycles seven authored rooms is a daily you have already seen by the second week, so
+the room of the day is **generated**. That is the same idea that killed Palace — ship a level
+nobody has played — with a multiplier on it, and the only reason it is safe here is that
+playability is already a number.
+
+`RoomGen.room(seed)` lays a room out left to right from a small grammar of the ideas the authored
+seven teach: a **leap** the ledge-grab cannot bridge, a **step** down narrow enough to run straight
+off, a run of **loose** stone, a **blade** over open floor. Shapes come from a table rather than a
+random walk, because a random walk produces rooms that are merely different and this has to produce
+rooms that are legible — one idea at a time, in an order where the second lands on the first.
+
+`RoomGen.curate(day, band)` is the half that matters. It walks a seed stream, throws away every
+candidate whose measured margin falls outside the band asked for, and returns the first that fits.
+Nothing reaches a player unmeasured.
+
+**Two facts about the shipped tuning decide the whole shape of it**, and both were measured rather
+than chosen:
+
+- A jump carries 96 units at full speed and the grab already bridges 57 of them, so a real leap has
+  about 39 units of leeway in where you leave the ground. **No room with a leap in it has ever
+  measured above 20 frames** — `RoomGen.LEAP_CEILING`, re-checked against every published day.
+- A blade's open window is as wide as it is authored to be, and moves the margin smoothly from
+  about 12 frames to 40.
+
+So the blade is the difficulty dial and the leap is a fixed cost — which is also true of the
+authored descent, where only the threshold demands a jump the grab cannot cover. `RoomGen.bandFor`
+turns that into the crossword's week: Monday through Wednesday are rhythm rooms by construction,
+Friday and Saturday ask for the leap, Sunday steps back out. The margin the day was published with
+is its public difficulty, named by `RoomGen.difficulty` and printed beside the room.
+
+**The seed is the room.** `packs/play/vaults/YYYY-MM.json` carries a seed, a margin and the plan
+that achieved it — never geometry, which would be a second copy of the room that could disagree
+with the first. `RoomGen.VERSION` is stamped into every pack because of that: change the grammar
+and old seeds mean other rooms, so `DailyRoomsTest` refuses a pack whose version is not the code's.
+
+Three gates, each doing something the others cannot:
+
+- **`RoomGenTest`** asserts what a glance would have caught if anyone had looked — the exit on
+  solid ground, the abyss below the floor, one idea per screen, a room narrow enough to read whole.
+- **`DailyRoomsTest`** replays the published plan for **every day of every published month** and
+  re-measures its slack against this build's physics. A tuning change months later moves every
+  margin in the repository, and without this the only symptom would be a daily whose stated
+  difficulty is a fiction.
+- **`tools/playtest/ghost.js`** follows the published plan in Chromium. Those numbers were found by
+  the solver on the JVM; a browser that cannot follow them means the two targets have quietly
+  stopped being one implementation.
+
+Writing the packs is `gradle -p enginetests publishRooms`, run monthly by `play.yml` alongside the
+Chains grids. It lives in the test source set rather than in `tools/` — where every other content
+pipeline lives — because it is the one pipeline that cannot be written in Python: choosing a room
+means running the solver over it a few thousand times, and the physics is Kotlin. **A published day
+is never rewritten**; reruns only fill gaps, because the room someone played on Tuesday has to
+still be Tuesday's room when they come back, and a ghost link carries a date rather than a room.
 
 ### In the app
 
@@ -230,10 +286,16 @@ canvas with live tuning sliders; `tools/playtest/play.js` drives it in Chromium.
 `webplay/README.md`. This is the round trip through a human that the Palace entry below said was
 unavoidable — it was not.
 
-It is also **the daily** at `descent.html`: one room a day, chosen by day number so everyone gets
-the same one, under one clock with free deaths. Your time is the first run you finish; the room
-then stays open to practise on, because locking someone out after a single attempt is a poor trade
-for a game that is mostly muscle memory.
+It is also **the daily** at `descent.html`: one room a day, read out of the published pack so
+everyone gets the same one, under one clock with free deaths. Your time is the first run you
+finish; the room then stays open to practise on, because locking someone out after a single attempt
+is a poor trade for a game that is mostly muscle memory. A date the packs do not cover falls back
+to an authored room by day number — a worse daily than a curated one, and a much better one than an
+empty page.
+
+Generated rooms are not the authored ones' shape, reaching 1,200 units wide and 192 deep against
+720 and 64, so `vaults-draw.js` sizes itself to the room instead of drawing at a constant scale. It
+never magnifies: a room that already fits is drawn exactly as it was before any of this existed.
 
 `Ghost` is what makes that shareable without a server. The engine is deterministic, so **the
 inputs are the run** — nothing else needs recording, and a whole clearance of the first room is

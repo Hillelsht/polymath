@@ -196,11 +196,35 @@ streak survives restart; the Chromium playtest drives the daily end-to-end in CI
 are worth showing a stranger. **Shipped.** What remains is not code: a domain, an assetlinks file
 and a counter account.
 
-### Wedge 2 (~weeks 3–6): Provably-fair generated rooms + language parity
-- Room generator gated by `Playtest.solve` in CI (margin band → publish to
-  `packs/play/vaults/daily/` like Chains grids). The day's margin is its public difficulty label.
-- Run `generate_facts.py` to bring RU/HE toward parity; ship the language toggle — the same
-  daily in three languages, the story NYT structurally cannot copy.
+### Wedge 2 (~weeks 3–6): Provably-fair generated rooms + language parity  ← IN PROGRESS
+
+1. ~~**Room generator gated by `Playtest.solve`**~~ — done. `RoomGen` lays a room out from a seed
+   using a grammar of the ideas the seven authored rooms teach; `curate` walks a seed stream and
+   keeps only the candidates whose measured timing slack lands in the band the weekday asks for.
+   122 days published to `packs/play/vaults/`, each carrying **a seed, its margin and the plan that
+   achieved it** — never geometry, which would be a second copy of the room that could disagree
+   with the first. The margin is the day's public difficulty, printed beside the room.
+
+   Two measurements decided the shape of it, and neither was a taste call. A jump carries 96 units
+   and the ledge-grab already bridges 57, so **no room with a real leap in it measures above 20
+   frames**; a blade's open window, by contrast, moves the margin smoothly from 12 to 40. The blade
+   is therefore the difficulty dial and the leap a fixed cost — which is also true of the authored
+   descent, where only the threshold demands a jump the grab cannot cover. So the week is the
+   crossword's: Monday to Wednesday are rhythm rooms by construction, Friday and Saturday ask for
+   the leap, Sunday steps back out.
+
+   Three gates, each catching what the others cannot: `RoomGenTest` asserts what a glance would
+   have caught (exit on solid ground, abyss below the floor, one idea per screen, narrow enough to
+   read whole); `DailyRoomsTest` replays the published plan for **every day of every published
+   month** and re-measures its slack, so a tuning change months later fails the build instead of
+   quietly turning every difficulty label into a fiction; and `tools/playtest/ghost.js` follows the
+   published plan in Chromium, so a browser that can no longer execute the JVM's own answer is a
+   red build. `play.yml` curates monthly alongside the Chains grids, and **never rewrites a
+   published day** — a ghost link carries a date rather than a room.
+
+2. **Language parity** — run `generate_facts.py` to bring RU/HE up from ~10 facts each against
+   4,018 English; ship the language toggle. The same daily in three languages is the story NYT
+   structurally cannot copy.
 
 ### Wedge 3 (~weeks 6–10): "About anything"
 - Topic front door: topic → LLM maps to Wikidata subgraph → existing pipeline generates and
@@ -226,10 +250,10 @@ ads in the ritual, no new games until the dailies are excellent.
 3. **Wedge 1 is done**, except three things that are not code and are the user's to do: buy the
    domain, publish `.well-known/assetlinks.json` with a release signing fingerprint (which makes
    the https deep links live), and create a counter account (which makes step 7 live).
-   Next is **Wedge 2**: generated rooms gated by `Playtest.solve` in CI, and a `generate_facts.py`
-   run to bring RU and HE toward parity — the same daily in three languages is the story NYT
-   structurally cannot copy. The `author` and `musician` pools also want more facts before those
-   categories can return to the daily.
+   **Wedge 2 is half done**: the generated rooms ship, gated three ways and published monthly.
+   What is left is language parity — a `generate_facts.py` run to bring RU and HE up from ~10 facts
+   each, and the language toggle. The `author` and `musician` pools also want more facts before
+   those categories can return to the Chains daily.
    Two content follow-ups worth doing when convenient: the `author` and `musician` pools need
    more facts before those categories can return to the daily, and a device that already
    downloaded the placeholder-element facts keeps them, because library shards only ever add and
@@ -237,9 +261,9 @@ ads in the ritual, no new games until the dailies are excellent.
 4. Branch discipline: work on a feature branch, verify Compose changes by dispatching `build.yml`
    on the branch (this environment cannot compile Android), merge to `main` via PR — merges to
    `main` auto-publish the APK release and the Pages site.
-5. Keep the existing gates green: `enginetests` (306 tests), `tools/playtest/play.js` margins,
-   `tools/playtest/daily.js`, the docs-freshness pre-push hook (update `docs/` when code
-   contradicts it — it will tell you).
+5. Keep the existing gates green: `enginetests` (327 tests), `tools/playtest/play.js` margins,
+   `tools/playtest/daily.js`, `tools/playtest/ghost.js`, the docs-freshness pre-push hook (update
+   `docs/` when code contradicts it — it will tell you).
 
 Reference links: live site (Polymath) **https://hillelsht.github.io/polymath/** · rolling APK
 **https://github.com/Hillelsht/polymath/releases/tag/latest** · post-mortem & game design

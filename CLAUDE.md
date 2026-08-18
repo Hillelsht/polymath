@@ -28,7 +28,8 @@ minutes later in a workflow log.
 ## Commands that do work
 
 ```bash
-gradle -p enginetests test                       # 317 tests, seconds, no SDK needed
+gradle -p enginetests test                       # 327 tests, seconds, no SDK needed
+gradle -p enginetests publishRooms -Pmonths=4    # curate the daily Vaults rooms, ~1 min/month
 gradle -p tools/parsecheck compileKotlin 2>&1 | tee /tmp/parse.log
 python3 tools/compile_scan.py /tmp/parse.log     # filters ~3,200 expected errors, shows the rest
 python3 tools/import_audit.py                    # forgotten imports
