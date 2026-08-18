@@ -236,11 +236,19 @@ and a counter account.
    with a painter's or a moon's gender, which no label carries. Both tables keep the sentence's
    grammatical subject a noun written in the file, with the label beside it.
 
-   **The facts themselves still have to be harvested**, and only CI can do it — this sandbox has no
-   route to `query.wikidata.org`. Dispatch `library.yml` with `languages: ru,he` and read the
-   preflight table before trusting the run. RU and HE hold ~10 facts each today against 4,018
-   English. After that, the language toggle: the same daily in three languages is the story NYT
-   structurally cannot copy.
+   **A dry run has proved every template answers in every language** (Library run 32180040025, all
+   three green): English 4,090 facts, Russian 3,972, Hebrew 3,343 — six categories each, against
+   the ~10 facts RU and HE hold today. Only the publish is left, and only CI can do it: this
+   sandbox has no route to `query.wikidata.org`. Dispatch `library.yml` with `languages: ru,he`
+   and read the preflight table before trusting the run.
+
+   Budget about thirty minutes for Russian and ten for Hebrew. The harvest is two minutes in every
+   language; the rest is fetching Wikipedia extracts, and ru.wikipedia's API is roughly ten times
+   slower per batch than en's. That is why the languages are separate jobs — three of them in one
+   would not fit a single job's timeout.
+
+   After that, the language toggle: the same daily in three languages is the story NYT structurally
+   cannot copy.
 
 ### Wedge 3 (~weeks 6–10): "About anything"
 - Topic front door: topic → LLM maps to Wikidata subgraph → existing pipeline generates and
@@ -267,9 +275,9 @@ ads in the ritual, no new games until the dailies are excellent.
    domain, publish `.well-known/assetlinks.json` with a release signing fingerprint (which makes
    the https deep links live), and create a counter account (which makes step 7 live).
    **Wedge 2's rooms are done** — generated, gated three ways, published monthly. Language parity
-   is *ready but unharvested*: all eighteen templates are translated and the workflow publishes one
-   language at a time, but the facts need a `library.yml` dispatch with `languages: ru,he`, which
-   only CI can run. Then the language toggle. The `author` and `musician` pools also want more
+   is *proved but unpublished*: all eighteen templates are translated, a dry run harvested 3,972
+   Russian and 3,343 Hebrew facts across six categories, and the only step left is a `library.yml`
+   dispatch with `languages: ru,he` — which only CI can run. Then the language toggle. The `author` and `musician` pools also want more
    facts before those categories can return to the Chains daily.
    Two content follow-ups worth doing when convenient: the `author` and `musician` pools need
    more facts before those categories can return to the daily, and a device that already

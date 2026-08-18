@@ -124,7 +124,13 @@ Shared idioms, each of which is load-bearing:
 commits to `main` and three racing would spend the run rebasing each other, and `fail-fast: false`,
 because a Russian timeout must not cancel a Hebrew harvest that was going to succeed. Each job
 commits only its own language's directory and rebases-and-retries its push three times, since a
-forty-minute harvest is too expensive to throw away over a non-fast-forward.
+long harvest is too expensive to throw away over a non-fast-forward.
+
+Separate jobs are not only about the push. A run costs **3 minutes in English, 30 in Russian and 10
+in Hebrew**, and the difference is not the SPARQL — the harvest is two minutes in every language.
+It is `extracts_for()`: ru.wikipedia's API answers a 20-title batch roughly ten times slower than
+en's. Three languages in one job would not fit the 75-minute timeout, and the language that blew it
+would take the other two down with it.
 
 **Bot commits cannot trigger other workflows.** See `invariants.md` — this is a GitHub
 anti-recursion rule, and it means a Build run for a pipeline commit needs a manual dispatch.
