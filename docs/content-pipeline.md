@@ -22,6 +22,7 @@ Wikidata, Wikipedia or YouTube. Every tool is stdlib-only Python; there is no
 | `build_chains.py` | `packs/play/chains/` — daily puzzle grids | `play.yml`, monthly |
 | ↳ | *also decides which answers are fit to be tiles — see `docs/games.md`* | |
 | `enginetests publishRooms` | `packs/play/vaults/` — the daily room's seed, margin and plan | `play.yml`, monthly |
+| `validate_pack.py` | nothing — reads packs and reports | run by hand, and by CI over a proposed pack |
 | `probe_durations.py` | nothing — findings only | `probe.yml`, manual |
 | `probe_wikidata.py` | nothing — findings only | `probe.yml`, manual |
 | `playtest/play.js` | nothing — plays The Vaults in Chromium, screenshots | `web.yml` |
@@ -29,6 +30,14 @@ Wikidata, Wikipedia or YouTube. Every tool is stdlib-only Python; there is no
 | `playtest/ghost.js` | nothing — runs the daily room, then races the link it produces | `web.yml` |
 | `playtest/serve.js` | nothing — a static server, so `daily.js` gets a real origin | `web.yml` |
 | `playtest/inline.py` | one self-contained HTML file of The Vaults | `web.yml` |
+
+`validate_pack.py` is the odd one in the other direction: it is the only tool here that writes
+nothing. It exists for Wedge 3, where the next content arrives as a pull request from someone this
+repository has never met, so the contract a pack must meet has to be checkable by a machine. It
+enforces everything `ContentParser` does and then the things that parse perfectly and still make a
+bad pack — an answerType too thin to draw distractors from, a translated fact id missing its
+language suffix, a question containing its own answer. Errors mean the pack would misbehave;
+warnings mean it would work and could be better; `--strict` promotes them.
 
 **One pipeline is not in `tools/` and cannot be.** Curating a daily Vaults room means running
 `Playtest.solve` over each candidate a few thousand times, and the physics is Kotlin, so the
@@ -67,6 +76,17 @@ Three constraints found by probing rather than reasoning, all of which shape the
   template that silently yields zero.
 - **Wikidata labels come back in base form only.** No case, no declension. This is what shapes
   the translated phrasings — see `localization.md`.
+
+**A question must not contain its own answer.** The first run of `validate_pack.py` over the
+published library found forty that did: *"Who sculpted Pietà (Michelangelo)?"*, *"Which body does
+moon of Saturn orbit?"*, *"What is the capital of Guinea-Bissau?"*. Every one is true and parses
+perfectly, and every one prints the answer inside the question and then marks three distractors
+wrong — so a player who knew nothing scores what a player who knew everything does. The cause is
+structural rather than unlucky: Wikidata labels carry their own disambiguation and the templates
+slot them in whole. `drop_leaks()` removes them before `prune()`, since losing them can be what
+takes an answerType below the quiz's floor, and `validate()` refuses them again at publish —
+because a fact that answers itself is invisible in a diff and permanent on a device, given that
+library shards only ever add and update.
 
 **True by construction is not the same as worth asking.** The library shipped "What is the
 chemical symbol for unquadoctium?" — element 148, which nobody has made. Wikidata holds the claim
