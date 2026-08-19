@@ -28,6 +28,26 @@ jobs:
       - name: Run engine and curriculum tests
         run: ./gradlew -p enginetests test
 
+      # The contract a pack has to meet. It catches what the parser cannot: an answerType too thin
+      # to draw distractors from, a question containing its own answer, a translated fact id that
+      # would install over the English fact and take its review history with it.
+      #
+      # Two runs, at two bars, because they are two different questions. Everything published is
+      # held to the errors — the things that would actually misbehave on a phone. A pack arriving
+      # from outside is held to the warnings as well, because it is the moment when fixing a thin
+      # answerType costs one edit rather than a migration. The authoring sources under
+      # `assets/content/` are not validated separately: they are the same facts as their enriched
+      # copies in `packs/`, and one run must see one corpus or every id looks duplicated.
+      #
+      # See docs/community-packs.md.
+      - name: Every pack still meets the contract
+        run: |
+          python3 tools/validate_pack.py --self-test
+          python3 tools/validate_pack.py packs
+          if [ -d packs/community ]; then
+            python3 tools/validate_pack.py --strict packs/community
+          fi
+
       - name: Upload test report
         if: always()
         uses: actions/upload-artifact@v4

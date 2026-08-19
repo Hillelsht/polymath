@@ -22,7 +22,8 @@ Wikidata, Wikipedia or YouTube. Every tool is stdlib-only Python; there is no
 | `build_chains.py` | `packs/play/chains/` — daily puzzle grids | `play.yml`, monthly |
 | ↳ | *also decides which answers are fit to be tiles — see `docs/games.md`* | |
 | `enginetests publishRooms` | `packs/play/vaults/` — the daily room's seed, margin and plan | `play.yml`, monthly |
-| `validate_pack.py` | nothing — reads packs and reports | run by hand, and by CI over a proposed pack |
+| `validate_pack.py` | nothing — reads packs and reports | run by hand, and by CI over every pack |
+| `topic_pack.py` | `packs/community/` — a pack built from a typed topic | run by hand |
 | `probe_durations.py` | nothing — findings only | `probe.yml`, manual |
 | `probe_wikidata.py` | nothing — findings only | `probe.yml`, manual |
 | `playtest/play.js` | nothing — plays The Vaults in Chromium, screenshots | `web.yml` |

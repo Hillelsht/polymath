@@ -34,6 +34,8 @@ gradle -p tools/parsecheck compileKotlin 2>&1 | tee /tmp/parse.log
 python3 tools/compile_scan.py /tmp/parse.log     # filters ~3,200 expected errors, shows the rest
 python3 tools/import_audit.py                    # forgotten imports
 python3 tools/generate_facts.py --self-test      # offline, as CI runs it
+python3 tools/validate_pack.py packs             # the contract every pack must meet
+python3 tools/topic_pack.py --topic "space"      # Wedge 3's front door, minus the LLM
 
 gradle -p webplay bundle                         # the games -> JavaScript, in build/web/
 NODE_PATH=/opt/node22/lib/node_modules \
@@ -119,6 +121,7 @@ packs/        generated content, served to installed apps from raw.githubusercon
 | Room schema, migrations, JSON pack shapes, seeding | `docs/data-model.md` |
 | The Python tools, the six workflows, what commits to `main` | `docs/content-pipeline.md` |
 | Adding a language; why Hebrew has two string files | `docs/localization.md` |
+| Authoring a pack from outside; the contract and its validator | `docs/community-packs.md` |
 | The five games and their rules | `docs/games.md` |
 | The web portal, the daily, playing the games in a browser | `webplay/README.md` |
 | Building, verifying and shipping without a compiler | `docs/development.md` |
