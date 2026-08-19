@@ -35,6 +35,11 @@ tasks.test {
     testLogging {
         events("passed", "failed", "skipped")
         showStandardStreams = true
+        // Without this a failure prints its name and nothing else, and the assertion message —
+        // which is where every test in this suite puts the explanation — is only in the HTML
+        // report. That is fine locally and useless in `library.yml`, where the run happens on a
+        // machine nobody can open a browser on and the content that failed is never committed.
+        exceptionFormat = org.gradle.api.tasks.testing.logging.TestExceptionFormat.FULL
     }
 }
 

@@ -134,7 +134,9 @@ Shared idioms, each of which is load-bearing:
   device's own rules to every grid, and `DailyRoomsTest` re-measures every published room's timing
   slack against the physics that build ships. Schema drift, a fact id that would eat another, an
   ambiguous puzzle or a room whose difficulty label has quietly become a fiction all fail before
-  the commit rather than after it.
+  the commit rather than after it. When that gate does fire in `library.yml`, the content that
+  failed is never committed and there is nothing left to inspect — so the run uploads the test
+  report as an artifact, and the engine tests print the full assertion rather than the test's name.
 - **The content pipeline rebases and retries its push, three times.** A human push landing
   mid-run once made the push a non-fast-forward and threw away a full probe of 54 channels.
 - **`enrich_videos.py` is `continue-on-error`.** YouTube sometimes refuses datacenter IPs. The

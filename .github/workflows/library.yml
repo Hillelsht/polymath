@@ -120,6 +120,17 @@ jobs:
         # replaced a library that worked.
         run: ./gradlew -p enginetests test
 
+      # The content that failed is never committed, so without this the only record of *why* is a
+      # line in a log that scrolls past the harvest. Uploaded on failure only, because a green run
+      # has nothing to explain.
+      - name: Upload test report
+        if: failure()
+        uses: actions/upload-artifact@v4
+        with:
+          name: enginetests-${{ matrix.language }}
+          path: enginetests/build/reports/tests/test
+          if-no-files-found: ignore
+
       - name: Commit the library
         if: env.PUBLISHING == 'true'
         # English publishes at the path this pipeline has always used; every other language sits
