@@ -120,6 +120,17 @@ jobs:
         # replaced a library that worked.
         run: ./gradlew -p enginetests test
 
+      # The content that failed is never committed, so without this the only record of *why* is a
+      # line in a log that scrolls past the harvest. Uploaded on failure only, because a green run
+      # has nothing to explain.
+      - name: Upload test report
+        if: failure()
+        uses: actions/upload-artifact@v4
+        with:
+          name: enginetests-${{ matrix.language }}
+          path: enginetests/build/reports/tests/test
+          if-no-files-found: ignore
+
       - name: Commit the library
         if: env.PUBLISHING == 'true'
         # English publishes at the path this pipeline has always used; every other language sits
@@ -139,9 +150,15 @@ jobs:
           # Another language's job, or a human, may have landed a commit while this one was
           # harvesting for forty minutes. Rebasing and retrying is cheaper than throwing the
           # harvest away, which is what a plain non-fast-forward failure would do.
+          #
+          # Rebase onto **this run's own ref**, not onto main. An earlier version said `origin main`
+          # and worked only by accident: on a dispatch against a branch it pulled main's history
+          # into the branch and left the branch's real tip still unmerged, so every retry failed the
+          # same way. Hebrew lost a ten-minute harvest to it after Russian pushed first.
+          branch="${{ github.ref_name }}"
           for attempt in 1 2 3; do
-            if git push; then exit 0; fi
-            echo "push rejected, rebasing (attempt $attempt)"
-            git pull --rebase origin main
+            if git push origin "HEAD:$branch"; then exit 0; fi
+            echo "push rejected, rebasing onto $branch (attempt $attempt)"
+            git pull --rebase origin "$branch"
           done
-          git push
+          git push origin "HEAD:$branch"

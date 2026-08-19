@@ -846,6 +846,48 @@ def extracts_for(titles, language=DEFAULT_LANGUAGE):
 
 # --- Publishing --------------------------------------------------------------------------
 
+def leaks_answer(fact):
+    """Whether a fact's question already contains its own answer.
+
+    Wikidata labels carry their own disambiguation, and the templates slot them in whole, so the
+    corpus grows questions like *"Who sculpted Pietà (Michelangelo)?"*, *"Which body does moon of
+    Saturn orbit?"* and *"What is the capital of Guinea-Bissau?"*. Every one of those parses, is
+    true, and is worthless: the quiz prints the answer inside the question and then marks three
+    distractors wrong, so a player who knew nothing scores the same as one who knew everything.
+
+    Word boundaries rather than a substring test, because "Chad" inside "Lake Chad" is not the
+    same word twice, while "Africa" inside "South Africa" is — and the second really does give
+    "Which continent is South Africa in?" away.
+
+    Forty of these were in the published English library when `tools/validate_pack.py` was first
+    pointed at it. Dropping them here is the fix at source; the validator is what noticed.
+    """
+    answer = str(fact.get("answer", "")).strip()
+    if not answer:
+        return False
+    pattern = r"(?<!\w)" + re.escape(answer) + r"(?!\w)"
+    return re.search(pattern, str(fact.get("question", "")), re.IGNORECASE | re.UNICODE) is not None
+
+
+def drop_leaks(by_category):
+    """Removes the facts that give themselves away, and says how many.
+
+    A drop rather than a veto, for [prune]'s reason: a handful of unlucky labels should cost their
+    own facts and not the whole harvest.
+    """
+    dropped = 0
+    for category in list(by_category):
+        kept = [f for f in by_category[category] if not leaks_answer(f)]
+        dropped += len(by_category[category]) - len(kept)
+        if kept:
+            by_category[category] = kept
+        else:
+            del by_category[category]
+    if dropped:
+        print(f"  dropping {dropped} facts whose question already contains the answer")
+    return by_category
+
+
 def prune(by_category):
     """Drop answerTypes too thin to quiz on, and name them.
 
@@ -902,6 +944,15 @@ def validate(facts):
     bad = sum(1 for f in facts if f["difficulty"] not in (1, 2, 3))
     if bad:
         problems.append(f"{bad} facts have a difficulty outside 1..3")
+
+    # drop_leaks() should already have removed these. Checked again here because a fact that
+    # answers itself is invisible in a diff and permanent on a device: library shards only ever
+    # add and update, so one published once is on every phone that fetched it for good.
+    leaking = [f["id"] for f in facts if leaks_answer(f)]
+    if leaking:
+        problems.append(
+            f"{len(leaking)} questions contain their own answer, e.g. {leaking[:3]}"
+        )
     return problems
 
 
@@ -1219,6 +1270,39 @@ def self_test():
     check("Russian and Hebrew phrasing cover the same templates",
           set(RU_PHRASING) == set(HE_PHRASING))
 
+    # --- Questions that answer themselves ------------------------------------------------
+    def leaky(question, answer):
+        return leaks_answer({"question": question, "answer": answer})
+
+    check("a question repeating its answer is caught",
+          leaky("Who sculpted Pietà (Michelangelo)?", "Michelangelo"))
+    check("and caught whatever the case",
+          leaky("What is the capital of MUSCAT and Oman?", "Muscat"))
+    check("and across a hyphen, which is not a word character",
+          leaky("What is the capital of Guinea-Bissau?", "Bissau"))
+    check("the answer inside a longer word is not the answer",
+          not leaky("Which country contains Parisian suburbs?", "Paris"))
+    check("an ordinary question is left alone",
+          not leaky("What is the capital of France?", "Paris"))
+    check("a blank answer cannot leak",
+          not leaky("What is the capital of France?", "  "))
+    check("dropping the leaks leaves the rest, and empties nothing else",
+          drop_leaks({
+              "geography": [
+                  {"question": "What is the capital of France?", "answer": "Paris"},
+                  {"question": "What is the capital of Guinea-Bissau?", "answer": "Bissau"},
+              ],
+          }) == {"geography": [{"question": "What is the capital of France?", "answer": "Paris"}]})
+    check("a category that was nothing but leaks is removed rather than left empty",
+          drop_leaks({"science": [{"question": "Which body does moon of Mars orbit?",
+                                   "answer": "Mars"}]}) == {})
+    check("validate refuses a leak that reached it anyway",
+          any("own answer" in p for p in validate([{
+              "id": "x", "title": "t", "statement": "s", "answer": "Mars", "answerType": "body",
+              "question": "Which body does moon of Mars orbit?", "difficulty": 1,
+          }, *[{"id": f"y{i}", "title": "t", "statement": "s", "answer": f"A{i}",
+                "answerType": "body", "question": "Q?", "difficulty": 1} for i in range(4)]])))
+
     # --- Parity, and the one thing a phrasing must never do ------------------------------
     #
     # Every template is asked in every language the app ships. That is the whole product claim
@@ -1303,7 +1387,9 @@ def main(argv=None):
 
     harvested = sum(len(v) for v in by_category.values())
     print(f"\n{harvested} facts harvested. Checking each answerType can hold a quiz...")
-    by_category = prune(by_category)
+    # Order matters: dropping the give-aways first can be what takes an answerType below the
+    # quiz's floor, and a type that thin has to come out too.
+    by_category = prune(drop_leaks(by_category))
 
     total = sum(len(v) for v in by_category.values())
     previous = previous_total(language)

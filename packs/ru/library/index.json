@@ -1,0 +1,295 @@
+{
+ "generated": "2026-08-19T17:30:33Z",
+ "shards": [
+  {
+   "id": "library-ru-arts-000",
+   "name": "\u0418\u0441\u043a\u0443\u0441\u0441\u0442\u0432\u043e \u0438 \u043b\u0438\u0442\u0435\u0440\u0430\u0442\u0443\u0440\u0430 \u00b7 \u0431\u043e\u043b\u044c\u0448\u0435 \u0444\u0430\u043a\u0442\u043e\u0432",
+   "category": "arts",
+   "version": "8bd699aa9ad3",
+   "facts": 150,
+   "bytes": 258349,
+   "file": "library/arts-000.json",
+   "shard": 0
+  },
+  {
+   "id": "library-ru-arts-001",
+   "name": "\u0418\u0441\u043a\u0443\u0441\u0441\u0442\u0432\u043e \u0438 \u043b\u0438\u0442\u0435\u0440\u0430\u0442\u0443\u0440\u0430 \u00b7 \u0431\u043e\u043b\u044c\u0448\u0435 \u0444\u0430\u043a\u0442\u043e\u0432",
+   "category": "arts",
+   "version": "dba7ef42007c",
+   "facts": 150,
+   "bytes": 261478,
+   "file": "library/arts-001.json",
+   "shard": 1
+  },
+  {
+   "id": "library-ru-arts-002",
+   "name": "\u0418\u0441\u043a\u0443\u0441\u0441\u0442\u0432\u043e \u0438 \u043b\u0438\u0442\u0435\u0440\u0430\u0442\u0443\u0440\u0430 \u00b7 \u0431\u043e\u043b\u044c\u0448\u0435 \u0444\u0430\u043a\u0442\u043e\u0432",
+   "category": "arts",
+   "version": "c8d39409c58b",
+   "facts": 144,
+   "bytes": 241062,
+   "file": "library/arts-002.json",
+   "shard": 2
+  },
+  {
+   "id": "library-ru-culture-000",
+   "name": "\u041f\u043e\u043f-\u043a\u0443\u043b\u044c\u0442\u0443\u0440\u0430 \u00b7 \u0431\u043e\u043b\u044c\u0448\u0435 \u0444\u0430\u043a\u0442\u043e\u0432",
+   "category": "culture",
+   "version": "0617e27648d1",
+   "facts": 150,
+   "bytes": 278251,
+   "file": "library/culture-000.json",
+   "shard": 0
+  },
+  {
+   "id": "library-ru-culture-001",
+   "name": "\u041f\u043e\u043f-\u043a\u0443\u043b\u044c\u0442\u0443\u0440\u0430 \u00b7 \u0431\u043e\u043b\u044c\u0448\u0435 \u0444\u0430\u043a\u0442\u043e\u0432",
+   "category": "culture",
+   "version": "3c3d77a33e58",
+   "facts": 150,
+   "bytes": 264441,
+   "file": "library/culture-001.json",
+   "shard": 1
+  },
+  {
+   "id": "library-ru-culture-002",
+   "name": "\u041f\u043e\u043f-\u043a\u0443\u043b\u044c\u0442\u0443\u0440\u0430 \u00b7 \u0431\u043e\u043b\u044c\u0448\u0435 \u0444\u0430\u043a\u0442\u043e\u0432",
+   "category": "culture",
+   "version": "70ee71fc6370",
+   "facts": 150,
+   "bytes": 242650,
+   "file": "library/culture-002.json",
+   "shard": 2
+  },
+  {
+   "id": "library-ru-culture-003",
+   "name": "\u041f\u043e\u043f-\u043a\u0443\u043b\u044c\u0442\u0443\u0440\u0430 \u00b7 \u0431\u043e\u043b\u044c\u0448\u0435 \u0444\u0430\u043a\u0442\u043e\u0432",
+   "category": "culture",
+   "version": "ad359add57f1",
+   "facts": 38,
+   "bytes": 58951,
+   "file": "library/culture-003.json",
+   "shard": 3
+  },
+  {
+   "id": "library-ru-geography-000",
+   "name": "\u0413\u0435\u043e\u0433\u0440\u0430\u0444\u0438\u044f \u00b7 \u0431\u043e\u043b\u044c\u0448\u0435 \u0444\u0430\u043a\u0442\u043e\u0432",
+   "category": "geography",
+   "version": "31241a440dbf",
+   "facts": 150,
+   "bytes": 276666,
+   "file": "library/geography-000.json",
+   "shard": 0
+  },
+  {
+   "id": "library-ru-geography-001",
+   "name": "\u0413\u0435\u043e\u0433\u0440\u0430\u0444\u0438\u044f \u00b7 \u0431\u043e\u043b\u044c\u0448\u0435 \u0444\u0430\u043a\u0442\u043e\u0432",
+   "category": "geography",
+   "version": "b5adb708f16c",
+   "facts": 150,
+   "bytes": 273199,
+   "file": "library/geography-001.json",
+   "shard": 1
+  },
+  {
+   "id": "library-ru-geography-002",
+   "name": "\u0413\u0435\u043e\u0433\u0440\u0430\u0444\u0438\u044f \u00b7 \u0431\u043e\u043b\u044c\u0448\u0435 \u0444\u0430\u043a\u0442\u043e\u0432",
+   "category": "geography",
+   "version": "a39028897a93",
+   "facts": 150,
+   "bytes": 261757,
+   "file": "library/geography-002.json",
+   "shard": 2
+  },
+  {
+   "id": "library-ru-geography-003",
+   "name": "\u0413\u0435\u043e\u0433\u0440\u0430\u0444\u0438\u044f \u00b7 \u0431\u043e\u043b\u044c\u0448\u0435 \u0444\u0430\u043a\u0442\u043e\u0432",
+   "category": "geography",
+   "version": "d5668f7e918b",
+   "facts": 150,
+   "bytes": 252004,
+   "file": "library/geography-003.json",
+   "shard": 3
+  },
+  {
+   "id": "library-ru-geography-004",
+   "name": "\u0413\u0435\u043e\u0433\u0440\u0430\u0444\u0438\u044f \u00b7 \u0431\u043e\u043b\u044c\u0448\u0435 \u0444\u0430\u043a\u0442\u043e\u0432",
+   "category": "geography",
+   "version": "0248da6525d3",
+   "facts": 150,
+   "bytes": 214982,
+   "file": "library/geography-004.json",
+   "shard": 4
+  },
+  {
+   "id": "library-ru-geography-005",
+   "name": "\u0413\u0435\u043e\u0433\u0440\u0430\u0444\u0438\u044f \u00b7 \u0431\u043e\u043b\u044c\u0448\u0435 \u0444\u0430\u043a\u0442\u043e\u0432",
+   "category": "geography",
+   "version": "a66091278610",
+   "facts": 150,
+   "bytes": 225043,
+   "file": "library/geography-005.json",
+   "shard": 5
+  },
+  {
+   "id": "library-ru-geography-006",
+   "name": "\u0413\u0435\u043e\u0433\u0440\u0430\u0444\u0438\u044f \u00b7 \u0431\u043e\u043b\u044c\u0448\u0435 \u0444\u0430\u043a\u0442\u043e\u0432",
+   "category": "geography",
+   "version": "d5ca0a69d8c5",
+   "facts": 150,
+   "bytes": 235048,
+   "file": "library/geography-006.json",
+   "shard": 6
+  },
+  {
+   "id": "library-ru-geography-007",
+   "name": "\u0413\u0435\u043e\u0433\u0440\u0430\u0444\u0438\u044f \u00b7 \u0431\u043e\u043b\u044c\u0448\u0435 \u0444\u0430\u043a\u0442\u043e\u0432",
+   "category": "geography",
+   "version": "e25694e395cd",
+   "facts": 150,
+   "bytes": 236969,
+   "file": "library/geography-007.json",
+   "shard": 7
+  },
+  {
+   "id": "library-ru-geography-008",
+   "name": "\u0413\u0435\u043e\u0433\u0440\u0430\u0444\u0438\u044f \u00b7 \u0431\u043e\u043b\u044c\u0448\u0435 \u0444\u0430\u043a\u0442\u043e\u0432",
+   "category": "geography",
+   "version": "a18b2bab7556",
+   "facts": 13,
+   "bytes": 20369,
+   "file": "library/geography-008.json",
+   "shard": 8
+  },
+  {
+   "id": "library-ru-history-000",
+   "name": "\u0418\u0441\u0442\u043e\u0440\u0438\u044f \u00b7 \u0431\u043e\u043b\u044c\u0448\u0435 \u0444\u0430\u043a\u0442\u043e\u0432",
+   "category": "history",
+   "version": "968014853130",
+   "facts": 150,
+   "bytes": 263176,
+   "file": "library/history-000.json",
+   "shard": 0
+  },
+  {
+   "id": "library-ru-history-001",
+   "name": "\u0418\u0441\u0442\u043e\u0440\u0438\u044f \u00b7 \u0431\u043e\u043b\u044c\u0448\u0435 \u0444\u0430\u043a\u0442\u043e\u0432",
+   "category": "history",
+   "version": "c0e2d491ba99",
+   "facts": 134,
+   "bytes": 225757,
+   "file": "library/history-001.json",
+   "shard": 1
+  },
+  {
+   "id": "library-ru-science-000",
+   "name": "\u041d\u0430\u0443\u043a\u0430 \u00b7 \u0431\u043e\u043b\u044c\u0448\u0435 \u0444\u0430\u043a\u0442\u043e\u0432",
+   "category": "science",
+   "version": "b023d1bfd868",
+   "facts": 150,
+   "bytes": 275175,
+   "file": "library/science-000.json",
+   "shard": 0
+  },
+  {
+   "id": "library-ru-science-001",
+   "name": "\u041d\u0430\u0443\u043a\u0430 \u00b7 \u0431\u043e\u043b\u044c\u0448\u0435 \u0444\u0430\u043a\u0442\u043e\u0432",
+   "category": "science",
+   "version": "4be9d271f851",
+   "facts": 150,
+   "bytes": 239581,
+   "file": "library/science-001.json",
+   "shard": 1
+  },
+  {
+   "id": "library-ru-science-002",
+   "name": "\u041d\u0430\u0443\u043a\u0430 \u00b7 \u0431\u043e\u043b\u044c\u0448\u0435 \u0444\u0430\u043a\u0442\u043e\u0432",
+   "category": "science",
+   "version": "4f23337327a2",
+   "facts": 150,
+   "bytes": 240725,
+   "file": "library/science-002.json",
+   "shard": 2
+  },
+  {
+   "id": "library-ru-science-003",
+   "name": "\u041d\u0430\u0443\u043a\u0430 \u00b7 \u0431\u043e\u043b\u044c\u0448\u0435 \u0444\u0430\u043a\u0442\u043e\u0432",
+   "category": "science",
+   "version": "9e1b0deaa7d4",
+   "facts": 150,
+   "bytes": 230546,
+   "file": "library/science-003.json",
+   "shard": 3
+  },
+  {
+   "id": "library-ru-science-004",
+   "name": "\u041d\u0430\u0443\u043a\u0430 \u00b7 \u0431\u043e\u043b\u044c\u0448\u0435 \u0444\u0430\u043a\u0442\u043e\u0432",
+   "category": "science",
+   "version": "e13235623da7",
+   "facts": 150,
+   "bytes": 205954,
+   "file": "library/science-004.json",
+   "shard": 4
+  },
+  {
+   "id": "library-ru-science-005",
+   "name": "\u041d\u0430\u0443\u043a\u0430 \u00b7 \u0431\u043e\u043b\u044c\u0448\u0435 \u0444\u0430\u043a\u0442\u043e\u0432",
+   "category": "science",
+   "version": "8fd594e9abe1",
+   "facts": 74,
+   "bytes": 110682,
+   "file": "library/science-005.json",
+   "shard": 5
+  },
+  {
+   "id": "library-ru-sports-000",
+   "name": "\u0421\u043f\u043e\u0440\u0442 \u0438 \u0438\u0433\u0440\u044b \u00b7 \u0431\u043e\u043b\u044c\u0448\u0435 \u0444\u0430\u043a\u0442\u043e\u0432",
+   "category": "sports",
+   "version": "7e7ee4419b9d",
+   "facts": 150,
+   "bytes": 250543,
+   "file": "library/sports-000.json",
+   "shard": 0
+  },
+  {
+   "id": "library-ru-sports-001",
+   "name": "\u0421\u043f\u043e\u0440\u0442 \u0438 \u0438\u0433\u0440\u044b \u00b7 \u0431\u043e\u043b\u044c\u0448\u0435 \u0444\u0430\u043a\u0442\u043e\u0432",
+   "category": "sports",
+   "version": "7fcc886139d6",
+   "facts": 150,
+   "bytes": 227084,
+   "file": "library/sports-001.json",
+   "shard": 1
+  },
+  {
+   "id": "library-ru-sports-002",
+   "name": "\u0421\u043f\u043e\u0440\u0442 \u0438 \u0438\u0433\u0440\u044b \u00b7 \u0431\u043e\u043b\u044c\u0448\u0435 \u0444\u0430\u043a\u0442\u043e\u0432",
+   "category": "sports",
+   "version": "cb2e743d4e16",
+   "facts": 150,
+   "bytes": 211476,
+   "file": "library/sports-002.json",
+   "shard": 2
+  },
+  {
+   "id": "library-ru-sports-003",
+   "name": "\u0421\u043f\u043e\u0440\u0442 \u0438 \u0438\u0433\u0440\u044b \u00b7 \u0431\u043e\u043b\u044c\u0448\u0435 \u0444\u0430\u043a\u0442\u043e\u0432",
+   "category": "sports",
+   "version": "892f6b3ffc20",
+   "facts": 150,
+   "bytes": 218114,
+   "file": "library/sports-003.json",
+   "shard": 3
+  },
+  {
+   "id": "library-ru-sports-004",
+   "name": "\u0421\u043f\u043e\u0440\u0442 \u0438 \u0438\u0433\u0440\u044b \u00b7 \u0431\u043e\u043b\u044c\u0448\u0435 \u0444\u0430\u043a\u0442\u043e\u0432",
+   "category": "sports",
+   "version": "a999527c073d",
+   "facts": 54,
+   "bytes": 71670,
+   "file": "library/sports-004.json",
+   "shard": 4
+  }
+ ]
+}

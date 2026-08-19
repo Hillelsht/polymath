@@ -250,11 +250,25 @@ and a counter account.
    After that, the language toggle: the same daily in three languages is the story NYT structurally
    cannot copy.
 
-### Wedge 3 (~weeks 6–10): "About anything"
-- Topic front door: topic → LLM maps to Wikidata subgraph → existing pipeline generates and
-  validates the pack → games run on it. Facts must trace to Wikidata claims.
-- Three vertical landing packs as SEO/community seeds (citizenship test, driving theory, one
-  fandom). Community pack spec + validator so others can author packs by PR.
+### Wedge 3 (~weeks 6–10): "About anything"  ← STARTED
+
+1. ~~**Community pack spec + validator**~~ — done. `docs/community-packs.md` is the contract, and
+   `tools/validate_pack.py` checks it: everything `ContentParser` enforces, plus the failures that
+   parse perfectly and still make a bad pack. Pointed at this repository's own corpus for the first
+   time it found **forty questions containing their own answer** — *"Who sculpted Pietà
+   (Michelangelo)?"* — now dropped at source by `generate_facts.py`. CI gates every pack on the
+   errors and anything under `packs/community/` on the warnings too.
+
+2. **Topic front door** — the plumbing is done, the clever part is not. `tools/topic_pack.py` takes
+   a typed topic, routes it to templates, harvests, and writes a pack that has to clear the
+   validator at the strict bar or be deleted. The mapper is a synonym table and word overlap, so
+   *"chemistry"*, *"football"* and *"world war two"* work while *"the Byzantine succession"* routes
+   nowhere and says so — and *"rivers of Africa"* gets the same rivers as *"rivers"*, because
+   narrowing means adding a SPARQL constraint. **That is the LLM's job**, it is one function
+   (`route`), and it needs an API key as a repo secret before it can be written.
+
+3. Three vertical landing packs as SEO/community seeds (citizenship test, driving theory, one
+   fandom) — waiting on 2, since narrowing is exactly what a citizenship pack needs.
 
 ### Wedge 4 (~weeks 10–13): Decide with data
 Only now revisit backend/accounts/monetization, gated on share-loop evidence from the counter.

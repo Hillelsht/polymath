@@ -56,6 +56,18 @@ class TranslatedLibraryTest {
         }
     }
 
+    /**
+     * Whether a pack id names its language, wherever in the id it says so.
+     *
+     * Two conventions are in use and both are correct. The hand-authored packs suffix
+     * (`geography-ru`); `generate_facts.py` prefixes (`library-ru-geography-000`), so a translated
+     * shard cannot collide with the English shard of the same category and number. What matters is
+     * neither spelling but the property they share — the tag is a delimited segment of the id — so
+     * that is what is asserted. An earlier version of this test demanded the suffix and failed the
+     * generated library on its first real run, which is a test encoding a habit rather than a rule.
+     */
+    private fun namesLanguage(packId: String, tag: String) = "-$packId-".contains("-$tag-")
+
     @Test
     fun `a translated pack claims its own language, and its own ids`() {
         translated.forEach { language ->
@@ -66,8 +78,9 @@ class TranslatedLibraryTest {
             shards(dir).forEach { file ->
                 val pack = ContentParser.parsePack(file.readText(), file.name)
                 assertTrue(
-                    pack.packId.endsWith(suffix),
-                    "${pack.packId} has no '$suffix' suffix, so it would install over an English pack",
+                    namesLanguage(pack.packId, language.tag),
+                    "${pack.packId} does not name '${language.tag}' anywhere in its id, so it " +
+                        "could install over an English pack of the same name",
                 )
                 assertTrue(
                     Regex(""""language"\s*:\s*"${language.tag}"""").containsMatchIn(file.readText()),
