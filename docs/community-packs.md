@@ -79,10 +79,17 @@ they should next see it. Reusing an id that already exists **overwrites the othe
 review history with it**, on a device, silently, with no way back. Review history is the one thing
 here that cannot be re-downloaded. Prefix your ids with something nobody else will use.
 
-**A translated pack suffixes everything.** A Russian pack sets `"language": "ru"`, and both its
-`packId` and every fact `id` end in `-ru` (`astronomy-basics-ru`, `astro-001-ru`). Without the
-suffix it is not a Russian pack — it is a pack that deletes the English one. This is the rule the
-paragraph above is about, and it is why the validator treats it as an error rather than a warning.
+**A translated pack names its language everywhere.** A Russian pack sets `"language": "ru"`, its
+`packId` carries the tag (`astronomy-basics-ru`), and every fact `id` **ends** in `-ru`
+(`astro-001-ru`). Without that it is not a Russian pack — it is a pack that deletes the English
+one. This is the rule the paragraph above is about, and it is why the validator treats it as an
+error rather than a warning.
+
+The `packId` only has to name the tag as a delimited segment, not necessarily at the end: the
+hand-authored packs suffix it and `generate_facts.py` prefixes it (`library-ru-geography-000`), and
+both are equally namespaced against the English pack of that name. Fact ids are the strict half —
+the tag goes last, because that is what everything in this repository already does and what the
+validator checks.
 
 ## Checking it
 

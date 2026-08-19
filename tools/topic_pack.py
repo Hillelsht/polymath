@@ -150,16 +150,22 @@ def slug(topic):
 def pack_json(topic, category, facts, language=gen.DEFAULT_LANGUAGE, stamp="0"):
     """A community pack, shaped exactly as `docs/community-packs.md` describes one."""
     suffix = "" if language == gen.DEFAULT_LANGUAGE else f"-{language}"
-    pack_id = f"topic-{slug(topic)}-{category}{suffix}"
+    namespace = f"topic-{slug(topic)}-{category}"
     return {
         "category": category,
-        "packId": pack_id,
+        "packId": f"{namespace}{suffix}",
         "name": f"{topic.strip().title()} · {gen.CATEGORIES[category][language]}",
         "version": stamp,
         "language": language,
         # Ids are namespaced by the pack, which is the rule in `docs/community-packs.md`: an id
         # that collides with one already published replaces that fact and takes its review history.
-        "facts": [{**fact, "id": f"{pack_id}-{fact['id']}"} for fact in facts],
+        #
+        # The language tag goes *last* on a fact id, after the namespace, because that is the one
+        # place the rule is strict — `make_facts` suffixes, the hand-authored packs suffix, and the
+        # validator checks for it there. Namespacing with an id that already ended in the tag would
+        # bury it in the middle and produce `topic-space-science-ru-f0`, which reads translated and
+        # would be refused.
+        "facts": [{**fact, "id": f"{namespace}-{fact['id']}{suffix}"} for fact in facts],
     }
 
 
@@ -276,11 +282,13 @@ def self_test():
           pack["category"] == "science" and pack["packId"] == "topic-space-science")
     check("every fact id is namespaced by the pack",
           all(f["id"].startswith("topic-space-science-") for f in pack["facts"]))
-    check("a Russian pack suffixes its packId and every fact id",
-          (lambda p: p["packId"].endswith("-ru") and all(f["id"].endswith("-ru") is False
-                                                         for f in p["facts"][:0]) and
-           all(f["id"].startswith("topic-space-science-ru-") for f in p["facts"]))(
-              pack_json("space", "science", facts, "ru")))
+    ru_pack = pack_json("space", "science", facts, "ru")
+    check("a Russian pack names its language in the packId",
+          ru_pack["packId"] == "topic-space-science-ru")
+    check("and every Russian fact id ends with the tag, where the rule is strict",
+          all(f["id"].endswith("-ru") for f in ru_pack["facts"]))
+    check("without losing the namespace that keeps it off another pack's ids",
+          all(f["id"].startswith("topic-space-science-") for f in ru_pack["facts"]))
 
     # The pack it builds has to be one the contract accepts — checked here rather than trusted,
     # because a generator that emits invalid packs is worse than no generator.
@@ -292,6 +300,15 @@ def self_test():
         parsed = validate_pack.read_pack(path, report)
         validate_pack.check_corpus([parsed] if parsed else [], report)
     check("and the contract accepts it", not report.errors and not report.warnings)
+
+    with tempfile.TemporaryDirectory() as tmp:
+        path = Path(tmp) / "ru.json"
+        path.write_text(json.dumps(ru_pack, ensure_ascii=False), encoding="utf-8")
+        report = validate_pack.Report()
+        parsed = validate_pack.read_pack(path, report)
+        validate_pack.check_corpus([parsed] if parsed else [], report)
+    check("and the contract accepts the Russian one too",
+          not report.errors and not report.warnings)
 
     thin = pack_json("space", "science", facts[:2])
     with tempfile.TemporaryDirectory() as tmp:

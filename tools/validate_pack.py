@@ -148,10 +148,13 @@ def read_pack(path, report):
 
     pack_id = data.get("packId") or category
     suffix = "" if language == DEFAULT_LANGUAGE else f"-{language}"
-    if suffix and isinstance(pack_id, str) and not pack_id.endswith(suffix):
+    # The tag has to be *somewhere* in the id, not in one particular place. Hand-authored packs
+    # suffix it (`geography-ru`) and `generate_facts.py` prefixes it (`library-ru-geography-000`),
+    # and both are namespaced against the English pack of the same name, which is the actual rule.
+    if suffix and isinstance(pack_id, str) and f"-{language}-" not in f"-{pack_id}-":
         report.error(
             where,
-            f"is in {language} but its packId {pack_id!r} has no {suffix!r} suffix — installing it "
+            f"is in {language} but its packId {pack_id!r} never names the language — installing it "
             f"would replace the English pack of that id",
         )
 
@@ -387,8 +390,12 @@ def self_test():
                        statement="Столица Франции — Париж.")],
     }
     check("a Russian pack with suffixed ids passes", run(ru)[0].ok)
-    check("a Russian pack whose packId has no suffix is refused",
+    check("a Russian pack whose packId never names the language is refused",
           not run({**ru, "packId": "geography"})[0].ok)
+    check("a Russian pack that names the language as a prefix is accepted, as the library does",
+          run({**ru, "packId": "library-ru-geography-000"})[0].ok)
+    check("a packId merely containing the letters is not enough",
+          not run({**ru, "packId": "geography-rural"})[0].ok)
     check("a Russian fact whose id has no suffix is refused",
           not run({**ru, "facts": [fact(id="t-1", question="Столица?", answer="Париж",
                                         statement="Столица Франции — Париж.")]})[0].ok)
