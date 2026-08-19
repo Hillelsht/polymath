@@ -76,22 +76,27 @@ const PM = (() => {
   // --- the day's content ------------------------------------------------------------------------
 
   /**
-   * The grid for a date: from the copy baked into this build, else from the published pack.
+   * The day's content for a game: from the copy baked into this build, else from the published pack.
    *
    * The baked-in copy is what makes the page work offline and over `file://` (which is how CI
    * plays it). The fetch is what stops a deploy going stale: packs are refreshed by a bot, and a
    * bot push cannot trigger the workflow that would rebuild this site.
+   *
+   * Chains calls its days `puzzles` and The Vaults calls them `rooms`, which is worth one `||`
+   * here to keep each pack readable as the thing it is when someone opens the file.
    */
+  const BAKED = { chains: 'POLYMATH_CHAINS', vaults: 'POLYMATH_VAULTS' };
   const months = {};
   async function puzzle(game, date) {
     const month = date.slice(0, 7);
-    if (!months[month]) {
-      const baked = (globalThis.POLYMATH_CHAINS || {})[month];
-      months[month] = baked ? Promise.resolve(baked)
+    const key = `${game}/${month}`;
+    if (!months[key]) {
+      const baked = (globalThis[BAKED[game]] || {})[month];
+      months[key] = baked ? Promise.resolve(baked)
         : fetch(`${RAW}/${game}/${month}.json`).then(r => r.ok ? r.json() : null).catch(() => null);
     }
-    const pack = await months[month];
-    return pack?.puzzles?.find(p => p.date === date) || null;
+    const pack = await months[key];
+    return (pack?.puzzles || pack?.rooms || []).find(p => p.date === date) || null;
   }
 
   // --- handing a result on ------------------------------------------------------------------------

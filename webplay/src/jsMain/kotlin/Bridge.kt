@@ -19,8 +19,8 @@ class Session {
     private var descent: Descent = DescentRules.start(Rooms.all, tuning)
     private var framesSinceDeath: Int = 0
 
-    /** Set to play a single room on repeat instead of the whole descent, or -1 for the descent. */
-    private var soloRoom: Int = -1
+    /** Set to play one room on repeat instead of the whole descent; null for the descent. */
+    private var solo: Room? = null
 
     /**
      * Every frame's buttons, in order — which is the whole run, because the engine is
@@ -57,22 +57,31 @@ class Session {
     fun restart() {
         framesSinceDeath = 0
         recorded.clear()
-        descent = if (soloRoom >= 0) {
-            DescentRules.start(listOf(Rooms.all[soloRoom]), tuning)
-        } else {
-            DescentRules.start(Rooms.all, tuning)
-        }
+        descent = DescentRules.start(solo?.let { listOf(it) } ?: Rooms.all, tuning)
         rewindGhost()
     }
 
-    /** Jump to a room and stay there, for working on one piece of geometry. */
+    /** Jump to an authored room and stay there, for working on one piece of geometry. */
     fun playRoom(index: Int) {
-        soloRoom = index.coerceIn(0, Rooms.all.size - 1)
+        solo = Rooms.all[index.coerceIn(0, Rooms.all.size - 1)]
+        restart()
+    }
+
+    /**
+     * Play the room a seed means — the daily, once a curated seed has been published for the day.
+     *
+     * The page hands over a number it read out of a pack; the geometry is built here, by the same
+     * [RoomGen] that built it when the margin was measured. Nothing about the room crosses the
+     * JavaScript boundary, which is what stops the browser and the solver ever disagreeing about
+     * what today's room is.
+     */
+    fun playSeed(seed: Int) {
+        solo = RoomGen.room(seed, tuning)
         restart()
     }
 
     fun playDescent() {
-        soloRoom = -1
+        solo = null
         restart()
     }
 
@@ -104,7 +113,7 @@ class Session {
         ghostFrame = 0
         ghostSinceDeath = 0
         ghostDescent = if (ghost.isEmpty()) null else {
-            DescentRules.start(if (soloRoom >= 0) listOf(Rooms.all[soloRoom]) else Rooms.all, tuning)
+            DescentRules.start(solo?.let { listOf(it) } ?: Rooms.all, tuning)
         }
     }
 
@@ -172,7 +181,7 @@ class Session {
     val deaths: Int get() = descent.deaths
     val roomsCleared: Int get() = descent.roomsCleared
     val finished: Boolean get() = descent.finished
-    val soloing: Boolean get() = soloRoom >= 0
+    val soloing: Boolean get() = solo != null
 
     val ledgeCount: Int get() = descent.room.ledges.size
     fun ledgeX0(i: Int): Double = descent.room.ledges[i].x0
@@ -246,5 +255,13 @@ class Session {
         fun roomIdAt(i: Int): String = Rooms.all[i].id
         val minMargin: Int get() = Playtest.MIN_MARGIN_FRAMES
         val fps: Int get() = Tuning.FPS
+
+        /**
+         * The word a published margin earns, so the page never has to hold the thresholds itself.
+         *
+         * The number is measured in CI and travels in the pack; only the naming of it belongs to
+         * the game, and keeping the naming here means one place decides what "steady" means.
+         */
+        fun difficultyFor(margin: Int): String = RoomGen.difficulty(margin)
     }
 }

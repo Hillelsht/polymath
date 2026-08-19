@@ -196,11 +196,59 @@ streak survives restart; the Chromium playtest drives the daily end-to-end in CI
 are worth showing a stranger. **Shipped.** What remains is not code: a domain, an assetlinks file
 and a counter account.
 
-### Wedge 2 (~weeks 3–6): Provably-fair generated rooms + language parity
-- Room generator gated by `Playtest.solve` in CI (margin band → publish to
-  `packs/play/vaults/daily/` like Chains grids). The day's margin is its public difficulty label.
-- Run `generate_facts.py` to bring RU/HE toward parity; ship the language toggle — the same
-  daily in three languages, the story NYT structurally cannot copy.
+### Wedge 2 (~weeks 3–6): Provably-fair generated rooms + language parity  ← IN PROGRESS
+
+1. ~~**Room generator gated by `Playtest.solve`**~~ — done. `RoomGen` lays a room out from a seed
+   using a grammar of the ideas the seven authored rooms teach; `curate` walks a seed stream and
+   keeps only the candidates whose measured timing slack lands in the band the weekday asks for.
+   122 days published to `packs/play/vaults/`, each carrying **a seed, its margin and the plan that
+   achieved it** — never geometry, which would be a second copy of the room that could disagree
+   with the first. The margin is the day's public difficulty, printed beside the room.
+
+   Two measurements decided the shape of it, and neither was a taste call. A jump carries 96 units
+   and the ledge-grab already bridges 57, so **no room with a real leap in it measures above 20
+   frames**; a blade's open window, by contrast, moves the margin smoothly from 12 to 40. The blade
+   is therefore the difficulty dial and the leap a fixed cost — which is also true of the authored
+   descent, where only the threshold demands a jump the grab cannot cover. So the week is the
+   crossword's: Monday to Wednesday are rhythm rooms by construction, Friday and Saturday ask for
+   the leap, Sunday steps back out.
+
+   Three gates, each catching what the others cannot: `RoomGenTest` asserts what a glance would
+   have caught (exit on solid ground, abyss below the floor, one idea per screen, narrow enough to
+   read whole); `DailyRoomsTest` replays the published plan for **every day of every published
+   month** and re-measures its slack, so a tuning change months later fails the build instead of
+   quietly turning every difficulty label into a fiction; and `tools/playtest/ghost.js` follows the
+   published plan in Chromium, so a browser that can no longer execute the JVM's own answer is a
+   red build. `play.yml` curates monthly alongside the Chains grids, and **never rewrites a
+   published day** — a ghost link carries a date rather than a room.
+
+2. **Language parity** — the pipeline is ready, the harvest has not run. All **eighteen**
+   templates are now phrased in Russian and Hebrew (five were, all Geography), so a run in either
+   language covers the same six categories English does; `library.yml` generates and publishes one
+   language at a time; and `TranslatedLibraryTest` refuses a translated fact id that is missing its
+   language suffix, which is the failure that would install a Russian fact **over** an English one
+   and take its review history with it.
+
+   Two grammar problems shaped the phrasings and are worth knowing before adding a nineteenth
+   template. Wikidata hands back labels in base form only, so Russian cannot decline them —
+   every phrasing quotes the name in guillemets and is built to need the nominative. And past
+   Geography both languages hit the same second problem from opposite directions: a verb agreeing
+   with a painter's or a moon's gender, which no label carries. Both tables keep the sentence's
+   grammatical subject a noun written in the file, with the label beside it.
+
+   **A dry run has proved every template answers in every language** (Library run 32180040025, all
+   three green): English 4,090 facts, Russian 3,972, Hebrew 3,343 — six categories each, against
+   the ~10 facts RU and HE hold today. Only the publish is left, and only CI can do it: this
+   sandbox has no route to `query.wikidata.org`. Dispatch `library.yml` with `languages: ru,he`
+   and read the preflight table before trusting the run.
+
+   Budget about thirty minutes for Russian and ten for Hebrew. The harvest is two minutes in every
+   language; the rest is fetching Wikipedia extracts, and ru.wikipedia's API is roughly ten times
+   slower per batch than en's. That is why the languages are separate jobs — three of them in one
+   would not fit a single job's timeout.
+
+   After that, the language toggle: the same daily in three languages is the story NYT structurally
+   cannot copy.
 
 ### Wedge 3 (~weeks 6–10): "About anything"
 - Topic front door: topic → LLM maps to Wikidata subgraph → existing pipeline generates and
@@ -226,10 +274,11 @@ ads in the ritual, no new games until the dailies are excellent.
 3. **Wedge 1 is done**, except three things that are not code and are the user's to do: buy the
    domain, publish `.well-known/assetlinks.json` with a release signing fingerprint (which makes
    the https deep links live), and create a counter account (which makes step 7 live).
-   Next is **Wedge 2**: generated rooms gated by `Playtest.solve` in CI, and a `generate_facts.py`
-   run to bring RU and HE toward parity — the same daily in three languages is the story NYT
-   structurally cannot copy. The `author` and `musician` pools also want more facts before those
-   categories can return to the daily.
+   **Wedge 2's rooms are done** — generated, gated three ways, published monthly. Language parity
+   is *proved but unpublished*: all eighteen templates are translated, a dry run harvested 3,972
+   Russian and 3,343 Hebrew facts across six categories, and the only step left is a `library.yml`
+   dispatch with `languages: ru,he` — which only CI can run. Then the language toggle. The `author` and `musician` pools also want more
+   facts before those categories can return to the Chains daily.
    Two content follow-ups worth doing when convenient: the `author` and `musician` pools need
    more facts before those categories can return to the daily, and a device that already
    downloaded the placeholder-element facts keeps them, because library shards only ever add and
@@ -237,9 +286,9 @@ ads in the ritual, no new games until the dailies are excellent.
 4. Branch discipline: work on a feature branch, verify Compose changes by dispatching `build.yml`
    on the branch (this environment cannot compile Android), merge to `main` via PR — merges to
    `main` auto-publish the APK release and the Pages site.
-5. Keep the existing gates green: `enginetests` (306 tests), `tools/playtest/play.js` margins,
-   `tools/playtest/daily.js`, the docs-freshness pre-push hook (update `docs/` when code
-   contradicts it — it will tell you).
+5. Keep the existing gates green: `enginetests` (331 tests), `tools/playtest/play.js` margins,
+   `tools/playtest/daily.js`, `tools/playtest/ghost.js`, the docs-freshness pre-push hook (update
+   `docs/` when code contradicts it — it will tell you).
 
 Reference links: live site (Polymath) **https://hillelsht.github.io/polymath/** · rolling APK
 **https://github.com/Hillelsht/polymath/releases/tag/latest** · post-mortem & game design

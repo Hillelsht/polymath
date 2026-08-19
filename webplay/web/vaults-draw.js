@@ -12,9 +12,38 @@
 const VaultView = (canvas, options = {}) => {
   const ctx = canvas.getContext('2d');
   const W = canvas.width, H = canvas.height;
-  // Rooms run to ~720 units wide and 100 tall; fit the widest with a margin either side.
+  // The authored rooms run to ~720 units wide and 64 tall, and these are the numbers they were
+  // drawn at. Generated rooms are not that shape — three beats and two drops reach 1,200 wide and
+  // 192 deep — so the scale is a ceiling now rather than a constant.
   const SCALE = options.scale ?? 1.2, OX = options.ox ?? 22, OY = options.oy ?? 112;
-  const sx = x => OX + x * SCALE, sy = y => OY + y * SCALE;
+
+  /** How far a jump rises, which is the headroom a room needs above its highest floor. */
+  const RISE = 48, EDGE = 30;
+
+  let scale = SCALE, oy = OY, deepest = 0, fittedTo = null;
+  const sx = x => OX + x * scale, sy = y => oy + y * scale;
+
+  /**
+   * Sizes the drawing to the room, once per room rather than once per frame.
+   *
+   * Never magnifies: a room that already fits is drawn at the size the game was tuned at, so every
+   * authored room looks exactly as it did before generated ones existed. Only a room too big for
+   * the canvas is stepped down, and then far enough to keep the jump arc on screen as well —
+   * clipping the top of a jump would be a worse bug than clipping the far wall, because you would
+   * lose sight of the runner rather than of the scenery.
+   */
+  function fit(session) {
+    if (fittedTo === session.roomId) return;
+    fittedTo = session.roomId;
+    let right = session.exitX;
+    deepest = 0;
+    for (let i = 0; i < session.ledgeCount; i++) {
+      right = Math.max(right, session.ledgeX1(i));
+      deepest = Math.max(deepest, session.ledgeY(i));
+    }
+    scale = Math.min(SCALE, (W - OX * 2) / Math.max(right, 1), (H - EDGE * 2) / (RISE + deepest));
+    oy = Math.min(OY, H - EDGE - deepest * scale);
+  }
 
   let trail = [];
 
@@ -43,7 +72,7 @@ const VaultView = (canvas, options = {}) => {
   }
 
   return {
-    reset() { trail = []; },
+    reset() { trail = []; fittedTo = null; },
 
     /** Call once per simulated frame, so the arc is drawn at the engine's rate not the screen's. */
     record(session) {
@@ -52,8 +81,13 @@ const VaultView = (canvas, options = {}) => {
     },
 
     draw(session, { showTrail = true, showGhost = true } = {}) {
+      fit(session);
       ctx.fillStyle = '#0F1014'; ctx.fillRect(0, 0, W, H);
-      ctx.fillStyle = '#0A0B0E'; ctx.fillRect(0, sy(104), W, H - sy(104));
+      // The void under the world. Kept below the lowest floor as well as at its authored depth,
+      // so a room that drops further than any hand-built one does not have it painted over its
+      // own stone.
+      const floor = Math.max(sy(104), sy(deepest) + 26);
+      ctx.fillStyle = '#0A0B0E'; ctx.fillRect(0, floor, W, H - floor);
 
       // ledges — torchlight from above, so the top edge is lit and the body is not
       for (let i = 0; i < session.ledgeCount; i++) {

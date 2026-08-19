@@ -42,18 +42,39 @@ const check = (ok, what) => {
 };
 
 /**
- * Drives the page's own session to clear the room, the way the margin solver does: hold right,
- * press jump on one frame, search for a frame that works. Deliberately not a recorded input list —
- * the room changes daily, so the test has to solve whatever it is given.
+ * Drives the page's own session to clear the room.
+ *
+ * The published plan is tried first, and that is the interesting half: those numbers were found by
+ * the margin solver on the JVM, and a browser that cannot follow them means the two targets have
+ * quietly stopped being one implementation. Everything downstream — the difficulty printed beside
+ * the room, the whole claim that a generated daily was proved playable before anyone met it — is
+ * measured on the JVM and spent here.
+ *
+ * The search is the fallback, for a day the packs do not cover. It is the solver's own vocabulary:
+ * hold right, press jump on one frame, try frames until one works.
  */
 const clearTheRoom = page => page.evaluate(() => {
   const s = window.__vaults();
+  const record = () => ({ frames: s.elapsedFrames, deaths: s.deaths, ghost: s.recording() });
+
+  const plan = window.__plan();
+  if (plan) {
+    s.restart();
+    const presses = plan.presses.map(p => p + plan.wait);
+    for (let f = 0; f < 480; f++) {
+      s.tick(false, f >= plan.wait, presses.includes(f), false);
+      if (s.finished) return { ...record(), followed: true };
+      if (s.phase === 'DEAD') break;
+    }
+    return null;   // the published plan is the claim; falling back would hide it failing
+  }
+
   for (let wait = 0; wait < 140; wait += 2) {
     for (let press = 0; press < 300; press++) {
       s.restart();
       for (let f = 0; f < 480; f++) {
         s.tick(false, f >= wait, f === wait + press, false);
-        if (s.finished) return { frames: s.elapsedFrames, deaths: s.deaths, ghost: s.recording() };
+        if (s.finished) return { ...record(), followed: false };
         if (s.phase === 'DEAD') break;
       }
     }
@@ -89,13 +110,21 @@ const clearTheRoom = page => page.evaluate(() => {
   check(await page.locator('#c').isVisible(), 'the room is on screen');
   check(await page.locator('#v-result').isHidden(), 'and there is no result yet');
   const room = (await page.locator('#v-room').textContent()).trim();
-  console.log(`  today's room: ${room}`);
+  const plan = await page.evaluate(() => window.__plan());
+  console.log(`  today's room: ${room}${plan ? ` (seeded, wait=${plan.wait} presses=[${plan.presses}])` : ' (authored)'}`);
+  check(
+    (await page.locator('#v-epi').textContent()).trim().length > 0,
+    'the room says its own line',
+  );
 
   // 1 — clear it, and take the link the page offers
   const run = await clearTheRoom(page);
   check(run !== null, 'the room can be cleared');
   if (!run) { await browser.close(); await host.close(); process.exit(1); }
-  console.log(`  cleared in ${(run.frames / 60).toFixed(1)}s, ${run.deaths} deaths`);
+  console.log(
+    `  cleared in ${(run.frames / 60).toFixed(1)}s, ${run.deaths} deaths` +
+    (run.followed ? ' — following the plan the solver published' : ' — searched for a way through'),
+  );
   check(run.ghost.length > 0, 'the run records to a ghost');
   check(run.ghost.length < 400, `and the ghost is short enough to paste (${run.ghost.length} chars)`);
 

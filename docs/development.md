@@ -24,7 +24,7 @@ internals makes a red build unreadable.
 gradle -p enginetests test
 ```
 
-317 tests, no Android SDK needed, seconds to run. `enginetests` is a **separate Gradle build**
+331 tests, no Android SDK needed, seconds to run. `enginetests` is a **separate Gradle build**
 (its own `settings.gradle.kts`) that points `kotlin.srcDirs` straight at the app's
 `domain/` and `data/seed/` directories. It compiles and tests **the exact source that ships** —
 not a copy, not a port.
@@ -40,6 +40,18 @@ Two consequences worth internalising:
 Test resources point at `app/src/main/assets`, so the content tests parse the real shipped
 curriculum. Generated content under `packs/` is read through relative `File("../packs/...")`
 paths instead, because it lives outside assets.
+
+This build also **writes** one piece of content, which no other test build does:
+
+```bash
+gradle -p enginetests publishRooms -Pmonths=4        # -> packs/play/vaults/
+```
+
+Curating a daily Vaults room means running `Playtest.solve` over each candidate a few thousand
+times, so it cannot live in `tools/` with the Python pipelines. It is a `JavaExec` over the test
+classpath rather than a test, because a test that edits the repository is a test you cannot run
+twice with confidence — `DailyRoomsTest` is the half that belongs in the suite, and it re-measures
+every day the task published. See `docs/games.md`.
 
 ### The browser build — the only thing here that can be played
 
@@ -63,17 +75,20 @@ toolchain is pointed at the system Node and stopped before webpack so npm is nev
 It builds four pages sharing one bundle and one stylesheet: `index.html` (Polymath, the front
 door), `chains.html` (the daily grid), `descent.html` (the daily room, with ghost racing) and
 `vaults.html` (the tuning harness). The room is drawn by `vaults-draw.js`, shared by the last two.
-The day's grids are baked into `dailies.js` by the `dailies` task rather than fetched, which is
-what lets the page work offline and over `file://`; the page still falls back to the published
-pack for a month it was not built with, because a pack refreshed by a bot cannot trigger a rebuild
-of this site.
+The day's content is baked in by the `dailies` task rather than fetched, which is what lets the
+pages work offline and over `file://` — the grids into `dailies.js` and the rooms into `rooms.js`,
+one file per game so the descent does not load a few hundred kilobytes of Wikidata labels it has no
+use for. Either page still falls back to the published pack for a month it was not built with,
+because a pack refreshed by a bot cannot trigger a rebuild of this site.
 
 This exists because the previous game shipped unplayable past a full headless suite: no test had
 ever pressed a button. `play.js` presses them, and re-measures every room's timing margin in the
 browser — those figures matching the JVM's is what proves the two targets have not drifted.
 `daily.js` does the same job one layer up, over http rather than `file://` because a daily is made
 of things a `file://` origin does not have: `localStorage`, and therefore a streak that survives a
-reload. The extra constraint all this buys is in `invariants.md`: `domain/play/vaults` and
+reload. `ghost.js` adds the check the generated rooms depend on — it clears today's room by
+following the plan the margin solver published for it, so a browser that can no longer execute the
+JVM's own answer fails the build. The extra constraint all this buys is in `invariants.md`: `domain/play/vaults` and
 `domain/play/chains` are **stdlib only**, no `java.*` either, or this build stops compiling.
 
 Full detail in `webplay/README.md`.

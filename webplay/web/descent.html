@@ -16,6 +16,7 @@
   .pad .pm-btn { min-width:62px; padding:14px 20px; }
   .pad .pm-btn.on { background:var(--pm-gold); border-color:var(--pm-gold); color:var(--pm-ink); }
   .keys { color:var(--pm-dim); font-size:12.5px; text-align:center; }
+  .epi { color:var(--pm-dim); font-style:italic; font-size:13.5px; margin:2px 0 0; }
   kbd { background:var(--pm-panel-lit); border:1px solid var(--pm-edge); border-radius:4px;
         padding:1px 6px; font-size:11.5px; color:var(--pm-text); }
 </style>
@@ -44,6 +45,7 @@
     <span><b>deaths</b> <span id="v-deaths">0</span></span>
     <span class="ghosted" id="v-ghost" hidden><b>ghost</b> <span id="v-ghost-time">—</span></span>
   </div>
+  <p class="epi" id="v-epi"></p>
 
   <div class="stage"><canvas id="c" width="920" height="280"></canvas></div>
 
@@ -81,6 +83,7 @@
 <script src="./kotlin_org_jetbrains_kotlin_kotlin_dom_api_compat.js"></script>
 <script src="./smart-webplay.js"></script>
 <script src="./vaults-draw.js"></script>
+<script src="./rooms.js"></script>
 <script src="./polymath.js"></script>
 <script>
 const V = globalThis['smart-webplay'].com.hillelsht.smart.domain.play.vaults;
@@ -104,34 +107,54 @@ const DATE = /^\d{4}-\d{2}-\d{2}$/.test(fragment.get('d') || '') ? fragment.get(
 const COUNTS = DATE === TODAY;                 // an old day's room is practice, not today's attempt
 const NUMBER = PM.dayNumber(DATE);
 
-// Everyone gets the same room on the same day, because a shared time means nothing otherwise.
-const ROOM = ((NUMBER - 1) % ROOMS + ROOMS) % ROOMS;
-session.playRoom(ROOM);
-
-let done = PM.load('vaults', DATE);            // today's locked-in time, if there is one
+let done = null;                               // today's locked-in time, if there is one
 let started = false;                           // the clock waits for the first input
 let racing = false;
+let curated = null;                            // the published room for DATE, when there is one
+const ghostText = fragment.get('g');
 
 const held = { left: false, right: false, jump: false, down: false };
 let jumpEdge = false;
 
-// --- setting up ---------------------------------------------------------------------------------
+/**
+ * Today's room: a curated seed where one has been published, else one of the authored seven.
+ *
+ * The pack carries a seed rather than a shape, and the room it means is rebuilt here by the same
+ * generator that was running when its timing slack was measured — so the difficulty printed beside
+ * it is a measurement of the room being played, not a label attached to one. The fallback covers a
+ * date from before the packs begin and a deploy that has outlived them: a worse daily than a
+ * curated room, and a much better one than an empty page.
+ */
+async function setUp() {
+  curated = await PM.puzzle('vaults', DATE);
+  if (curated) session.playSeed(curated.seed);
+  else session.playRoom(((NUMBER - 1) % ROOMS + ROOMS) % ROOMS);
 
-el('v-when').textContent =
-  `${PM.pretty(DATE)} · no. ${NUMBER}` + (COUNTS ? '' : ' · practice');
-el('v-room').textContent = V.Session.Companion.roomIdAt(ROOM);
+  done = PM.load('vaults', DATE);
 
-const ghostText = fragment.get('g');
-if (ghostText && session.loadGhost(ghostText)) {
-  racing = true;
-  el('v-ghost').hidden = false;
-} else if (ghostText) {
-  // Refused rather than raced: a half-read ghost would be an attempt nobody had.
-  el('v-ghost').hidden = false;
-  el('v-ghost-time').textContent = 'that link is not a run';
+  el('v-when').textContent =
+    `${PM.pretty(DATE)} · no. ${NUMBER}` + (COUNTS ? '' : ' · practice');
+  el('v-room').textContent = curated
+    ? V.Session.Companion.difficultyFor(curated.margin)
+    : session.roomId;
+  // The margin is the whole claim the daily makes, so it is available to anyone who looks rather
+  // than being a number only CI ever sees.
+  if (curated) {
+    el('v-room').title = `${curated.margin} frames of timing slack, measured before publishing`;
+  }
+  el('v-epi').textContent = session.epigraph;
+
+  if (ghostText && session.loadGhost(ghostText)) {
+    racing = true;
+    el('v-ghost').hidden = false;
+  } else if (ghostText) {
+    // Refused rather than raced: a half-read ghost would be an attempt nobody had.
+    el('v-ghost').hidden = false;
+    el('v-ghost-time').textContent = 'that link is not a run';
+  }
+
+  if (done) finish(done.frames, done.deaths, done.ghost);
 }
-
-if (done) finish(done.frames, done.deaths, done.ghost);
 
 // --- input ---------------------------------------------------------------------------------------
 
@@ -270,6 +293,13 @@ addEventListener('hashchange', () => location.reload());
 window.__vaults = () => session;
 window.__shareText = () => shareText();
 window.__begin = () => { started = true; };
-window.__ready = true;
-requestAnimationFrame(loop);
+// The plan the margin solver found on the JVM, so the playtest can check it still clears the room
+// in a browser. That the same numbers work on both targets is the claim the whole pipeline rests
+// on, and it is not one the engine tests can make.
+window.__plan = () => curated && { wait: curated.wait, presses: curated.presses.slice() };
+
+setUp().then(() => {
+  window.__ready = true;
+  requestAnimationFrame(loop);
+});
 </script>

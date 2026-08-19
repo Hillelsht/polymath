@@ -254,6 +254,11 @@ TEMPLATES = [
 # name, or naming it in its own clause — rather than guess at a declension and sometimes get it
 # wrong. This is why the Russian phrasings do not read as a literal translation of the English
 # ones sentence-for-sentence.
+#
+# The templates that answer with a *person* need a second dodge. "Кто открыл X" is fine, because
+# the verb agrees with «кто»; "«X» открыл X" is not, because it would agree with a discoverer
+# whose gender is a label this file has never seen. Every such statement is therefore nominal —
+# «Автор картины «X» — «Y».» — which needs no verb and so has nothing to get wrong.
 RU_PHRASING = {
     "capital": (
         "Столица страны «{s}»",
@@ -280,6 +285,81 @@ RU_PHRASING = {
         "В состав какой горной системы входит «{s}»?",
         "«{s}» входит в состав горной системы «{o}».",
     ),
+
+    # --- Science ---------------------------------------------------------------------------
+    "element-symbol": (
+        "Химический символ: «{s}»",
+        "Какой химический символ у элемента «{s}»?",
+        "Химический символ элемента «{s}» — «{o}».",
+    ),
+    "moon-parent": (
+        "Орбита: «{s}»",
+        "Вокруг какого небесного тела обращается «{s}»?",
+        "«{s}» обращается вокруг небесного тела «{o}».",
+    ),
+    "discoverer": (
+        "Первооткрыватель: «{s}»",
+        "Кто открыл объект «{s}»?",
+        "Первооткрыватель объекта «{s}» — «{o}».",
+    ),
+    "named-after": (
+        "Происхождение названия: «{s}»",
+        "В честь кого или чего назван объект «{s}»?",
+        "Объект «{s}» назван в честь «{o}».",
+    ),
+
+    # --- Arts & Literature -----------------------------------------------------------------
+    "painting-creator": (
+        "Автор картины «{s}»",
+        "Кто написал картину «{s}»?",
+        "Автор картины «{s}» — «{o}».",
+    ),
+    "book-author": (
+        "Автор книги «{s}»",
+        "Кто написал книгу «{s}»?",
+        "Автор книги «{s}» — «{o}».",
+    ),
+    "sculpture-creator": (
+        "Автор скульптуры «{s}»",
+        "Кто создал скульптуру «{s}»?",
+        "Автор скульптуры «{s}» — «{o}».",
+    ),
+    "composer": (
+        "Музыка: «{s}»",
+        "Кто написал музыку к «{s}»?",
+        "Автор музыки к «{s}» — «{o}».",
+    ),
+
+    # --- History ---------------------------------------------------------------------------
+    "battle-conflict": (
+        "Сражение «{s}»",
+        "Частью какой войны было сражение «{s}»?",
+        "Сражение «{s}» было частью войны «{o}».",
+    ),
+
+    # --- Culture ---------------------------------------------------------------------------
+    "film-director": (
+        "Режиссёр фильма «{s}»",
+        "Кто снял фильм «{s}»?",
+        "Режиссёр фильма «{s}» — «{o}».",
+    ),
+    "dish-origin": (
+        "Происхождение блюда «{s}»",
+        "Из какой страны происходит блюдо «{s}»?",
+        "Блюдо «{s}» происходит из страны «{o}».",
+    ),
+
+    # --- Sports ----------------------------------------------------------------------------
+    "club-country": (
+        "Страна клуба «{s}»",
+        "В какой стране выступает клуб «{s}»?",
+        "Клуб «{s}» выступает в стране «{o}».",
+    ),
+    "athlete-sport": (
+        "Вид спорта: «{s}»",
+        "С каким видом спорта связано имя «{s}»?",
+        "Имя «{s}» связано с видом спорта «{o}».",
+    ),
 }
 
 # Hebrew's grammatical wrinkle is not Russian's. There is no case declension to dodge — the
@@ -293,6 +373,13 @@ RU_PHRASING = {
 # by a different route. Subjects are countries, cities, rivers or mountains, so statements agree
 # with them in gender by Hebrew convention: countries and cities feminine, rivers and mountains
 # masculine.
+#
+# Beyond geography the subject is a painting, a battle, a moon or a footballer, and there is no
+# convention to lean on — a Hebrew verb agrees in gender with its subject, and the subject is a
+# label this file has never seen. So the rest of the table keeps the *grammatical* subject a noun
+# written here ("המסלול", "הקרב", "המחבר") with the Wikidata label in a של-phrase or in apposition
+# beside it. The sentence then agrees with a word whose gender is known, and the label is still
+# slotted in exactly as given.
 HE_PHRASING = {
     "capital": (
         "הבירה של {s}",
@@ -318,6 +405,81 @@ HE_PHRASING = {
         "ההר {s}",
         "לאיזו שרשרת הרים שייך ההר {s}?",
         "ההר {s} שייך לשרשרת ההרים {o}.",
+    ),
+
+    # --- Science ---------------------------------------------------------------------------
+    "element-symbol": (
+        "הסמל הכימי של {s}",
+        "מהו הסמל הכימי של היסוד {s}?",
+        "הסמל הכימי של היסוד {s} הוא {o}.",
+    ),
+    "moon-parent": (
+        "המסלול של {s}",
+        "סביב איזה גוף שמימי נמצא המסלול של {s}?",
+        "המסלול של {s} הוא סביב {o}.",
+    ),
+    "discoverer": (
+        "המגלה של {s}",
+        "מי גילה את {s}?",
+        "המגלה של {s} הוא {o}.",
+    ),
+    "named-after": (
+        "מקור השם של {s}",
+        "מהו מקור השם של {s}?",
+        "מקור השם של {s} הוא {o}.",
+    ),
+
+    # --- Arts & Literature -----------------------------------------------------------------
+    "painting-creator": (
+        "הצייר של {s}",
+        "מי צייר את {s}?",
+        "הצייר של {s} הוא {o}.",
+    ),
+    "book-author": (
+        "המחבר של {s}",
+        "מי כתב את הספר {s}?",
+        "המחבר של הספר {s} הוא {o}.",
+    ),
+    "sculpture-creator": (
+        "היוצר של הפסל {s}",
+        "מי יצר את הפסל {s}?",
+        "היוצר של הפסל {s} הוא {o}.",
+    ),
+    "composer": (
+        "המוזיקה של {s}",
+        "מי הלחין את המוזיקה של {s}?",
+        "המלחין של {s} הוא {o}.",
+    ),
+
+    # --- History ---------------------------------------------------------------------------
+    "battle-conflict": (
+        "הקרב {s}",
+        "לאיזו מלחמה שייך הקרב {s}?",
+        "הקרב {s} היה חלק מהמלחמה {o}.",
+    ),
+
+    # --- Culture ---------------------------------------------------------------------------
+    "film-director": (
+        "הבמאי של הסרט {s}",
+        "מי ביים את הסרט {s}?",
+        "הבמאי של הסרט {s} הוא {o}.",
+    ),
+    "dish-origin": (
+        "ארץ המקור של המאכל {s}",
+        "מאיזו מדינה מגיע המאכל {s}?",
+        "המאכל {s} מגיע מהמדינה {o}.",
+    ),
+
+    # --- Sports ----------------------------------------------------------------------------
+    "club-country": (
+        "המדינה של המועדון {s}",
+        "באיזו מדינה משחק המועדון {s}?",
+        "המועדון {s} משחק במדינה {o}.",
+    ),
+    "athlete-sport": (
+        "ענף הספורט של {s}",
+        "באיזה ענף ספורט מוכר השם {s}?",
+        "ענף הספורט של {s} הוא {o}.",
     ),
 }
 
@@ -983,8 +1145,14 @@ def self_test():
           (TEMPLATES[0].title, TEMPLATES[0].question, TEMPLATES[0].statement))
     check("a template with Russian phrasing resolves it",
           phrase(next(t for t in TEMPLATES if t.key == "capital"), "ru") == RU_PHRASING["capital"])
+    # Every shipped template is translated now, so the untranslated path is demonstrated with a
+    # template that does not exist rather than by hunting for a gap in the table. The mechanism
+    # still matters: it is what lets a new English template be added and published before anyone
+    # has phrased it, instead of holding the whole pipeline until three languages agree.
+    untranslated = Template("not-a-template", "science", "thing", "T {s}", "Q {s}?", "{s} is {o}.",
+                            "?s wdt:P0 ?o .")
     check("a template with no Russian phrasing resolves to nothing",
-          phrase(next(t for t in TEMPLATES if t.key not in RU_PHRASING), "ru") is None)
+          phrase(untranslated, "ru") is None)
     check("every RU_PHRASING key names a real template",
           set(RU_PHRASING) <= {t.key for t in TEMPLATES})
     check("every Russian phrasing supplies all three parts",
@@ -1017,13 +1185,12 @@ def self_test():
     check("the English id shape is untouched by the language feature",
           make_facts(capital, [row("Q142", "France", "Paris")])[0]["id"] == "wd-capital-Q142")
     check("a template outside the Russian set yields nothing for Russian, not a crash",
-          make_facts(next(t for t in TEMPLATES if t.key not in RU_PHRASING),
-                     [row("Q1", "S", "A")], "ru") == [])
+          make_facts(untranslated, [row("Q1", "S", "A")], "ru") == [])
 
     check("a template with Hebrew phrasing resolves it",
           phrase(next(t for t in TEMPLATES if t.key == "capital"), "he") == HE_PHRASING["capital"])
     check("a template with no Hebrew phrasing resolves to nothing",
-          phrase(next(t for t in TEMPLATES if t.key not in HE_PHRASING), "he") is None)
+          phrase(untranslated, "he") is None)
     check("every HE_PHRASING key names a real template",
           set(HE_PHRASING) <= {t.key for t in TEMPLATES})
     check("every Hebrew phrasing supplies all three parts",
@@ -1048,10 +1215,32 @@ def self_test():
     check("a Hebrew fact's page URL points at the Hebrew Wikipedia",
           he_facts[0]["pageUrl"].startswith("https://he.wikipedia.org/wiki/"))
     check("a template outside the Hebrew set yields nothing for Hebrew, not a crash",
-          make_facts(next(t for t in TEMPLATES if t.key not in HE_PHRASING),
-                     [row("Q1", "S", "A")], "he") == [])
+          make_facts(untranslated, [row("Q1", "S", "A")], "he") == [])
     check("Russian and Hebrew phrasing cover the same templates",
           set(RU_PHRASING) == set(HE_PHRASING))
+
+    # --- Parity, and the one thing a phrasing must never do ------------------------------
+    #
+    # Every template is asked in every language the app ships. That is the whole product claim
+    # for this pipeline — the same daily in three languages — so a template added in English
+    # alone is a gap someone has to be told about, not a thing to discover from a Russian
+    # library that quietly holds four categories instead of six.
+    for tag in PHRASING_BY_LANGUAGE:
+        check(f"every template is asked in {tag} as well as in English",
+              {t.key for t in templates_for(tag)} == {t.key for t in TEMPLATES})
+
+    # A prompt containing the answer is the one failure that turns a fact into an anti-fact: the
+    # quiz would show the correct answer inside its own question and mark three distractors
+    # wrong for no reason. Cheap to check and impossible to spot by reading a language you do
+    # not have.
+    for tag in ("en", *PHRASING_BY_LANGUAGE):
+        for template in templates_for(tag):
+            title, question, statement = phrase(template, tag)
+            check(f"{tag}/{template.key} never puts the answer in the prompt",
+                  "{o}" not in title and "{o}" not in question)
+            check(f"{tag}/{template.key} names its subject in the prompt and both in the fact",
+                  "{s}" in title and "{s}" in question and
+                  "{s}" in statement and "{o}" in statement)
 
     print(f"\n{len(failures)} failed" if failures else "\nAll checks passed.")
     return 1 if failures else 0
