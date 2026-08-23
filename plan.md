@@ -289,11 +289,36 @@ and a counter account.
    and the API named `gemini-3.6-flash` as its replacement. A 404 naming a successor is now
    followed once and recorded.
 
-3. Three vertical landing packs as SEO/community seeds (citizenship test, driving theory, one
-   fandom) — **blocked on 2 reaching `main`**, since each one is a `topic.yml` dispatch and
-   dispatching needs the workflow on the default branch. Worth doing in that order anyway: the
-   first real runs are what say whether the model narrows a citizenship test usefully or routes it
-   nowhere, and that answer should be read before three packs are published on the strength of it.
+3. **Three vertical landing packs** — one published, and the other two turned out to be a
+   *content* gap rather than a mapping one, which is worth more than the packs would have been.
+
+   `packs/community/topic-rivers-of-africa-geography.json` is live: **86 facts, 35 distinct
+   answers, every one with an image**, narrowed by `?s wdt:P17 ?c . ?c wdt:P30 wd:Q15 .` and
+   catalogued so any installed app can download it.
+
+   The plan named a citizenship test, a driving theory test and a fandom. Asked for the first, the
+   model answered — correctly — that *"the catalogue lacks templates for civics, government
+   structure, political offices, constitutional amendments, national symbols, and US state
+   capitals"*. Driving theory is the same story with road signs. **Neither is a mapper failure: no
+   template asks those questions, and no narrowing of an existing one can invent them.** The fix is
+   a nineteenth template in `generate_facts.py`, which is a content decision worth taking
+   deliberately rather than as a side effect of wanting a landing page.
+
+   The fandom is answerable and is blocked on quota, not capability — see below.
+
+   Three findings came out of these runs and all three are now in the code:
+
+   - **A correct clause can match nothing.** `?s wdt:P30 wd:Q15 .` is exactly "on the continent of
+     Africa" and almost no river carries P30. Coverage is invisible to any gate that reads a
+     clause, so the endpoint is asked and an empty answer goes back to the model with its row
+     count.
+   - **A model cannot recall Q-numbers.** Asked about Star Wars it produced `Q82347` — "America's
+     Next Top Model, season 2" — and, told so, produced `Q809`, the Polish language. It is no
+     longer asked to recall: a refusal now carries Wikidata's own search results and the model
+     picks from real candidates. **The label gate is what stood between that and a pack named Star
+     Wars full of reality-television credits**, permanently, because a published fact id is
+     permanent.
+   - **The free tier is twenty requests a day.** Which is the wall this stopped at.
 
 ### Wedge 4 (~weeks 10–13): Decide with data
 Only now revisit backend/accounts/monetization, gated on share-loop evidence from the counter.
@@ -320,12 +345,19 @@ ads in the ritual, no new games until the dailies are excellent.
    Wedge 2 is finished end to end: rooms generated and gated three ways, three libraries published
    (11,267 facts), and the daily playable in all three languages with a switcher.
 
-   **Wedge 3 is one merge from its headline.** The model-backed mapper, its five gates, the
-   workflow and the catalogue it publishes into all exist and are green; `topic.yml` cannot be
-   dispatched until it is on `main`, because GitHub only offers `workflow_dispatch` for workflows
-   present on the default branch. First runs to try, in this order: *"rivers of Africa"* (a
-   narrowing that should work), *"the Byzantine succession"* (should route nowhere and say so),
-   then the three vertical packs.
+   **Wedge 3's headline works and has published.** `topic.yml` has run end to end: a typed topic,
+   mapped by a model, narrowed, harvested from Wikidata, validated at the strict bar, catalogued
+   and committed — 86 African rivers, and the pipeline refusing three separate ways along the way.
+
+   Two things are needed to carry on, and both are yours:
+
+   - **Gemini's free tier allows 20 requests a day** and today's are spent. A topic costs one call,
+     or two when a proposal needs correcting. Either raise the quota / enable billing on the Google
+     AI Studio project (the calls are a few thousand tokens each, so this is cents rather than
+     dollars), or add `ANTHROPIC_API_KEY` as a repo secret — the provider is already a
+     `--provider anthropic` flag away.
+   - **Templates for civics and road signs**, if the citizenship and driving-theory verticals are
+     still wanted. That is a `generate_facts.py` change and a content decision, not a mapper one.
 
    Two content follow-ups worth doing when convenient: the `author` and `musician` pools need
    more facts before those categories can return to the daily, and a device that already
