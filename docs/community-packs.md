@@ -159,6 +159,19 @@ pack called *Rivers of Africa* full of European rivers is the exact bug the feat
 Answers are cached in `tools/topic_cache.json`, committed. A topic asked once is free forever and,
 more usefully, reviewable in a diff — what a model decided a topic meant is a content decision.
 
+What it actually does, from `probe.yml`'s first real run:
+
+| typed | mapped to |
+|---|---|
+| `chemistry` | `element-symbol`, not narrowed — a broad topic needs no clause |
+| `rivers of Africa` | `river-mouth`, narrowed by continent |
+| `films by Japanese directors` | `film-director`, `?o wdt:P27 wd:Q17 .` — narrowing the *answer* rather than the subject |
+| `the Byzantine succession` | nothing, and it says why: no template asks about monarchs, officeholders or successors |
+
+The last row is the honest one. A topic the catalogue cannot serve is answered with a sentence
+naming what is missing, and the fix is a nineteenth template in `generate_facts.py` — not a looser
+mapper.
+
 Whatever it writes goes through the same validator at the same `--strict` bar, and a pack that
 fails is deleted rather than left in the tree. `tools/build_manifest.py` then lists it in the
 catalogue, which is the only thing that makes it reachable from a device at all.
