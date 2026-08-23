@@ -23,7 +23,9 @@ Wikidata, Wikipedia or YouTube. Every tool is stdlib-only Python; there is no
 | ↳ | *also decides which answers are fit to be tiles — see `docs/games.md`* | |
 | `enginetests publishRooms` | `packs/play/vaults/` — the daily room's seed, margin and plan | `play.yml`, monthly |
 | `validate_pack.py` | nothing — reads packs and reports | run by hand, and by CI over every pack |
-| `topic_pack.py` | `packs/community/` — a pack built from a typed topic | run by hand |
+| `build_manifest.py` | `packs/manifest.json`, `packs/<tag>/manifest.json` — the catalogue | `content.yml`, `topic.yml`; checked by `build.yml` |
+| `topic_pack.py` | `packs/community/` — a pack built from a typed topic | `topic.yml`, on dispatch |
+| `topic_llm.py` | `tools/topic_cache.json` — what a model decided a topic meant | called by `topic_pack.py --llm` |
 | `probe_durations.py` | nothing — findings only | `probe.yml`, manual |
 | `probe_wikidata.py` | nothing — findings only | `probe.yml`, manual |
 | `playtest/play.js` | nothing — plays The Vaults in Chromium, screenshots | `web.yml` |
@@ -39,6 +41,23 @@ enforces everything `ContentParser` does and then the things that parse perfectl
 bad pack — an answerType too thin to draw distractors from, a translated fact id missing its
 language suffix, a question containing its own answer. Errors mean the pack would misbehave;
 warnings mean it would work and could be better; `--strict` promotes them.
+
+`build_manifest.py` writes the **catalogue**, and it is worth knowing why that is a tool of its
+own rather than three lines at the end of `enrich_content.py`, where it used to live.
+`PackService` reads exactly two files to discover content: `manifest.json` for the packs somebody
+chooses from, and `library/index.json` for the shards that top themselves up. A pack in neither is
+bytes on a CDN that nothing will ever request. Building the catalogue from `assets/content/*.json`
+— the six hand-authored sources — therefore made a whole class of pack *unpublishable*: a topic
+pack in `packs/community/` could be added to the manifest by hand and would survive exactly until
+the next content run deleted it, which is the worst version of that bug because it works when you
+test it. It also meant Russian and Hebrew had no catalogue at all, for weeks, with a published
+pack one URL away. Now every run catalogues what is actually published, in every language, and
+`build.yml` runs `--check` so a manifest that has drifted fails a build instead of a phone.
+
+It also stamps a `version` into any published pack that names none. `ContentParser` falls back to
+hashing the raw text, which nothing outside the app can reproduce, so the catalogue and the device
+would disagree about the version forever — and a device that believes its pack is stale offers the
+same download on every refresh for as long as the app is installed.
 
 **One pipeline is not in `tools/` and cannot be.** Curating a daily Vaults room means running
 `Playtest.solve` over each candidate a few thousand times, and the physics is Kotlin, so the
@@ -107,16 +126,17 @@ facts and published none of them, vetoed by two templates that yielded one fact 
 
 ## The workflows
 
-Seven, of which **four commit back to `main`**.
+Eight, of which **five commit back to `main`**.
 
 | Workflow | Trigger | Commits | Runs tests |
 |---|---|---|---|
 | `build.yml` | push / PR | no — publishes the `latest` release | yes |
-| `content.yml` | push to `assets/content/**`, weekly | `packs/`, assets mirror | no |
+| `content.yml` | push to `assets/content/**`, weekly | `packs/`, assets mirror, every manifest | no |
 | `durations.yml` | hourly | `packs/durations.json` | no |
 | `library.yml` | monthly, or dispatch | `packs/library/`, `packs/<tag>/library/` | yes, before committing |
 | `play.yml` | monthly, dispatch, or a change to the room grammar | `packs/play/` | yes, before committing |
 | `probe.yml` | manual only | nothing | no |
+| `topic.yml` | dispatch only | `packs/community/`, the manifests, the topic cache | yes, before committing |
 | `web.yml` | push / PR touching a game or its packs, or dispatch | no — publishes the portal to GitHub Pages | yes, and plays both |
 
 Shared idioms, each of which is load-bearing:

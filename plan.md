@@ -300,7 +300,7 @@ ads in the ritual, no new games until the dailies are excellent.
 4. Branch discipline: work on a feature branch, verify Compose changes by dispatching `build.yml`
    on the branch (this environment cannot compile Android), merge to `main` via PR — merges to
    `main` auto-publish the APK release and the Pages site.
-5. Keep the existing gates green: `enginetests` (331 tests), `tools/playtest/play.js` margins,
+5. Keep the existing gates green: `enginetests` (337 tests), `tools/playtest/play.js` margins,
    `tools/playtest/daily.js`, `tools/playtest/ghost.js`, the docs-freshness pre-push hook (update
    `docs/` when code contradicts it — it will tell you).
 

@@ -37,9 +37,18 @@ preference and every published path.
 3. Add a translated content pack — `packs/<tag>/geography.json` — with a **suffixed `packId` and
    suffixed fact ids**, and bundle a copy at `app/src/main/assets/packs/<tag>/`. Both, or it
    ships nowhere. See `invariants.md`.
-4. Add channels to `assets/content/channels.json` with `"language": "<tag>"`, covering all six
+4. Run `python3 tools/build_manifest.py`, which writes `packs/<tag>/manifest.json`. Without it the
+   pack ships in the APK and is **undownloadable**: `PackService.fetchManifest` asks for exactly
+   that path, a 404 comes back as `null`, and `null` is also what "CI has not published yet" looks
+   like — so the Library tab in that language is empty and nothing anywhere says why. Russian and
+   Hebrew both shipped like that for weeks with a published pack sitting one URL away. The same
+   run stamps a `version` into any pack that names none, because `ContentParser` otherwise falls
+   back to hashing the raw text, which no tool outside the app can reproduce — leaving the
+   catalogue and the device permanently disagreeing about whether the pack is current, and the
+   device re-downloading it on every refresh. `CatalogueTest` fails the build on both.
+5. Add channels to `assets/content/channels.json` with `"language": "<tag>"`, covering all six
    categories. CI's prober resolves the handles.
-5. Add generator phrasings for all eighteen templates (below). The self-test requires them.
+6. Add generator phrasings for all eighteen templates (below). The self-test requires them.
 
 `ChannelLanguageTest` enforces that every language offered in Settings has a Watch channel in
 every category — a language with an empty category is a dead filter chip, where the user taps
