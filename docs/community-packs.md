@@ -173,6 +173,15 @@ naming what is missing, and the fix is a nineteenth template in `generate_facts.
 mapper. Every Q- and P-number in that table was checked against its real Wikidata label before
 anything was harvested, which is the whole reason a model is allowed near published content.
 
+**A correct clause can still match nothing.** The first real publish run narrowed rivers with
+`?s wdt:P30 wd:Q15 .` — "on the continent of Africa", both ids verified — and it selected zero
+rivers, because almost none carry P30. Wikidata's coverage is uneven and no gate that reads a
+clause can see it; only the endpoint knows. So the endpoint is asked, and an empty answer sends the
+clause back to the model with the count attached: `?s wdt:P17 ?c . ?c wdt:P30 wd:Q15 .` reaches the
+same meaning through a property rivers do carry. A model with nothing better costs its own
+template. The one thing that never happens is widening back to the un-narrowed query, because a
+pack called *Rivers of Africa* full of European rivers is exactly the bug this path exists to fix.
+
 Whatever it writes goes through the same validator at the same `--strict` bar, and a pack that
 fails is deleted rather than left in the tree. `tools/build_manifest.py` then lists it in the
 catalogue, which is the only thing that makes it reachable from a device at all.

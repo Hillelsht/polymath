@@ -53,6 +53,18 @@ remembered, the way the other two probes record theirs:
       succession                         monarchs, rulers, political succession, predecessors or
                                          successors, or historical dynasties"
 
+And then the first real *publish* run found the one thing none of the gates can: **`?s wdt:P30
+wd:Q15 .` matched nothing.** It is exactly right — "on the continent of Africa", both ids verified
+against Wikidata — and almost no river carries P30, so it selected zero rivers. A clause can be
+correct about meaning and wrong about coverage, and nothing that reads the clause can tell the
+difference. Only the endpoint knows.
+
+So the endpoint is asked, and when the answer is empty the model is told precisely that — which
+clause, and how little it matched — and asked to route around it. `?s wdt:P17 ?c . ?c wdt:P30
+wd:Q15 .` reaches the same meaning through a property rivers actually carry. What never happens
+is widening back to the un-narrowed query; a model with nothing better to offer costs its template,
+not the topic's honesty.
+
 Worth reading closely, because two of those are better than the brief asked for. "Chemistry" was
 not one template but three, with two of them narrowed to `wd:Q11344` — so the pack asks who
 discovered an element and what an element is named after, rather than who discovered anything at
@@ -322,8 +334,39 @@ In `entities`, list every Q-number and P-number your clause uses — bare, witho
 `wdt:` prefix — with the English label you believe it has. Every one is checked against Wikidata before anything runs. Say what you
 actually believe — a guessed id whose label does not match is thrown out, and so is the clause.
 
+One more thing, and it is the failure that actually happens: **a clause can be perfectly correct
+and still match nothing**, because Wikidata's coverage is uneven. `?s wdt:P30 wd:Q15 .` reads as
+"on the continent of Africa" and is exactly right, and almost no river carries P30 — so narrowing
+rivers that way returns zero. Prefer a property the subjects of that template actually carry. When
+the obvious one is likely sparse, hop through a related entity that does carry it: a river has a
+country (P17), and a country has a continent (P30).
+
 Return JSON only.
 """
+
+
+def renarrow_prompt(topic, template_key, clause, matched, templates=None):
+    """The second ask, after a clause turned out to match nothing.
+
+    The model is told exactly which clause failed and how little it returned, because "try again"
+    without the result is rolling the same dice. This loop is the difference between a feature that
+    works on lucky topics and one that works.
+    """
+    return (
+        f"{INSTRUCTIONS}\n"
+        f"Topic: {json.dumps(topic)}\n\n"
+        f"You already answered this topic, and one of your narrowings did not work:\n\n"
+        f"    template: {template_key}\n"
+        f"    narrow:   {clause}\n"
+        f"    matched:  {matched} subjects — too few to build a pack from\n\n"
+        f"The clause is valid and its ids are real. The problem is coverage: the property you used "
+        f"is not populated on the subjects this template selects. Propose a *different* narrowing "
+        f"for this one template, reaching the same meaning through a property those subjects "
+        f"actually carry — usually by hopping through a related entity. Return only that one "
+        f"template. If the topic's meaning cannot be reached any other way, return no templates and "
+        f"say so in `note`; that is a better answer than a clause you do not believe in.\n\n"
+        f"Catalogue:\n{json.dumps(catalogue(templates), ensure_ascii=False, indent=1)}\n"
+    )
 
 
 def prompt_for(topic, templates=None):
@@ -402,7 +445,7 @@ def loads(text):
         raise Refused(f"the model did not return JSON: {exc}") from exc
 
 
-def ask_gemini(topic, templates=None, model=None, key=None):
+def ask_gemini(topic, templates=None, model=None, key=None, prompt=None):
     """One call, with one retry if the model named has been retired since this was written.
 
     The retry is not defensiveness for its own sake. The first real call this file ever made came
@@ -421,7 +464,7 @@ def ask_gemini(topic, templates=None, model=None, key=None):
     def call(name):
         return post(
             f"https://generativelanguage.googleapis.com/v1beta/models/{name}:generateContent",
-            {"contents": [{"parts": [{"text": prompt_for(topic, templates)}]}],
+            {"contents": [{"parts": [{"text": prompt or prompt_for(topic, templates)}]}],
              "generationConfig": {"temperature": 0, "responseMimeType": "application/json",
                                   "responseSchema": SCHEMA}},
             {"x-goog-api-key": key})
@@ -441,7 +484,7 @@ def ask_gemini(topic, templates=None, model=None, key=None):
     return loads(text), model
 
 
-def ask_anthropic(topic, templates=None, model=None, key=None):
+def ask_anthropic(topic, templates=None, model=None, key=None, prompt=None):
     """The same call against Claude, because the provider is a setting and not an architecture.
 
     Kept deliberately: the mapping step is small and the whole point of the gates above is that
@@ -455,7 +498,8 @@ def ask_anthropic(topic, templates=None, model=None, key=None):
         "https://api.anthropic.com/v1/messages",
         {"model": model, "max_tokens": 2000, "temperature": 0,
          "system": "Return a single JSON object and nothing else.",
-         "messages": [{"role": "user", "content": prompt_for(topic, templates)}]},
+         "messages": [{"role": "user",
+                       "content": prompt or prompt_for(topic, templates)}]},
         {"x-api-key": key, "anthropic-version": "2023-06-01"})
     try:
         text = body["content"][0]["text"]
@@ -516,6 +560,53 @@ def plan_for(topic, provider="gemini", templates=None, ask=None, model=None, use
     if use_cache:
         save_cache(cache, cache_path)
     return verified, note, False
+
+
+def renarrow(topic, template_key, clause, matched, provider="gemini", templates=None, ask=None,
+             model=None, cache_path=CACHE, use_cache=True):
+    """A second narrowing for one template, after the first matched nothing.
+
+    Returns a verified proposal, or None if the model had nothing better — which is a real answer
+    and the caller drops the template rather than widening back to the un-narrowed query.
+
+    Every gate that ran on the first proposal runs on this one. A retry is not a second chance to
+    get past them; it is a second chance to be right.
+    """
+    asker = PROVIDERS[provider]
+    raw, used_model = asker(topic, templates, model=model,
+                            prompt=renarrow_prompt(topic, template_key, clause, matched, templates))
+    for proposal in raw.get("templates") or []:
+        if str(proposal.get("key", "")).strip() != template_key:
+            continue
+        if not str(proposal.get("narrow", "")).strip():
+            # Declining to narrow on the retry means "I cannot reach this meaning", not "publish it
+            # broad" — the un-narrowed query is the bug this whole path exists to prevent.
+            continue
+        try:
+            better = verify(proposal, templates, ask=ask)
+        except Refused as exc:
+            print(f"  retry refused — {template_key}: {exc}")
+            continue
+        if use_cache:
+            remember(topic, better, used_model, cache_path)
+        return better
+    print(f"  {template_key}: the model had no better narrowing to offer")
+    return None
+
+
+def remember(topic, proposal, model, cache_path=CACHE):
+    """Replace a template's entry in the cache with one that actually worked.
+
+    So a clause that failed is not tried again on the next run — and, more importantly, so the
+    committed cache records what the pack was really built from rather than the first guess.
+    """
+    cache = load_cache(cache_path)
+    slot = cache.setdefault(cache_key(topic),
+                            {"topic": topic, "model": model, "templates": [], "note": ""})
+    slot["templates"] = [p for p in slot["templates"] if p.get("key") != proposal["key"]]
+    slot["templates"].append(proposal)
+    slot["model"] = model
+    save_cache(cache, cache_path)
 
 
 # --- self-test ------------------------------------------------------------------------------
@@ -658,7 +749,7 @@ def self_test():
         path = Path(tmp) / "cache.json"
         calls = []
 
-        def fake_model(topic, templates=None, model=None, key=None):
+        def fake_model(topic, templates=None, model=None, key=None, prompt=None):
             calls.append(topic)
             return {"templates": [good], "note": ""}, "fake-1"
 
@@ -672,7 +763,7 @@ def self_test():
 
         calls.clear()
 
-        def lying_model(topic, templates=None, model=None, key=None):
+        def lying_model(topic, templates=None, model=None, key=None, prompt=None):
             return {"templates": [{**good, "entities": [{"id": "Q15", "label": "Asia"}]}],
                     "note": "narrowed to Asia"}, "fake-1"
 
