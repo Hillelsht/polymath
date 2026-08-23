@@ -1,5 +1,5 @@
 {
- "generated": "2026-08-19T18:59:00Z",
+ "generated": "2026-08-23T19:12:46Z",
  "packs": [
   {
    "id": "arts",
@@ -54,6 +54,15 @@
    "facts": 70,
    "bytes": 149853,
    "file": "sports.json"
+  },
+  {
+   "id": "topic-rivers-of-africa-geography",
+   "name": "Rivers Of Africa · Geography",
+   "category": "geography",
+   "version": "2026-08-23",
+   "facts": 86,
+   "bytes": 48642,
+   "file": "community/topic-rivers-of-africa-geography.json"
   }
  ]
 }

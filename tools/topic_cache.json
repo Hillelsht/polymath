@@ -1,0 +1,29 @@
+{
+ "rivers of africa": {
+  "model": "gemini-3.6-flash",
+  "note": "",
+  "provider": "gemini",
+  "templates": [
+   {
+    "entities": [
+     {
+      "id": "P17",
+      "label": "country"
+     },
+     {
+      "id": "P30",
+      "label": "continent"
+     },
+     {
+      "id": "Q15",
+      "label": "Africa"
+     }
+    ],
+    "key": "river-mouth",
+    "narrow": "?s wdt:P17 ?c . ?c wdt:P30 wd:Q15 .",
+    "why": "Narrows rivers to those situated in countries located on the African continent."
+   }
+  ],
+  "topic": "rivers of Africa"
+ }
+}
