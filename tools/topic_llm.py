@@ -40,6 +40,23 @@ Answers are cached in `tools/topic_cache.json`, committed. A topic asked once is
 more usefully, **reviewable in a diff**: what a model decided a topic meant is a content decision,
 and content decisions in this repository are read before they ship.
 
+What a real model actually does with this, from `probe.yml`'s first run — recorded here rather than
+remembered, the way the other two probes record theirs:
+
+    chemistry                    -> element-symbol, not narrowed
+    the Byzantine succession     -> nothing, "the catalogue does not contain templates for
+                                    monarchs, emperors, officeholders, predecessors or successors"
+    films by Japanese directors  -> film-director, ?o wdt:P27 wd:Q17 .
+    rivers of Africa             -> river-mouth, narrowed by continent
+
+Two findings came out of that run and both are in the code above. The model named `gemini-2.5-flash`
+as retired and `gemini-3.6-flash` as its replacement, which is why a 404 naming a successor is
+followed once. And "rivers of Africa" was **refused by this file's own gate**, not by the model: it
+declared its entities as `wd:Q15`, the spelling they have inside the clause, and `bare()` did not
+exist yet. Refusing a right answer over a spelling is precisely what a strict gate is meant not to
+do, and it is the kind of thing no amount of offline testing against a fake model would have found
+— the fake answered the way the gate expected, because the same person wrote both.
+
     python3 tools/topic_llm.py --self-test               # offline, no key
     python3 tools/topic_llm.py --topic "rivers of Africa" --explain
     python3 tools/topic_llm.py --topic "rivers of Africa"    # asks the model, caches, verifies
@@ -146,6 +163,19 @@ def clause_ids(clause):
 
 # --- Verification ---------------------------------------------------------------------------
 
+# A prefixed id and a bare one name the same entity. The first real model call declared its
+# entities as `wd:Q15` — the spelling they have inside the clause, which is a perfectly reasonable
+# reading of "list every Q-number your clause uses" — and the gate refused a correct answer for it.
+# Refusing a right answer over a spelling is the failure mode a strict gate is *supposed* to avoid,
+# so both spellings are accepted and the prompt now says which one it wants.
+PREFIXED = re.compile(r"^(?:wdt|wd|ps|pq|p):")
+
+
+def bare(entity_id):
+    """`wd:Q15` and `Q15` are the same id. Returns it the way the rest of this file writes it."""
+    return PREFIXED.sub("", str(entity_id or "").strip())
+
+
 def normalise(label):
     return " ".join(str(label or "").lower().replace("’", "'").split())
 
@@ -185,9 +215,9 @@ def check_entities(entities, ask=None):
     """
     claimed = {}
     for entry in entities or []:
-        eid = str(entry.get("id", "")).strip()
+        eid = bare(str(entry.get("id", "")))
         if not gen.WELL_FORMED.match(eid):
-            raise Refused(f"'{eid}' is not a well-formed Wikidata id")
+            raise Refused(f"'{entry.get('id')}' is not a well-formed Wikidata id")
         claimed[eid] = str(entry.get("label", "")).strip()
 
     real = fetch_labels(sorted(claimed), ask=ask)
@@ -276,8 +306,8 @@ for that template with it:
   * Leave `narrow` as "" when the topic needs no narrowing. An empty clause is a good answer for
     a broad topic; a wrong clause is not.
 
-In `entities`, list every Q-number and P-number your clause uses, with the English label you
-believe it has. Every one is checked against Wikidata before anything runs. Say what you
+In `entities`, list every Q-number and P-number your clause uses — bare, without the `wd:` or
+`wdt:` prefix — with the English label you believe it has. Every one is checked against Wikidata before anything runs. Say what you
 actually believe — a guessed id whose label does not match is thrown out, and so is the clause.
 
 Return JSON only.
@@ -551,6 +581,10 @@ def self_test():
     check("an id that does not exist is refused",
           "does not exist" in (refused(check_entities, [{"id": "Q99999999", "label": "Atlantis"}],
                                        ask=fake_ask) or ""))
+    check("an id declared with its prefix is the same id, not a malformed one",
+          check_entities([{"id": "wd:Q15", "label": "Africa"}], ask=fake_ask) == {"Q15": "Africa"})
+    check("and a prefixed property id likewise",
+          check_entities([{"id": "wdt:P30", "label": "continent"}], ask=fake_ask) == {"P30": "continent"})
     check("an id that could not exist is refused with no network at all",
           "well-formed" in (refused(check_entities, [{"id": "Qafrica", "label": "Africa"}]) or ""))
 
