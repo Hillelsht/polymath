@@ -24,12 +24,20 @@ the same rivers, because narrowing means adding a constraint to a SPARQL query, 
 the judgement being deferred. Words it ignored are printed, so the gap is visible in the output
 rather than discovered in the pack.
 
-    python3 tools/topic_pack.py --topic "space"            # what it would harvest
-    python3 tools/topic_pack.py --topic "space" --write    # harvest it (needs Wikidata)
+**`--llm` is that gap closed.** `topic_llm.py` asks a model for the same two decisions and returns
+them through five gates, and the plumbing here does not change at all — which is the payoff of
+having built it this way round. The deterministic mapper stays as the default and as the fallback,
+because it needs no key, no network and no review, and a topic it already answers well should not
+cost an API call to answer again.
+
+    python3 tools/topic_pack.py --topic "space"                  # what it would harvest
+    python3 tools/topic_pack.py --topic "space" --write          # harvest it (needs Wikidata)
+    python3 tools/topic_pack.py --topic "rivers of africa" --llm # ask the model to narrow it
     python3 tools/topic_pack.py --self-test
 """
 
 import argparse
+import collections
 import json
 import re
 import sys
@@ -38,6 +46,7 @@ from pathlib import Path
 sys.path.insert(0, str(Path(__file__).resolve().parent))
 
 import generate_facts as gen                                          # noqa: E402
+import topic_llm                                                      # noqa: E402
 import validate_pack                                                  # noqa: E402
 
 ROOT = Path(__file__).resolve().parent.parent
@@ -46,6 +55,11 @@ OUT_DIR = ROOT / "packs" / "community"
 # A pack that cannot furnish four options is not a pack. Same floor the rest of the pipeline uses,
 # stated again here because this is the number that decides whether a topic is answerable at all.
 MIN_FACTS_PER_PACK = 12
+
+# Below this, a narrowing clause did not narrow the topic — it emptied it, which almost always
+# means it constrained the wrong property. Four is the number of options a question has, so a
+# template contributing fewer than four cannot even furnish one question's worth of them.
+MIN_NARROWED_FACTS = 4
 
 # What a person types, and the templates they meant.
 #
@@ -143,6 +157,40 @@ def plan(topic, templates=None):
     return packs
 
 
+# What both mappers hand back, so everything downstream reads one shape: the template to ask, the
+# SPARQL fragment narrowing it (empty from the deterministic mapper, which cannot narrow), and the
+# model's own account of why. The `why` is not decoration — it is what a reviewer reads in the
+# cache diff to decide whether a topic was understood.
+Entry = collections.namedtuple("Entry", "template clause why")
+
+
+def entries(topic, use_llm=False, templates=None, **kw):
+    """{category: [Entry]} — the plan, from whichever mapper was asked for.
+
+    The two mappers are interchangeable here on purpose. `route` is the default because it costs
+    nothing and its answers need no review; the model is opt-in because its answers do. A topic the
+    table already handles should not cost an API call to handle again.
+    """
+    by_key = {t.key: t for t in (templates or gen.TEMPLATES)}
+    packs = {}
+
+    if use_llm:
+        proposals, note, cached = topic_llm.plan_for(topic, templates=templates, **kw)
+        if note:
+            print(f"  model: {note}")
+        if cached:
+            print("  (from tools/topic_cache.json — asked once, answered forever)")
+        for proposal in proposals:
+            template = by_key[proposal["key"]]
+            packs.setdefault(template.category, []).append(
+                Entry(template, proposal.get("narrow", ""), proposal.get("why", "")))
+        return packs
+
+    for category, chosen in plan(topic, templates).items():
+        packs[category] = [Entry(t, "", "") for t in chosen]
+    return packs
+
+
 def slug(topic):
     return re.sub(r"-+", "-", re.sub(r"[^a-z0-9]+", "-", topic.lower())).strip("-") or "topic"
 
@@ -169,18 +217,45 @@ def pack_json(topic, category, facts, language=gen.DEFAULT_LANGUAGE, stamp="0"):
     }
 
 
-def harvest(topic, limit, language, stamp):
+def harvest(topic, limit, language, stamp, use_llm=False, **kw):
     """The network half. Kept in one function so everything above it is testable offline."""
     built = {}
-    for category, templates in sorted(plan(topic).items()):
+    for category, plans in sorted(entries(topic, use_llm, **kw).items()):
         facts = []
-        for template in templates:
+        for template, clause, _why in plans:
             if gen.phrase(template, language) is None:
                 print(f"  {template.key}: not phrased in {language}, skipped")
                 continue
-            rows = gen.harvest(template, limit, language)
-            made = gen.make_facts(template, rows, language)
-            print(f"  {template.key:20s} {len(made)} facts")
+            asked = topic_llm.narrowed(template, clause)
+            # `gen.harvest` answers with the rows *and* how it got them — which floor it settled
+            # on, or that every floor timed out. An earlier version of this line took the pair for
+            # the rows and passed a tuple to `make_facts`; it crashed on the first row and nobody
+            # saw it, because reaching this line at all needs Wikidata and no environment this was
+            # written in has a route to it. The self-test now runs the whole function against a
+            # fake endpoint, which is the only way a network-only path gets checked offline.
+            rows, note = gen.harvest(asked, limit, language)
+            made = gen.make_facts(asked, rows, language)
+
+            # The same drop `generate_facts.py` makes over the whole library, made here too. A
+            # Wikidata label carrying its own disambiguation — "Pietà (Michelangelo)" — produces a
+            # question printing its own answer, and `validate_pack` treats one of those as an error
+            # over the entire pack. An unlucky label should cost its own fact, not the topic.
+            leaking = [f for f in made if gen.leaks_answer(f)]
+            if leaking:
+                made = [f for f in made if not gen.leaks_answer(f)]
+                print(f"  {template.key:20s} dropped {len(leaking)} that gave themselves away")
+
+            # The narrowing gate the model's own output cannot check for itself. A clause that
+            # leaves almost nothing behind did not narrow the topic, it mistook it — and the one
+            # thing that must never happen here is widening back to the un-narrowed template,
+            # because a pack called "Rivers of Africa" full of European rivers is precisely the
+            # bug this whole path exists to fix. So it is dropped and said out loud.
+            if clause and len(made) < MIN_NARROWED_FACTS:
+                print(f"  {template.key:20s} narrowing left {len(made)} facts — dropped, "
+                      f"not widened back  [{note}]")
+                continue
+            print(f"  {template.key:20s} {len(made)} facts  [{note}]"
+                  + ("  (narrowed)" if clause else ""))
             facts.extend(made)
         if len(facts) < MIN_FACTS_PER_PACK:
             print(f"  {category}: {len(facts)} facts is too few to publish")
@@ -218,19 +293,37 @@ def ignored(topic):
     return sorted(words(topic) - used)
 
 
-def describe(topic):
-    packs = plan(topic)
+def describe(topic, use_llm=False, **kw):
+    packs = entries(topic, use_llm, **kw)
     if not packs:
         print(f"'{topic}' matches none of the {len(gen.TEMPLATES)} questions this pipeline can ask.")
-        print("A topic reaches the templates in generate_facts.py and nothing else — that is the")
-        print("gap a language model is meant to close, and it is not closed yet.")
+        if use_llm:
+            print("The model read the whole catalogue and found nothing that fits, which is a")
+            print("real answer: the gap is a template nobody has written, not a mapping nobody")
+            print("has made. Adding one is a change to generate_facts.py.")
+        else:
+            print("A topic reaches the templates in generate_facts.py and nothing else. Try --llm,")
+            print("which reads the same catalogue and can also narrow what it picks.")
         return 1
-    for category, templates in sorted(packs.items()):
-        print(f"  {category:<10} {', '.join(t.key for t in templates)}")
-    unused = ignored(topic)
-    if unused:
-        print(f"  ignored: {', '.join(unused)} — this cut picks which questions to ask, and")
-        print("  cannot narrow which subjects they are asked about.")
+
+    for category, plans in sorted(packs.items()):
+        print(f"  {category:<10} {', '.join(e.template.key for e in plans)}")
+        for template, clause, why in plans:
+            if clause:
+                print(f"  {'':<10} {template.key}: {clause}")
+                if why:
+                    print(f"  {'':<10} {'':<{len(template.key)}}  {why}")
+
+    # Only the deterministic mapper has words it could not honour. The model's whole advantage is
+    # that a qualifier becomes a clause instead of being dropped, so reporting "ignored: africa"
+    # after it narrowed by Africa would be the tool lying about its own output.
+    if not use_llm:
+        unused = ignored(topic)
+        if unused:
+            print(f"  ignored: {', '.join(unused)} — this cut picks which questions to ask, and")
+            print("  cannot narrow which subjects they are asked about. --llm can.")
+    elif not any(e.clause for plans in packs.values() for e in plans):
+        print("  not narrowed — the model judged the topic broad enough to ask whole.")
     return 0
 
 
@@ -245,6 +338,17 @@ def self_test():
             failures.append(name)
 
     keys = lambda topic: [t.key for t in route(topic)]
+
+    def validate_report(pack):
+        """What `write` would say about a pack, without writing it into the repository."""
+        import tempfile
+        with tempfile.TemporaryDirectory() as tmp:
+            path = Path(tmp) / "p.json"
+            path.write_text(json.dumps(pack, ensure_ascii=False), encoding="utf-8")
+            report = validate_pack.Report()
+            parsed = validate_pack.read_pack(path, report)
+            validate_pack.check_corpus([parsed] if parsed else [], report)
+        return report
 
     check("an alias routes a topic its own words could never reach",
           "moon-parent" in keys("space"))
@@ -310,6 +414,104 @@ def self_test():
     check("and the contract accepts the Russian one too",
           not report.errors and not report.warnings)
 
+    # --- the two mappers, and the path that only exists over the network -----------------
+    #
+    # Everything below runs `harvest` end to end against a fake endpoint. That matters more here
+    # than it looks: this function is the one part of the tool that cannot be exercised anywhere
+    # it is developed, because it needs a route to query.wikidata.org and no sandbox has one. It
+    # shipped with `rows = gen.harvest(...)` taking a `(rows, note)` pair for the rows, which
+    # would have crashed on the first row of the first real run. A fake endpoint is what turns
+    # "untested until CI" into "tested here".
+
+    def fake_rows(count, answers=None, prefix="Thing"):
+        return {"results": {"bindings": [
+            {"s": {"value": f"http://www.wikidata.org/entity/Q{100 + i}"},
+             "sLabel": {"value": f"{prefix} {i}"},
+             "oLabel": {"value": (answers or ["Ocean A", "Ocean B", "Ocean C", "Ocean D"])[i % 4]},
+             "sl": {"value": "45"},
+             "article": {"value": f"https://en.wikipedia.org/wiki/{prefix}_{i}"}}
+            for i in range(count)]}}
+
+    class FakeEndpoint:
+        """Stands in for Wikidata, and records which queries it was actually asked."""
+
+        def __init__(self, count=20, narrowed_count=None):
+            self.count, self.narrowed_count, self.queries = count, narrowed_count, []
+
+        def __call__(self, query, timeout=65):
+            self.queries.append(query)
+            narrowed = "wd:Q15" in query
+            n = self.narrowed_count if (narrowed and self.narrowed_count is not None) else self.count
+            return fake_rows(n)
+
+    def with_endpoint(endpoint, fn, *a, **kw):
+        real = gen.sparql
+        gen.sparql = endpoint
+        try:
+            return fn(*a, **kw)
+        finally:
+            gen.sparql = real
+
+    plain = entries("rivers")
+    check("the deterministic mapper still answers, and narrows nothing",
+          [e.clause for e in plain["geography"]] == [""])
+
+    def fake_model(topic, templates=None, model=None, key=None):
+        return {"templates": [{"key": "river-mouth",
+                               "narrow": "?s wdt:P17 ?c . ?c wdt:P30 wd:Q15 .",
+                               "why": "rivers in African countries",
+                               "entities": [{"id": "P17", "label": "country"},
+                                            {"id": "P30", "label": "continent"},
+                                            {"id": "Q15", "label": "Africa"}]}],
+                "note": ""}, "fake-1"
+
+    def fake_labels(query):
+        known = {"P17": "country", "P30": "continent", "Q15": "Africa"}
+        return {"results": {"bindings": [
+            {"item": {"value": f"http://www.wikidata.org/entity/{i}"},
+             "label": {"value": known[i]}}
+            for i in re.findall(r"wd:([QP][0-9]+)", query) if i in known]}}
+
+    topic_llm.PROVIDERS["fake"] = fake_model
+    import tempfile
+    tmpdir = tempfile.TemporaryDirectory()
+    cache = Path(tmpdir.name) / "cache.json"
+    llm_kw = dict(provider="fake", ask=fake_labels, cache_path=cache)
+
+    narrow = entries("rivers of africa", use_llm=True, **llm_kw)
+    check("the model mapper reaches the same template",
+          [e.template.key for e in narrow["geography"]] == ["river-mouth"])
+    check("and narrows it, which is the whole difference between the two",
+          narrow["geography"][0].clause == "?s wdt:P17 ?c . ?c wdt:P30 wd:Q15 .")
+
+    endpoint = FakeEndpoint(count=20)
+    built = with_endpoint(endpoint, harvest, "rivers of africa", 50, "en", "1",
+                          use_llm=True, **llm_kw)
+    check("a narrowed harvest builds a pack", "geography" in built)
+    check("and the narrowing actually reached the endpoint, rather than being planned and dropped",
+          any("wd:Q15" in q for q in endpoint.queries))
+    check("the facts it built are the shape the parser reads",
+          all({"id", "question", "answer", "answerType"} <= set(f)
+              for f in built["geography"]["facts"]))
+    check("and the pack the contract would accept",
+          not validate_report(built["geography"]).errors)
+
+    # The gate that matters most, because failing it silently is the bug this path exists to fix.
+    empty = FakeEndpoint(count=20, narrowed_count=2)
+    thin_build = with_endpoint(empty, harvest, "rivers of africa", 50, "en", "1",
+                               use_llm=True, **llm_kw)
+    check("a narrowing that empties the template publishes nothing", thin_build == {})
+    check("and never widens back to the un-narrowed query",
+          all("wd:Q15" in q for q in empty.queries))
+
+    unnarrowed = FakeEndpoint(count=20)
+    with_endpoint(unnarrowed, harvest, "rivers", 50, "en", "1")
+    check("the deterministic path harvests too, and asks for no narrowing",
+          unnarrowed.queries and not any("wd:Q15" in q for q in unnarrowed.queries))
+
+    topic_llm.PROVIDERS.pop("fake")
+    tmpdir.cleanup()
+
     thin = pack_json("space", "science", facts[:2])
     with tempfile.TemporaryDirectory() as tmp:
         path = Path(tmp) / "p.json"
@@ -333,6 +535,10 @@ def main(argv=None):
     parser.add_argument("--write", action="store_true",
                         help="actually harvest and write the packs (needs Wikidata)")
     parser.add_argument("--version", default="1", help="the pack version to stamp")
+    parser.add_argument("--llm", action="store_true",
+                        help="let a model pick the templates and narrow them (needs an API key)")
+    parser.add_argument("--provider", default="gemini", choices=sorted(topic_llm.PROVIDERS),
+                        help="which model answers, when --llm is on")
     parser.add_argument("--self-test", action="store_true")
     args = parser.parse_args(argv)
 
@@ -341,11 +547,22 @@ def main(argv=None):
     if not args.topic:
         parser.error("--topic is required")
 
-    print(f"'{args.topic}' in {args.language}:")
-    if not args.write:
-        return describe(args.topic)
+    mapper = {"use_llm": args.llm}
+    if args.llm:
+        mapper["provider"] = args.provider
 
-    built = harvest(args.topic, args.limit, args.language, args.version)
+    print(f"'{args.topic}' in {args.language}:")
+    try:
+        if not args.write:
+            return describe(args.topic, **mapper)
+        built = harvest(args.topic, args.limit, args.language, args.version, **mapper)
+    except topic_llm.Refused as exc:
+        # A refusal is the mapper working, not the tool breaking, so it prints as a sentence
+        # rather than a traceback — and it never falls through to the deterministic mapper,
+        # which would publish a pack about a topic the model had just declined to narrow.
+        print(f"  refused: {exc}")
+        return 1
+
     if not built:
         print("Nothing worth publishing.")
         return 1

@@ -1,0 +1,14 @@
+{
+ "generated": "2026-08-23T14:54:27Z",
+ "packs": [
+  {
+   "id": "geography-ru",
+   "name": "География",
+   "category": "geography",
+   "version": "620d35a246c2",
+   "facts": 10,
+   "bytes": 26767,
+   "file": "geography.json"
+  }
+ ]
+}

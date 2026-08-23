@@ -20,6 +20,10 @@ from pathlib import Path
 ROOT = Path(__file__).resolve().parent.parent
 # Authoring source stays inside the app's assets so a build with no packs still has content.
 CONTENT_DIR = ROOT / "app" / "src" / "main" / "assets" / "content"
+sys.path.insert(0, str(Path(__file__).resolve().parent))
+
+import build_manifest                                                  # noqa: E402
+
 PACKS_DIR = ROOT / "packs"
 ASSETS_PACKS_DIR = ROOT / "app" / "src" / "main" / "assets" / "packs"
 
@@ -158,7 +162,6 @@ def main():
     PACKS_DIR.mkdir(exist_ok=True)
     ASSETS_PACKS_DIR.mkdir(parents=True, exist_ok=True)
 
-    manifest = []
     all_facts = []
     total = images = extracts = 0
     missing_images = []
@@ -206,17 +209,6 @@ def main():
         out = PACKS_DIR / f"{category}.json"
         out.write_text(body)
         (ASSETS_PACKS_DIR / f"{category}.json").write_text(body)
-        manifest.append(
-            {
-                "id": category,
-                "name": enriched["name"],
-                "category": category,
-                "version": version,
-                "facts": len(facts),
-                "bytes": len(body.encode()),
-                "file": f"{category}.json",
-            }
-        )
 
     errors = validate(all_facts)
     if errors:
@@ -225,13 +217,14 @@ def main():
             print("  -", e)
         return 1
 
-    (PACKS_DIR / "manifest.json").write_text(
-        json.dumps(
-            {"generated": time.strftime("%Y-%m-%dT%H:%M:%SZ", time.gmtime()), "packs": manifest},
-            ensure_ascii=False,
-            indent=1,
-        )
-    )
+    # The catalogue is not this file's to write any more. It used to be built from the six
+    # `content/*.json` sources above and nothing else, which quietly made a whole class of pack
+    # unpublishable: a topic pack in `packs/community/` could be added to the manifest by hand and
+    # would survive exactly until the next content run deleted it. Delegating means every run
+    # catalogues everything that is actually published — in every language, which is also how
+    # Russian and Hebrew finally got a catalogue at all.
+    if build_manifest.build() != 0:
+        return 1
 
     print(f"\nEnriched {total} facts: {images} images, {extracts} extracts")
     if missing_images:

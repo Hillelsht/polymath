@@ -28,14 +28,17 @@ minutes later in a workflow log.
 ## Commands that do work
 
 ```bash
-gradle -p enginetests test                       # 331 tests, seconds, no SDK needed
+gradle -p enginetests test                       # 339 tests, seconds, no SDK needed
 gradle -p enginetests publishRooms -Pmonths=4    # curate the daily Vaults rooms, ~1 min/month
 gradle -p tools/parsecheck compileKotlin 2>&1 | tee /tmp/parse.log
 python3 tools/compile_scan.py /tmp/parse.log     # filters ~3,200 expected errors, shows the rest
 python3 tools/import_audit.py                    # forgotten imports
 python3 tools/generate_facts.py --self-test      # offline, as CI runs it
 python3 tools/validate_pack.py packs             # the contract every pack must meet
-python3 tools/topic_pack.py --topic "space"      # Wedge 3's front door, minus the LLM
+python3 tools/build_manifest.py --check          # is every published pack actually reachable?
+python3 tools/topic_llm.py --self-test           # the model's gates, against a fake model
+python3 tools/topic_pack.py --topic "space"      # Wedge 3's front door, deterministic
+python3 tools/topic_pack.py --topic "x" --llm    # ...and with the model (needs a key, so CI)
 
 gradle -p webplay bundle                         # the games -> JavaScript, in build/web/
 NODE_PATH=/opt/node22/lib/node_modules \
@@ -86,6 +89,10 @@ Full list with the story behind each: `docs/invariants.md`.
   `geo-001-he`). Reusing English ids overwrites English facts and destroys review history.
 - **A pack in `packs/` also needs a copy in `app/src/main/assets/packs/`** (under `<tag>/` if
   translated), or it ships nowhere.
+- **And it needs a row in `manifest.json` for its language**, or nothing can download it —
+  `PackService` discovers content through the manifest and `library/index.json`, and nowhere else.
+  Run `tools/build_manifest.py`. It also stamps a `version` into any pack lacking one, without
+  which the catalogue and the device disagree forever and the pack re-downloads on every refresh.
 - **Hebrew has two identical string files** — `values-he/` and `values-iw/`. Edit both.
 - **Room migrations are always additive.** Review history is the only data that cannot be
   re-downloaded.
@@ -121,7 +128,7 @@ packs/        generated content, served to installed apps from raw.githubusercon
 | Room schema, migrations, JSON pack shapes, seeding | `docs/data-model.md` |
 | The Python tools, the six workflows, what commits to `main` | `docs/content-pipeline.md` |
 | Adding a language; why Hebrew has two string files | `docs/localization.md` |
-| Authoring a pack from outside; the contract and its validator | `docs/community-packs.md` |
+| Authoring a pack from outside; the contract, the validator, the topic front door | `docs/community-packs.md` |
 | The five games and their rules | `docs/games.md` |
 | The web portal, the daily, playing the games in a browser | `webplay/README.md` |
 | Building, verifying and shipping without a compiler | `docs/development.md` |

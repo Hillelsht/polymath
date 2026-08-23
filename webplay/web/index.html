@@ -8,13 +8,14 @@
   <div class="pm-nav">
     <a class="pm-mark" href="./index.html">Poly<span>math</span></a>
     <nav>
-      <a href="./chains.html">Chains</a>
-      <a href="./descent.html">The Vaults</a>
+      <a href="./chains.html" data-t="nav.chains">Chains</a>
+      <a href="./descent.html" data-t="nav.vaults">The Vaults</a>
     </nav>
+    <div class="pm-langs" data-lang-switch></div>
   </div>
 
   <header class="pm-head">
-    <h1><span class="pm-sub" id="p-when">—</span>Something new, every day</h1>
+    <h1><span class="pm-sub" id="p-when">—</span><span data-t="home.title">Something new, every day</span></h1>
     <p class="pm-lede">
       A grid to untangle and a descent to survive. No account, no install, about a minute each —
       and unlike a crossword, <b>what you meet in them is real</b>: every tile traces back to a
@@ -24,12 +25,12 @@
 
   <div class="pm-cards">
     <a class="pm-card" href="./chains.html">
-      <h2>Chains</h2>
-      <p>Sixteen things, four hidden groups, four mistakes. The same grid everybody else got.</p>
+      <h2 data-t="nav.chains">Chains</h2>
+      <p data-t="home.chains">Sixteen things, four hidden groups, four mistakes. The same grid everybody else got.</p>
       <span class="pm-state" id="p-chains">Not played yet</span>
     </a>
     <a class="pm-card" href="./descent.html">
-      <h2>The Vaults</h2>
+      <h2 data-t="nav.vaults">The Vaults</h2>
       <p>One room under one clock. Blades on cycles, stone that will not hold you twice, and
          deaths that cost you nothing but time.</p>
       <span class="pm-state" id="p-vaults">Not run yet</span>
@@ -41,14 +42,15 @@
   <footer class="pm-foot">
     Polymath runs on published content and your own browser's memory — there is no account, no
     server keeping score and nothing to sign up for. The games are the same Kotlin the
-    <a href="https://github.com/Hillelsht/smart/releases/tag/latest">Android app</a> ships,
+    <a href="https://github.com/Hillelsht/polymath/releases/tag/latest">Android app</a> ships,
     recompiled to JavaScript rather than rewritten, so what you play here is what you get there.
-    <a href="https://github.com/Hillelsht/smart">Source</a>.
+    <a href="https://github.com/Hillelsht/polymath">Source</a>.
   </footer>
 </div>
 
 <script src="./polymath.js"></script>
 <script>
+PM.dress();
 const DATE = PM.today();
 document.getElementById('p-when').textContent = PM.pretty(DATE);
 
@@ -57,18 +59,19 @@ document.getElementById('p-when').textContent = PM.pretty(DATE);
 const played = PM.load('chains', DATE);
 const card = document.getElementById('p-chains');
 if (played?.won) {
-  card.textContent = played.mistakes === 0 ? 'Solved today — perfect' : 'Solved today';
+  card.textContent = PM.t(played.mistakes === 0 ? 'home.solvedPerfect' : 'home.solved');
   card.className = 'pm-state done';
 } else if (played?.guesses?.length) {
   card.textContent = played.won === false && played.mistakes >= 4
-    ? 'Finished today — no luck' : `In progress · ${played.guesses.length} guesses`;
+    ? PM.t('home.noLuck')
+    : `${PM.t('home.inProgress')} · ${PM.guesses(played.guesses.length)}`;
   card.className = 'pm-state' + (played.mistakes >= 4 ? ' missed' : '');
 }
 
 const ran = PM.load('vaults', DATE);
 if (ran) {
   const card = document.getElementById('p-vaults');
-  card.textContent = `Out in ${(ran.frames / 60).toFixed(1)}s today`;
+  card.textContent = PM.t('home.outIn', { s: (ran.frames / 60).toFixed(1) });
   card.className = 'pm-state done';
 }
 
@@ -77,8 +80,8 @@ if (streak > 0) {
   const line = document.getElementById('p-streak');
   line.hidden = false;
   line.textContent = streak === 1
-    ? 'One day down. Come back tomorrow and it becomes a streak.'
-    : `${streak} days in a row. Grid no. ${PM.dayNumber(DATE)}.`;
+    ? PM.t('home.oneDay')
+    : PM.t('home.inARow', { n: streak, no: `${PM.t('no')} ${PM.dayNumber(DATE)}` });
 }
 
 window.__ready = true;

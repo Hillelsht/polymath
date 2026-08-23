@@ -1,0 +1,184 @@
+name: Topic
+
+# "Type a topic, get a daily" — the half of it that runs on a machine.
+#
+# This is the only place the whole path can execute. It needs two networks the development
+# sandbox has neither of: a model API to decide what the topic means, and query.wikidata.org to
+# harvest the facts. Both are refused there by egress policy, which is why every gate in
+# `topic_llm.py` and `topic_pack.py` is written to run offline against a fake — the real run
+# happens here, once, in front of a log.
+#
+# Dispatch-only, deliberately. A topic is a content decision: it publishes a pack into the
+# catalogue every installed app reads, and `docs/invariants.md` is clear that a published fact id
+# is permanent. Wiring this to a web form is a Wedge 4 question, and it needs a queue and a review
+# step before it needs a button.
+#
+# What the model is allowed to decide is narrow on purpose: which of the eighteen existing
+# templates to ask, and a SPARQL fragment narrowing them. It never writes a fact, a question or an
+# answer — those still come from Wikidata, which is what makes "about anything" safe to say.
+on:
+  workflow_dispatch:
+    inputs:
+      topic:
+        description: "What somebody typed"
+        required: true
+      languages:
+        description: "Which languages to publish, comma separated"
+        default: "en"
+      limit:
+        description: "Facts per template"
+        default: "150"
+      provider:
+        description: "Which model answers"
+        type: choice
+        options: [gemini, anthropic]
+        default: gemini
+      deterministic:
+        description: "Skip the model and use the synonym table (no narrowing, no key)"
+        type: boolean
+        default: false
+      dry_run:
+        description: "Decide and report, but publish nothing"
+        type: boolean
+        default: false
+
+permissions:
+  contents: write
+
+jobs:
+  topic:
+    name: ${{ inputs.topic }}
+    runs-on: ubuntu-latest
+    timeout-minutes: 45
+    env:
+      # Without this a harvest prints nothing until it exits, and a cancelled job loses the log
+      # entirely — taking with it the one record of what the model decided this topic meant.
+      PYTHONUNBUFFERED: "1"
+      GEMINI_API_KEY: ${{ secrets.GEMINI_API_KEY }}
+      ANTHROPIC_API_KEY: ${{ secrets.ANTHROPIC_API_KEY }}
+      MAPPER: ${{ inputs.deterministic == true && ' ' || format('--llm --provider {0}', inputs.provider) }}
+    steps:
+      - uses: actions/checkout@v4
+
+      # Seconds, and every one of them offline. A logic bug in a gate should fail before the model
+      # is called rather than after a pack built on a clause nobody checked.
+      - name: Self-test everything that can be tested without a network
+        run: |
+          python3 tools/topic_llm.py --self-test
+          python3 tools/topic_pack.py --self-test
+          python3 tools/validate_pack.py --self-test
+          python3 tools/build_manifest.py --self-test
+
+      - name: Refuse to start without the key the run needs
+        if: inputs.deterministic != true
+        # A missing secret otherwise surfaces forty lines later as "the model API answered 401",
+        # after the log has scrolled past the only step that could have said so plainly.
+        run: |
+          case "${{ inputs.provider }}" in
+            gemini)    [ -n "$GEMINI_API_KEY" ]    || { echo "GEMINI_API_KEY is not set on this repository"; exit 1; } ;;
+            anthropic) [ -n "$ANTHROPIC_API_KEY" ] || { echo "ANTHROPIC_API_KEY is not set on this repository"; exit 1; } ;;
+          esac
+
+      # Printed before anything is harvested, because this is the reviewable part. The clause it
+      # chose and the entities it claimed are what a person reads to decide whether the topic was
+      # understood — and they are cached, so this is also the diff that lands in the commit.
+      - name: What the topic means
+        run: python3 tools/topic_pack.py --topic "${{ inputs.topic }}" $MAPPER
+
+      - name: Harvest and write the packs
+        if: inputs.dry_run != true
+        run: |
+          set -euo pipefail
+          IFS=',' read -ra langs <<< "${{ inputs.languages }}"
+          for lang in "${langs[@]}"; do
+            lang="$(echo "$lang" | tr -d '[:space:]')"
+            [ -n "$lang" ] || continue
+            echo "::group::$lang"
+            # A language that yields nothing worth publishing is an outcome, not a failure: the
+            # Russian half of a topic can be too thin while the English half is fine, and killing
+            # the run would throw away the half that worked.
+            python3 tools/topic_pack.py \
+              --topic "${{ inputs.topic }}" \
+              --language "$lang" \
+              --limit "${{ inputs.limit }}" \
+              --version "$(date -u +%Y-%m-%d)" \
+              --write $MAPPER || echo "$lang: nothing published"
+            echo "::endgroup::"
+          done
+
+      - name: Refuse to continue if nothing was written
+        if: inputs.dry_run != true
+        run: |
+          if [ -z "$(git status --porcelain packs/community)" ]; then
+            echo "No pack was written for '${{ inputs.topic }}'."
+            echo "The plan above says why: either the model routed nowhere, or every narrowing"
+            echo "it proposed emptied its template. Neither is fixed by re-running."
+            exit 1
+          fi
+
+      # A pack the catalogue does not list is a pack nothing can download, which is the failure
+      # this whole path had until `build_manifest.py` existed.
+      - name: Catalogue it
+        if: inputs.dry_run != true
+        run: python3 tools/build_manifest.py
+
+      - name: Hold it to the contract
+        if: inputs.dry_run != true
+        # `--strict` on community packs, the same bar `docs/community-packs.md` asks of a pack
+        # arriving from outside. A generated pack has no better claim to the loose bar than a
+        # hand-written one does, and this is the moment when a thin answerType costs one rerun
+        # rather than a migration.
+        run: |
+          python3 tools/validate_pack.py packs
+          python3 tools/validate_pack.py --strict packs/community
+
+      - uses: actions/setup-java@v4
+        if: inputs.dry_run != true
+        with:
+          distribution: temurin
+          java-version: 17
+
+      - uses: gradle/actions/setup-gradle@v4
+        if: inputs.dry_run != true
+
+      # `CatalogueTest` reads the manifest just written with the app's own parser and checks every
+      # promise it makes to a phone: the file is there, the counts match, the version is the one
+      # the device will compute, and no fact id collides with a pack already published. Without
+      # this the commit below lands first and the damage is on devices before anyone looks.
+      - name: Check a device could actually install it
+        if: inputs.dry_run != true
+        run: ./gradlew -p enginetests test
+
+      - name: Upload test report
+        if: failure()
+        uses: actions/upload-artifact@v4
+        with:
+          name: enginetests-topic
+          path: enginetests/build/reports/tests/test
+          if-no-files-found: ignore
+
+      - name: Publish
+        if: inputs.dry_run != true
+        run: |
+          set -euo pipefail
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          # The cache goes in with the pack. What a model decided a topic meant is a content
+          # decision, and this is the file a reviewer reads to check it — committing the pack
+          # without it would publish the answer and throw away the reasoning.
+          git add packs/community packs/manifest.json packs/*/manifest.json tools/topic_cache.json
+          if git diff --cached --quiet; then
+            echo "Nothing changed"
+            exit 0
+          fi
+          git commit -m "[topic] Publish a pack for '${{ inputs.topic }}'"
+          # Rebase onto this run's own ref, not onto main — a dispatch against a branch that
+          # pulled main would leave the branch's real tip unmerged and fail every retry
+          # identically. Hebrew lost a ten-minute harvest to that in library.yml.
+          branch="${{ github.ref_name }}"
+          for attempt in 1 2 3; do
+            if git push origin "HEAD:$branch"; then exit 0; fi
+            echo "push rejected, rebasing onto $branch (attempt $attempt)"
+            git pull --rebase origin "$branch"
+          done
+          git push origin "HEAD:$branch"

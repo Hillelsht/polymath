@@ -48,6 +48,25 @@ jobs:
             python3 tools/validate_pack.py --strict packs/community
           fi
 
+      # The catalogue is the only route a non-library pack has to a device, and everything about
+      # it is a promise a phone cannot check: that the file named is there, that its version is
+      # the one the parser will compute, that a published pack is listed at all. `--check` fails
+      # rather than fixing, because a manifest silently repaired in CI is a manifest whose real
+      # state nobody ever sees.
+      - name: The catalogue still describes what is published
+        run: |
+          python3 tools/build_manifest.py --self-test
+          python3 tools/build_manifest.py --check
+
+      # The mapper that decides what a typed topic means. Its gates are the reason a model can be
+      # trusted anywhere near published content — a closed template list, an allowlisted SPARQL
+      # grammar, and a label check that refuses a hallucinated Q-number — and a gate nobody has
+      # watched reject something is not known to reject anything. All offline, no key needed.
+      - name: The topic mapper still refuses what it should
+        run: |
+          python3 tools/topic_llm.py --self-test
+          python3 tools/topic_pack.py --self-test
+
       - name: Upload test report
         if: always()
         uses: actions/upload-artifact@v4

@@ -8,14 +8,17 @@
   <div class="pm-nav">
     <a class="pm-mark" href="./index.html">Poly<span>math</span></a>
     <nav>
-      <a href="./chains.html" aria-current="page">Chains</a>
-      <a href="./descent.html">The Vaults</a>
+      <a href="./chains.html" aria-current="page" data-t="nav.chains">Chains</a>
+      <a href="./descent.html" data-t="nav.vaults">The Vaults</a>
     </nav>
+    <div class="pm-langs" data-lang-switch></div>
   </div>
 
   <header class="pm-head">
-    <h1><span class="pm-sub" id="c-when">—</span>Chains</h1>
-    <p class="pm-lede">
+    <h1 data-t-title="nav.chains">
+      <span class="pm-sub" id="c-when">—</span><span data-t="nav.chains">Chains</span>
+    </h1>
+    <p class="pm-lede" data-t-html="chains.lede">
       Sixteen things, four hidden groups of four. <b>Four mistakes</b> — and a guess with three of a
       group right is told so, because otherwise being wrong teaches you nothing.
     </p>
@@ -28,14 +31,14 @@
     </div>
 
     <div class="pm-status" style="margin-top:14px">
-      <span class="pm-lives" id="c-lives" aria-label="Mistakes remaining"></span>
+      <span class="pm-lives" id="c-lives" data-t-label="chains.lives"></span>
       <span class="pm-say" id="c-say" role="status" aria-live="polite"></span>
     </div>
 
     <div class="pm-controls" style="margin-top:12px">
-      <button class="pm-btn" id="c-shuffle">Shuffle</button>
-      <button class="pm-btn" id="c-clear" disabled>Deselect</button>
-      <button class="pm-btn primary" id="c-submit" disabled>Submit</button>
+      <button class="pm-btn" id="c-shuffle" data-t="chains.shuffle">Shuffle</button>
+      <button class="pm-btn" id="c-clear" disabled data-t="chains.deselect">Deselect</button>
+      <button class="pm-btn primary" id="c-submit" disabled data-t="chains.submit">Submit</button>
     </div>
   </div>
 
@@ -44,20 +47,19 @@
     <pre class="pm-emoji" id="c-emoji"></pre>
     <p class="pm-meta" id="c-streak"></p>
     <div class="pm-controls" style="justify-content:flex-start">
-      <button class="pm-btn primary" id="c-share">Share result</button>
+      <button class="pm-btn primary" id="c-share" data-t="chains.share">Share result</button>
     </div>
     <p class="pm-meta" id="c-shared" role="status" aria-live="polite"></p>
   </div>
 
-  <p class="pm-lede" id="c-missing" hidden>
-    There is no grid for this day yet. The packs are generated a month at a time — try
-    <a href="./index.html">today's</a>.
+  <p class="pm-lede" id="c-missing" hidden data-t="chains.missing">
+    There is no grid for this day yet. The packs are generated a month at a time.
   </p>
 
-  <footer class="pm-foot">
-    The grid is the same one everybody else got today: tile order is published with the puzzle
-    rather than shuffled on your device, so a shared result describes a board your friend will
-    recognise. Shuffling here only rearranges what is on your screen.
+  <footer class="pm-foot" data-t="chains.foot">
+    The grid is the same one everybody else got today, in this language: tile order is published
+    with the puzzle rather than shuffled on your device, so a shared result describes a board your
+    friend will recognise. Shuffling here only rearranges what is on your screen.
   </footer>
 </div>
 
@@ -86,7 +88,10 @@ let saying = '';
 // --- setting up ------------------------------------------------------------------------------
 
 (async function begin() {
-  el('c-when').textContent = `${PM.pretty(DATE)} · no. ${PM.dayNumber(DATE)}`;
+  // Before anything else: the page has to be in the right language before it says its first
+  // word, or a switch flashes English and then corrects itself.
+  PM.dress();
+  el('c-when').textContent = `${PM.pretty(DATE)} · ${PM.t('no')} ${PM.dayNumber(DATE)}`;
 
   const day = await PM.puzzle('chains', DATE);
   if (!day) { el('c-missing').hidden = false; window.__ready = true; return; }
@@ -103,7 +108,7 @@ let saying = '';
   if (problems) {
     session = null;
     el('c-missing').hidden = false;
-    el('c-missing').textContent = "Today's grid did not pass its own checks, so it is not being served.";
+    el('c-missing').textContent = PM.t('chains.rejected');
     console.error('grid rejected:\n' + problems);
     window.__ready = true;
     return;
@@ -134,7 +139,7 @@ function submit() {
   session.submit();
 
   saying = {
-    SOLVED: '', WRONG: 'Not a group.', ONE_AWAY: 'One away…',
+    SOLVED: '', WRONG: PM.t('chains.notAGroup'), ONE_AWAY: PM.t('chains.oneAway'),
     ALREADY_TRIED: 'Already tried that one.', NONE: '',
   }[session.verdict] || '';
 
@@ -206,7 +211,9 @@ function render() {
 
   const say = el('c-say');
   say.textContent = session.over ? '' : saying;
-  say.className = 'pm-say' + (saying === 'One away…' ? ' warn' : '');
+  // Compared against the translated string rather than the English one it used to be, which
+  // would have quietly stopped highlighting the near miss in every language but English.
+  say.className = 'pm-say' + (saying === PM.t('chains.oneAway') ? ' warn' : '');
 
   el('c-clear').disabled = session.over || session.selectedCount === 0;
   el('c-submit').disabled = session.over || session.selectedCount !== SIZE;
@@ -217,16 +224,18 @@ function render() {
 
 function finish() {
   el('c-result').hidden = false;
-  el('c-verdict').textContent = session.won
-    ? (session.mistakes === 0 ? 'Perfect.' : 'Solved.')
-    : 'Out of guesses.';
+  el('c-verdict').textContent = PM.t(session.won
+    ? (session.mistakes === 0 ? 'chains.perfect' : 'chains.solved')
+    : 'chains.lost');
   el('c-emoji').textContent = emoji();
 
   const streak = PM.streak('chains', DATE);
-  const parts = [`${session.guessCount} guess${session.guessCount === 1 ? '' : 'es'}`];
-  if (session.won) parts.push(`${LIVES - session.mistakes} of ${LIVES} lives left`);
-  if (streak > 0) parts.push(`streak ${streak}`);
-  el('c-streak').textContent = parts.join(' · ') + ' · back tomorrow.';
+  const parts = [PM.guesses(session.guessCount)];
+  if (session.won) {
+    parts.push(PM.t('chains.livesLeft', { n: LIVES - session.mistakes, m: LIVES }));
+  }
+  if (streak > 0) parts.push(PM.t('chains.streak', { n: streak }));
+  el('c-streak').textContent = parts.join(' · ') + ' · ' + PM.t('chains.tomorrow');
 }
 
 /** One row per guess, coloured by the group each tile really belonged to. */
@@ -238,9 +247,14 @@ function emoji() {
 
 function shareText() {
   const streak = PM.streak('chains', DATE);
-  const head = `Polymath · Chains no. ${PM.dayNumber(DATE)}` +
-    (session.won ? (session.mistakes === 0 ? ' · perfect' : '') : ' · beat me');
-  const tail = streak > 1 ? `streak ${streak} · ${PM.SITE}` : PM.SITE;
+  // The share text names the language it was played in, because the grids differ per language:
+  // without it, two people comparing identical-looking day numbers would be comparing two
+  // different puzzles and concluding one of them cheated.
+  const played = PM.lang() === PM.DEFAULT_LANGUAGE ? '' : ` · ${PM.LANGUAGE_NAMES[PM.lang()]}`;
+  const head = `Polymath · ${PM.t('nav.chains')} ${PM.t('no')} ${PM.dayNumber(DATE)}${played}` +
+    (session.won ? (session.mistakes === 0 ? ` · ${PM.t('share.perfect')}` : '')
+                 : ` · ${PM.t('share.beatMe')}`);
+  const tail = streak > 1 ? `${PM.t('chains.streak', { n: streak })} · ${PM.SITE}` : PM.SITE;
   return `${head}\n${emoji()}\n${tail}`;
 }
 
@@ -259,8 +273,8 @@ el('c-shuffle').addEventListener('click', () => {
 el('c-share').addEventListener('click', async () => {
   const how = await PM.share(shareText());
   el('c-shared').textContent = {
-    shared: '', copied: 'Copied — paste it anywhere.', cancelled: '',
-    failed: 'Could not copy it; the grid above can be selected by hand.',
+    shared: '', cancelled: '',
+    copied: PM.t('chains.copied'), failed: PM.t('chains.copyFailed'),
   }[how];
 });
 

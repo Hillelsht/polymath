@@ -149,7 +149,7 @@ pipeline attacks the first; daily ritual + shareable results attack the second.
 
 ## Part 3 — The roadmap (next work, in order)
 
-### Wedge 1 (~weeks 1–3): The Daily, on the web, shareable  ← IN PROGRESS
+### Wedge 1 (~weeks 1–3): The Daily, on the web, shareable  ← SHIPPED (bar the domain)
 
 Grow `webplay/` from a Vaults harness into a small daily portal at a real domain:
 
@@ -196,7 +196,7 @@ streak survives restart; the Chromium playtest drives the daily end-to-end in CI
 are worth showing a stranger. **Shipped.** What remains is not code: a domain, an assetlinks file
 and a counter account.
 
-### Wedge 2 (~weeks 3–6): Provably-fair generated rooms + language parity  ← IN PROGRESS
+### Wedge 2 (~weeks 3–6): Provably-fair generated rooms + language parity  ← SHIPPED
 
 1. ~~**Room generator gated by `Playtest.solve`**~~ — done. `RoomGen` lays a room out from a seed
    using a grammar of the ideas the seven authored rooms teach; `curate` walks a seed stream and
@@ -222,12 +222,10 @@ and a counter account.
    red build. `play.yml` curates monthly alongside the Chains grids, and **never rewrites a
    published day** — a ghost link carries a date rather than a room.
 
-2. **Language parity** — the pipeline is ready, the harvest has not run. All **eighteen**
-   templates are now phrased in Russian and Hebrew (five were, all Geography), so a run in either
-   language covers the same six categories English does; `library.yml` generates and publishes one
-   language at a time; and `TranslatedLibraryTest` refuses a translated fact id that is missing its
-   language suffix, which is the failure that would install a Russian fact **over** an English one
-   and take its review history with it.
+2. ~~**Language parity**~~ — done, and published. All eighteen templates are phrased in Russian
+   and Hebrew (five were, all Geography), so a run in either language covers the same six
+   categories English does. `library.yml` has run for both: **11,267 facts across three languages**
+   — English 4,074, Russian 3,936, Hebrew 3,340 — against the ~10 each RU and HE held before.
 
    Two grammar problems shaped the phrasings and are worth knowing before adding a nineteenth
    template. Wikidata hands back labels in base form only, so Russian cannot decline them —
@@ -236,21 +234,26 @@ and a counter account.
    with a painter's or a moon's gender, which no label carries. Both tables keep the sentence's
    grammatical subject a noun written in the file, with the label beside it.
 
-   **A dry run has proved every template answers in every language** (Library run 32180040025, all
-   three green): English 4,090 facts, Russian 3,972, Hebrew 3,343 — six categories each, against
-   the ~10 facts RU and HE hold today. Only the publish is left, and only CI can do it: this
-   sandbox has no route to `query.wikidata.org`. Dispatch `library.yml` with `languages: ru,he`
-   and read the preflight table before trusting the run.
+3. ~~**The daily in three languages**~~ — done, which is the part that makes the parity visible.
+   `build_chains.py` builds a grid per language from that language's own library, so a Russian
+   player gets Russian tiles under Russian group labels rather than translated buttons over an
+   English puzzle. 122 grids each in English, Russian and Hebrew. The portal has a switcher, one
+   string table with real Russian plurals, and `dir="rtl"` doing the whole of Hebrew's layout;
+   `tools/playtest/daily.js` plays all three in Chromium.
 
-   Budget about thirty minutes for Russian and ten for Hebrew. The harvest is two minutes in every
-   language; the rest is fetching Wikipedia extracts, and ru.wikipedia's API is roughly ten times
-   slower per batch than en's. That is why the languages are separate jobs — three of them in one
-   would not fit a single job's timeout.
+   Two things had to be fixed for any of it to work, and neither would have reported itself. The
+   tile filter was `[A-Za-z][A-Za-z .'À-ɏ-]*` — a Latin-alphabet test whose range stops at U+024F,
+   so **every Cyrillic and Hebrew answer failed it** and a translated build would have published
+   nothing while exiting 0. Fixing that then changed all 122 already-published English grids,
+   because `build_grid` samples from pools and one new eligible answer reshuffles every date —
+   which means the monthly library regeneration had been quietly rewriting played grids all along.
+   A published day is now read back and kept verbatim, the rule the daily rooms already followed.
 
-   After that, the language toggle: the same daily in three languages is the story NYT structurally
-   cannot copy.
+   The catalogue was broken in the same direction: `packs/ru/manifest.json` and its Hebrew twin had
+   never existed, so `fetchManifest` 404'd for both languages and the Library tab in them was empty
+   while a published pack sat one URL away. `tools/build_manifest.py` writes every catalogue now.
 
-### Wedge 3 (~weeks 6–10): "About anything"  ← STARTED
+### Wedge 3 (~weeks 6–10): "About anything"  ← BUILT, ONE MERGE FROM RUNNING
 
 1. ~~**Community pack spec + validator**~~ — done. `docs/community-packs.md` is the contract, and
    `tools/validate_pack.py` checks it: everything `ContentParser` enforces, plus the failures that
@@ -259,16 +262,38 @@ and a counter account.
    (Michelangelo)?"* — now dropped at source by `generate_facts.py`. CI gates every pack on the
    errors and anything under `packs/community/` on the warnings too.
 
-2. **Topic front door** — the plumbing is done, the clever part is not. `tools/topic_pack.py` takes
-   a typed topic, routes it to templates, harvests, and writes a pack that has to clear the
-   validator at the strict bar or be deleted. The mapper is a synonym table and word overlap, so
-   *"chemistry"*, *"football"* and *"world war two"* work while *"the Byzantine succession"* routes
-   nowhere and says so — and *"rivers of Africa"* gets the same rivers as *"rivers"*, because
-   narrowing means adding a SPARQL constraint. **That is the LLM's job**, it is one function
-   (`route`), and it needs an API key as a repo secret before it can be written.
+2. ~~**Topic front door**~~ — done, pending one merge. `tools/topic_llm.py` asks a model for the
+   two decisions the synonym table could not make: which of the eighteen templates a topic wants,
+   and a SPARQL fragment narrowing them. *"Rivers of Africa"* becomes
+   `?s wdt:P17 ?c . ?c wdt:P30 wd:Q15 .` and harvests African rivers, where the deterministic
+   mapper harvested every river and printed that it had ignored the word.
+
+   **The model never writes a fact, a question or an answer.** That line is what makes "about
+   anything" safe to say: every published fact is still a Wikidata claim, and a model that phrased
+   facts would be a model that could invent them. Five gates run before anything is harvested — a
+   closed template list, an allowlisted triples-only grammar, well-formed ids, a **label check**
+   that reads the real English label and aliases for every Q- and P-number the model named and
+   refuses any whose meaning it got wrong, and a yield floor that drops a narrowing which empties
+   its template rather than widening back. All tested offline against a fake model, including the
+   hallucinations. Answers cache to `tools/topic_cache.json`, committed, because what a model
+   decided a topic meant is a content decision and should be readable in a diff.
+
+   `topic.yml` runs the whole path — dispatch a topic, verify, harvest, validate at the strict bar,
+   catalogue it, prove the app's parser can read it, commit. **It cannot be dispatched until it is
+   on `main`**: GitHub only offers `workflow_dispatch` for workflows present on the default branch.
+   That is the one thing standing between here and a published topic pack.
+
+   The model call itself is proved. `probe.yml` gained a mapper job — the sandbox can reach neither
+   `generativelanguage.googleapis.com` nor `query.wikidata.org`, so a real call is only possible
+   from a runner — and its first run earned its keep: `gemini-2.5-flash` is retired for new users
+   and the API named `gemini-3.6-flash` as its replacement. A 404 naming a successor is now
+   followed once and recorded.
 
 3. Three vertical landing packs as SEO/community seeds (citizenship test, driving theory, one
-   fandom) — waiting on 2, since narrowing is exactly what a citizenship pack needs.
+   fandom) — **blocked on 2 reaching `main`**, since each one is a `topic.yml` dispatch and
+   dispatching needs the workflow on the default branch. Worth doing in that order anyway: the
+   first real runs are what say whether the model narrows a citizenship test usefully or routes it
+   nowhere, and that answer should be read before three packs are published on the strength of it.
 
 ### Wedge 4 (~weeks 10–13): Decide with data
 Only now revisit backend/accounts/monetization, gated on share-loop evidence from the counter.
@@ -285,14 +310,23 @@ ads in the ritual, no new games until the dailies are excellent.
 
 1. Read `CLAUDE.md` (root) — build constraints, working commands, git rules, invariants map.
 2. Read this file for strategy and state.
-3. **Wedge 1 is done**, except three things that are not code and are the user's to do: buy the
-   domain, publish `.well-known/assetlinks.json` with a release signing fingerprint (which makes
-   the https deep links live), and create a counter account (which makes step 7 live).
-   **Wedge 2's rooms are done** — generated, gated three ways, published monthly. Language parity
-   is *proved but unpublished*: all eighteen templates are translated, a dry run harvested 3,972
-   Russian and 3,343 Hebrew facts across six categories, and the only step left is a `library.yml`
-   dispatch with `languages: ru,he` — which only CI can run. Then the language toggle. The `author` and `musician` pools also want more
-   facts before those categories can return to the Chains daily.
+3. **Wedges 1 and 2 are done.** What remains of Wedge 1 is not code and is the user's to do: buy
+   the domain, publish `.well-known/assetlinks.json` with a release signing fingerprint, and
+   create a counter account. One correction on the second of those — Android verifies App Links
+   **by host**, so the file must sit at `https://<host>/.well-known/assetlinks.json`. A project
+   Pages site at `hillelsht.github.io/polymath/` cannot serve its own host root, so **the domain
+   has to come first**, or a repository literally named `hillelsht.github.io` does.
+
+   Wedge 2 is finished end to end: rooms generated and gated three ways, three libraries published
+   (11,267 facts), and the daily playable in all three languages with a switcher.
+
+   **Wedge 3 is one merge from its headline.** The model-backed mapper, its five gates, the
+   workflow and the catalogue it publishes into all exist and are green; `topic.yml` cannot be
+   dispatched until it is on `main`, because GitHub only offers `workflow_dispatch` for workflows
+   present on the default branch. First runs to try, in this order: *"rivers of Africa"* (a
+   narrowing that should work), *"the Byzantine succession"* (should route nowhere and say so),
+   then the three vertical packs.
+
    Two content follow-ups worth doing when convenient: the `author` and `musician` pools need
    more facts before those categories can return to the daily, and a device that already
    downloaded the placeholder-element facts keeps them, because library shards only ever add and
@@ -300,7 +334,7 @@ ads in the ritual, no new games until the dailies are excellent.
 4. Branch discipline: work on a feature branch, verify Compose changes by dispatching `build.yml`
    on the branch (this environment cannot compile Android), merge to `main` via PR — merges to
    `main` auto-publish the APK release and the Pages site.
-5. Keep the existing gates green: `enginetests` (331 tests), `tools/playtest/play.js` margins,
+5. Keep the existing gates green: `enginetests` (339 tests), `tools/playtest/play.js` margins,
    `tools/playtest/daily.js`, `tools/playtest/ghost.js`, the docs-freshness pre-push hook (update
    `docs/` when code contradicts it — it will tell you).
 

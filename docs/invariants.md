@@ -26,6 +26,26 @@ Read tab and an empty daily plan while the facts sat in the repository. Two thin
 true and only one was: `ContentSeeder.readBundledPacks()` also had to learn to scan
 `assets/packs/<tag>/` subfolders, because it only listed top-level files.
 
+**A pack that ships is still not a pack anybody can get.** It must also be listed in
+`manifest.json` for its language — `packs/manifest.json`, or `packs/<tag>/manifest.json`.
+→ `PackService` reads exactly two files to discover content: the manifest, and
+`library/index.json`. A pack in neither is bytes on a CDN nothing will ever request. Two things
+were wrong at once when this was written. `packs/ru/manifest.json` and its Hebrew twin had never
+existed, so `fetchManifest` 404'd for both languages and returned `null` — which is *also* what
+"CI has not published yet" looks like, so an empty Library tab was indistinguishable from a
+working one. And the manifest was rebuilt from `assets/content/*.json` alone, which made a topic
+pack in `packs/community/` unpublishable rather than merely unpublished: adding it by hand worked
+until the next content run silently deleted it. `tools/build_manifest.py` now writes every
+catalogue from what is actually published; `build.yml` runs `--check`; `CatalogueTest` fails the
+build if a published pack is unlisted or a listed one is missing.
+
+**A published pack must name its own `version`.** Not left out for `ContentParser` to fall back on.
+→ The fallback is `"text-${raw.hashCode()}"`, which no tool outside the app can reproduce — so the
+catalogue advertises one version and the device computes another, forever. The device concludes it
+is out of date on every single refresh and re-downloads a pack it already has, for as long as the
+app is installed. Both translated packs shipped that way. `build_manifest.py` stamps one and
+mirrors it into the bundled twin; `CatalogueTest` compares the two strings the device compares.
+
 **Generated library shards merge; curated packs replace.** `PackInstall.replacesExistingFacts()`
 decides, keyed on the `library-` prefix.
 → A regeneration returned 4,160 facts one month and 3,501 the next, because one SPARQL template

@@ -1,0 +1,14 @@
+{
+ "generated": "2026-08-23T14:54:27Z",
+ "packs": [
+  {
+   "id": "geography-he",
+   "name": "גאוגרפיה",
+   "category": "geography",
+   "version": "4af5ecf42051",
+   "facts": 10,
+   "bytes": 20940,
+   "file": "geography.json"
+  }
+ ]
+}

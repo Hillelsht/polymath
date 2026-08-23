@@ -20,3 +20,44 @@ jobs:
       - name: Probe Wikidata as an unlimited fact source
         run: python3 tools/probe_wikidata.py
         continue-on-error: true
+
+  mapper:
+    name: What a model makes of a topic
+    runs-on: ubuntu-latest
+    env:
+      PYTHONUNBUFFERED: "1"
+      GEMINI_API_KEY: ${{ secrets.GEMINI_API_KEY }}
+    steps:
+      - uses: actions/checkout@v4
+
+      # Everything the gates can decide without a network, first and free.
+      - name: The gates still refuse what they should
+        run: python3 tools/topic_llm.py --self-test
+
+      # The two things no sandbox can answer: whether the request shape is right, and whether the
+      # model's answers survive the gates when nobody wrote them to. Both are only knowable from a
+      # runner — the development environment's egress policy refuses generativelanguage.googleapis
+      # .com and query.wikidata.org alike — and both are worth knowing *before* a topic run
+      # publishes a pack on the strength of them.
+      #
+      # `--no-cache` so a rerun asks again rather than reciting what it was told last time, which
+      # is the opposite of what a probe is for. Nothing is committed; the findings belong in
+      # `tools/topic_llm.py`'s docstring, the way the other two probes record theirs.
+      - name: Ask it four topics of different shapes
+        if: env.GEMINI_API_KEY != ''
+        continue-on-error: true
+        run: |
+          for topic in "rivers of Africa" "chemistry" "the Byzantine succession" \
+                       "films by Japanese directors"; do
+            echo "::group::$topic"
+            # A non-zero exit here means one of two very different things — the model routed the
+            # topic nowhere, which is an answer, or the call itself failed, which is a finding —
+            # and the line above says which. Conflating them under "(routed nowhere)" is how the
+            # first run of this probe reported four dead API calls as four honest refusals.
+            python3 tools/topic_llm.py --topic "$topic" --no-cache || true
+            echo "::endgroup::"
+          done
+
+      - name: Say so plainly if there is no key
+        if: env.GEMINI_API_KEY == ''
+        run: echo "GEMINI_API_KEY is not set on this repository; the mapper probe cannot run."

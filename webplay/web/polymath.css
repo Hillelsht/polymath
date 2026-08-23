@@ -54,6 +54,24 @@ body {
 .pm-nav nav a:hover { color:var(--pm-text); }
 .pm-nav nav a[aria-current="page"] { color:var(--pm-text); border-bottom-color:var(--pm-gold); }
 
+/* The language switcher. `margin-left:auto` on the nav above already pushed it right, so this
+   only needs to sit beside it — and because the whole page flips to `dir="rtl"` in Hebrew, the
+   logical properties do the mirroring rather than a second rule. */
+.pm-langs { display:flex; gap:6px; font-size:12px; }
+.pm-lang {
+  font:inherit; color:var(--pm-dim); background:none; cursor:pointer;
+  border:1px solid transparent; border-radius:6px; padding:2px 7px;
+}
+.pm-lang:hover { color:var(--pm-text); border-color:var(--pm-edge); }
+.pm-lang.on { color:var(--pm-ink); background:var(--pm-gold); border-color:var(--pm-gold); }
+.pm-lang:focus-visible { outline:2px solid var(--pm-blue); outline-offset:2px; }
+
+/* Hebrew is right-to-left and the browser mirrors the layout from `dir` alone — the same thing
+   that makes the Android app need no separate RTL code. Two exceptions, both because the content
+   is not text: the emoji share grid reads left to right in every language, and so does the
+   monospace board it describes. */
+[dir="rtl"] .pm-emoji { direction:ltr; text-align:right; }
+
 /* --- headings and prose ---------------------------------------------------------------------- */
 
 .pm-head { display:flex; flex-direction:column; gap:6px; }

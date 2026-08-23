@@ -19,11 +19,13 @@ Wikidata, Wikipedia or YouTube. Every tool is stdlib-only Python; there is no
 | `enrich_content.py` | `packs/*.json` — hand-authored facts + Wikipedia images/extracts | `content.yml` |
 | `enrich_videos.py` | `packs/channels.json` — the probed Watch allowlist | `content.yml` |
 | `fetch_durations.py` | `packs/durations.json` — video lengths, via the YouTube API | `durations.yml`, hourly |
-| `build_chains.py` | `packs/play/chains/` — daily puzzle grids | `play.yml`, monthly |
+| `build_chains.py` | `packs/play/chains/` — daily puzzle grids, one set per language | `play.yml`, monthly |
 | ↳ | *also decides which answers are fit to be tiles — see `docs/games.md`* | |
 | `enginetests publishRooms` | `packs/play/vaults/` — the daily room's seed, margin and plan | `play.yml`, monthly |
 | `validate_pack.py` | nothing — reads packs and reports | run by hand, and by CI over every pack |
-| `topic_pack.py` | `packs/community/` — a pack built from a typed topic | run by hand |
+| `build_manifest.py` | `packs/manifest.json`, `packs/<tag>/manifest.json` — the catalogue | `content.yml`, `topic.yml`; checked by `build.yml` |
+| `topic_pack.py` | `packs/community/` — a pack built from a typed topic | `topic.yml`, on dispatch |
+| `topic_llm.py` | `tools/topic_cache.json` — what a model decided a topic meant | called by `topic_pack.py --llm` |
 | `probe_durations.py` | nothing — findings only | `probe.yml`, manual |
 | `probe_wikidata.py` | nothing — findings only | `probe.yml`, manual |
 | `playtest/play.js` | nothing — plays The Vaults in Chromium, screenshots | `web.yml` |
@@ -40,6 +42,23 @@ bad pack — an answerType too thin to draw distractors from, a translated fact 
 language suffix, a question containing its own answer. Errors mean the pack would misbehave;
 warnings mean it would work and could be better; `--strict` promotes them.
 
+`build_manifest.py` writes the **catalogue**, and it is worth knowing why that is a tool of its
+own rather than three lines at the end of `enrich_content.py`, where it used to live.
+`PackService` reads exactly two files to discover content: `manifest.json` for the packs somebody
+chooses from, and `library/index.json` for the shards that top themselves up. A pack in neither is
+bytes on a CDN that nothing will ever request. Building the catalogue from `assets/content/*.json`
+— the six hand-authored sources — therefore made a whole class of pack *unpublishable*: a topic
+pack in `packs/community/` could be added to the manifest by hand and would survive exactly until
+the next content run deleted it, which is the worst version of that bug because it works when you
+test it. It also meant Russian and Hebrew had no catalogue at all, for weeks, with a published
+pack one URL away. Now every run catalogues what is actually published, in every language, and
+`build.yml` runs `--check` so a manifest that has drifted fails a build instead of a phone.
+
+It also stamps a `version` into any published pack that names none. `ContentParser` falls back to
+hashing the raw text, which nothing outside the app can reproduce, so the catalogue and the device
+would disagree about the version forever — and a device that believes its pack is stale offers the
+same download on every refresh for as long as the app is installed.
+
 **One pipeline is not in `tools/` and cannot be.** Curating a daily Vaults room means running
 `Playtest.solve` over each candidate a few thousand times, and the physics is Kotlin, so the
 publisher is a Gradle task over the engine tests' classpath —
@@ -51,6 +70,16 @@ commit. See `docs/games.md` for what a band is and why a published day is never 
 scripts are the only Node here rather than Python, because they drive a browser. It exists because Aryeh's Palace shipped
 unplayable past a full suite of headless tests — nothing had ever pressed a button. See
 `docs/games.md`.
+
+`probe.yml` carries a third question of the same kind: **what a real model makes of a topic**.
+The mapper's gates are all tested offline against a fake model, which proves they refuse what they
+should and proves nothing about whether the request shape is right or whether a real model's
+answers survive gates nobody wrote them to satisfy — and neither is knowable from a sandbox whose
+egress policy refuses `generativelanguage.googleapis.com` and `query.wikidata.org` alike. Its first
+run earned its keep immediately: the model name was a guess made where it could not be checked, and
+the API answered 404 — `gemini-2.5-flash` retired, `gemini-3.6-flash` named as its replacement. A
+404 that names a successor is now followed once and recorded, because a model name has a shelf life
+measured in months and this pipeline runs monthly.
 
 The two probes are reconnaissance scripts whose **results are recorded in their own docstrings**.
 `probe_durations.py` establishes that neither the channel RSS feed nor the embed page carries a
@@ -107,16 +136,17 @@ facts and published none of them, vetoed by two templates that yielded one fact 
 
 ## The workflows
 
-Seven, of which **four commit back to `main`**.
+Eight, of which **five commit back to `main`**.
 
 | Workflow | Trigger | Commits | Runs tests |
 |---|---|---|---|
 | `build.yml` | push / PR | no — publishes the `latest` release | yes |
-| `content.yml` | push to `assets/content/**`, weekly | `packs/`, assets mirror | no |
+| `content.yml` | push to `assets/content/**`, weekly | `packs/`, assets mirror, every manifest | no |
 | `durations.yml` | hourly | `packs/durations.json` | no |
 | `library.yml` | monthly, or dispatch | `packs/library/`, `packs/<tag>/library/` | yes, before committing |
 | `play.yml` | monthly, dispatch, or a change to the room grammar | `packs/play/` | yes, before committing |
 | `probe.yml` | manual only | nothing | no |
+| `topic.yml` | dispatch only | `packs/community/`, the manifests, the topic cache | yes, before committing |
 | `web.yml` | push / PR touching a game or its packs, or dispatch | no — publishes the portal to GitHub Pages | yes, and plays both |
 
 Shared idioms, each of which is load-bearing:

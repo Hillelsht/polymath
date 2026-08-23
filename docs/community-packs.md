@@ -1,4 +1,4 @@
-<!-- covers: tools/validate_pack.py, packs/community/** -->
+<!-- covers: tools/validate_pack.py, tools/topic_pack.py, tools/topic_llm.py, packs/community/** -->
 
 # Authoring a pack
 
@@ -133,18 +133,49 @@ python3 tools/topic_pack.py --topic "space"            # which questions it woul
 python3 tools/topic_pack.py --topic "space" --write    # harvest and write them
 ```
 
-It is Wedge 3's front door with the clever part left out. The version everyone imagines has a
-language model reading the topic and inventing a Wikidata query; this one matches the topic against
-a synonym table and the templates' own vocabulary, which is enough to prove the path — topic in,
-validated pack out — and small enough that the model replaces one function when it arrives.
+The mapper is a synonym table and word overlap against the templates' own vocabulary. It only
+reaches the eighteen questions `generate_facts.py` knows how to ask, so *"the Byzantine
+succession"* routes nowhere and says so; and it cannot narrow a topic, so *"rivers of Africa"*
+harvests the same rivers as *"rivers"* and tells you it ignored the word. Both limits are printed
+rather than hidden.
 
-Two limits, printed rather than hidden. It only reaches the eighteen questions
-`generate_facts.py` knows how to ask, so *"the Byzantine succession"* routes nowhere and says so.
-And it cannot narrow a topic: *"rivers of Africa"* harvests the same rivers as *"rivers"*, and tells
-you it ignored the word.
+`--llm` closes the second one. `tools/topic_llm.py` asks a model for the same two decisions — which
+templates, and a SPARQL fragment narrowing them — so *"rivers of Africa"* becomes
+`?s wdt:P17 ?c . ?c wdt:P30 wd:Q15 .` and harvests African rivers.
+
+```bash
+python3 tools/topic_pack.py --topic "rivers of africa" --llm     # what it would narrow to
+```
+
+**The model never writes a fact, a question or an answer.** That is the line that makes "about
+anything" safe to say: every published fact is still a Wikidata claim, and a model that phrased
+facts would be a model that could invent them. What it proposes passes five gates before a single
+fact is harvested — a closed template list, an allowlisted triples-only grammar, well-formed ids,
+a **label check** that reads the real English label and aliases for every Q- and P-number it named
+and refuses any whose meaning it got wrong, and a yield floor. A narrowing that empties its
+template is dropped and reported; it is never widened back to the un-narrowed query, because a
+pack called *Rivers of Africa* full of European rivers is the exact bug the feature exists to fix.
+
+Answers are cached in `tools/topic_cache.json`, committed. A topic asked once is free forever and,
+more usefully, reviewable in a diff — what a model decided a topic meant is a content decision.
+
+What it actually does, from `probe.yml`'s first real run:
+
+| typed | mapped to |
+|---|---|
+| `rivers of Africa` | `river-mouth`, `?s wdt:P30 wd:Q15 .` |
+| `chemistry` | `element-symbol` unnarrowed, plus `discoverer` and `named-after` both narrowed to `?s wdt:P31 wd:Q11344 .` — so it asks who discovered an *element*, not who discovered anything |
+| `films by Japanese directors` | `film-director`, `?o wdt:P27 wd:Q17 .` — narrowing the *answer* rather than the subject |
+| `the Byzantine succession` | nothing, and it says why: no template asks about monarchs, rulers or succession |
+
+The last row is the honest one. A topic the catalogue cannot serve is answered with a sentence
+naming what is missing, and the fix is a nineteenth template in `generate_facts.py` — not a looser
+mapper. Every Q- and P-number in that table was checked against its real Wikidata label before
+anything was harvested, which is the whole reason a model is allowed near published content.
 
 Whatever it writes goes through the same validator at the same `--strict` bar, and a pack that
-fails is deleted rather than left in the tree.
+fails is deleted rather than left in the tree. `tools/build_manifest.py` then lists it in the
+catalogue, which is the only thing that makes it reachable from a device at all.
 
 ## Where this fits
 
