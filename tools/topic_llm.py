@@ -504,6 +504,13 @@ TRANSIENT = {429, 500, 502, 503, 504}
 ATTEMPTS = 3
 BACKOFF = 4
 
+# A 429 has two meanings and they need opposite responses. "This model is currently experiencing
+# high demand" clears in seconds and is worth waiting for. "You exceeded your current quota" is a
+# daily allowance that will not return before tomorrow, and backing off three times to discover
+# that wastes twelve seconds and says nothing useful — the free tier's cap is what it is, and the
+# run should name it and stop.
+EXHAUSTED = re.compile(r"(?i)exceeded your current quota|quota exceeded for metric")
+
 
 def post(url, payload, headers, timeout=90, sleep=time.sleep):
     request = urllib.request.Request(
@@ -519,6 +526,14 @@ def post(url, payload, headers, timeout=90, sleep=time.sleep):
                 named = RETIRED.search(detail)
                 if named:
                     raise Retired(f"{DEFAULT_GEMINI_MODEL} is retired", named.group(1)) from error
+            if error.code == 429 and EXHAUSTED.search(detail):
+                limit = re.search(r"limit:\s*(\d+)", detail)
+                raise Refused(
+                    "the API key's quota is spent"
+                    + (f" (limit: {limit.group(1)} requests)" if limit else "")
+                    + " — this is a daily allowance, not a hiccup, so waiting minutes will not "
+                      "help. Raise the quota, enable billing, or set ANTHROPIC_API_KEY and pass "
+                      "--provider anthropic.") from error
             if error.code in TRANSIENT and attempt < ATTEMPTS:
                 wait = BACKOFF * attempt
                 print(f"  the model API answered {error.code}; waiting {wait}s and asking again")
@@ -895,6 +910,23 @@ def self_test():
         urllib.request.urlopen = real_open
     check("a 503 is weather, not an answer — it waits and asks again", answered == {"ok": True})
     check("and it backs off rather than hammering", waits == [4, 8])
+
+    # The other 429, which reads the same to a status code and means the opposite.
+    def spent(url, data=None, timeout=None):
+        raise urllib.error.HTTPError(url, 429, "quota", {}, io.BytesIO(
+            b'{"error":{"message":"You exceeded your current quota. Quota exceeded for metric: '
+            b'generate_content_free_tier_requests, limit: 20"}}'))
+
+    slept = []
+    urllib.request.urlopen = lambda req, timeout=None: spent(req.full_url, timeout=timeout)
+    try:
+        exhausted = refused(post, "https://example.invalid", {}, {}, sleep=slept.append)
+    finally:
+        urllib.request.urlopen = real_open
+    check("a spent quota is named as such rather than reported as overload",
+          "quota is spent" in (exhausted or ""))
+    check("and it does not wait for a daily allowance to come back in twelve seconds", slept == [])
+    check("the message says how to carry on", "ANTHROPIC_API_KEY" in (exhausted or ""))
 
     check("JSON in a code fence is still JSON", loads('```json\n{"a": 1}\n```') == {"a": 1})
     check("bare JSON is still JSON", loads('{"a": 1}') == {"a": 1})

@@ -181,6 +181,12 @@ reality-television credits. The label check refused it — and then, because tha
 is answerable is not routed nowhere over one wrong number; a model that repeats the same wrong id
 is refused for good.
 
+**The free tier is twenty requests a day.** A topic costs one call, or two when a proposal has to
+be corrected, so a handful of topics exhausts it — and the answer comes back as a 429 that looks
+exactly like the transient "experiencing high demand" one. They are told apart now, because waiting
+twelve seconds for a daily allowance to return is not a strategy. The cache is what makes this
+survivable: a topic asked once is never asked again.
+
 **A correct clause can still match nothing.** The first real publish run narrowed rivers with
 `?s wdt:P30 wd:Q15 .` — "on the continent of Africa", both ids verified — and it selected zero
 rivers, because almost none carry P30. Wikidata's coverage is uneven and no gate that reads a
