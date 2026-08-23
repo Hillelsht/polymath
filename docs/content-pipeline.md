@@ -81,6 +81,15 @@ the API answered 404 — `gemini-2.5-flash` retired, `gemini-3.6-flash` named as
 404 that names a successor is now followed once and recorded, because a model name has a shelf life
 measured in months and this pipeline runs monthly.
 
+The first real publish run then found the failure the probe could not: a narrowing can be correct
+and still match nothing. `?s wdt:P30 wd:Q15 .` is exactly "on the continent of Africa", both ids
+verify, and almost no river carries P30 — so it selected zero rivers. Wikidata's coverage is uneven
+and no gate that reads a clause can see it; only the endpoint knows. So the endpoint is asked, and
+an empty answer sends the clause back to the model with the count attached, to be reached through a
+property those subjects actually carry. The retry passes every gate the first proposal did, and a
+model with nothing better costs its own template rather than the topic's honesty — the un-narrowed
+query is never run as a fallback.
+
 The two probes are reconnaissance scripts whose **results are recorded in their own docstrings**.
 `probe_durations.py` establishes that neither the channel RSS feed nor the embed page carries a
 duration, so the YouTube Data API is the only source — which is the entire justification for
