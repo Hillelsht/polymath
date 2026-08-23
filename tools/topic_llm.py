@@ -43,11 +43,23 @@ and content decisions in this repository are read before they ship.
 What a real model actually does with this, from `probe.yml`'s first run — recorded here rather than
 remembered, the way the other two probes record theirs:
 
-    chemistry                    -> element-symbol, not narrowed
-    the Byzantine succession     -> nothing, "the catalogue does not contain templates for
-                                    monarchs, emperors, officeholders, predecessors or successors"
-    films by Japanese directors  -> film-director, ?o wdt:P27 wd:Q17 .
-    rivers of Africa             -> river-mouth, narrowed by continent
+    rivers of Africa    river-mouth     ?s wdt:P30 wd:Q15 .
+    chemistry           element-symbol  (not narrowed)
+                        discoverer      ?s wdt:P31 wd:Q11344 .
+                        named-after     ?s wdt:P31 wd:Q11344 .
+    films by Japanese   film-director   ?o wdt:P27 wd:Q17 .
+      directors
+    the Byzantine       nothing         "the catalogue contains no question templates related to
+      succession                         monarchs, rulers, political succession, predecessors or
+                                         successors, or historical dynasties"
+
+Worth reading closely, because two of those are better than the brief asked for. "Chemistry" was
+not one template but three, with two of them narrowed to `wd:Q11344` — so the pack asks who
+discovered an element and what an element is named after, rather than who discovered anything at
+all. And "films by Japanese directors" narrowed **`?o`**, the answer, rather than the subject: the
+grammar permits it and nothing in the prompt suggested it. Every Q- and P-number in that column was
+checked against its real Wikidata label before a single fact was harvested, which is the whole
+reason a model is allowed near this at all.
 
 Two findings came out of that run and both are in the code above. The model named `gemini-2.5-flash`
 as retired and `gemini-3.6-flash` as its replacement, which is why a 404 naming a successor is
