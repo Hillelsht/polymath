@@ -71,6 +71,12 @@ MIN_ROWS = 12
 # enough that a runaway clause cannot become a join nobody can afford.
 MAX_TRIPLES = 4
 
+# Read off a real 404 rather than chosen from memory. The first call this file made was to
+# `gemini-2.5-flash`, and the API answered: "This model models/gemini-2.5-flash is no longer
+# available to new users. Please update your code to use models/gemini-3.6-flash." Overridable
+# with GEMINI_MODEL, and followed automatically once if this one goes the same way.
+DEFAULT_GEMINI_MODEL = "gemini-3.6-flash"
+
 
 class Refused(Exception):
     """A proposal that failed a gate. The message is what to print — it names the gate."""
@@ -313,6 +319,19 @@ SCHEMA = {
 }
 
 
+class Retired(Refused):
+    """The model is gone and the API named its replacement. Carries the name it gave."""
+
+    def __init__(self, message, replacement):
+        super().__init__(message)
+        self.replacement = replacement
+
+
+# Google answers a retired model with a 404 whose message names the successor in prose. Read
+# rather than guessed at: the exact wording is recorded below, from the probe run that found it.
+RETIRED = re.compile(r"use\s+models/([A-Za-z0-9.\-]+)")
+
+
 def post(url, payload, headers, timeout=90):
     request = urllib.request.Request(
         url, data=json.dumps(payload).encode("utf-8"),
@@ -322,6 +341,10 @@ def post(url, payload, headers, timeout=90):
             return json.load(response)
     except urllib.error.HTTPError as error:
         detail = error.read().decode("utf-8", "replace")[:400]
+        if error.code == 404:
+            named = RETIRED.search(detail)
+            if named:
+                raise Retired(f"{DEFAULT_GEMINI_MODEL} is retired", named.group(1)) from error
         raise Refused(f"the model API answered {error.code}: {detail}") from error
 
 
@@ -338,16 +361,37 @@ def loads(text):
 
 
 def ask_gemini(topic, templates=None, model=None, key=None):
-    model = model or os.environ.get("GEMINI_MODEL", "gemini-2.5-flash")
+    """One call, with one retry if the model named has been retired since this was written.
+
+    The retry is not defensiveness for its own sake. The first real call this file ever made came
+    back 404: `gemini-2.5-flash` was retired for new users, and the message said which model to use
+    instead. A model name has a shelf life measured in months and this pipeline runs monthly, so
+    without this a topic run would one day fail with a 404 that reads like a broken key — and the
+    fix would be a code change nobody knew was needed. Following the API's own instruction once,
+    loudly, turns an outage into a line in a log. It is recorded in the cache, so which model
+    answered is never a guess.
+    """
+    model = model or os.environ.get("GEMINI_MODEL", DEFAULT_GEMINI_MODEL)
     key = key or os.environ.get("GEMINI_API_KEY", "")
     if not key:
         raise Refused("GEMINI_API_KEY is not set — this step only runs where the secret is")
-    body = post(
-        f"https://generativelanguage.googleapis.com/v1beta/models/{model}:generateContent",
-        {"contents": [{"parts": [{"text": prompt_for(topic, templates)}]}],
-         "generationConfig": {"temperature": 0, "responseMimeType": "application/json",
-                              "responseSchema": SCHEMA}},
-        {"x-goog-api-key": key})
+
+    def call(name):
+        return post(
+            f"https://generativelanguage.googleapis.com/v1beta/models/{name}:generateContent",
+            {"contents": [{"parts": [{"text": prompt_for(topic, templates)}]}],
+             "generationConfig": {"temperature": 0, "responseMimeType": "application/json",
+                                  "responseSchema": SCHEMA}},
+            {"x-goog-api-key": key})
+
+    try:
+        body = call(model)
+    except Retired as exc:
+        print(f"  {model} is retired; the API says to use {exc.replacement}. Following it once —"
+              f" set GEMINI_MODEL to make that the default.")
+        model = exc.replacement
+        body = call(model)
+
     try:
         text = body["candidates"][0]["content"]["parts"][0]["text"]
     except (KeyError, IndexError) as exc:
@@ -549,6 +593,14 @@ def self_test():
           "rivers of Africa" in prompt_for("rivers of Africa"))
     check("the prompt names the grammar the gates enforce",
           "at most 4 triples" in prompt_for("x").lower())
+
+    retired = ('{"error": {"code": 404, "message": "This model models/gemini-2.5-flash is no '
+               'longer available to new users. Please update your code to use '
+               'models/gemini-3.6-flash for the latest features and improvements."}}')
+    check("a retired model's replacement is read out of the API's own message",
+          RETIRED.search(retired).group(1) == "gemini-3.6-flash")
+    check("and a 404 that names no replacement is just a refusal",
+          RETIRED.search('{"error": {"code": 404, "message": "not found"}}') is None)
 
     check("JSON in a code fence is still JSON", loads('```json\n{"a": 1}\n```') == {"a": 1})
     check("bare JSON is still JSON", loads('{"a": 1}') == {"a": 1})

@@ -71,6 +71,16 @@ scripts are the only Node here rather than Python, because they drive a browser.
 unplayable past a full suite of headless tests — nothing had ever pressed a button. See
 `docs/games.md`.
 
+`probe.yml` carries a third question of the same kind: **what a real model makes of a topic**.
+The mapper's gates are all tested offline against a fake model, which proves they refuse what they
+should and proves nothing about whether the request shape is right or whether a real model's
+answers survive gates nobody wrote them to satisfy — and neither is knowable from a sandbox whose
+egress policy refuses `generativelanguage.googleapis.com` and `query.wikidata.org` alike. Its first
+run earned its keep immediately: the model name was a guess made where it could not be checked, and
+the API answered 404 — `gemini-2.5-flash` retired, `gemini-3.6-flash` named as its replacement. A
+404 that names a successor is now followed once and recorded, because a model name has a shelf life
+measured in months and this pipeline runs monthly.
+
 The two probes are reconnaissance scripts whose **results are recorded in their own docstrings**.
 `probe_durations.py` establishes that neither the channel RSS feed nor the embed page carries a
 duration, so the YouTube Data API is the only source — which is the entire justification for

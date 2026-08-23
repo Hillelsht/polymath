@@ -50,7 +50,11 @@ jobs:
           for topic in "rivers of Africa" "chemistry" "the Byzantine succession" \
                        "films by Japanese directors"; do
             echo "::group::$topic"
-            python3 tools/topic_llm.py --topic "$topic" --no-cache || echo "(routed nowhere)"
+            # A non-zero exit here means one of two very different things — the model routed the
+            # topic nowhere, which is an answer, or the call itself failed, which is a finding —
+            # and the line above says which. Conflating them under "(routed nowhere)" is how the
+            # first run of this probe reported four dead API calls as four honest refusals.
+            python3 tools/topic_llm.py --topic "$topic" --no-cache || true
             echo "::endgroup::"
           done
 
