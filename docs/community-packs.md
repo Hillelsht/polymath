@@ -173,6 +173,14 @@ naming what is missing, and the fix is a nineteenth template in `generate_facts.
 mapper. Every Q- and P-number in that table was checked against its real Wikidata label before
 anything was harvested, which is the whole reason a model is allowed near published content.
 
+**A model will name the wrong entity, and the gate is what stands between that and a published
+pack.** Asked about *Star Wars*, it said `Q82347` was the franchise. Wikidata calls Q82347
+"America's Next Top Model, season 2". The pack would have been named Star Wars and filled with
+reality-television credits. The label check refused it — and then, because that check knows the
+*real* label, the refusal is handed back to the model so it can use the id it meant. A topic that
+is answerable is not routed nowhere over one wrong number; a model that repeats the same wrong id
+is refused for good.
+
 **A correct clause can still match nothing.** The first real publish run narrowed rivers with
 `?s wdt:P30 wd:Q15 .` — "on the continent of Africa", both ids verified — and it selected zero
 rivers, because almost none carry P30. Wikidata's coverage is uneven and no gate that reads a

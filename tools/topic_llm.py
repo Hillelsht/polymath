@@ -53,6 +53,17 @@ remembered, the way the other two probes record theirs:
       succession                         monarchs, rulers, political succession, predecessors or
                                          successors, or historical dynasties"
 
+"Star Wars" then produced the moment this whole design was built for. The model claimed `Q82347`
+was the franchise; the label gate looked it up and found **"america's next top model, season 2"**.
+Without that check the pipeline would have published a pack called *Star Wars* full of reality-
+television credits — plausibly named, entirely wrong, and permanent, because a published fact id
+is permanent. It refused instead.
+
+Refusing was right and stopping there was not: the gate is holding the correction in its hand. So a
+refusal now goes back to the model with the true label attached, and a topic that is perfectly
+answerable is no longer routed nowhere over one wrong number. A model that repeats the same wrong
+id is refused for good.
+
 And then the first real *publish* run found the one thing none of the gates can: **`?s wdt:P30
 wd:Q15 .` matched nothing.** It is exactly right — "on the continent of Africa", both ids verified
 against Wikidata — and almost no river carries P30, so it selected zero rivers. A clause can be
@@ -345,26 +356,29 @@ Return JSON only.
 """
 
 
-def renarrow_prompt(topic, template_key, clause, matched, templates=None):
-    """The second ask, after a clause turned out to match nothing.
+def retry_prompt(topic, template_key, clause, problem, templates=None):
+    """The second ask, after a proposal failed for a reason the model can act on.
 
-    The model is told exactly which clause failed and how little it returned, because "try again"
-    without the result is rolling the same dice. This loop is the difference between a feature that
-    works on lucky topics and one that works.
+    Two failures reach here and both are recoverable, which is why they share a prompt. A clause
+    can name the wrong entity — the gate knows the *real* label and hands it back — or it can name
+    the right one and still match nothing, because Wikidata's coverage is uneven. Either way the
+    model is told exactly what went wrong, because "try again" without the result is rolling the
+    same dice.
     """
     return (
         f"{INSTRUCTIONS}\n"
         f"Topic: {json.dumps(topic)}\n\n"
         f"You already answered this topic, and one of your narrowings did not work:\n\n"
         f"    template: {template_key}\n"
-        f"    narrow:   {clause}\n"
-        f"    matched:  {matched} subjects — too few to build a pack from\n\n"
-        f"The clause is valid and its ids are real. The problem is coverage: the property you used "
-        f"is not populated on the subjects this template selects. Propose a *different* narrowing "
-        f"for this one template, reaching the same meaning through a property those subjects "
-        f"actually carry — usually by hopping through a related entity. Return only that one "
-        f"template. If the topic's meaning cannot be reached any other way, return no templates and "
-        f"say so in `note`; that is a better answer than a clause you do not believe in.\n\n"
+        f"    narrow:   {clause or '(none)'}\n"
+        f"    problem:  {problem}\n\n"
+        f"Propose a *different* narrowing for this one template, and return only that template. "
+        f"If the problem was an entity id, use the one that really means what you intended — the "
+        f"message above tells you what the id you chose actually is. If the problem was that the "
+        f"clause matched nothing, reach the same meaning through a property those subjects "
+        f"actually carry, usually by hopping through a related entity. If the topic's meaning "
+        f"cannot be reached any other way, return no templates and say so in `note`; that is a "
+        f"better answer than a clause you do not believe in.\n\n"
         f"Catalogue:\n{json.dumps(catalogue(templates), ensure_ascii=False, indent=1)}\n"
     )
 
@@ -541,17 +555,38 @@ def plan_for(topic, provider="gemini", templates=None, ask=None, model=None, use
     if slot:
         return slot["templates"], slot.get("note", ""), True
 
-    raw, used_model = PROVIDERS[provider](topic, templates)
+    raw, used_model = PROVIDERS[provider](topic, templates, model=model)
     verified, refusals = [], []
     for proposal in raw.get("templates") or []:
+        key = str(proposal.get("key", "?"))
         try:
             verified.append(verify(proposal, templates, ask=ask))
-        except Refused as exc:
-            refusals.append(f"{proposal.get('key', '?')}: {exc}")
+            continue
+        except Refused as error:
+            # Bound to a name that outlives the block: Python deletes an `as` target when the
+            # except clause ends, and the retry below needs to quote the reason back to the model.
+            reason = str(error)
+        print(f"  refused — {key}: {reason}")
+
+        # A refusal is not the end of the topic. The commonest one by far is a hallucinated
+        # entity id, and the gate that caught it knows what that id *really* is — so the model is
+        # told, and asked again. "Star Wars" was the case that argued for this: the model claimed
+        # Q82347 was the franchise, the label check found "america's next top model, season 2",
+        # and three templates were dropped over one wrong number. Handing back the true label is
+        # the difference between a topic that routes nowhere and one that works.
+        try:
+            better = retry(topic, key, str(proposal.get("narrow", "")).strip(), reason,
+                           provider=provider, templates=templates, ask=ask, model=model,
+                           cache_path=cache_path, use_cache=False)
+        except Refused as second:
+            better, reason = None, str(second)
+        if better:
+            print(f"  {key}: corrected after being told what it had really named")
+            verified.append(better)
+        else:
+            refusals.append(f"{key}: {reason}")
 
     note = str(raw.get("note", "")).strip()
-    for refusal in refusals:
-        print(f"  refused — {refusal}")
     if refusals:
         note = "; ".join([note] + refusals) if note else "; ".join(refusals)
 
@@ -562,25 +597,27 @@ def plan_for(topic, provider="gemini", templates=None, ask=None, model=None, use
     return verified, note, False
 
 
-def renarrow(topic, template_key, clause, matched, provider="gemini", templates=None, ask=None,
-             model=None, cache_path=CACHE, use_cache=True):
-    """A second narrowing for one template, after the first matched nothing.
+def retry(topic, template_key, clause, problem, provider="gemini", templates=None, ask=None,
+          model=None, cache_path=CACHE, use_cache=True):
+    """A second proposal for one template, after the first failed for a reason worth reporting.
 
-    Returns a verified proposal, or None if the model had nothing better — which is a real answer
-    and the caller drops the template rather than widening back to the un-narrowed query.
+    Returns a verified proposal, or None if the model had nothing better — which is a real answer,
+    and the caller drops the template rather than falling back to something broader.
 
     Every gate that ran on the first proposal runs on this one. A retry is not a second chance to
     get past them; it is a second chance to be right.
     """
     asker = PROVIDERS[provider]
     raw, used_model = asker(topic, templates, model=model,
-                            prompt=renarrow_prompt(topic, template_key, clause, matched, templates))
+                            prompt=retry_prompt(topic, template_key, clause, problem, templates))
     for proposal in raw.get("templates") or []:
         if str(proposal.get("key", "")).strip() != template_key:
             continue
-        if not str(proposal.get("narrow", "")).strip():
-            # Declining to narrow on the retry means "I cannot reach this meaning", not "publish it
-            # broad" — the un-narrowed query is the bug this whole path exists to prevent.
+        if clause and not str(proposal.get("narrow", "")).strip():
+            # Declining to narrow after a *narrowing* failed means "I cannot reach this meaning",
+            # not "publish it broad" — the un-narrowed query is the bug this path exists to
+            # prevent. When the first attempt was refused outright there was never a working
+            # narrowing to lose, so an honest un-narrowed answer is allowed to stand.
             continue
         try:
             better = verify(proposal, templates, ask=ask)
@@ -762,6 +799,49 @@ def self_test():
         check("and the cache is written where a reviewer will see it in a diff", path.is_file())
 
         calls.clear()
+
+        # --- the Star Wars case, which is why a refusal is not the end of a topic ------------
+        #
+        # The model claimed Q82347 was Star Wars. It is "America's Next Top Model, season 2", and
+        # the label gate said so — precisely, with the real label attached. Dropping the template
+        # there would route a perfectly answerable topic nowhere over one wrong number, when the
+        # gate is holding the correction in its hand.
+        WORLD["Q462"] = {"star wars"}
+        WORLD["P179"] = {"part of the series"}
+        WORLD["Q82347"] = {"america's next top model, season 2"}
+        wrong = {"key": "film-director", "narrow": "?s wdt:P179 wd:Q82347 .",
+                 "why": "films in the Star Wars series",
+                 "entities": [{"id": "P179", "label": "part of the series"},
+                              {"id": "Q82347", "label": "Star Wars"}]}
+        right = {**wrong, "narrow": "?s wdt:P179 wd:Q462 .",
+                 "entities": [{"id": "P179", "label": "part of the series"},
+                              {"id": "Q462", "label": "Star Wars"}]}
+        told = []
+
+        def hallucinating_model(topic, templates=None, model=None, key=None, prompt=None):
+            told.append(prompt)
+            return ({"templates": [right if prompt else wrong], "note": ""}, "fake-1")
+
+        PROVIDERS["hallucinating"] = hallucinating_model
+        plan, note, _ = plan_for("star wars", "hallucinating", ask=fake_ask,
+                                 cache_path=Path(tmp) / "sw.json")
+        check("a hallucinated entity id is corrected rather than dropped",
+              [p["narrow"] for p in plan] == ["?s wdt:P179 wd:Q462 ."])
+        check("and the model is told what the id it chose actually was",
+              "america's next top model" in (told[1] or ""))
+        check("the corrected proposal passed every gate the first one did",
+              plan and plan[0]["entities"][1]["id"] == "Q462")
+        PROVIDERS.pop("hallucinating")
+
+        def stubborn_model(topic, templates=None, model=None, key=None, prompt=None):
+            return ({"templates": [wrong], "note": ""}, "fake-1")
+
+        PROVIDERS["stubborn"] = stubborn_model
+        plan, note, _ = plan_for("star wars again", "stubborn", ask=fake_ask,
+                                 cache_path=Path(tmp) / "sw2.json")
+        check("a model that repeats the same wrong id is refused, not indulged", plan == [])
+        check("and the reason still reaches the note", "Q82347 is not" in note)
+        PROVIDERS.pop("stubborn")
 
         def lying_model(topic, templates=None, model=None, key=None, prompt=None):
             return {"templates": [{**good, "entities": [{"id": "Q15", "label": "Asia"}]}],

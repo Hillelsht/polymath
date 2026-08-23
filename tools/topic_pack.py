@@ -273,8 +273,11 @@ def harvest(topic, limit, language, stamp, use_llm=False, **kw):
             if clause and len(made) < MIN_NARROWED_FACTS:
                 print(f"  {template.key:20s} narrowing matched {matched} subjects, "
                       f"{len(made)} usable — asking for another  [{note}]")
-                better = topic_llm.renarrow(topic, template.key, clause, matched,
-                                            **retry_args(kw)) if use_llm else None
+                better = topic_llm.retry(
+                    topic, template.key, clause,
+                    f"it matched {matched} subjects, too few to build a pack from — the property "
+                    f"is not populated on the subjects this template selects",
+                    **retry_args(kw)) if use_llm else None
                 if better and better["narrow"] != clause:
                     clause = better["narrow"]
                     print(f"  {template.key:20s} retrying with {clause}")
