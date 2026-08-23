@@ -24,7 +24,7 @@ internals makes a red build unreadable.
 gradle -p enginetests test
 ```
 
-337 tests, no Android SDK needed, seconds to run. `enginetests` is a **separate Gradle build**
+339 tests, no Android SDK needed, seconds to run. `enginetests` is a **separate Gradle build**
 (its own `settings.gradle.kts`) that points `kotlin.srcDirs` straight at the app's
 `domain/` and `data/seed/` directories. It compiles and tests **the exact source that ships** —
 not a copy, not a port.
@@ -61,7 +61,7 @@ gradle -p webplay site                       # the same, minus source maps and s
 NODE_PATH=/opt/node22/lib/node_modules \
   node tools/playtest/play.js                # plays all seven Vaults rooms in Chromium, ~5s
 NODE_PATH=/opt/node22/lib/node_modules \
-  node tools/playtest/daily.js               # plays the daily grid through its own buttons
+  node tools/playtest/daily.js               # plays the daily grid, in all three languages
 NODE_PATH=/opt/node22/lib/node_modules \
   node tools/playtest/ghost.js               # races a shared run, end to end
 python3 tools/playtest/inline.py             # fold The Vaults into one self-contained file
@@ -84,6 +84,12 @@ because a pack refreshed by a bot cannot trigger a rebuild of this site.
 This exists because the previous game shipped unplayable past a full headless suite: no test had
 ever pressed a button. `play.js` presses them, and re-measures every room's timing margin in the
 browser — those figures matching the JVM's is what proves the two targets have not drifted.
+`daily.js` also plays the Russian and Hebrew grids, because the daily exists once per language and
+the way that breaks is quiet: a build serving English tiles under Russian buttons looks localised
+in a screenshot. It checks the three things that can each be true while the feature is broken —
+that the tiles are in the language asked for, that the chrome is, and that it is not the English
+grid relabelled.
+
 `daily.js` does the same job one layer up, over http rather than `file://` because a daily is made
 of things a `file://` origin does not have: `localStorage`, and therefore a streak that survives a
 reload. `ghost.js` adds the check the generated rooms depend on — it clears today's room by
