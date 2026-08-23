@@ -301,7 +301,7 @@ def harvest(topic, limit, language, stamp, use_llm=False, **kw):
 def retry_args(kw):
     """The mapper arguments a retry needs, dropping the ones only the first ask takes."""
     return {k: v for k, v in kw.items() if k in {"provider", "templates", "ask", "model",
-                                                 "cache_path", "use_cache"}}
+                                                 "cache_path", "use_cache", "fetch"}}
 
 
 def write(built, out_dir=OUT_DIR):

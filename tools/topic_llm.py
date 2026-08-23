@@ -60,9 +60,16 @@ television credits — plausibly named, entirely wrong, and permanent, because a
 is permanent. It refused instead.
 
 Refusing was right and stopping there was not: the gate is holding the correction in its hand. So a
-refusal now goes back to the model with the true label attached, and a topic that is perfectly
-answerable is no longer routed nowhere over one wrong number. A model that repeats the same wrong
-id is refused for good.
+refusal goes back to the model — and telling it "Q82347 is actually a reality show" was not enough
+either. It guessed again and produced `Q809`, the Polish language. Two guesses, two unrelated
+entities, because **recalling five-digit identifiers is not something a language model does**, and
+asking more politely does not change that.
+
+So it is not asked to. A refusal now carries Wikidata's own search results for the name the model
+used — `Q462 Star Wars — American epic space opera media franchise` — and the model picks from real
+candidates instead of reciting. Reading beats recall, and this is the division of labour the whole
+design was reaching for: the model knows what "part of the series = Star Wars" means, Wikidata
+knows which entity that is, and neither is asked to do the other's job.
 
 And then the first real *publish* run found the one thing none of the gates can: **`?s wdt:P30
 wd:Q15 .` matched nothing.** It is exactly right — "on the continent of Africa", both ids verified
@@ -102,6 +109,7 @@ import json
 import os
 import re
 import sys
+import time
 import urllib.error
 import urllib.parse
 import urllib.request
@@ -239,6 +247,62 @@ def fetch_labels(ids, ask=None):
     return found
 
 
+class WrongEntity(Refused):
+    """The id names something else. Carries what the model thought it was, so it can be looked up."""
+
+    def __init__(self, message, entity_id, claimed):
+        super().__init__(message)
+        self.entity_id = entity_id
+        self.claimed = claimed
+
+
+SEARCH = "https://www.wikidata.org/w/api.php"
+
+
+def search_entities(text, kind="item", limit=7, fetch=None):
+    """Real Wikidata entities whose name matches [text], with descriptions to tell them apart.
+
+    The model is good at "the constraint is: part of the series = Star Wars" and bad at "Star Wars
+    is Q462". Asked about Star Wars it produced Q82347 — "America's Next Top Model, season 2" —
+    and, told that was wrong, produced Q809, the Polish language. Two guesses, two unrelated
+    entities, because recalling arbitrary five-digit identifiers is not a thing a language model
+    does reliably and no amount of asking again fixes it.
+
+    So it is not asked to. Wikidata's own search returns the real candidates and the model picks
+    from them, which is the division of labour that plays to what each side is actually good at.
+    """
+    params = {"action": "wbsearchentities", "search": text, "language": "en", "uselang": "en",
+              "format": "json", "limit": str(limit), "type": kind}
+    url = f"{SEARCH}?{urllib.parse.urlencode(params)}"
+    request = urllib.request.Request(url, headers={"User-Agent": gen.UA})
+    try:
+        if fetch:
+            body = fetch(url)
+        else:
+            with urllib.request.urlopen(request, timeout=30) as response:
+                body = json.load(response)
+    except Exception:
+        # A search that cannot run is not a reason to fail the topic; it just means the retry goes
+        # out without candidates, exactly as it did before this existed.
+        return []
+    return [{"id": hit.get("id", ""), "label": hit.get("label", ""),
+             "description": hit.get("description", "")}
+            for hit in body.get("search", []) if hit.get("id")]
+
+
+def candidates_for(claimed, entity_id, fetch=None):
+    """The line a retry prompt shows: what that id really is, and what the model probably meant."""
+    kind = "property" if str(entity_id).startswith("P") else "item"
+    found = search_entities(claimed, kind=kind, fetch=fetch)
+    if not found:
+        return ""
+    rows = "\n".join(f"      {hit['id']}  {hit['label']}"
+                      + (f" — {hit['description']}" if hit["description"] else "")
+                      for hit in found)
+    return (f"\n    Wikidata's own search for {json.dumps(claimed)} returns these real "
+            f"entities. Pick from them rather than recalling an id:\n{rows}\n")
+
+
 def check_entities(entities, ask=None):
     """The label gate. Every id the model named must be the thing the model said it was.
 
@@ -261,7 +325,8 @@ def check_entities(entities, ask=None):
             raise Refused(f"{eid} does not exist on Wikidata (the model called it '{label}')")
         if normalise(label) not in real[eid]:
             example = sorted(real[eid])[:3]
-            raise Refused(f"{eid} is not '{label}' — Wikidata calls it {', '.join(example)}")
+            raise WrongEntity(
+                f"{eid} is not '{label}' — Wikidata calls it {', '.join(example)}", eid, label)
     return claimed
 
 
@@ -431,20 +496,35 @@ class Retired(Refused):
 RETIRED = re.compile(r"use\s+models/([A-Za-z0-9.\-]+)")
 
 
-def post(url, payload, headers, timeout=90):
+# Overload and rate limits are weather, not answers. A free tier returns them routinely and the
+# first Star Wars run lost a whole template to one 503 — reported as though the model had refused,
+# which it had not. Bounded, because a provider that is down stays down and a topic run should say
+# so rather than sit in a loop.
+TRANSIENT = {429, 500, 502, 503, 504}
+ATTEMPTS = 3
+BACKOFF = 4
+
+
+def post(url, payload, headers, timeout=90, sleep=time.sleep):
     request = urllib.request.Request(
         url, data=json.dumps(payload).encode("utf-8"),
         headers={"Content-Type": "application/json", **headers})
-    try:
-        with urllib.request.urlopen(request, timeout=timeout) as response:
-            return json.load(response)
-    except urllib.error.HTTPError as error:
-        detail = error.read().decode("utf-8", "replace")[:400]
-        if error.code == 404:
-            named = RETIRED.search(detail)
-            if named:
-                raise Retired(f"{DEFAULT_GEMINI_MODEL} is retired", named.group(1)) from error
-        raise Refused(f"the model API answered {error.code}: {detail}") from error
+    for attempt in range(1, ATTEMPTS + 1):
+        try:
+            with urllib.request.urlopen(request, timeout=timeout) as response:
+                return json.load(response)
+        except urllib.error.HTTPError as error:
+            detail = error.read().decode("utf-8", "replace")[:400]
+            if error.code == 404:
+                named = RETIRED.search(detail)
+                if named:
+                    raise Retired(f"{DEFAULT_GEMINI_MODEL} is retired", named.group(1)) from error
+            if error.code in TRANSIENT and attempt < ATTEMPTS:
+                wait = BACKOFF * attempt
+                print(f"  the model API answered {error.code}; waiting {wait}s and asking again")
+                sleep(wait)
+                continue
+            raise Refused(f"the model API answered {error.code}: {detail}") from error
 
 
 def loads(text):
@@ -543,7 +623,7 @@ def cache_key(topic):
 
 
 def plan_for(topic, provider="gemini", templates=None, ask=None, model=None, use_cache=True,
-             cache_path=CACHE):
+             cache_path=CACHE, fetch=None):
     """The verified plan for a topic: cached if it has been asked, asked and verified if not.
 
     Returns (plan, note, cached). [plan] is a list of verified proposals; a topic the model could
@@ -562,11 +642,13 @@ def plan_for(topic, provider="gemini", templates=None, ask=None, model=None, use
         try:
             verified.append(verify(proposal, templates, ask=ask))
             continue
+        except WrongEntity as error:
+            # Bound to names that outlive the block: Python deletes an `as` target when the except
+            # clause ends, and the retry below needs both the reason and the real candidates.
+            reason = str(error) + candidates_for(error.claimed, error.entity_id, fetch=fetch)
         except Refused as error:
-            # Bound to a name that outlives the block: Python deletes an `as` target when the
-            # except clause ends, and the retry below needs to quote the reason back to the model.
             reason = str(error)
-        print(f"  refused — {key}: {reason}")
+        print(f"  refused — {key}: {reason.splitlines()[0]}")
 
         # A refusal is not the end of the topic. The commonest one by far is a hallucinated
         # entity id, and the gate that caught it knows what that id *really* is — so the model is
@@ -649,7 +731,9 @@ def remember(topic, proposal, model, cache_path=CACHE):
 # --- self-test ------------------------------------------------------------------------------
 
 def self_test():
+    import io
     failures = []
+    _seen = []
 
     def check(name, condition):
         print(f"  {'ok  ' if condition else 'FAIL'} {name}")
@@ -776,6 +860,42 @@ def self_test():
     check("and a 404 that names no replacement is just a refusal",
           RETIRED.search('{"error": {"code": 404, "message": "not found"}}') is None)
 
+    check("a search result is read down to id, label and description",
+          search_entities("Star Wars", fetch=lambda url: {"search": [
+              {"id": "Q462", "label": "Star Wars", "description": "franchise"}]})
+          == [{"id": "Q462", "label": "Star Wars", "description": "franchise"}])
+    check("a search that cannot run costs candidates, not the topic",
+          search_entities("x", fetch=lambda url: (_ for _ in ()).throw(OSError("no route"))) == [])
+    def capturing(url):
+        _seen.append(url)
+        return {"search": [{"id": "P17", "label": "country", "description": "sovereign state"}]}
+
+    shown = candidates_for("country", "P17", fetch=capturing)
+    check("a P-number is looked up among properties, not items",
+          _seen and "type=property" in _seen[0])
+    check("an item id is looked up among items",
+          "type=item" in (candidates_for("Africa", "Q15", fetch=capturing) and _seen[1]))
+    check("and the candidates are shown with their descriptions, which is what tells them apart",
+          "P17" in shown and "sovereign state" in shown)
+
+    waits = []
+    calls = {"n": 0}
+
+    def flaky(url, data=None, timeout=None):
+        calls["n"] += 1
+        if calls["n"] < 3:
+            raise urllib.error.HTTPError(url, 503, "busy", {}, io.BytesIO(b"high demand"))
+        return io.BytesIO(json.dumps({"ok": True}).encode())
+
+    real_open = urllib.request.urlopen
+    urllib.request.urlopen = lambda req, timeout=None: flaky(req.full_url, timeout=timeout)
+    try:
+        answered = post("https://example.invalid", {}, {}, sleep=waits.append)
+    finally:
+        urllib.request.urlopen = real_open
+    check("a 503 is weather, not an answer — it waits and asks again", answered == {"ok": True})
+    check("and it backs off rather than hammering", waits == [4, 8])
+
     check("JSON in a code fence is still JSON", loads('```json\n{"a": 1}\n```') == {"a": 1})
     check("bare JSON is still JSON", loads('{"a": 1}') == {"a": 1})
     check("prose instead of JSON is refused", refused(loads, "I think the topic is about rivers"))
@@ -818,13 +938,25 @@ def self_test():
                               {"id": "Q462", "label": "Star Wars"}]}
         told = []
 
+        def fake_search(url):
+            """Wikidata's own search, which knows what "Star Wars" is and the model does not."""
+            return {"search": [
+                {"id": "Q462", "label": "Star Wars",
+                 "description": "American epic space opera media franchise"},
+                {"id": "Q17738", "label": "Star Wars", "description": "1977 film by George Lucas"},
+            ]}
+
         def hallucinating_model(topic, templates=None, model=None, key=None, prompt=None):
             told.append(prompt)
             return ({"templates": [right if prompt else wrong], "note": ""}, "fake-1")
 
         PROVIDERS["hallucinating"] = hallucinating_model
         plan, note, _ = plan_for("star wars", "hallucinating", ask=fake_ask,
-                                 cache_path=Path(tmp) / "sw.json")
+                                 cache_path=Path(tmp) / "sw.json", fetch=fake_search)
+        check("the retry carries real candidates, not just the news that it was wrong",
+              "Q462" in (told[1] or "") and "space opera" in (told[1] or ""))
+        check("and it says which id is which, so picking is reading rather than recalling",
+              "Q17738" in (told[1] or ""))
         check("a hallucinated entity id is corrected rather than dropped",
               [p["narrow"] for p in plan] == ["?s wdt:P179 wd:Q462 ."])
         check("and the model is told what the id it chose actually was",
@@ -838,7 +970,7 @@ def self_test():
 
         PROVIDERS["stubborn"] = stubborn_model
         plan, note, _ = plan_for("star wars again", "stubborn", ask=fake_ask,
-                                 cache_path=Path(tmp) / "sw2.json")
+                                 cache_path=Path(tmp) / "sw2.json", fetch=fake_search)
         check("a model that repeats the same wrong id is refused, not indulged", plan == [])
         check("and the reason still reaches the note", "Q82347 is not" in note)
         PROVIDERS.pop("stubborn")
