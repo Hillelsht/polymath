@@ -1,5 +1,6 @@
 // Imported rather than written out at the call site: inside a Kotlin DSL build script `java`
 // resolves to the Java plugin extension, so `java.time.YearMonth` does not compile.
+import java.io.File
 import java.time.YearMonth
 
 plugins {
@@ -52,29 +53,61 @@ val dailies by tasks.registering {
     // One file per game rather than one between them: the grids run to a few hundred kilobytes of
     // Wikidata labels and the rooms to a few dozen numbers, and the descent has no use for the
     // grids. Each page pays for its own daily and nobody else's.
-    val games = mapOf(
-        "dailies.js" to ("POLYMATH_CHAINS" to layout.projectDirectory.dir("../packs/play/chains")),
-        "rooms.js" to ("POLYMATH_VAULTS" to layout.projectDirectory.dir("../packs/play/vaults")),
-    )
+    //
+    // Chains is split again, by language, for the same reason one step further. Its grids exist
+    // once per language — a Russian player gets Russian tiles, not translated buttons over an
+    // English puzzle — and baking all three into one file would triple what every visitor
+    // downloads so that they can not read two of them. English lands in `dailies.js`, which the
+    // page always carries; `dailies-ru.js` and `dailies-he.js` are fetched only by someone who
+    // switches. The Vaults is not split: a room is geometry and a clock, with nothing to translate.
+    val chains = layout.projectDirectory.dir("../packs/play/chains")
+    val vaults = layout.projectDirectory.dir("../packs/play/vaults")
     val outDir = layout.buildDirectory.dir("generated")
-    games.values.forEach { inputs.dir(it.second) }
+    inputs.dir(chains)
+    inputs.dir(vaults)
     outputs.dir(outDir)
     doLast {
         val from = YearMonth.now().minusMonths(1).toString()
-        games.forEach { (name, game) ->
-            val (global, packs) = game
-            val months = (packs.asFile.listFiles().orEmpty())
-                .filter { it.name.endsWith(".json") && it.nameWithoutExtension >= from }
+
+        fun monthsIn(dir: File): List<File> = dir.listFiles().orEmpty()
+            .filter { it.isFile && it.name.endsWith(".json") && it.nameWithoutExtension >= from }
+            .sortedBy { it.name }
+
+        fun inline(months: List<File>): String = months.joinToString(",\n  ") { month ->
+            // A closing script tag would end the page's <script> early and truncate the day into
+            // something that still parses. Chains content comes from Wikidata labels, so this is
+            // unlikely rather than impossible, and silent corruption is hard to spot.
+            require("</script" !in month.readText().lowercase()) { "${month.name} cannot be inlined" }
+            "\"${month.nameWithoutExtension}\": ${month.readText()}"
+        }
+
+        fun write(name: String, body: String) =
+            outDir.get().file(name).asFile.apply { parentFile.mkdirs() }.writeText(body)
+
+        // The rooms, unchanged: one flat map of months.
+        val rooms = monthsIn(vaults.asFile)
+        write("rooms.js", "globalThis.POLYMATH_VAULTS = {\n  ${inline(rooms)}\n};\n")
+        logger.lifecycle("rooms.js: ${rooms.size} month(s) from $from")
+
+        // The grids, one file per language, each merging itself into the same global so the
+        // pages never have to care which file a language arrived in — or in what order.
+        val languages = listOf("en" to chains.asFile) +
+            (chains.asFile.listFiles().orEmpty()
+                .filter { it.isDirectory }
                 .sortedBy { it.name }
-            months.forEach { month ->
-                // A closing script tag would end the page's <script> early and truncate the day
-                // into something that still parses. Chains content comes from Wikidata labels, so
-                // this is unlikely rather than impossible, and silent corruption is hard to spot.
-                require("</script" !in month.readText().lowercase()) { "${month.name} cannot be inlined" }
+                .map { it.name to it })
+        languages.forEach { (tag, dir) ->
+            val months = monthsIn(dir)
+            if (months.isEmpty()) {
+                logger.lifecycle("chains $tag: no months from $from, nothing baked")
+                return@forEach
             }
-            val body = months.joinToString(",\n  ") { "\"${it.nameWithoutExtension}\": ${it.readText()}" }
-            outDir.get().file(name).asFile.apply { parentFile.mkdirs() }
-                .writeText("globalThis.$global = {\n  $body\n};\n")
+            val name = if (tag == "en") "dailies.js" else "dailies-$tag.js"
+            write(
+                name,
+                "globalThis.POLYMATH_CHAINS = Object.assign(globalThis.POLYMATH_CHAINS || {}, {\n" +
+                    "  \"$tag\": {\n  ${inline(months)}\n  }\n});\n",
+            )
             logger.lifecycle("$name: ${months.size} month(s) from $from")
         }
     }

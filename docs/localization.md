@@ -1,4 +1,4 @@
-<!-- covers: app/src/main/res/values/**, app/src/main/res/values-ru/**, app/src/main/res/values-he/**, app/src/main/res/values-iw/**, app/src/main/java/com/hillelsht/smart/domain/model/Language.kt, app/src/main/java/com/hillelsht/smart/util/LocalePrefs.kt, packs/he/**, packs/ru/** -->
+<!-- covers: tools/build_chains.py, webplay/web/polymath.js, app/src/main/res/values/**, app/src/main/res/values-ru/**, app/src/main/res/values-he/**, app/src/main/res/values-iw/**, app/src/main/java/com/hillelsht/smart/domain/model/Language.kt, app/src/main/java/com/hillelsht/smart/util/LocalePrefs.kt, packs/he/**, packs/ru/** -->
 
 # Localization
 
@@ -49,6 +49,42 @@ preference and every published path.
 5. Add channels to `assets/content/channels.json` with `"language": "<tag>"`, covering all six
    categories. CI's prober resolves the handles.
 6. Add generator phrasings for all eighteen templates (below). The self-test requires them.
+7. Add the language to `tools/build_chains.py` (`LANGUAGES`, and a name for every entry in
+   `LABELS`) and to `webplay/web/polymath.js` (`LANGUAGES`, `LANGUAGE_NAMES`, and a full row in
+   `STRINGS`). Both self-tests assert parity by name, so a half-added language fails rather than
+   shipping with English showing through.
+
+## The daily, in three languages
+
+This is the claim the whole product rests on — "playable in your language" — and it is the one a
+wordplay daily structurally cannot copy, because MOUSE/TRAP/CHEESE does not survive translation.
+
+It works because the *content* is translated, not only the chrome. `build_chains.py` builds a grid
+per language from that language's own library, so a Russian player gets Russian tiles under Russian
+group labels. English publishes at `packs/play/chains/`, everything else at
+`packs/play/chains/<tag>/` — the unprefixed-English convention used everywhere else here.
+
+Consequences worth knowing before touching it:
+
+- **The grids are different puzzles on the same day**, not one puzzle translated. Three corpora
+  that do not hold the same facts cannot share a grid without reducing every language to what the
+  thinnest supports. The share text names the language for exactly this reason.
+- **A saved game is keyed by language.** A saved Chains game is a list of guesses, replayed
+  through the rules to rebuild the board; replaying an English guess into a Russian grid selects
+  tiles that are not on it. English keeps its unsuffixed `localStorage` key so no existing streak
+  resets, and streaks are per-language, which is right — they are different puzzles.
+- **`dir="rtl"` on the root element is the whole of Hebrew's layout support**, on the web exactly
+  as in the app. The browser mirrors flex and grid; the emoji share block is pinned back to `ltr`
+  because it is a picture rather than a sentence.
+- **The tile filter must stay Unicode-aware.** It used to be `[A-Za-z][A-Za-z .'À-ɏ-]*`, whose
+  range stops at U+024F, so every Cyrillic and Hebrew answer failed it and a translated build
+  would have published nothing while exiting 0. `readable_tile` uses `str.isalpha()` now, and the
+  self-test names all three scripts.
+
+`tools/playtest/daily.js` plays the Russian and Hebrew dailies through the page's own buttons in
+Chromium, and checks the three things that can each be true while the feature is broken: that the
+tiles are in the language asked for, that the chrome is, and that it is not the English grid
+relabelled.
 
 `ChannelLanguageTest` enforces that every language offered in Settings has a Watch channel in
 every category — a language with an empty category is a dead filter chip, where the user taps

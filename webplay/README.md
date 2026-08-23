@@ -80,6 +80,17 @@ One file per game rather than one between them: the grids run to a few hundred k
 Wikidata labels and the rooms to a few dozen numbers, so each page pays for its own daily and
 nobody else's.
 
+The grids are split once more, by language. Chains exists once per language because its content
+*is* text — a Russian player gets Russian tiles, not translated buttons over an English puzzle —
+so English lands in `dailies.js`, which every page already carries, and `dailies-ru.js` and
+`dailies-he.js` are loaded only by somebody who switches. Baking all three into one file would
+triple what every visitor downloads so that they can not read two of them. Each file merges itself
+into the same global, so they can arrive in any order. The switch injects a `<script>` tag rather
+than fetching, for the same `file://` reason the baking exists at all: a language that only worked
+over http would be a language CI could never play.
+
+The Vaults is not split. A room is geometry and a clock; there is nothing in it to translate.
+
 Either page still falls back to the published pack over the network for a month it was not built
 with, and it has to: packs are refreshed by a bot, and **a bot push cannot trigger a workflow**, so
 the site is not rebuilt when new days land. Without the fallback a deploy left alone long enough
@@ -96,6 +107,32 @@ Nothing else is stored anywhere but the visitor's own browser. A streak is deriv
 `localStorage`, and a part-played grid is rebuilt by **replaying its guesses through
 `ChainsRules`** rather than by restoring a snapshot of the board — so no derived state is saved,
 and none of it can rot.
+
+That replay is why a saved Chains game is keyed by language. The guesses name tiles, the grids
+differ per language, and replaying an English guess into a Russian grid selects tiles that are not
+on the board. English keeps the unsuffixed key it has always used, so nobody's streak resets the
+day this ships; streaks are per-language, which is right, because they are different puzzles.
+
+## Language
+
+`?lang=ru` wins, then the stored choice, then the browser's own setting — and `iw` is folded to
+`he`, because Hebrew's ISO code changed in 1989 and some platforms still send the old one. The app
+carries two identical resource folders for the same reason.
+
+Switching reloads the page. The day's content, every string on it and the text direction all change
+together, and half of them are set during a page's own start-up; doing it by hand would mean every
+page keeping a second code path that only runs on a switch, which is the sort of thing that works
+when written and rots quietly afterwards.
+
+Strings live in one table in `polymath.js`, marked up in the pages as `data-t="key"`. Small enough
+to read end to end, which is the point — a string file nobody can read whole is a string file with
+an untranslated line in it. Russian plurals are real (одна попытка / две попытки / пять попыток),
+because getting that wrong is the single most obvious way a translated interface announces that
+nobody who speaks the language read it.
+
+`dir="rtl"` on the root element is the whole of Hebrew's layout support. The browser mirrors flex
+and grid; only the emoji share block is pinned back to `ltr`, because it is a picture rather than a
+sentence.
 
 ## What is measured
 

@@ -47,6 +47,35 @@ everyone.
 Built in CI rather than on the device **because it must be identical for everyone**, and devices
 hold different subsets of the library after top-up.
 
+**And once published, a day is never rebuilt.** `build_grid` is deterministic in the date, which
+sounds like enough and is not: it samples from pools, so one new eligible answer anywhere in the
+corpus reshuffles every grid in every month. Adding Unicode support to the tile filter moved all
+122 published English days at once, which is how this was noticed — and since the library
+regenerates monthly, the same thing had been happening quietly on its own schedule. Somebody who
+shared a result on the 1st would find the puzzle it described no longer existed. `build_chains.py`
+now reads back what is already published and keeps it verbatim, the rule `PublishRooms.kt` has
+followed for the daily rooms since they existed.
+
+**There is a grid per language.** Chains is the one game whose content *is* text, so each language
+gets its own daily built from its own library: `packs/play/chains/2026-08.json` in English, and
+`packs/play/chains/<tag>/2026-08.json` for the rest — the unprefixed-English convention the packs
+and the catalogue already use, and a path `fetchGamePack` can already reach without an app release.
+`LABELS` carries the group names in all three languages, keyed on the English `answerType` that
+`docs/invariants.md` requires stay English; a type this table cannot name is **dropped** from a
+translated build rather than falling back, because a group revealed as "Composer" in the middle of
+a Russian puzzle is worse than that group not appearing.
+
+They are therefore *different puzzles* on the same day, not one puzzle translated. Building one
+shared grid would mean intersecting three corpora that do not hold the same facts, reducing every
+language to what the thinnest can support. Sharing still works where sharing happens — between two
+people playing the same language — and the share text names the language so a comparison across
+two of them cannot silently look like cheating.
+
+One thing had to change for any of this to work, and it is worth knowing about because nothing
+would have reported it: the tile filter was `[A-Za-z][A-Za-z .'À-ɏ-]*`, a Latin-alphabet test in a
+character class, whose range stops at U+024F. **Every Cyrillic and Hebrew answer failed it.** A
+Russian build would have found no eligible answers, published nothing, and exited 0.
+
 The defining failure of the format is the **overlap rule**: a tile that fits two groups gives the
 puzzle no single solution. `build_chains.py` handles it twice over — a string is only eligible as
 a tile if it is the answer to exactly one thing in the entire corpus, *and* every generated grid

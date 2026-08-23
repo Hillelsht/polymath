@@ -30,9 +30,31 @@ from datetime import date, timedelta
 from pathlib import Path
 
 ROOT = Path(__file__).resolve().parent.parent
-LIBRARY = ROOT / "packs" / "library"
-BUNDLED = ROOT / "app" / "src" / "main" / "assets" / "packs"
-OUT = ROOT / "packs" / "play" / "chains"
+
+LANGUAGES = ["en", "ru", "he"]
+DEFAULT_LANGUAGE = "en"
+
+
+# English resolves to the paths this pipeline has always used, so every published grid and every
+# installed app keeps hitting the exact URLs it always has. Any other language sits under its own
+# tag — the same convention `PackService` already resolves for the library and the catalogue.
+#
+# The output stays under `packs/play/` rather than moving to `packs/<tag>/play/`, because
+# `fetchGamePack` joins a relative path onto `packs/play/` and a translated grid should not need
+# an app release to become reachable. `chains/ru/2026-08.json` is a path it can already fetch.
+def library_dir(language=DEFAULT_LANGUAGE):
+    return ROOT / "packs" / "library" if language == DEFAULT_LANGUAGE \
+        else ROOT / "packs" / language / "library"
+
+
+def bundled_dir(language=DEFAULT_LANGUAGE):
+    base = ROOT / "app" / "src" / "main" / "assets" / "packs"
+    return base if language == DEFAULT_LANGUAGE else base / language
+
+
+def out_dir(language=DEFAULT_LANGUAGE):
+    base = ROOT / "packs" / "play" / "chains"
+    return base if language == DEFAULT_LANGUAGE else base / language
 
 GROUP_COUNT = 4
 GROUP_SIZE = 4
@@ -68,41 +90,62 @@ MIN_SUBJECT_IMPORTANCE = 15
 
 # What a group of four is called once it is revealed. An answerType with no entry here falls
 # back to its own name, which reads acceptably ("composer") but not well.
+# What a group of four is called once it is revealed, in every language the app ships.
+#
+# The `answerType` key stays English in every language — that is the invariant in
+# `docs/invariants.md`, and it is what lets one table serve all three: the type is the key that
+# groups distractors, and translating it would split each type per language and starve the quiz.
+# Only the *label* is translated, because the label is the only part a player reads.
+#
+# A type with no entry for the language being built is **dropped**, not fallen back on. The
+# fallback capitalises the type's own English name, which reads acceptably in an English grid and
+# reads as a bug in a Russian one — a group revealed as "Composer" in the middle of a Russian
+# puzzle is worse than that group not appearing.
 LABELS = {
-    "capital": "Capital cities",
-    "currency": "Currencies",
-    "continent": "Continents",
-    "body of water": "Rivers empty into these",
-    "mountain range": "Mountain ranges",
-    "chemical symbol": "Chemical symbols",
-    "astronomical body": "Orbited by something",
-    "discoverer": "Discovered something",
-    "namesake": "Things are named after these",
-    "painter": "Painters",
-    "author": "Authors",
-    "sculptor": "Sculptors",
-    "composer": "Wrote the music",
-    "war": "Wars",
-    "director": "Directed films",
-    "country": "Countries",
-    "sport": "Sports",
-    "genus": "Genera",
-    "birthplace": "Birthplaces",
-    "writing system": "Writing systems",
+    "capital": {"en": "Capital cities", "ru": "Столицы", "he": "ערי בירה"},
+    "currency": {"en": "Currencies", "ru": "Валюты", "he": "מטבעות"},
+    "continent": {"en": "Continents", "ru": "Континенты", "he": "יבשות"},
+    "body of water": {"en": "Rivers empty into these", "ru": "Куда впадают реки",
+                      "he": "לשם נשפכים נהרות"},
+    "mountain range": {"en": "Mountain ranges", "ru": "Горные хребты", "he": "רכסי הרים"},
+    "chemical symbol": {"en": "Chemical symbols", "ru": "Химические символы",
+                        "he": "סמלים כימיים"},
+    "astronomical body": {"en": "Orbited by something", "ru": "Вокруг них обращаются",
+                          "he": "משהו מקיף אותם"},
+    "discoverer": {"en": "Discovered something", "ru": "Первооткрыватели", "he": "מגלים"},
+    "namesake": {"en": "Things are named after these", "ru": "В их честь названо",
+                 "he": "על שמם נקראים דברים"},
+    "painter": {"en": "Painters", "ru": "Художники", "he": "ציירים"},
+    "author": {"en": "Authors", "ru": "Писатели", "he": "סופרים"},
+    "sculptor": {"en": "Sculptors", "ru": "Скульпторы", "he": "פסלים"},
+    "composer": {"en": "Wrote the music", "ru": "Написали музыку", "he": "כתבו את המוזיקה"},
+    "war": {"en": "Wars", "ru": "Войны", "he": "מלחמות"},
+    "director": {"en": "Directed films", "ru": "Режиссёры", "he": "ביימו סרטים"},
+    "country": {"en": "Countries", "ru": "Страны", "he": "מדינות"},
+    "sport": {"en": "Sports", "ru": "Виды спорта", "he": "ענפי ספורט"},
+    "genus": {"en": "Genera", "ru": "Роды", "he": "סוגים ביולוגיים"},
+    "birthplace": {"en": "Birthplaces", "ru": "Места рождения", "he": "מקומות לידה"},
+    "writing system": {"en": "Writing systems", "ru": "Системы письма", "he": "שיטות כתב"},
     # These four were falling through to the fallback, which capitalises the type's own name and
     # leaves it singular. A group revealed as "Historical-figure" — hyphen and all — reads as a
     # database field rather than as an answer, and the reveal is the moment the grid is judged.
-    "historical-figure": "Historical figures",
-    "athlete": "Athletes",
-    "musician": "Musicians",
-    "element": "Elements",
+    "historical-figure": {"en": "Historical figures", "ru": "Исторические личности",
+                          "he": "דמויות היסטוריות"},
+    "athlete": {"en": "Athletes", "ru": "Спортсмены", "he": "ספורטאים"},
+    "musician": {"en": "Musicians", "ru": "Музыканты", "he": "מוזיקאים"},
+    "element": {"en": "Elements", "ru": "Химические элементы", "he": "יסודות כימיים"},
 }
 
 
-def load_facts():
-    """Every fact on disk: the published library plus what the app bundles."""
+def load_facts(language=DEFAULT_LANGUAGE):
+    """Every fact on disk for one language: its published library plus what the app bundles.
+
+    A language reads only its own corpus. Mixing them would put a Russian tile in an English grid,
+    and the answers are the tiles here — this is the one game in the app whose *content* is the
+    text on screen rather than a picture or a number.
+    """
     facts = []
-    for directory in (LIBRARY, BUNDLED):
+    for directory in (library_dir(language), bundled_dir(language)):
         if not directory.exists():
             continue
         for path in sorted(directory.glob("*.json")):
@@ -119,6 +162,31 @@ def load_facts():
                     continue
                 facts.append(fact)
     return facts
+
+
+# Punctuation a real answer can contain. Everything else — digits, brackets, slashes, the
+# parenthetical disambiguations Wikidata labels carry — reads as noise on a tile and rarely groups
+# cleanly. The apostrophes are listed in all three shapes a corpus actually produces: ASCII, the
+# typographic one Wikipedia prefers, and the Hebrew geresh.
+TILE_PUNCTUATION = " .'-\u2019\u05f3"
+
+
+def readable_tile(answer):
+    """Whether a string is the kind of thing that can sit on a tile.
+
+    This used to be `[A-Za-z][A-Za-z .'À-ɏ-]*`, which is a Latin-alphabet test wearing a
+    character-class costume: the range stops at U+024F, so **every Cyrillic and every Hebrew
+    answer failed it**. Nothing said so. The Russian build would simply have found no eligible
+    answers, reported zero usable types, published nothing, and exited 0 — a daily that does not
+    exist in two of the three languages the app ships, with no error anywhere to explain it.
+
+    `str.isalpha()` is Unicode-aware and says the same thing about a Latin letter that the old
+    range did, so English grids are unchanged: a digit is not alphabetic, so "Q123" and "1984"
+    are still refused, and a leading letter is still required.
+    """
+    if len(answer) < 2 or not answer[0].isalpha():
+        return False
+    return all(c.isalpha() or c in TILE_PUNCTUATION for c in answer)
 
 
 def eligible_answers(facts):
@@ -178,8 +246,7 @@ def eligible_answers(facts):
             continue
         if len(answer) > MAX_TILE_CHARS or len(answer) < 2:
             continue
-        # Digits and punctuation read as noise on a tile and rarely group cleanly.
-        if not re.fullmatch(r"[A-Za-z][A-Za-z .'À-ɏ-]*", answer):
+        if not readable_tile(answer):
             continue
         pools[next(iter(types))].append((answer, fame(answer)))
 
@@ -230,12 +297,61 @@ def written_about_types(facts, pools):
     return trusted, subjects
 
 
-def label_for(answer_type):
-    return LABELS.get(answer_type, answer_type[:1].upper() + answer_type[1:])
+def label_for(answer_type, language=DEFAULT_LANGUAGE):
+    """What the group is called, or None if this language has no name for it.
+
+    None is a real answer and the caller drops the type. English keeps the old fallback, because
+    an English label derived from an English type name is a slightly clumsy label rather than a
+    wrong one — and because dropping types in English would change grids already published.
+    """
+    entry = LABELS.get(answer_type)
+    if entry and entry.get(language):
+        return entry[language]
+    if language == DEFAULT_LANGUAGE:
+        return answer_type[:1].upper() + answer_type[1:]
+    return None
 
 
-def build_grid(pools, day):
-    """One grid, deterministic in the date so a re-run republishes the same puzzle."""
+def nameable(pools, language=DEFAULT_LANGUAGE):
+    """The pools this language can actually put a name to, and a note about what it dropped."""
+    keep = {t: entries for t, entries in pools.items() if label_for(t, language) is not None}
+    dropped = sorted(set(pools) - set(keep))
+    return keep, dropped
+
+
+def published_days(path):
+    """The grids already published for a month, keyed by date. Empty if there is no file yet.
+
+    This is what stops a rebuild rewriting a day somebody has already played, and it is not a
+    nicety. `build_grid` is deterministic in the *date*, which sounds like enough and is not: it
+    samples from pools, so **one new eligible answer anywhere in the corpus reshuffles every grid
+    in every month**. Adding Unicode support to the tile filter changed all 122 published English
+    days at once, which is how this was noticed — and the library regenerates monthly, so the same
+    thing had been quietly happening on its own schedule. Somebody who shared a result on the 1st
+    would find the puzzle it described no longer existed.
+
+    `PublishRooms.kt` has followed this rule for the daily rooms since they existed, for the same
+    reason: a shared result names a date, so the date has to keep meaning what it meant.
+    """
+    if not Path(path).is_file():
+        return {}
+    try:
+        pack = json.loads(Path(path).read_text(encoding="utf-8"))
+    except (json.JSONDecodeError, OSError):
+        return {}
+    return {grid["date"]: grid for grid in pack.get("puzzles", []) if grid.get("date")}
+
+
+def build_grid(pools, day, language=DEFAULT_LANGUAGE):
+    """One grid, deterministic in the date so a re-run republishes the same puzzle.
+
+    Each language builds its own grid from its own corpus, seeded by the same date. They are
+    therefore *different puzzles* on the same day, not one puzzle translated — and that is a
+    limit worth stating rather than discovering. Building one shared grid would mean intersecting
+    three corpora that do not hold the same facts, and every language would then be reduced to
+    what the thinnest of them can support. A Russian player comparing a share grid with another
+    Russian player is comparing the same puzzle, which is what sharing is actually for.
+    """
     rng = random.Random(f"chains-{day.isoformat()}")
     types = sorted(pools)
     if len(types) < GROUP_COUNT:
@@ -253,7 +369,7 @@ def build_grid(pools, day):
         obscurity = sum(f for a, f in pools[answer_type] if a in members) / GROUP_SIZE
         groups.append({
             "id": answer_type.replace(" ", "-"),
-            "label": label_for(answer_type),
+            "label": label_for(answer_type, language),
             "members": members,
             "obscurity": obscurity,
         })
@@ -425,6 +541,96 @@ def self_test():
         build_grid(eligible_answers(synthetic(type_count=2)), date(2026, 8, 11)) is None,
     )
 
+    # --- three languages -----------------------------------------------------------------
+    check("every group label is written in every language the app ships",
+          all(set(entry) == set(LANGUAGES) and all(entry.values())
+              for entry in LABELS.values()))
+    absent = [t for t, e in LABELS.items() if set(e) != set(LANGUAGES)]
+    check(f"...and none is missing one{'' if not absent else f': {absent}'}", not absent)
+
+    check("English still falls back to the type's own name, so published grids do not change",
+          label_for("brand-new-type") == "Brand-new-type")
+    check("a language with no name for a type says so rather than printing English",
+          label_for("brand-new-type", "ru") is None)
+    check("a type it can name comes back translated", label_for("capital", "ru") == "Столицы")
+    check("and in Hebrew too", label_for("capital", "he") == "ערי בירה")
+
+    named = {"capital": [("Paris", 1.0)], "brand-new-type": [("Thing", 1.0)]}
+    kept, dropped = nameable(named, "ru")
+    check("an unnameable type is dropped from a translated build", set(kept) == {"capital"})
+    check("and named in the report, because the fix is one row in LABELS",
+          dropped == ["brand-new-type"])
+    check("English drops nothing, because it can name everything", nameable(named)[1] == [])
+
+    check("English reads and writes exactly where it always has",
+          library_dir().name == "library" and out_dir().parts[-2:] == ("play", "chains"))
+    check("a translated library sits under its own tag",
+          library_dir("ru").parts[-2:] == ("ru", "library"))
+    check("and its grids sit one level below English, not beside it",
+          out_dir("ru").parent == out_dir() and out_dir("ru").name == "ru")
+    check("a bundled translated pack is looked for under its tag too",
+          bundled_dir("he").name == "he" and bundled_dir().name == "packs")
+
+    # A grid built in Russian must carry Russian labels — the check that would have caught a
+    # translated build quietly emitting the English table.
+    check("a Latin answer is a readable tile", readable_tile("Buenos Aires"))
+    check("so is a Cyrillic one, which the old Latin-only filter refused outright",
+          readable_tile("Буэнос-Айрес"))
+    check("and a Hebrew one", readable_tile("בואנוס איירס"))
+    check("an accented Latin answer still passes, as it always did", readable_tile("Zürich"))
+    check("a Q-number is not a tile", not readable_tile("Q1234"))
+    check("nor is a year", not readable_tile("1984"))
+    check("nor is a parenthetical disambiguation", not readable_tile("Pietà (Michelangelo)"))
+    check("nor is a single letter", not readable_tile("H"))
+
+    types = ("capital", "currency", "continent", "painter")
+    # Cyrillic throughout and no digits, because a fixture that could pass the old Latin-only
+    # filter would not be testing anything this change is about.
+    ru_facts = [{"answer": f"{chr(0x410 + t)}твет{chr(0x430 + i)}", "answerType": kind,
+                 "difficulty": 1 + i % 3}
+                for t, kind in enumerate(types) for i in range(20)]
+    ru_pools, _ = nameable(eligible_answers(ru_facts), "ru")
+    ru_grid = build_grid(ru_pools, date(2026, 9, 1), "ru")
+    check("a Russian grid is buildable from a Russian corpus", ru_grid is not None)
+    check("and every label on it is Russian",
+          ru_grid is not None and all(
+              g["label"] in {v["ru"] for v in LABELS.values()} for g in ru_grid["groups"]))
+    check("and it still passes the rules the device applies",
+          ru_grid is not None and problems(ru_grid) == [])
+    en_grid = build_grid(nameable(eligible_answers(ru_facts))[0], date(2026, 9, 1))
+    check("the same corpus in English produces English labels, from one shared table",
+          en_grid is not None and all(
+              g["label"] in {v["en"] for v in LABELS.values()} for g in en_grid["groups"]))
+
+    # --- a published day is never rewritten ------------------------------------------------
+    import tempfile
+    with tempfile.TemporaryDirectory() as tmp:
+        month = Path(tmp) / "2026-09.json"
+        check("no file yet means nothing is published", published_days(month) == {})
+        first = build_grid(ru_pools, date(2026, 9, 1), "ru")
+        month.write_text(json.dumps({"month": "2026-09", "puzzles": [first]}), encoding="utf-8")
+        check("a written month reads back keyed by date",
+              list(published_days(month)) == ["2026-09-01"])
+        check("and reads back the very same grid", published_days(month)["2026-09-01"] == first)
+
+        # The failure this exists for, reproduced: one extra answer in one pool, and dates that
+        # used to build one grid build another. Checked across a fortnight rather than on a single
+        # day, because any one date may happen to resample the same four answers — which is
+        # precisely why "it looked fine when I spot-checked it" is not evidence here. On the real
+        # corpus this change moved all 122 published days.
+        wider = {t: list(v) for t, v in ru_pools.items()}
+        wider[sorted(wider)[0]].append(("Новыйответ", 1.0))
+        moved = sum(1 for d in range(1, 15)
+                    if build_grid(wider, date(2026, 9, d), "ru")
+                    != build_grid(ru_pools, date(2026, 9, d), "ru"))
+        check(f"one new eligible answer changes what dates build ({moved}/14 days)", moved > 0)
+        check("...which is exactly why the published one is kept instead",
+              published_days(month)["2026-09-01"] == first)
+
+        month.write_text("{not json", encoding="utf-8")
+        check("a corrupt month is treated as unpublished rather than crashing the run",
+              published_days(month) == {})
+
     starts = list(months_from(date(2026, 11, 3), 3))
     check(
         "months roll over the year",
@@ -437,54 +643,92 @@ def self_test():
     return 1 if failures else 0
 
 
-def main(argv=None):
-    parser = argparse.ArgumentParser(description=__doc__)
-    parser.add_argument("--self-test", action="store_true")
-    parser.add_argument("--months", type=int, default=3, help="how many months to publish")
-    parser.add_argument("--start", default=None, help="YYYY-MM-DD, defaults to today")
-    args = parser.parse_args(argv)
+def publish(language, start, months):
+    """One language's grids. Returns (published, skipped, problems) — problems fail the whole run."""
+    facts = load_facts(language)
+    print(f"\n[{language}] {len(facts)} facts on disk.")
+    if not facts:
+        print(f"  no library published for {language} yet — nothing to build from")
+        return 0, 0, []
 
-    if args.self_test:
-        return self_test()
-
-    facts = load_facts()
-    print(f"{len(facts)} facts on disk.")
     pools = eligible_answers(facts)
-    print(f"{len(pools)} answer types are usable as groups:")
+    pools, unnameable = nameable(pools, language)
+    if unnameable:
+        # Said out loud rather than silently skipped: a type the corpus can fill and this table
+        # cannot name is a group the language is missing, and the fix is one row in LABELS.
+        print(f"  no {language} label for: {', '.join(unnameable)} — those groups cannot appear")
+    print(f"  {len(pools)} answer types usable as groups:")
     for answer_type, entries in sorted(pools.items(), key=lambda kv: -len(kv[1])):
-        print(f"  {answer_type:<20} {len(entries):>4} answers")
+        print(f"    {answer_type:<20} {len(entries):>4} answers")
 
     if len(pools) < GROUP_COUNT:
-        print(f"\nFAIL: {len(pools)} usable types, need {GROUP_COUNT}. Publishing nothing.")
-        return 1
+        print(f"  only {len(pools)} usable types, need {GROUP_COUNT} — publishing nothing for "
+              f"{language}")
+        return 0, 0, []
 
-    start = date.fromisoformat(args.start) if args.start else date.today()
-    published, skipped, all_problems = 0, 0, []
-    OUT.mkdir(parents=True, exist_ok=True)
+    published, kept, skipped, all_problems = 0, 0, 0, []
+    directory = out_dir(language)
+    directory.mkdir(parents=True, exist_ok=True)
 
-    for month_start in months_from(start, args.months):
+    for month_start in months_from(start, months):
+        name = f"{month_start.strftime('%Y-%m')}.json"
+        already = published_days(directory / name)
         grids = []
         for day in days_in(month_start):
-            grid = build_grid(pools, day)
+            iso = day.isoformat()
+            if iso in already:
+                grids.append(already[iso])
+                kept += 1
+                continue
+            grid = build_grid(pools, day, language)
             if grid is None:
                 skipped += 1
                 continue
             found = problems(grid)
             if found:
-                all_problems += found
+                all_problems += [f"{language} {p}" for p in found]
                 skipped += 1
                 continue
             grids.append(grid)
+            published += 1
 
         if not grids:
             continue
-        name = f"{month_start.strftime('%Y-%m')}.json"
-        (OUT / name).write_text(
-            json.dumps({"month": month_start.strftime("%Y-%m"), "puzzles": grids},
+        (directory / name).write_text(
+            json.dumps({"month": month_start.strftime("%Y-%m"), "language": language,
+                        "puzzles": sorted(grids, key=lambda g: g["date"])},
                        ensure_ascii=False, separators=(",", ":")),
+            encoding="utf-8",
         )
-        published += len(grids)
-        print(f"  {name}  {len(grids)} grids")
+        print(f"  {name}  {len(grids)} grids ({kept} already published)"
+              if kept else f"  {name}  {len(grids)} grids")
+
+    return published, skipped, all_problems
+
+
+def main(argv=None):
+    parser = argparse.ArgumentParser(description=__doc__)
+    parser.add_argument("--self-test", action="store_true")
+    parser.add_argument("--months", type=int, default=3, help="how many months to publish")
+    parser.add_argument("--start", default=None, help="YYYY-MM-DD, defaults to today")
+    parser.add_argument("--language", action="append", choices=LANGUAGES,
+                        help="just this one (repeatable); defaults to every language")
+    args = parser.parse_args(argv)
+
+    if args.self_test:
+        return self_test()
+
+    start = date.fromisoformat(args.start) if args.start else date.today()
+    languages = args.language or LANGUAGES
+
+    total, skipped, all_problems, built = 0, 0, [], []
+    for language in languages:
+        published, missed, found = publish(language, start, args.months)
+        total += published
+        skipped += missed
+        all_problems += found
+        if published or out_dir(language).exists():
+            built.append(language)
 
     if all_problems:
         # Never publish a grid that would tell a player they are wrong when they are right.
@@ -493,12 +737,20 @@ def main(argv=None):
             print(f"  - {problem}")
         return 1
 
-    if published == 0:
-        print("\nFAIL: nothing publishable. Leaving what is there alone.")
+    if total == 0 and not any(out_dir(l).exists() for l in languages):
+        print("\nFAIL: nothing publishable in any language. Leaving what is there alone.")
         return 1
 
-    size = sum(f.stat().st_size for f in OUT.glob("*.json"))
-    print(f"\n{published} grids published, {size // 1024} KB. {skipped} days skipped.")
+    # A language asked for and not built is not a failure — Russian and Hebrew had no library at
+    # all until recently, and a run that refused to publish English over it would be refusing the
+    # work that succeeded. It is reported, because silence here reads as success.
+    missing = [l for l in languages if l not in built]
+    if missing:
+        print(f"\nNothing published for: {', '.join(missing)}")
+
+    size = sum(f.stat().st_size for language in built for f in out_dir(language).glob("*.json"))
+    print(f"\n{total} grids published across {', '.join(built)}, {size // 1024} KB. "
+          f"{skipped} days skipped.")
     return 0
 
 

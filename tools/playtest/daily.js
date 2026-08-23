@@ -41,12 +41,29 @@ const CHROME = ['/opt/pw-browsers/chromium-1194/chrome-linux/chrome',
 
 const SQUARE = /^[\u{1F7E6}\u{1F7E8}\u{1F7E9}\u{1F7EA}\u{2B1B}]+$/u;
 
+/**
+ * The grids a language's baked file actually contains, read the way the browser reads them.
+ *
+ * By evaluating the file rather than slicing between its braces. The file is a script, not JSON —
+ * it merges itself into a shared global so three languages can arrive in any order — and the old
+ * `js.slice(indexOf('{'), lastIndexOf('}'))` broke the moment that shape changed. Running it is
+ * both simpler and exactly what the page does.
+ */
+function bakedPacks(language) {
+  const file = language === 'en' ? 'dailies.js' : `dailies-${language}.js`;
+  const full = path.join(SITE, file);
+  if (!fs.existsSync(full)) return null;
+  const world = {};
+  new Function('globalThis', fs.readFileSync(full, 'utf8'))(world);
+  return (world.POLYMATH_CHAINS || {})[language] || null;
+}
+
 /** The last day this build was given a grid for, so the run never depends on the wall clock. */
-function lastBakedDate() {
-  const js = fs.readFileSync(path.join(SITE, 'dailies.js'), 'utf8');
-  const packs = JSON.parse(js.slice(js.indexOf('{'), js.lastIndexOf('}') + 1));
+function lastBakedDate(language = 'en') {
+  const packs = bakedPacks(language);
+  if (!packs) return null;
   const dates = Object.values(packs).flatMap(p => p.puzzles.map(q => q.date)).sort();
-  return dates[dates.length - 1];
+  return dates[dates.length - 1] || null;
 }
 
 const problems = [];
@@ -62,10 +79,10 @@ const check = (ok, what) => {
  * progress, and it should not. This checks the interface around the rules, not whether it can
  * solve the puzzle.
  */
-const answerFor = (page, date) => page.evaluate(d => {
-  const pack = globalThis.POLYMATH_CHAINS[d.slice(0, 7)];
+const answerFor = (page, date, language = 'en') => page.evaluate(([d, lang]) => {
+  const pack = (globalThis.POLYMATH_CHAINS[lang] || {})[d.slice(0, 7)];
   return pack ? pack.puzzles.find(p => p.date === d).groups.map(g => g.members) : null;
-}, date);
+}, [date, language]);
 
 (async () => {
   if (!fs.existsSync(path.join(SITE, 'index.html'))) {
@@ -85,8 +102,9 @@ const answerFor = (page, date) => page.evaluate(d => {
   page.on('pageerror', e => errors.push(String(e)));
   page.on('console', m => { if (m.type() === 'error') errors.push(m.text()); });
 
-  const open = async (where, date) => {
-    await page.goto(`${host.url}/${where}?date=${date}`);
+  const open = async (where, date, language) => {
+    const lang = language ? `&lang=${language}` : '';
+    await page.goto(`${host.url}/${where}?date=${date}${lang}`);
     await page.waitForFunction(() => window.__ready === true, null, { timeout: 15000 });
   };
   // Anchored, because `hasText` matches substrings and one tile's label can sit inside another's.
@@ -161,6 +179,66 @@ const answerFor = (page, date) => page.evaluate(d => {
           'and the front door knows today is done');
   } else {
     console.log(`  · no grid baked in for ${YESTERDAY}; skipping the streak check`);
+  }
+
+  // --- the same daily, in the other two languages ---------------------------------------------
+  //
+  // The claim the whole wedge rests on is "playable in your language", and the way it fails is
+  // quiet: a translated build that serves English tiles under Russian buttons looks localised in a
+  // screenshot and is not. So this plays a real Russian grid through the page's own controls and
+  // checks the three things that could each be true on their own while the feature is broken —
+  // that the content is Russian, that the chrome is Russian, and that it is a *different* puzzle
+  // from the English one rather than the same grid relabelled.
+
+  for (const [tag, sample, submit] of [['ru', /[А-Яа-яЁё]/, 'Проверить'],
+                                       ['he', /[\u0590-\u05FF]/, 'בדוק']]) {
+    const day = lastBakedDate(tag);
+    if (!day) {
+      console.log(`  · nothing baked for ${tag}; skipping`);
+      continue;
+    }
+    // A fresh context, because a language's saved games are its own and a half-played English
+    // grid in storage must not be what makes this pass.
+    const other = await context.newPage();
+    other.on('pageerror', e => errors.push(`[${tag}] ${e}`));
+    await other.goto(`${host.url}/chains.html?date=${day}&lang=${tag}`);
+    await other.waitForFunction(() => window.__ready === true, null, { timeout: 15000 });
+
+    check(await other.locator('.pm-tile').count() === 16, `[${tag}] sixteen tiles`);
+    const tiles = await other.locator('.pm-tile').allTextContents();
+    check(tiles.some(t => sample.test(t)), `[${tag}] the tiles are in the language asked for`);
+    check((await other.locator('#c-submit').textContent()).trim() === submit,
+          `[${tag}] and so is the chrome`);
+    check(await other.locator(`.pm-lang.on`).textContent() ===
+          { ru: 'Русский', he: 'עברית' }[tag],
+          `[${tag}] the switcher shows which language is on`);
+    check(await other.evaluate(() => document.documentElement.lang) === tag,
+          `[${tag}] the document declares its language`);
+    check(await other.evaluate(() => document.documentElement.dir) ===
+          (tag === 'he' ? 'rtl' : 'ltr'),
+          `[${tag}] and its direction`);
+
+    const english = await answerFor(other, day, 'en');
+    const mine = await answerFor(other, day, tag);
+    check(mine?.length === 4 && mine.every(g => g.length === 4),
+          `[${tag}] the grid describes four groups of four`);
+    check(english === null || JSON.stringify(mine) !== JSON.stringify(english),
+          `[${tag}] and it is its own puzzle, not the English one relabelled`);
+
+    // It has to be playable, not merely legible.
+    for (const tile of mine[0]) {
+      await other.locator('.pm-tile', {
+        hasText: new RegExp(`^${tile.replace(/[.*+?^${}()|[\]\\]/g, '\\$&')}$`),
+      }).first().click();
+    }
+    await other.locator('#c-submit').click();
+    check(await other.locator('#c-groups .pm-group').count() === 1,
+          `[${tag}] a correct group solves`);
+    check(await other.locator('.pm-life.spent').count() === 0,
+          `[${tag}] and costs no life`);
+
+    await other.screenshot({ path: SHOT.replace(/\.png$/, `-${tag}.png`), fullPage: true });
+    await other.close();
   }
 
   await open('chains.html', DATE);

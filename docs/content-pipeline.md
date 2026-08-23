@@ -19,7 +19,7 @@ Wikidata, Wikipedia or YouTube. Every tool is stdlib-only Python; there is no
 | `enrich_content.py` | `packs/*.json` — hand-authored facts + Wikipedia images/extracts | `content.yml` |
 | `enrich_videos.py` | `packs/channels.json` — the probed Watch allowlist | `content.yml` |
 | `fetch_durations.py` | `packs/durations.json` — video lengths, via the YouTube API | `durations.yml`, hourly |
-| `build_chains.py` | `packs/play/chains/` — daily puzzle grids | `play.yml`, monthly |
+| `build_chains.py` | `packs/play/chains/` — daily puzzle grids, one set per language | `play.yml`, monthly |
 | ↳ | *also decides which answers are fit to be tiles — see `docs/games.md`* | |
 | `enginetests publishRooms` | `packs/play/vaults/` — the daily room's seed, margin and plan | `play.yml`, monthly |
 | `validate_pack.py` | nothing — reads packs and reports | run by hand, and by CI over every pack |

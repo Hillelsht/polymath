@@ -25,13 +25,16 @@
   <div class="pm-nav">
     <a class="pm-mark" href="./index.html">Poly<span>math</span></a>
     <nav>
-      <a href="./chains.html">Chains</a>
-      <a href="./descent.html" aria-current="page">The Vaults</a>
+      <a href="./chains.html" data-t="nav.chains">Chains</a>
+      <a href="./descent.html" aria-current="page" data-t="nav.vaults">The Vaults</a>
     </nav>
+    <div class="pm-langs" data-lang-switch></div>
   </div>
 
   <header class="pm-head">
-    <h1><span class="pm-sub" id="v-when">—</span>The Vaults</h1>
+    <h1 data-t-title="nav.vaults">
+      <span class="pm-sub" id="v-when">—</span><span data-t="nav.vaults">The Vaults</span>
+    </h1>
     <p class="pm-lede">
       One room a day, one clock. <b>Deaths are free</b> — you restart at the entrance and the clock
       keeps running, so dying costs you only the thing you cannot get back. Finish it and you can
@@ -102,6 +105,7 @@ const view = VaultView(el('c'));
  * the only thing this site ever produces that belongs to a person.
  */
 const fragment = new URLSearchParams(location.hash.slice(1));
+PM.dress();
 const TODAY = PM.today();
 const DATE = /^\d{4}-\d{2}-\d{2}$/.test(fragment.get('d') || '') ? fragment.get('d') : TODAY;
 const COUNTS = DATE === TODAY;                 // an old day's room is practice, not today's attempt
@@ -133,7 +137,7 @@ async function setUp() {
   done = PM.load('vaults', DATE);
 
   el('v-when').textContent =
-    `${PM.pretty(DATE)} · no. ${NUMBER}` + (COUNTS ? '' : ' · practice');
+    `${PM.pretty(DATE)} · ${PM.t('no')} ${NUMBER}` + (COUNTS ? '' : ' · practice');
   el('v-room').textContent = curated
     ? V.Session.Companion.difficultyFor(curated.margin)
     : session.roomId;
