@@ -233,6 +233,26 @@ def normalise(label):
     return " ".join(str(label or "").lower().replace("’", "'").split())
 
 
+def ask_wikidata(query, ask=None, sleep=time.sleep):
+    """One SPARQL query, waiting out a rate limit rather than dying on it.
+
+    Wikidata answers 429 when asked too often, and this file asks three times per proposal now:
+    the labels, the entity search, and the properties that link them. A run that crashed with an
+    uncaught `HTTPError: 429` is what added this — the traceback replaced the topic's own report,
+    so the log said nothing about what the model had decided.
+    """
+    for attempt in range(1, ATTEMPTS + 1):
+        try:
+            return (ask or gen.sparql)(query)
+        except urllib.error.HTTPError as error:
+            if error.code not in TRANSIENT or attempt == ATTEMPTS:
+                raise
+            wait = BACKOFF * attempt
+            print(f"  wikidata answered {error.code}; waiting {wait}s and asking again")
+            sleep(wait)
+    raise Refused("wikidata did not answer")
+
+
 def fetch_labels(ids, ask=None):
     """{id: {every label and alias it has in English}} — the ground truth the model is checked on.
 
@@ -249,7 +269,13 @@ def fetch_labels(ids, ask=None):
       {{ ?item skos:altLabel ?label . FILTER(lang(?label) = "en") }}
     }}
     """
-    rows = (ask or gen.sparql)(query)["results"]["bindings"]
+    try:
+        rows = ask_wikidata(query, ask)["results"]["bindings"]
+    except Exception as exc:
+        # Fail closed. An id this file could not check is an id it must not accept — the whole
+        # reason a model is allowed near published content is that every id it names is verified,
+        # and "the check was unavailable" is not verification.
+        raise Refused(f"could not verify these ids against Wikidata: {exc}") from exc
     found = {}
     for row in rows:
         qid = row["item"]["value"].rsplit("/", 1)[-1]
@@ -321,8 +347,10 @@ def linking_properties(where, entity_id, ask=None, limit=6):
     GROUP BY ?p ORDER BY DESC(?n) LIMIT {limit}
     """
     try:
-        rows = (ask or gen.sparql)(query)["results"]["bindings"]
+        rows = ask_wikidata(query, ask)["results"]["bindings"]
     except Exception:
+        # Unlike the label check, this one is only a hint. Losing it costs the model a better
+        # second guess, not the guarantee that what it named is what it said it was.
         return []
     found = []
     for row in rows:
@@ -946,6 +974,30 @@ def self_test():
             {"p": {"value": "http://www.wikidata.org/prop/direct/P8345"}, "n": {"value": "47"}},
             {"p": {"value": "http://www.wikidata.org/prop/direct/P361"}, "n": {"value": "1"}},
         ]}}
+
+    # Wikidata rate-limits, and a run once died on an uncaught 429 with a traceback where the
+    # topic's report should have been.
+    limited = {"n": 0}
+
+    def rate_limited(query):
+        limited["n"] += 1
+        if limited["n"] < 3:
+            raise urllib.error.HTTPError("u", 429, "slow down", {}, io.BytesIO(b""))
+        return {"results": {"bindings": []}}
+
+    paused = []
+    check("a rate-limited Wikidata is waited out, not crashed on",
+          ask_wikidata("SELECT 1", rate_limited, sleep=paused.append) == {"results": {"bindings": []}})
+    check("with a backoff between tries", paused == [4, 8])
+
+    def always_limited(query):
+        raise urllib.error.HTTPError("u", 429, "slow down", {}, io.BytesIO(b""))
+
+    check("an id that cannot be checked is refused, never assumed good",
+          "could not verify" in (refused(check_entities, [{"id": "Q15", "label": "Africa"}],
+                                         ask=always_limited) or ""))
+    check("but a hint that cannot be fetched costs only the hint",
+          linking_properties("?s wdt:P86 ?o .", "Q462", ask=always_limited) == [])
 
     check("the properties that really link subjects to an entity are read off Wikidata",
           linking_properties("?s wdt:P86 ?o .", "Q462", ask=fake_links)
