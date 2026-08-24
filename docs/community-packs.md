@@ -187,6 +187,13 @@ exactly like the transient "experiencing high demand" one. They are told apart n
 twelve seconds for a daily allowance to return is not a strategy. The cache is what makes this
 survivable: a topic asked once is never asked again.
 
+**And a model cannot produce identifiers of any kind.** Given the right entity, it guessed the
+*property*: `?s wdt:P361 wd:Q462 .` — "part of Star Wars" — which is defensible and yields one
+fact, where `P8345` (media franchise) links forty-seven. So properties are looked up too. When a
+narrowing matches nothing, Wikidata is asked which properties actually connect that template's
+subjects to that entity, commonest first, and the retry offers them as a list. The model chooses;
+it does not recall.
+
 **A correct clause can still match nothing.** The first real publish run narrowed rivers with
 `?s wdt:P30 wd:Q15 .` — "on the continent of Africa", both ids verified — and it selected zero
 rivers, because almost none carry P30. Wikidata's coverage is uneven and no gate that reads a

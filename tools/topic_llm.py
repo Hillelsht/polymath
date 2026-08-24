@@ -67,9 +67,19 @@ asking more politely does not change that.
 
 So it is not asked to. A refusal now carries Wikidata's own search results for the name the model
 used — `Q462 Star Wars — American epic space opera media franchise` — and the model picks from real
-candidates instead of reciting. Reading beats recall, and this is the division of labour the whole
-design was reaching for: the model knows what "part of the series = Star Wars" means, Wikidata
-knows which entity that is, and neither is asked to do the other's job.
+candidates instead of reciting.
+
+That fixed which `Q`, and the same problem promptly reappeared one level along: given the right
+entity, the model guessed the *property*. `?s wdt:P361 wd:Q462 .` is a defensible reading of "part
+of" and yields exactly one fact, and the next template's retry invented `Q8234`, a valley in
+Saxony. Four wrong identifiers across three attempts is not a prompting problem.
+
+So properties are looked up too. [linking_properties] asks Wikidata which properties actually
+connect a template's subjects to that entity, commonest first, and the retry shows them — so the
+second attempt is a choice from a list rather than another guess. Reading beats recall, twice, and
+this is the division of labour the whole design was reaching for: the model knows that "the music
+of Star Wars" means constraining a composer's works to a franchise, Wikidata knows that the
+franchise is `Q462` and the link is `P8345`, and neither is asked to do the other's job.
 
 And then the first real *publish* run found the one thing none of the gates can: **`?s wdt:P30
 wd:Q15 .` matched nothing.** It is exactly right — "on the continent of Africa", both ids verified
@@ -288,6 +298,59 @@ def search_entities(text, kind="item", limit=7, fetch=None):
     return [{"id": hit.get("id", ""), "label": hit.get("label", ""),
              "description": hit.get("description", "")}
             for hit in body.get("search", []) if hit.get("id")]
+
+
+def linking_properties(where, entity_id, ask=None, limit=6):
+    """How the subjects of a template are *actually* connected to an entity, most common first.
+
+    The third time the same lesson arrived. Entity search fixed which `Q` to use; the model then
+    guessed the property instead — `?s wdt:P361 wd:Q462 .` for Star Wars music, which is a
+    defensible reading of "part of" and yields one fact — and on the next template invented
+    `Q8234`, a valley in Saxony. It cannot reliably produce identifiers of either kind, and no
+    prompt fixes that.
+
+    So this asks Wikidata which properties really link these subjects to that entity, and the
+    model chooses from the answer. One query, bounded by the template's own WHERE, and a failure
+    costs the hint rather than the topic.
+    """
+    query = f"""
+    SELECT ?p (COUNT(DISTINCT ?s) AS ?n) WHERE {{
+      {where}
+      ?s ?p wd:{entity_id} .
+    }}
+    GROUP BY ?p ORDER BY DESC(?n) LIMIT {limit}
+    """
+    try:
+        rows = (ask or gen.sparql)(query)["results"]["bindings"]
+    except Exception:
+        return []
+    found = []
+    for row in rows:
+        # `?p` binds the direct-claim predicate URI; the P-number is its last segment. Read
+        # defensively: this is a hint, and a response that is not the shape expected should cost
+        # the hint rather than the run.
+        try:
+            pid = row["p"]["value"].rsplit("/", 1)[-1]
+            count = int(row["n"]["value"])
+        except (KeyError, TypeError, ValueError):
+            continue
+        if gen.WELL_FORMED.match(pid) and pid.startswith("P"):
+            found.append((pid, count))
+    return found
+
+
+def links_for(where, entity_id, ask=None):
+    """The line a retry prompt shows: which properties connect these subjects to that entity."""
+    found = linking_properties(where, entity_id, ask=ask)
+    if not found:
+        return ""
+    names = fetch_labels([pid for pid, _ in found], ask=ask)
+    rows = "\n".join(
+        f"      wdt:{pid}  {sorted(names.get(pid, {'?'}))[0]} — links {n} of them"
+        for pid, n in found)
+    return (f"\n    Wikidata says the subjects this template selects are connected to "
+            f"wd:{entity_id} by these properties. Use one of them rather than choosing a "
+            f"property from memory:\n{rows}\n")
 
 
 def candidates_for(claimed, entity_id, fetch=None):
@@ -874,6 +937,39 @@ def self_test():
           RETIRED.search(retired).group(1) == "gemini-3.6-flash")
     check("and a 404 that names no replacement is just a refusal",
           RETIRED.search('{"error": {"code": 404, "message": "not found"}}') is None)
+
+    def fake_links(query):
+        """Wikidata answering "how are these connected?" — the question the model was guessing at."""
+        if "?p wd:Q462" not in query:
+            return {"results": {"bindings": []}}
+        return {"results": {"bindings": [
+            {"p": {"value": "http://www.wikidata.org/prop/direct/P8345"}, "n": {"value": "47"}},
+            {"p": {"value": "http://www.wikidata.org/prop/direct/P361"}, "n": {"value": "1"}},
+        ]}}
+
+    check("the properties that really link subjects to an entity are read off Wikidata",
+          linking_properties("?s wdt:P86 ?o .", "Q462", ask=fake_links)
+          == [("P8345", 47), ("P361", 1)])
+    check("and they come back commonest first, which is the one worth using",
+          linking_properties("?s wdt:P86 ?o .", "Q462", ask=fake_links)[0][0] == "P8345")
+    check("a query that cannot run costs the hint, not the topic",
+          linking_properties("?s wdt:P86 ?o .", "Q1", ask=fake_links) == [])
+
+    def links_and_labels(query):
+        if "VALUES" in query:
+            return {"results": {"bindings": [
+                {"item": {"value": "http://www.wikidata.org/entity/P8345"},
+                 "label": {"value": "media franchise"}},
+                {"item": {"value": "http://www.wikidata.org/entity/P361"},
+                 "label": {"value": "part of"}}]}}
+        return fake_links(query)
+
+    shown_links = links_for("?s wdt:P86 ?o .", "Q462", ask=links_and_labels)
+    check("the hint names each property and how many subjects it links",
+          "wdt:P8345" in shown_links and "media franchise" in shown_links
+          and "links 47 of them" in shown_links)
+    check("and tells the model to choose rather than recall",
+          "rather than choosing a property from memory" in shown_links)
 
     check("a search result is read down to id, label and description",
           search_entities("Star Wars", fetch=lambda url: {"search": [

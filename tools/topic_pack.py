@@ -273,10 +273,17 @@ def harvest(topic, limit, language, stamp, use_llm=False, **kw):
             if clause and len(made) < MIN_NARROWED_FACTS:
                 print(f"  {template.key:20s} narrowing matched {matched} subjects, "
                       f"{len(made)} usable — asking for another  [{note}]")
+                # Not just "that did not work" but "here is how these things are actually
+                # connected". The model guessed P361 for Star Wars music and got one fact; asking
+                # Wikidata which properties really link the subjects to wd:Q462 turns the second
+                # attempt from another guess into a choice from a list.
+                hint = "".join(
+                    topic_llm.links_for(template.where, entity, ask=kw.get("ask"))
+                    for entity in topic_llm.clause_ids(clause) if entity.startswith("Q"))
                 better = topic_llm.retry(
                     topic, template.key, clause,
                     f"it matched {matched} subjects, too few to build a pack from — the property "
-                    f"is not populated on the subjects this template selects",
+                    f"is not populated on the subjects this template selects" + hint,
                     **retry_args(kw)) if use_llm else None
                 if better and better["narrow"] != clause:
                     clause = better["narrow"]
@@ -591,6 +598,8 @@ def self_test():
               len(asked) == 2 and asked[1] is not None)
         check("and the retry is told which clause failed",
               "?s wdt:P30 wd:Q15 ." in (asked[1] or ""))
+        check("and carries whatever Wikidata could say about how they really connect",
+              "matched 0 subjects" in (asked[1] or ""))
         check("the better clause is harvested and the pack is built after all",
               "geography" in rescued)
         check("the query that ran last is the retry's, not the one that matched nothing",
