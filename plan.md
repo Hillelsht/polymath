@@ -304,7 +304,19 @@ and a counter account.
    a nineteenth template in `generate_facts.py`, which is a content decision worth taking
    deliberately rather than as a side effect of wanting a landing page.
 
-   The fandom is answerable and is blocked on quota, not capability — see below.
+   The fandom is the interesting one. *Star Wars* was attempted five times and failed five times,
+   and **each failure was a different real bug**, every one of which is now fixed: a hallucinated
+   entity id (Q82347 = "America's Next Top Model, season 2"), a hallucinated *replacement* for it
+   (Q809, Polish), a guessed property (`P361`, one fact, where `P8345` links forty-seven), an
+   uncaught 429 from Wikidata's rate limiter, and the free tier's daily allowance. The pipeline is
+   substantially more robust for having tried it. It still does not publish, and the remaining
+   cause is in the harvest rather than the mapping — which the next run will say plainly, because
+   topic runs now write their own report into the GitHub run summary instead of burying it in
+   post-job git plumbing.
+
+   The lesson underneath all of it is one line: **a model cannot produce Wikidata identifiers, of
+   either kind.** Every id it names is now either verified or looked up, and that is what makes it
+   safe to let one near published content.
 
    Three findings came out of these runs and all three are now in the code:
 
