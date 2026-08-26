@@ -1,5 +1,5 @@
 {
- "generated": "2026-08-24T07:34:09Z",
+ "generated": "2026-08-26T18:57:10Z",
  "packs": [
   {
    "id": "arts",
@@ -63,6 +63,15 @@
    "facts": 86,
    "bytes": 48642,
    "file": "community/topic-rivers-of-africa-geography.json"
+  },
+  {
+   "id": "topic-star-wars-arts",
+   "name": "Star Wars · Arts & Literature",
+   "category": "arts",
+   "version": "2026-08-26",
+   "facts": 35,
+   "bytes": 19421,
+   "file": "community/topic-star-wars-arts.json"
   }
  ]
 }

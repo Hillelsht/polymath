@@ -25,5 +25,43 @@
    }
   ],
   "topic": "rivers of Africa"
+ },
+ "star wars": {
+  "model": "gemini-3.6-flash",
+  "note": "Selected templates for film directors and composers narrowed to the Star Wars franchise.",
+  "provider": "gemini",
+  "templates": [
+   {
+    "entities": [
+     {
+      "id": "P8345",
+      "label": "franchise"
+     },
+     {
+      "id": "Q462",
+      "label": "Star Wars"
+     }
+    ],
+    "key": "composer",
+    "narrow": "?s wdt:P8345 wd:Q462 .",
+    "why": "Narrows works to those that belong to the Star Wars franchise."
+   },
+   {
+    "entities": [
+     {
+      "id": "P8345",
+      "label": "media franchise"
+     },
+     {
+      "id": "Q462",
+      "label": "Star Wars"
+     }
+    ],
+    "key": "film-director",
+    "narrow": "?s wdt:P8345 wd:Q462 .",
+    "why": "Selects films that belong to the Star Wars media franchise."
+   }
+  ],
+  "topic": "Star Wars"
  }
 }
