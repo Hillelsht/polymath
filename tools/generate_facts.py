@@ -715,6 +715,14 @@ def make_facts(template, rows, language=DEFAULT_LANGUAGE):
     Panama?" with two correct answers is a broken quiz question. Subjects with more than one
     answer are dropped rather than arbitrarily resolved.
 
+    It has a twin that only shows up once a harvest is narrow enough to concentrate on a small
+    set: **two different subjects that happen to share a name**. Two Star Wars works are both
+    labelled the same, so both produce "Who wrote the music for X?" with different composers —
+    one question, two right answers, and no way for a player to know which is wanted. Same injury
+    as the first rule, arriving by way of the label rather than the property, and dropped the same
+    way. The whole corpus was clean of it, which is why it took a topic pack to find: narrowing
+    to one franchise is exactly the condition that makes two same-named works collide.
+
     [language] picks the phrasing (see [RU_PHRASING]) and, for the id, whether the fact needs a
     language suffix at all: English keeps the exact ids this pipeline has always produced, so a
     fact already installed on a device is never orphaned by this feature. Any other language
@@ -779,6 +787,16 @@ def make_facts(template, rows, language=DEFAULT_LANGUAGE):
             "pageUrl": f"https://{WIKI_HOSTS[language]}/wiki/{urllib.parse.quote(title.replace(' ', '_'))}",
             "importance": links,
         })
+
+    # Two subjects with one name ask one question and give two answers. Both go: keeping either
+    # would be picking a winner between two facts that are each true, and `validate_pack` refuses
+    # the whole pack over it anyway — better to lose two facts here than a hundred there.
+    asked = {}
+    for fact in facts:
+        asked.setdefault(fact["question"], set()).add(fact["answer"])
+    ambiguous = {question for question, answers in asked.items() if len(answers) > 1}
+    if ambiguous:
+        facts = [f for f in facts if f["question"] not in ambiguous]
     return facts
 
 
@@ -1081,6 +1099,19 @@ def self_test():
           make_facts(template, [row("Q1", "Panama", "Balboa"), row("Q1", "Panama", "Dollar")]) == [])
     check("a subject repeated with one answer survives once",
           len(make_facts(template, [row("Q1", "France", "Paris"), row("Q1", "France", "Paris")])) == 1)
+    # The twin of the rule above, which only shows up once a harvest narrows enough for two
+    # same-named things to land in the same pack. A topic pack for Star Wars found it: two works
+    # sharing a title asked one question and offered two composers.
+    check("two different subjects sharing a name are both dropped, not silently picked between",
+          make_facts(template, [row("Q1", "Twin Title", "Alice"),
+                                row("Q2", "Twin Title", "Bob")]) == [])
+    check("but two subjects sharing a name *and* an answer are not ambiguous at all",
+          len(make_facts(template, [row("Q1", "Twin Title", "Alice"),
+                                    row("Q2", "Twin Title", "Alice")])) == 2)
+    check("and an unrelated fact beside an ambiguous pair is kept",
+          [f["answer"] for f in make_facts(template, [
+              row("Q1", "Twin Title", "Alice"), row("Q2", "Twin Title", "Bob"),
+              row("Q3", "Its Own Title", "Carol")])] == ["Carol"])
     check("an item with no Wikipedia article is dropped",
           make_facts(template, [row("Q1", "Obscure", "Thing", article=None)]) == [])
     check("a decorated row wins over a bare one",
