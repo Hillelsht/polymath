@@ -158,7 +158,7 @@ def entry(path, data, root):
 
 
 def collect(language, packs_dir=PACKS, write_stamps=False, unversioned=None,
-            assets=None):
+            assets=None, claimed=None):
     """Every pack published for one language, curated first and then everything else.
 
     Order is the shelf order. The six curated packs are the ones a person came for; a topic pack
@@ -171,6 +171,7 @@ def collect(language, packs_dir=PACKS, write_stamps=False, unversioned=None,
 
     rows = []
     unversioned = [] if unversioned is None else unversioned
+    claimed = set() if claimed is None else claimed
     for sub in PACK_DIRS:
         directory = root / sub if sub else root
         if not directory.is_dir():
@@ -189,6 +190,7 @@ def collect(language, packs_dir=PACKS, write_stamps=False, unversioned=None,
                 print(f"  {shown(path)} declares "
                       f"'{data.get('language', DEFAULT_LANGUAGE)}' under {language}/ — skipped")
                 continue
+            claimed.add(Path(path).resolve())
             if write_stamps:
                 stamp(path, packs_dir, assets)
             data, missing = versioned(data)
@@ -222,10 +224,11 @@ def build(packs_dir=PACKS, languages=None, check=False, assets=None):
     every run and would make the check fail always, which is the same as not having it.
     """
     stale = []
+    claimed = set()
     for language in languages or LANGUAGES:
         unversioned = []
         rows = collect(language, packs_dir, write_stamps=not check,
-                       unversioned=unversioned, assets=assets)
+                       unversioned=unversioned, assets=assets, claimed=claimed)
         if unversioned and check:
             # Reported as its own failure rather than folded into "stale", because the manifest
             # can look perfectly current while every device re-downloads the pack forever.
@@ -259,11 +262,46 @@ def build(packs_dir=PACKS, languages=None, check=False, assets=None):
         target.write_text(body(manifest_for(language, packs_dir)), encoding="utf-8")
         print(f"  {language}: wrote {shown(target)} with {len(rows)} packs")
 
+    # Every fact pack under `packs/` has to be claimed by exactly one language's catalogue. One
+    # that no catalogue claims is the "ships nowhere" failure in its purest form: the file is
+    # published, served, and unreachable, because `PackService` finds content through a manifest
+    # and nowhere else.
+    #
+    # This is not hypothetical. A multilingual topic run wrote its Russian and Hebrew packs into
+    # the English folder; every language looked at them, correctly declined them as belonging to
+    # somebody else, and the run reported success. Skipping was right. Saying nothing was not.
+    orphans = [path for path in fact_packs(packs_dir, languages)
+               if path.resolve() not in claimed]
+    if orphans:
+        print()
+        for path in sorted(orphans):
+            print(f"  {shown(path)} is in no catalogue — nothing can ever download it")
+        print("A pack whose folder and declared language disagree belongs in the other folder.")
+        return 1
+
     if stale:
         named = sorted(set(stale))
         print(f"\n{', '.join(named)} out of date. Run: python3 tools/build_manifest.py")
         return 1
     return 0
+
+
+def fact_packs(packs_dir=PACKS, languages=None):
+    """Every fact pack published anywhere a catalogue is meant to reach."""
+    found = []
+    for language in languages or LANGUAGES:
+        root = packs_dir if language == DEFAULT_LANGUAGE else packs_dir / language
+        for sub in PACK_DIRS:
+            directory = root / sub if sub else root
+            if not directory.is_dir():
+                continue
+            for path in sorted(directory.glob("*.json")):
+                try:
+                    if is_pack(json.loads(path.read_text(encoding="utf-8"))):
+                        found.append(path)
+                except json.JSONDecodeError:
+                    continue
+    return found
 
 
 # --- self-test ------------------------------------------------------------------------------
@@ -379,6 +417,13 @@ def self_test():
             json.dumps(pack("geography", "geography-ru", "ru")))
         check("a pack whose declared language contradicts its folder is skipped, not miscatalogued",
               collect("he", packs) == [])
+        # Skipping it is right; saying nothing about it is not. A real topic run wrote its Russian
+        # and Hebrew packs into the English folder, every language declined them as somebody
+        # else's, and the run reported success while publishing two packs no device could ask for.
+        check("and a pack no catalogue claims fails the check outright",
+              build(packs, check=True) == 1)
+        (packs / "he" / "geography.json").unlink()
+        check("once it is gone, the check passes again", build(packs, check=True) == 0)
 
         # The bundled twin. A stamped pack whose APK copy still names no version is the same
         # disagreement moved one file along, and the device re-downloads on every refresh.

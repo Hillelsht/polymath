@@ -44,9 +44,12 @@ jobs:
         run: |
           python3 tools/validate_pack.py --self-test
           python3 tools/validate_pack.py packs
-          if [ -d packs/community ]; then
-            python3 tools/validate_pack.py --strict packs/community
-          fi
+          # One folder at a time: the validator treats a run as a single corpus, so a translated
+          # pack judged beside its English twin reads as a pile of duplicate questions.
+          for dir in packs/community packs/*/community; do
+            [ -d "$dir" ] || continue
+            python3 tools/validate_pack.py --strict "$dir"
+          done
 
       # The catalogue is the only route a non-library pack has to a device, and everything about
       # it is a promise a phone cannot check: that the file named is there, that its version is

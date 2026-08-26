@@ -54,6 +54,14 @@ preference and every published path.
    `STRINGS`). Both self-tests assert parity by name, so a half-added language fails rather than
    shipping with English showing through.
 
+A topic pack follows the same rule, and it is where the rule was learned the hard way. English
+lands at `packs/community/`, every other language at `packs/<tag>/community/` — and the folder must
+agree with the pack's declared `language`, because `build_manifest.py` reads the field rather than
+the path. A translated pack in the English folder is declined by English (it says `ru`) and never
+seen by Russian (which does not look there), so it is published, served, and unreachable. The first
+multilingual topic run did precisely that with 81 Russian and 34 Hebrew facts and reported success;
+`build_manifest.py --check` now fails on any fact pack no catalogue claims.
+
 ## The daily, in three languages
 
 This is the claim the whole product rests on — "playable in your language" — and it is the one a

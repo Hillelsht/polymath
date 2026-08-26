@@ -119,7 +119,7 @@ jobs:
       - name: Refuse to continue if nothing was written
         if: inputs.dry_run != true
         run: |
-          if [ -z "$(git status --porcelain packs/community)" ]; then
+          if [ -z "$(git status --porcelain packs/community packs/*/community)" ]; then
             echo "No pack was written for '${{ inputs.topic }}'."
             echo "The plan above says why: either the model routed nowhere, or every narrowing"
             echo "it proposed emptied its template. Neither is fixed by re-running."
@@ -140,7 +140,15 @@ jobs:
         # rather than a migration.
         run: |
           python3 tools/validate_pack.py packs
-          python3 tools/validate_pack.py --strict packs/community
+          # Each language's community folder on its own, because the validator treats one run as
+          # one corpus — and a Russian pack judged beside its English twin looks like a pile of
+          # duplicate questions when it is nothing of the sort.
+          for dir in packs/community packs/*/community; do
+            [ -d "$dir" ] || continue
+            echo "::group::$dir"
+            python3 tools/validate_pack.py --strict "$dir"
+            echo "::endgroup::"
+          done
 
       - uses: actions/setup-java@v4
         if: inputs.dry_run != true
@@ -176,7 +184,8 @@ jobs:
           # The cache goes in with the pack. What a model decided a topic meant is a content
           # decision, and this is the file a reviewer reads to check it — committing the pack
           # without it would publish the answer and throw away the reasoning.
-          git add packs/community packs/manifest.json packs/*/manifest.json tools/topic_cache.json
+          git add packs/community packs/*/community \
+                  packs/manifest.json packs/*/manifest.json tools/topic_cache.json
           if git diff --cached --quiet; then
             echo "Nothing changed"
             exit 0

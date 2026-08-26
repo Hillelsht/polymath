@@ -50,7 +50,26 @@ import topic_llm                                                      # noqa: E4
 import validate_pack                                                  # noqa: E402
 
 ROOT = Path(__file__).resolve().parent.parent
-OUT_DIR = ROOT / "packs" / "community"
+
+
+def out_dir(language=gen.DEFAULT_LANGUAGE):
+    """Where a topic pack for this language belongs.
+
+    English at `packs/community/`, everything else one folder down under its own tag — the same
+    unprefixed-English convention the library, the catalogue and the daily grids all use.
+
+    This was a fixed path once, and the first multilingual topic run wrote 81 Russian and 34
+    Hebrew facts into the English folder. They were perfectly good facts. `build_manifest` looked
+    at them, saw a pack declaring `ru` sitting under `en/`, skipped it exactly as designed — and
+    nothing failed, so the run reported success while publishing two packs that no device could
+    ever ask for.
+    """
+    base = ROOT / "packs" / "community"
+    return base if language == gen.DEFAULT_LANGUAGE \
+        else ROOT / "packs" / language / "community"
+
+
+OUT_DIR = out_dir()
 
 # A pack that cannot furnish four options is not a pack. Same floor the rest of the pipeline uses,
 # stated again here because this is the number that decides whether a topic is answerable at all.
@@ -311,12 +330,13 @@ def retry_args(kw):
                                                  "cache_path", "use_cache", "fetch"}}
 
 
-def write(built, out_dir=OUT_DIR):
+def write(built, directory=None, language=gen.DEFAULT_LANGUAGE):
     """Writes packs, then refuses any the validator would reject — before they reach the repo."""
-    out_dir.mkdir(parents=True, exist_ok=True)
+    directory = Path(directory or out_dir(language))
+    directory.mkdir(parents=True, exist_ok=True)
     written = []
     for category, pack in sorted(built.items()):
-        path = out_dir / f"{pack['packId']}.json"
+        path = directory / f"{pack['packId']}.json"
         path.write_text(json.dumps(pack, ensure_ascii=False, indent=1), encoding="utf-8")
         report = validate_pack.Report()
         parsed = validate_pack.read_pack(path, report)
@@ -681,7 +701,7 @@ def main(argv=None):
     if not built:
         print("Nothing worth publishing.")
         return 1
-    return 0 if write(built) else 1
+    return 0 if write(built, language=args.language) else 1
 
 
 if __name__ == "__main__":

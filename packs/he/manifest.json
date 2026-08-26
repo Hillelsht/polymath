@@ -1,5 +1,5 @@
 {
- "generated": "2026-08-23T14:54:27Z",
+ "generated": "2026-08-26T19:09:16Z",
  "packs": [
   {
    "id": "geography-he",
@@ -9,6 +9,15 @@
    "facts": 10,
    "bytes": 20940,
    "file": "geography.json"
+  },
+  {
+   "id": "topic-rivers-of-africa-geography-he",
+   "name": "Rivers Of Africa · גאוגרפיה",
+   "category": "geography",
+   "version": "2026-08-26",
+   "facts": 34,
+   "bytes": 21657,
+   "file": "community/topic-rivers-of-africa-geography-he.json"
   }
  ]
 }

@@ -1,5 +1,5 @@
 {
- "generated": "2026-08-23T14:54:27Z",
+ "generated": "2026-08-26T19:09:16Z",
  "packs": [
   {
    "id": "geography-ru",
@@ -9,6 +9,15 @@
    "facts": 10,
    "bytes": 26767,
    "file": "geography.json"
+  },
+  {
+   "id": "topic-rivers-of-africa-geography-ru",
+   "name": "Rivers Of Africa · География",
+   "category": "geography",
+   "version": "2026-08-26",
+   "facts": 81,
+   "bytes": 56751,
+   "file": "community/topic-rivers-of-africa-geography-ru.json"
   }
  ]
 }
