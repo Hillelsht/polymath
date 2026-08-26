@@ -1,5 +1,5 @@
 {
- "generated": "2026-08-26T18:57:10Z",
+ "generated": "2026-08-26T19:00:24Z",
  "packs": [
   {
    "id": "arts",
@@ -54,6 +54,15 @@
    "facts": 70,
    "bytes": 150040,
    "file": "sports.json"
+  },
+  {
+   "id": "topic-japanese-cinema-culture",
+   "name": "Japanese Cinema · Pop Culture",
+   "category": "culture",
+   "version": "2026-08-26",
+   "facts": 77,
+   "bytes": 38386,
+   "file": "community/topic-japanese-cinema-culture.json"
   },
   {
    "id": "topic-rivers-of-africa-geography",

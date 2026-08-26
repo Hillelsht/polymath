@@ -1,4 +1,27 @@
 {
+ "japanese cinema": {
+  "model": "gemini-3.6-flash",
+  "note": "",
+  "provider": "gemini",
+  "templates": [
+   {
+    "entities": [
+     {
+      "id": "P495",
+      "label": "country of origin"
+     },
+     {
+      "id": "Q17",
+      "label": "Japan"
+     }
+    ],
+    "key": "film-director",
+    "narrow": "?s wdt:P495 wd:Q17 .",
+    "why": "Restricts films to those with Japan as their country of origin."
+   }
+  ],
+  "topic": "Japanese cinema"
+ },
  "rivers of africa": {
   "model": "gemini-3.6-flash",
   "note": "",
