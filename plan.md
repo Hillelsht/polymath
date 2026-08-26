@@ -253,7 +253,7 @@ and a counter account.
    never existed, so `fetchManifest` 404'd for both languages and the Library tab in them was empty
    while a published pack sat one URL away. `tools/build_manifest.py` writes every catalogue now.
 
-### Wedge 3 (~weeks 6–10): "About anything"  ← BUILT, ONE MERGE FROM RUNNING
+### Wedge 3 (~weeks 6–10): "About anything"  ← SHIPPED
 
 1. ~~**Community pack spec + validator**~~ — done. `docs/community-packs.md` is the contract, and
    `tools/validate_pack.py` checks it: everything `ContentParser` enforces, plus the failures that
@@ -289,48 +289,52 @@ and a counter account.
    and the API named `gemini-3.6-flash` as its replacement. A 404 naming a successor is now
    followed once and recorded.
 
-3. **Three vertical landing packs** — one published, and the other two turned out to be a
-   *content* gap rather than a mapping one, which is worth more than the packs would have been.
+3. ~~**Three vertical landing packs**~~ — three published, and the two the plan originally named
+   turned out to be a *content* gap rather than a mapping one, which was worth more than the packs
+   would have been.
 
-   `packs/community/topic-rivers-of-africa-geography.json` is live: **86 facts, 35 distinct
-   answers, every one with an image**, narrowed by `?s wdt:P17 ?c . ?c wdt:P30 wd:Q15 .` and
-   catalogued so any installed app can download it.
+   | pack | facts | distinct answers | narrowed by |
+   |---|---|---|---|
+   | `topic-rivers-of-africa-geography` | 86 | 35 | `?s wdt:P17 ?c . ?c wdt:P30 wd:Q15 .` |
+   | `topic-japanese-cinema-culture` | 77 | 52 | `?s wdt:P495 wd:Q17 .` |
+   | `topic-star-wars-arts` | 35 | 18 | `?s wdt:P8345 wd:Q462 .` |
 
-   The plan named a citizenship test, a driving theory test and a fandom. Asked for the first, the
-   model answered — correctly — that *"the catalogue lacks templates for civics, government
-   structure, political offices, constitutional amendments, national symbols, and US state
-   capitals"*. Driving theory is the same story with road signs. **Neither is a mapper failure: no
-   template asks those questions, and no narrowing of an existing one can invent them.** The fix is
-   a nineteenth template in `generate_facts.py`, which is a content decision worth taking
-   deliberately rather than as a side effect of wanting a landing page.
+   And the rivers pack exists in **all three languages** — 81 Russian facts and 34 Hebrew,
+   harvested from the same cached plan at no further cost to the model, which is the two wedges
+   meeting: a typed topic, in your language.
 
-   The fandom is the interesting one. *Star Wars* was attempted five times and failed five times,
-   and **each failure was a different real bug**, every one of which is now fixed: a hallucinated
-   entity id (Q82347 = "America's Next Top Model, season 2"), a hallucinated *replacement* for it
-   (Q809, Polish), a guessed property (`P361`, one fact, where `P8345` links forty-seven), an
-   uncaught 429 from Wikidata's rate limiter, and the free tier's daily allowance. The pipeline is
-   substantially more robust for having tried it. It still does not publish, and the remaining
-   cause is in the harvest rather than the mapping — which the next run will say plainly, because
-   topic runs now write their own report into the GitHub run summary instead of burying it in
-   post-job git plumbing.
+   **A citizenship test and a driving theory test cannot be served by this catalogue**, and the
+   model said so precisely rather than inventing something: *"the catalogue lacks templates for
+   civics, government structure, political offices, constitutional amendments, national symbols,
+   and US state capitals."* Road signs likewise. No narrowing of an existing template can invent a
+   question nobody wrote. Those two want a nineteenth and twentieth template in
+   `generate_facts.py` — a content decision, taken deliberately.
 
-   The lesson underneath all of it is one line: **a model cannot produce Wikidata identifiers, of
-   either kind.** Every id it names is now either verified or looked up, and that is what makes it
-   safe to let one near published content.
-
-   Three findings came out of these runs and all three are now in the code:
+   Six findings came out of these runs, every one from a real failure, every one now fixed:
 
    - **A correct clause can match nothing.** `?s wdt:P30 wd:Q15 .` is exactly "on the continent of
      Africa" and almost no river carries P30. Coverage is invisible to any gate that reads a
-     clause, so the endpoint is asked and an empty answer goes back to the model with its row
-     count.
-   - **A model cannot recall Q-numbers.** Asked about Star Wars it produced `Q82347` — "America's
-     Next Top Model, season 2" — and, told so, produced `Q809`, the Polish language. It is no
-     longer asked to recall: a refusal now carries Wikidata's own search results and the model
-     picks from real candidates. **The label gate is what stood between that and a pack named Star
-     Wars full of reality-television credits**, permanently, because a published fact id is
-     permanent.
-   - **The free tier is twenty requests a day.** Which is the wall this stopped at.
+     clause, so the endpoint is asked and an empty answer goes back to the model with its count.
+   - **A model cannot produce Wikidata identifiers, of either kind.** Asked about Star Wars it
+     offered `Q82347` ("America's Next Top Model, season 2"), then `Q809` (Polish), then `Q8234`
+     (a valley in Saxony); given the right entity it guessed the property, `P361`, worth one fact
+     where `P8345` was worth forty-seven. Entities are now searched and properties looked up, and
+     the model chooses from real candidates. **The label gate is what stood between the first of
+     those and a pack named Star Wars full of reality-television credits** — permanently, because
+     a published fact id is permanent.
+   - **One question, asked once.** Two subjects sharing a name ask the same question twice: with
+     different answers that is ambiguity and both go, with the same answer it is redundancy and
+     one survives. An 11,000-fact library was clean of it; narrowing to one franchise found it.
+   - **A folder and a declared language must agree.** The first multilingual run wrote its Russian
+     and Hebrew packs into the English folder. Every catalogue correctly declined them, nothing
+     failed, and the run reported success — two packs published, served and unreachable.
+     `build_manifest.py --check` now fails on any fact pack no catalogue claims.
+   - **Rate limits and quotas are not refusals.** Wikidata's 429 crashed a run with a traceback;
+     Gemini's two different 429s ("high demand" versus a spent daily allowance) needed opposite
+     responses. Both handled, and the label check fails *closed* — an id that could not be
+     verified is refused, because "the check was unavailable" is not a check.
+   - **A run should report itself.** The four lines that matter now go to the GitHub run summary
+     rather than being buried under post-job git plumbing.
 
 ### Wedge 4 (~weeks 10–13): Decide with data
 Only now revisit backend/accounts/monetization, gated on share-loop evidence from the counter.
@@ -357,19 +361,23 @@ ads in the ritual, no new games until the dailies are excellent.
    Wedge 2 is finished end to end: rooms generated and gated three ways, three libraries published
    (11,267 facts), and the daily playable in all three languages with a switcher.
 
+   **Wedge 3 is shipped.** Three topic packs are published and catalogued, the rivers one in all
+   three languages. What is left of the wedge is a content decision rather than code: a citizenship
+   test and a driving theory test need templates that do not exist, and no mapper can invent a
+   question nobody wrote.
+
+   **Wedge 4 is next, and it is gated on the counter** — which needs a domain and an account, both
+   yours. Until there is share-loop evidence there is nothing to decide with.
+
    **Wedge 3's headline works and has published.** `topic.yml` has run end to end: a typed topic,
    mapped by a model, narrowed, harvested from Wikidata, validated at the strict bar, catalogued
    and committed — 86 African rivers, and the pipeline refusing three separate ways along the way.
 
-   Two things are needed to carry on, and both are yours:
-
-   - **Gemini's free tier allows 20 requests a day** and today's are spent. A topic costs one call,
-     or two when a proposal needs correcting. Either raise the quota / enable billing on the Google
-     AI Studio project (the calls are a few thousand tokens each, so this is cents rather than
-     dollars), or add `ANTHROPIC_API_KEY` as a repo secret — the provider is already a
-     `--provider anthropic` flag away.
-   - **Templates for civics and road signs**, if the citizenship and driving-theory verticals are
-     still wanted. That is a `generate_facts.py` change and a content decision, not a mapper one.
+   Worth knowing before running more topics: **Gemini's free tier allows 20 requests a day.** A
+   topic costs one call, or two to three when proposals need correcting, so a batch of topics
+   exhausts it. Enabling billing on the Google AI Studio project makes that a non-issue for cents;
+   `ANTHROPIC_API_KEY` plus `--provider anthropic` is the other route. The cache means a topic is
+   only ever asked once, so the cost is per new topic rather than per run.
 
    Two content follow-ups worth doing when convenient: the `author` and `musician` pools need
    more facts before those categories can return to the daily, and a device that already
