@@ -39,6 +39,15 @@ until the next content run silently deleted it. `tools/build_manifest.py` now wr
 catalogue from what is actually published; `build.yml` runs `--check`; `CatalogueTest` fails the
 build if a published pack is unlisted or a listed one is missing.
 
+**A pack's folder and its declared language must agree.** English at `packs/community/`, every
+other language at `packs/<tag>/community/`.
+→ `build_manifest.py` reads the declared `language`, not the path, so a Russian pack sitting under
+`packs/community/` is correctly declined by English — and by Russian, which never looks there. It
+is published, served, and unreachable. The first multilingual topic run did exactly this: 81
+Russian and 34 Hebrew facts, translated perfectly, written to the English folder, skipped by every
+catalogue, **and the run reported success**. Skipping was right; saying nothing was not.
+`build_manifest.py --check` now fails on any fact pack no catalogue claims.
+
 **A published pack must name its own `version`.** Not left out for `ContentParser` to fall back on.
 → The fallback is `"text-${raw.hashCode()}"`, which no tool outside the app can reproduce — so the
 catalogue advertises one version and the device computes another, forever. The device concludes it
