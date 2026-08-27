@@ -196,7 +196,7 @@ streak survives restart; the Chromium playtest drives the daily end-to-end in CI
 are worth showing a stranger. **Shipped.** What remains is not code: a domain, an assetlinks file
 and a counter account.
 
-### Wedge 2 (~weeks 3–6): Provably-fair generated rooms + language parity  ← SHIPPED
+### Wedge 2 (~weeks 3–6): Provably-fair generated rooms + language parity  ← SHIPPED (the app's daily is still English-only)
 
 1. ~~**Room generator gated by `Playtest.solve`**~~ — done. `RoomGen` lays a room out from a seed
    using a grammar of the ideas the seven authored rooms teach; `curate` walks a seed stream and
@@ -234,7 +234,12 @@ and a counter account.
    with a painter's or a moon's gender, which no label carries. Both tables keep the sentence's
    grammatical subject a noun written in the file, with the label beside it.
 
-3. ~~**The daily in three languages**~~ — done, which is the part that makes the parity visible.
+3. ~~**The daily in three languages**~~ — **on the web.** This is the part that makes the parity
+   visible, and it is worth being exact about where: `webplay/` plays the Russian and Hebrew grids,
+   the app does not yet. `SmartRepository` fetches `chains/<month>.json` with no language tag, so
+   the Android Chains screen serves the English grid whatever language the user has chosen. The
+   grids exist at `packs/play/chains/<tag>/` and `fetchGamePack` can already reach them — it is a
+   path change and a test, not a new mechanism, and it is the first item in Part 4 below.
    `build_chains.py` builds a grid per language from that language's own library, so a Russian
    player gets Russian tiles under Russian group labels rather than translated buttons over an
    English puzzle. 122 grids each in English, Russian and Hebrew. The portal has a switcher, one
@@ -366,8 +371,13 @@ ads in the ritual, no new games until the dailies are excellent.
    test and a driving theory test need templates that do not exist, and no mapper can invent a
    question nobody wrote.
 
-   **Wedge 4 is next, and it is gated on the counter** — which needs a domain and an account, both
-   yours. Until there is share-loop evidence there is nothing to decide with.
+   **The one loose end in code**: the app's Chains daily fetches `chains/<month>.json` with no
+   language tag, so a Russian or Hebrew user gets the English grid. The web portal does this
+   correctly and the translated grids are published; the app needs `fetchGamePack` given the
+   language and a `PlayContentTest`-style gate. Small, and app code, so CI is the only compiler.
+
+   **Wedge 4 after that, and it is gated on the counter** — which needs a domain and an account,
+   both yours. Until there is share-loop evidence there is nothing to decide with.
 
    **Wedge 3's headline works and has published.** `topic.yml` has run end to end: a typed topic,
    mapped by a model, narrowed, harvested from Wikidata, validated at the strict bar, catalogued
