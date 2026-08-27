@@ -214,6 +214,47 @@ TEMPLATES = [
              "?s wdt:P86 ?o .", floor=15),
 
     # --- History -------------------------------------------------------------------------
+    # Civics. A citizenship test asks who governs, under what constitution, in which chamber and
+    # in what language, and those four are claims Wikidata holds about every country — unlike the
+    # rest of such a test ("name one branch of government", "what did the Declaration do"), which
+    # is a question somebody wrote rather than a fact anybody recorded, and which this pipeline
+    # therefore cannot and should not invent.
+    #
+    # All four read the full statement rather than the truthy shortcut, for the reason the
+    # geography three do and more sharply: an office is the most heavily time-qualified thing in
+    # Wikidata. Every former president is still a P35 statement, closed with P582 (end time), and
+    # `wdt:` keeps a preferred value without saying so. Dropping P582 and P518 (applies to part)
+    # leaves the current holder and the country-wide answer.
+    #
+    # They live in History rather than Geography because Geography already holds three country
+    # templates and would become the country category; and because "who governs, and how" is the
+    # institutions half of a history curriculum, not the shape-of-the-world half.
+    #
+    # Head of state is the one that dates. It is also the question a citizenship test actually
+    # asks, and the library re-publishes monthly, so a changed answer reaches a device on the
+    # next refresh — shards update as well as add. What does not update is a review history built
+    # on the old answer, which is the honest cost of including it.
+    Template("head-of-state", "history", "head of state",
+             "Head of state of {s}", "Who is the head of state of {s}?",
+             "{o} is the head of state of {s}.",
+             "?s wdt:P31 wd:Q6256 ; p:P35 ?st . ?st ps:P35 ?o . " + UNQUALIFIED.format(p="P35")),
+    Template("legislature", "history", "legislature",
+             "Legislature of {s}", "What is the legislature of {s} called?",
+             "The legislature of {s} is the {o}.",
+             "?s wdt:P31 wd:Q6256 ; p:P194 ?st . ?st ps:P194 ?o . "
+             + UNQUALIFIED.format(p="P194")),
+    Template("form-of-government", "history", "form of government",
+             "Government of {s}", "What is the form of government of {s}?",
+             "{s} is a {o}.",
+             "?s wdt:P31 wd:Q6256 ; p:P122 ?st . ?st ps:P122 ?o . "
+             + UNQUALIFIED.format(p="P122")),
+    # Multilingual countries produce several rows and are dropped whole by `make_facts`, which is
+    # the right answer rather than a shortcoming: "What is the official language of Switzerland?"
+    # has four correct answers and is not a question.
+    Template("official-language", "history", "official language",
+             "Official language of {s}", "What is the official language of {s}?",
+             "The official language of {s} is {o}.",
+             "?s wdt:P31 wd:Q6256 ; p:P37 ?st . ?st ps:P37 ?o . " + UNQUALIFIED.format(p="P37")),
     Template("battle-conflict", "history", "war",
              "The {s}", "Which war was the {s} part of?", "The {s} was part of {o}.",
              "?s wdt:P31 wd:Q178561 ; wdt:P361 ?o .", floor=15),
@@ -331,6 +372,31 @@ RU_PHRASING = {
     ),
 
     # --- History ---------------------------------------------------------------------------
+    # The civics four keep every Wikidata label in the nominative the label service returns: the
+    # word that has to decline is «страны», which this file wrote and can therefore inflect
+    # safely. The statements are nominal (a dash, no verb) for the same reason "Кто открыл" is
+    # phrased the way it is — a verb would have to agree with a head of state whose gender is a
+    # label nobody here has seen.
+    "head-of-state": (
+        "Глава государства «{s}»",
+        "Кто является главой государства «{s}»?",
+        "Глава государства «{s}» — «{o}».",
+    ),
+    "legislature": (
+        "Парламент страны «{s}»",
+        "Как называется парламент страны «{s}»?",
+        "Парламент страны «{s}» — «{o}».",
+    ),
+    "form-of-government": (
+        "Форма правления в стране «{s}»",
+        "Какая форма правления в стране «{s}»?",
+        "Форма правления в стране «{s}» — «{o}».",
+    ),
+    "official-language": (
+        "Официальный язык страны «{s}»",
+        "Какой официальный язык в стране «{s}»?",
+        "Официальный язык страны «{s}» — «{o}».",
+    ),
     "battle-conflict": (
         "Сражение «{s}»",
         "Частью какой войны было сражение «{s}»?",
@@ -452,6 +518,29 @@ HE_PHRASING = {
     ),
 
     # --- History ---------------------------------------------------------------------------
+    # Each civics statement keeps its grammatical subject a noun written here — ראש המדינה,
+    # בית המחוקקים, צורת הממשל, השפה הרשמית — so הוא/היא agrees with a word of known gender and
+    # the Wikidata label is slotted in exactly as given.
+    "head-of-state": (
+        "ראש המדינה של {s}",
+        "מיהו ראש המדינה של {s}?",
+        "ראש המדינה של {s} הוא {o}.",
+    ),
+    "legislature": (
+        "בית המחוקקים של {s}",
+        "מהו שמו של בית המחוקקים של {s}?",
+        "בית המחוקקים של {s} הוא {o}.",
+    ),
+    "form-of-government": (
+        "צורת הממשל של {s}",
+        "מהי צורת הממשל של {s}?",
+        "צורת הממשל של {s} היא {o}.",
+    ),
+    "official-language": (
+        "השפה הרשמית של {s}",
+        "מהי השפה הרשמית של {s}?",
+        "השפה הרשמית של {s} היא {o}.",
+    ),
     "battle-conflict": (
         "הקרב {s}",
         "לאיזו מלחמה שייך הקרב {s}?",
@@ -555,6 +644,26 @@ def sparql(query, timeout=65):
 ENTITY_TOKEN = re.compile(r"\b(?:wdt|wd|ps|pq|p):([A-Za-z0-9]+)")
 WELL_FORMED = re.compile(r"^[QP][1-9][0-9]*$")
 
+# What an id has to turn out to be, checked as a lowercase substring of the label Wikidata
+# returns for it.
+#
+# `preflight` already drops an id that resolves to nothing. That catches a typo and misses the
+# thing that actually goes wrong: an id that exists and is the wrong one. The topic mapper hit
+# it three times in one afternoon — P361 (`part of`, one fact) where P8345 (`media franchise`,
+# forty-seven) was meant, Q82347 (a season of America's Next Top Model) for a continent — and a
+# template is the same guess made once and then trusted for months. Nothing here can check an
+# id: the sandbox this file is written in has no route to Wikidata.
+#
+# Only ids written blind are listed. The templates above them have published 4,074 facts, which
+# is a stronger proof than any string in this dict, and adding a guessed expectation for a
+# proven id would risk dropping a template that works.
+EXPECTED_LABELS = {
+    "P35": "head of state",
+    "P37": "official language",
+    "P122": "form of government",
+    "P194": "legislative",
+}
+
 
 def referenced_ids(template):
     """Every Wikidata entity a template names, in the order it names them."""
@@ -568,6 +677,20 @@ def referenced_ids(template):
 def malformed_ids(template):
     """Ids that cannot exist. Catches a typo with no network at all."""
     return [i for i in referenced_ids(template) if not WELL_FORMED.match(i)]
+
+
+def mislabelled(template, labels):
+    """Ids this template names that resolved to something other than what it expects.
+
+    Split out from [preflight] so the comparison can be tested here, offline, rather than only
+    being exercised by a run that needs the endpoint.
+    """
+    return [
+        f"{i} is '{labels[i]}', wanted '{EXPECTED_LABELS[i]}'"
+        for i in referenced_ids(template)
+        if labels.get(i) and i in EXPECTED_LABELS
+        and EXPECTED_LABELS[i] not in labels[i].lower()
+    ]
 
 
 def preflight(templates, offline=False):
@@ -619,8 +742,11 @@ def preflight(templates, offline=False):
     checked = []
     for template in usable:
         missing = [i for i in referenced_ids(template) if not labels.get(i)]
+        wrong = mislabelled(template, labels)
         if missing:
             rejected.append((template, f"unresolved: {', '.join(missing)}"))
+        elif wrong:
+            rejected.append((template, "; ".join(wrong)))
         else:
             checked.append(template)
 
@@ -1083,6 +1209,18 @@ def self_test():
     check("a qualifier id is checked like any other",
           "P582" in referenced_ids(TEMPLATES[0]))
 
+    civics = next(t for t in TEMPLATES if t.key == "head-of-state")
+    check("an id that resolves to the wrong property is caught",
+          mislabelled(civics, {"P35": "spouse"}) == ["P35 is 'spouse', wanted 'head of state'"])
+    check("the expected label is a substring, not an exact match",
+          mislabelled(civics, {"P35": "head of state"}) == [])
+    check("an id nobody wrote an expectation for is left alone",
+          mislabelled(civics, {"Q6256": "sovereign state"}) == [])
+    check("every id written blind carries an expectation",
+          {"P35", "P37", "P122", "P194"} <= set(EXPECTED_LABELS))
+    check("no expectation names an id no template uses",
+          set(EXPECTED_LABELS) <= {i for t in TEMPLATES for i in referenced_ids(t)})
+
     template = TEMPLATES[0]
 
     def row(qid, subject, answer, sl="120", img=None, article="https://en.wikipedia.org/wiki/X"):
@@ -1393,6 +1531,9 @@ def main(argv=None):
                         help="facts per template (a small value makes a fast smoke run)")
     parser.add_argument("--dry-run", action="store_true",
                         help="harvest and report, but publish nothing")
+    parser.add_argument("--preflight-only", action="store_true",
+                        help="resolve every template's ids, print what they turned out to be, "
+                             "and exit -- one query, seconds, no harvest")
     parser.add_argument("--budget-minutes", type=float, default=BUDGET_MINUTES,
                         help="stop starting new templates after this long")
     parser.add_argument("--language", default=DEFAULT_LANGUAGE, choices=sorted(WIKI_HOSTS),
@@ -1416,6 +1557,17 @@ def main(argv=None):
     if not templates:
         print("\nFAIL: no template survived preflight. Leaving the library untouched.")
         return 1
+
+    # The only way to check an id, for anyone working where Wikidata is unreachable. A template
+    # is written blind here and its correctness is a claim about a number; this resolves every
+    # one of them in a single query and prints what it actually turned out to be, so a wrong
+    # guess is named in seconds rather than found out as a category that quietly published
+    # nothing forty minutes later.
+    if args.preflight_only:
+        dropped = len(candidates) - len(templates)
+        print(f"\n{len(templates)} of {len(candidates)} templates would run"
+              + (f", {dropped} dropped." if dropped else "."))
+        return 1 if dropped else 0
 
     print(f"\nHarvesting {len(templates)} templates, up to {args.limit} each, "
           f"within {args.budget_minutes} minutes, in '{language}'.\n")

@@ -48,7 +48,8 @@ preference and every published path.
    device re-downloading it on every refresh. `CatalogueTest` fails the build on both.
 5. Add channels to `assets/content/channels.json` with `"language": "<tag>"`, covering all six
    categories. CI's prober resolves the handles.
-6. Add generator phrasings for all eighteen templates (below). The self-test requires them.
+6. Add generator phrasings for every template in `TEMPLATES` (below). The self-test
+   requires them all — there is no partial credit.
 7. Add the language to `tools/build_chains.py` (`LANGUAGES`, and a name for every entry in
    `LABELS`) and to `webplay/web/polymath.js` (`LANGUAGES`, `LANGUAGE_NAMES`, and a full row in
    `STRINGS`). Both self-tests assert parity by name, so a half-added language fails rather than
@@ -170,7 +171,7 @@ written *here* (`Автор картины`, `המחבר`, `הקרב`), with the
 `של` phrase. The sentence then agrees with a word whose gender is known, and the label is slotted
 in exactly as given.
 
-**All eighteen templates are translated into both languages**, so a Russian or Hebrew run covers
+**Every template is translated into both languages**, so a Russian or Hebrew run covers
 the same six categories English does. The self-test asserts that parity rather than leaving it to
 be noticed — add an English template without translating it and `--self-test` fails by name. The
 graceful path still exists underneath: `templates_for(language)` drops any template with no

@@ -134,7 +134,7 @@ python3 tools/topic_pack.py --topic "space" --write    # harvest and write them
 ```
 
 The mapper is a synonym table and word overlap against the templates' own vocabulary. It only
-reaches the eighteen questions `generate_facts.py` knows how to ask, so *"the Byzantine
+reaches the twenty-two questions `generate_facts.py` knows how to ask, so *"the Byzantine
 succession"* routes nowhere and says so; and it cannot narrow a topic, so *"rivers of Africa"*
 harvests the same rivers as *"rivers"* and tells you it ignored the word. Both limits are printed
 rather than hidden.
@@ -169,7 +169,7 @@ What it actually does, from `probe.yml`'s first real run:
 | `the Byzantine succession` | nothing, and it says why: no template asks about monarchs, rulers or succession |
 
 The last row is the honest one. A topic the catalogue cannot serve is answered with a sentence
-naming what is missing, and the fix is a nineteenth template in `generate_facts.py` — not a looser
+naming what is missing, and the fix is another template in `generate_facts.py` — not a looser
 mapper. Every Q- and P-number in that table was checked against its real Wikidata label before
 anything was harvested, which is the whole reason a model is allowed near published content.
 

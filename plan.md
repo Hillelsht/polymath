@@ -222,12 +222,12 @@ and a counter account.
    red build. `play.yml` curates monthly alongside the Chains grids, and **never rewrites a
    published day** — a ghost link carries a date rather than a room.
 
-2. ~~**Language parity**~~ — done, and published. All eighteen templates are phrased in Russian
+2. ~~**Language parity**~~ — done, and published. All templates are phrased in Russian
    and Hebrew (five were, all Geography), so a run in either language covers the same six
    categories English does. `library.yml` has run for both: **11,267 facts across three languages**
    — English 4,074, Russian 3,936, Hebrew 3,340 — against the ~10 each RU and HE held before.
 
-   Two grammar problems shaped the phrasings and are worth knowing before adding a nineteenth
+   Two grammar problems shaped the phrasings and are worth knowing before adding another
    template. Wikidata hands back labels in base form only, so Russian cannot decline them —
    every phrasing quotes the name in guillemets and is built to need the nominative. And past
    Geography both languages hit the same second problem from opposite directions: a verb agreeing
@@ -269,7 +269,7 @@ and a counter account.
    errors and anything under `packs/community/` on the warnings too.
 
 2. ~~**Topic front door**~~ — done, pending one merge. `tools/topic_llm.py` asks a model for the
-   two decisions the synonym table could not make: which of the eighteen templates a topic wants,
+   two decisions the synonym table could not make: which of the templates a topic wants,
    and a SPARQL fragment narrowing them. *"Rivers of Africa"* becomes
    `?s wdt:P17 ?c . ?c wdt:P30 wd:Q15 .` and harvests African rivers, where the deterministic
    mapper harvested every river and printed that it had ignored the word.
@@ -309,12 +309,28 @@ and a counter account.
    harvested from the same cached plan at no further cost to the model, which is the two wedges
    meeting: a typed topic, in your language.
 
-   **A citizenship test and a driving theory test cannot be served by this catalogue**, and the
+   **A citizenship test and a driving theory test could not be served by this catalogue**, and the
    model said so precisely rather than inventing something: *"the catalogue lacks templates for
    civics, government structure, political offices, constitutional amendments, national symbols,
    and US state capitals."* Road signs likewise. No narrowing of an existing template can invent a
-   question nobody wrote. Those two want a nineteenth and twentieth template in
-   `generate_facts.py` — a content decision, taken deliberately.
+   question nobody wrote.
+
+   **Civics now exists** — four templates, `head-of-state`, `legislature`, `form-of-government`
+   and `official-language`, all reading the full statement so a former president is not published
+   as the current one, all phrased in three languages, three of them added to the Chains pools.
+   Head of state is kept out of the daily on purpose: a grid is frozen up to four months ahead,
+   and a group of four names under "Heads of state" stops being true the first time one of them
+   leaves office.
+
+   **Road signs cannot be a template, and that is a property of the pipeline rather than of the
+   effort spent on it.** A sign's meaning is not a Wikidata claim — it is what a pictogram
+   denotes, which nobody recorded as a triple — and the rule that makes this pipeline trustworthy
+   is precisely what rules the category out. `make_facts` also drops any subject with no
+   Wikipedia article, which individual signs do not have. The near miss is `P1622`, driving side,
+   left out because two possible answers make a coin flip that `QuizGenerator`'s widening
+   distractor rings would give away outright. A driving-theory pack is therefore an **authored
+   community pack** — the contract, the validator and `imageUrl` all already exist — and it
+   carries a licensing question about the pictograms that is not this pipeline's to answer.
 
    Six findings came out of these runs, every one from a real failure, every one now fixed:
 
@@ -368,9 +384,9 @@ ads in the ritual, no new games until the dailies are excellent.
    (11,267 facts), and the daily playable in all three languages with a switcher.
 
    **Wedge 3 is shipped.** Three topic packs are published and catalogued, the rivers one in all
-   three languages. What is left of the wedge is a content decision rather than code: a citizenship
-   test and a driving theory test need templates that do not exist, and no mapper can invent a
-   question nobody wrote.
+   three languages. Civics is now four templates, so a citizenship-test topic has something to map
+   onto; road signs are the one vertical this pipeline structurally cannot serve, and the reason
+   is written down in `docs/content-pipeline.md` along with the route that would work.
 
    **That loose end is closed**: the app's Chains daily now reads the selected language on every
    call and fetches `chains/<tag>/<month>.json`, with the month cache and the `game_daily` row

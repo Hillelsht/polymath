@@ -134,6 +134,16 @@ LABELS = {
     "athlete": {"en": "Athletes", "ru": "Спортсмены", "he": "ספורטאים"},
     "musician": {"en": "Musicians", "ru": "Музыканты", "he": "מוזיקאים"},
     "element": {"en": "Elements", "ru": "Химические элементы", "he": "יסודות כימיים"},
+    # The civics templates, minus one. "head of state" is deliberately absent: a grid is
+    # published up to four months ahead and then never rewritten, so a group of four names under
+    # "Heads of state" stops being true the first time one of them leaves office — and the
+    # player, not the table, is the one told they are wrong. The other three answer with
+    # institutions, forms and languages, which outlast a publishing window.
+    "legislature": {"en": "Legislatures", "ru": "Парламенты", "he": "בתי מחוקקים"},
+    "form of government": {"en": "Forms of government", "ru": "Формы правления",
+                           "he": "צורות ממשל"},
+    "official language": {"en": "Official languages", "ru": "Официальные языки",
+                          "he": "שפות רשמיות"},
 }
 
 

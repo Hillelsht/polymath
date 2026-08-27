@@ -122,6 +122,18 @@ Three constraints found by probing rather than reasoning, all of which shape the
   written. `preflight()` checks each id's shape offline, then asks Wikidata for its label and
   prints what each one actually means. A wrong id becomes a named line in the CI log instead of a
   template that silently yields zero.
+
+  That catches an id that resolves to *nothing* and misses the one that actually goes wrong: an
+  id that exists and is a different property. The topic mapper hit that three times in an
+  afternoon — `P361` (*part of*, one fact) where `P8345` (*media franchise*, forty-seven) was
+  meant. So `EXPECTED_LABELS` records what an id has to turn out to be, and preflight drops a
+  template whose id resolved to something else, naming both. Only ids written blind are listed:
+  the templates that have published 4,074 facts are better evidence than any string in that dict,
+  and a guessed expectation for a proven id could only drop something that works.
+
+  `generate_facts.py --preflight-only` is that check on its own — one query, seconds, no harvest,
+  exit 1 if anything was dropped. `probe.yml` runs it. It is the loop for writing a template you
+  cannot verify: write it, dispatch the probe, read the labels back.
 - **Wikidata labels come back in base form only.** No case, no declension. This is what shapes
   the translated phrasings — see `localization.md`.
 
@@ -151,6 +163,40 @@ Publishing is guarded. It refuses if fewer than 400 facts survive, or if the tot
 4 distinct answers). A weak template costs its own facts, not everybody else's: `prune()` drops
 it and the rest still publishes. That rule exists because the first full run harvested 3,223
 facts and published none of them, vetoed by two templates that yielded one fact each.
+
+### What a template can and cannot be
+
+Twenty-two templates over six categories. The four newest are **civics** — head of state,
+legislature, form of government, official language — added because a citizenship-test pack was
+the obvious vertical and nothing existed to build one from. They all read the full statement
+(`p:`/`ps:` plus the `P518`/`P582` filters) rather than the truthy `wdt:` shortcut, for the reason
+the geography three do and more sharply: an office is the most heavily time-qualified thing in
+Wikidata, every former president is still a `P35` statement closed with an end time, and `wdt:`
+keeps a preferred value without saying so. They sit in History rather than Geography, which
+already holds three country templates and would otherwise become the country category.
+
+**Road signs were the other obvious vertical and they cannot be a template.** Worth writing down,
+because it is a property of the pipeline rather than of the effort spent on it:
+
+- A road sign's meaning is not a Wikidata claim. It is what the pictogram denotes, which nobody
+  recorded as a subject-predicate-object triple. Every template here answers with an object's
+  label, and no property over a sign item yields "give way" or "no overtaking". The rule that
+  makes this pipeline trustworthy — the model proposes, Wikidata disposes, and nothing writes a
+  fact — is exactly what rules the whole category out.
+- Even if it were, `make_facts` drops any fact whose subject has no Wikipedia article in the
+  target language, and individual pictograms have none. The handful of signs that do have
+  articles — stop, yield — would publish a question about their `P31` class, which no driving
+  test has ever asked.
+- The near miss is `P1622` (driving side), which is a real country claim with an article behind
+  it. It is deliberately not a template: two possible answers make a coin flip, and
+  `QuizGenerator` widens its distractor rings past the answerType, so the other two options would
+  come from elsewhere in History and give it away outright.
+
+So a driving-theory pack is an **authored community pack**, not a harvest: `docs/community-packs.md`
+has the contract, `validate_pack.py` enforces it, and facts carry an `imageUrl`, which is what a
+sign question needs and what a Wikidata triple does not supply. That is a content decision with a
+licensing question attached — sign pictograms are not automatically free to redistribute — and so
+it is not one this pipeline should make on its own.
 
 ## The workflows
 

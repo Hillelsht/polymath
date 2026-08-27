@@ -21,6 +21,14 @@ jobs:
         run: python3 tools/probe_wikidata.py
         continue-on-error: true
 
+      # Every template id in generate_facts.py was written where Wikidata is unreachable, so
+      # each one is a guess until something resolves it. This does, in one query: it prints the
+      # label behind every Q- and P-number and fails if any of them turned out to be something
+      # other than the template said. Cheap enough to run before a library build rather than
+      # discovering a wrong property as a category that published nothing.
+      - name: Every template id is the one it claims to be
+        run: python3 tools/generate_facts.py --preflight-only
+
   mapper:
     name: What a model makes of a topic
     runs-on: ubuntu-latest
