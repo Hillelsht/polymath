@@ -1,5 +1,5 @@
 {
- "generated": "2026-08-24T07:34:09Z",
+ "generated": "2026-08-26T19:00:24Z",
  "packs": [
   {
    "id": "arts",
@@ -54,6 +54,33 @@
    "facts": 70,
    "bytes": 150040,
    "file": "sports.json"
+  },
+  {
+   "id": "topic-japanese-cinema-culture",
+   "name": "Japanese Cinema · Pop Culture",
+   "category": "culture",
+   "version": "2026-08-26",
+   "facts": 77,
+   "bytes": 38386,
+   "file": "community/topic-japanese-cinema-culture.json"
+  },
+  {
+   "id": "topic-rivers-of-africa-geography",
+   "name": "Rivers Of Africa · Geography",
+   "category": "geography",
+   "version": "2026-08-23",
+   "facts": 86,
+   "bytes": 48642,
+   "file": "community/topic-rivers-of-africa-geography.json"
+  },
+  {
+   "id": "topic-star-wars-arts",
+   "name": "Star Wars · Arts & Literature",
+   "category": "arts",
+   "version": "2026-08-26",
+   "facts": 35,
+   "bytes": 19421,
+   "file": "community/topic-star-wars-arts.json"
   }
  ]
 }

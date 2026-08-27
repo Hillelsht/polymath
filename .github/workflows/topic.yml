@@ -82,13 +82,21 @@ jobs:
       # Printed before anything is harvested, because this is the reviewable part. The clause it
       # chose and the entities it claimed are what a person reads to decide whether the topic was
       # understood — and they are cached, so this is also the diff that lands in the commit.
+      # Both of the next two steps tee their output into the run summary. Diagnosing a topic run
+      # from the raw log means scrolling past a screen of post-job git plumbing to find the four
+      # lines that matter — which clause the model chose, and what each template yielded. Those
+      # four lines are the whole story of a run, and they belong somewhere you can read them.
       - name: What the topic means
-        run: python3 tools/topic_pack.py --topic "${{ inputs.topic }}" $MAPPER
+        run: |
+          set -o pipefail
+          python3 tools/topic_pack.py --topic "${{ inputs.topic }}" $MAPPER 2>&1 \
+            | tee -a "$GITHUB_STEP_SUMMARY"
 
       - name: Harvest and write the packs
         if: inputs.dry_run != true
         run: |
           set -euo pipefail
+          printf '\n```\n' >> "$GITHUB_STEP_SUMMARY"
           IFS=',' read -ra langs <<< "${{ inputs.languages }}"
           for lang in "${langs[@]}"; do
             lang="$(echo "$lang" | tr -d '[:space:]')"
@@ -102,14 +110,16 @@ jobs:
               --language "$lang" \
               --limit "${{ inputs.limit }}" \
               --version "$(date -u +%Y-%m-%d)" \
-              --write $MAPPER || echo "$lang: nothing published"
+              --write $MAPPER 2>&1 | tee -a "$GITHUB_STEP_SUMMARY" \
+              || echo "$lang: nothing published"
             echo "::endgroup::"
           done
+          printf '```\n' >> "$GITHUB_STEP_SUMMARY"
 
       - name: Refuse to continue if nothing was written
         if: inputs.dry_run != true
         run: |
-          if [ -z "$(git status --porcelain packs/community)" ]; then
+          if [ -z "$(git status --porcelain packs/community packs/*/community)" ]; then
             echo "No pack was written for '${{ inputs.topic }}'."
             echo "The plan above says why: either the model routed nowhere, or every narrowing"
             echo "it proposed emptied its template. Neither is fixed by re-running."
@@ -130,7 +140,15 @@ jobs:
         # rather than a migration.
         run: |
           python3 tools/validate_pack.py packs
-          python3 tools/validate_pack.py --strict packs/community
+          # Each language's community folder on its own, because the validator treats one run as
+          # one corpus — and a Russian pack judged beside its English twin looks like a pile of
+          # duplicate questions when it is nothing of the sort.
+          for dir in packs/community packs/*/community; do
+            [ -d "$dir" ] || continue
+            echo "::group::$dir"
+            python3 tools/validate_pack.py --strict "$dir"
+            echo "::endgroup::"
+          done
 
       - uses: actions/setup-java@v4
         if: inputs.dry_run != true
@@ -166,7 +184,8 @@ jobs:
           # The cache goes in with the pack. What a model decided a topic meant is a content
           # decision, and this is the file a reviewer reads to check it — committing the pack
           # without it would publish the answer and throw away the reasoning.
-          git add packs/community packs/manifest.json packs/*/manifest.json tools/topic_cache.json
+          git add packs/community packs/*/community \
+                  packs/manifest.json packs/*/manifest.json tools/topic_cache.json
           if git diff --cached --quiet; then
             echo "Nothing changed"
             exit 0

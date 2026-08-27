@@ -50,7 +50,26 @@ import topic_llm                                                      # noqa: E4
 import validate_pack                                                  # noqa: E402
 
 ROOT = Path(__file__).resolve().parent.parent
-OUT_DIR = ROOT / "packs" / "community"
+
+
+def out_dir(language=gen.DEFAULT_LANGUAGE):
+    """Where a topic pack for this language belongs.
+
+    English at `packs/community/`, everything else one folder down under its own tag — the same
+    unprefixed-English convention the library, the catalogue and the daily grids all use.
+
+    This was a fixed path once, and the first multilingual topic run wrote 81 Russian and 34
+    Hebrew facts into the English folder. They were perfectly good facts. `build_manifest` looked
+    at them, saw a pack declaring `ru` sitting under `en/`, skipped it exactly as designed — and
+    nothing failed, so the run reported success while publishing two packs that no device could
+    ever ask for.
+    """
+    base = ROOT / "packs" / "community"
+    return base if language == gen.DEFAULT_LANGUAGE \
+        else ROOT / "packs" / language / "community"
+
+
+OUT_DIR = out_dir()
 
 # A pack that cannot furnish four options is not a pack. Same floor the rest of the pipeline uses,
 # stated again here because this is the number that decides whether a topic is answerable at all.
@@ -219,6 +238,36 @@ def pack_json(topic, category, facts, language=gen.DEFAULT_LANGUAGE, stamp="0"):
 
 def harvest(topic, limit, language, stamp, use_llm=False, **kw):
     """The network half. Kept in one function so everything above it is testable offline."""
+
+    def run(template, clause):
+        """One narrowed harvest: the facts it yielded, how many subjects it matched, and a note.
+
+        The subject count is reported separately from the fact count because they fail for
+        different reasons and the difference is the diagnosis. Zero subjects means the clause
+        matched nothing — a coverage problem, worth asking the model to route around. Plenty of
+        subjects and few facts means the labels or articles were missing in this language, which
+        no re-narrowing can fix.
+        """
+        asked = topic_llm.narrowed(template, clause)
+        # `gen.harvest` answers with the rows *and* how it got them — which floor it settled on,
+        # or that every floor timed out. An earlier version of this line took the pair for the
+        # rows and passed a tuple to `make_facts`; it crashed on the first row and nobody saw it,
+        # because reaching this line at all needs Wikidata and no environment this was written in
+        # has a route to it. The self-test now runs the whole function against a fake endpoint,
+        # which is the only way a network-only path gets checked offline.
+        rows, note = gen.harvest(asked, limit, language)
+        made = gen.make_facts(asked, rows, language)
+
+        # The same drop `generate_facts.py` makes over the whole library, made here too. A
+        # Wikidata label carrying its own disambiguation — "Pietà (Michelangelo)" — produces a
+        # question printing its own answer, and `validate_pack` treats one of those as an error
+        # over the entire pack. An unlucky label should cost its own fact, not the topic.
+        leaking = [f for f in made if gen.leaks_answer(f)]
+        if leaking:
+            made = [f for f in made if not gen.leaks_answer(f)]
+            print(f"  {template.key:20s} dropped {len(leaking)} that gave themselves away")
+        return made, len({r["s"]["value"] for r in rows if r.get("s")}), note
+
     built = {}
     for category, plans in sorted(entries(topic, use_llm, **kw).items()):
         facts = []
@@ -226,34 +275,45 @@ def harvest(topic, limit, language, stamp, use_llm=False, **kw):
             if gen.phrase(template, language) is None:
                 print(f"  {template.key}: not phrased in {language}, skipped")
                 continue
-            asked = topic_llm.narrowed(template, clause)
-            # `gen.harvest` answers with the rows *and* how it got them — which floor it settled
-            # on, or that every floor timed out. An earlier version of this line took the pair for
-            # the rows and passed a tuple to `make_facts`; it crashed on the first row and nobody
-            # saw it, because reaching this line at all needs Wikidata and no environment this was
-            # written in has a route to it. The self-test now runs the whole function against a
-            # fake endpoint, which is the only way a network-only path gets checked offline.
-            rows, note = gen.harvest(asked, limit, language)
-            made = gen.make_facts(asked, rows, language)
 
-            # The same drop `generate_facts.py` makes over the whole library, made here too. A
-            # Wikidata label carrying its own disambiguation — "Pietà (Michelangelo)" — produces a
-            # question printing its own answer, and `validate_pack` treats one of those as an error
-            # over the entire pack. An unlucky label should cost its own fact, not the topic.
-            leaking = [f for f in made if gen.leaks_answer(f)]
-            if leaking:
-                made = [f for f in made if not gen.leaks_answer(f)]
-                print(f"  {template.key:20s} dropped {len(leaking)} that gave themselves away")
+            made, matched, note = run(template, clause)
 
-            # The narrowing gate the model's own output cannot check for itself. A clause that
-            # leaves almost nothing behind did not narrow the topic, it mistook it — and the one
-            # thing that must never happen here is widening back to the un-narrowed template,
-            # because a pack called "Rivers of Africa" full of European rivers is precisely the
-            # bug this whole path exists to fix. So it is dropped and said out loud.
+            # The narrowing gate the model's own output cannot check for itself, and the one that
+            # taught this pipeline its most useful lesson. "Rivers of Africa" was narrowed to
+            # `?s wdt:P30 wd:Q15 .` — correct English, real ids, both verified against Wikidata —
+            # and it matched **nothing**, because almost no river carries P30. A clause can be
+            # perfectly right about meaning and still be wrong about coverage, and no gate that
+            # reads the clause can tell.
+            #
+            # So the endpoint answers the question the gates cannot: it is asked, and if the
+            # answer is empty the model is told exactly that and asked to route around it. What
+            # never happens is widening back to the un-narrowed query, because a pack called
+            # "Rivers of Africa" full of European rivers is the bug this whole path exists to fix.
+            if clause and len(made) < MIN_NARROWED_FACTS:
+                print(f"  {template.key:20s} narrowing matched {matched} subjects, "
+                      f"{len(made)} usable — asking for another  [{note}]")
+                # Not just "that did not work" but "here is how these things are actually
+                # connected". The model guessed P361 for Star Wars music and got one fact; asking
+                # Wikidata which properties really link the subjects to wd:Q462 turns the second
+                # attempt from another guess into a choice from a list.
+                hint = "".join(
+                    topic_llm.links_for(template.where, entity, ask=kw.get("ask"))
+                    for entity in topic_llm.clause_ids(clause) if entity.startswith("Q"))
+                better = topic_llm.retry(
+                    topic, template.key, clause,
+                    f"it matched {matched} subjects, too few to build a pack from — the property "
+                    f"is not populated on the subjects this template selects" + hint,
+                    **retry_args(kw)) if use_llm else None
+                if better and better["narrow"] != clause:
+                    clause = better["narrow"]
+                    print(f"  {template.key:20s} retrying with {clause}")
+                    made, matched, note = run(template, clause)
+
             if clause and len(made) < MIN_NARROWED_FACTS:
                 print(f"  {template.key:20s} narrowing left {len(made)} facts — dropped, "
                       f"not widened back  [{note}]")
                 continue
+
             print(f"  {template.key:20s} {len(made)} facts  [{note}]"
                   + ("  (narrowed)" if clause else ""))
             facts.extend(made)
@@ -264,12 +324,19 @@ def harvest(topic, limit, language, stamp, use_llm=False, **kw):
     return built
 
 
-def write(built, out_dir=OUT_DIR):
+def retry_args(kw):
+    """The mapper arguments a retry needs, dropping the ones only the first ask takes."""
+    return {k: v for k, v in kw.items() if k in {"provider", "templates", "ask", "model",
+                                                 "cache_path", "use_cache", "fetch"}}
+
+
+def write(built, directory=None, language=gen.DEFAULT_LANGUAGE):
     """Writes packs, then refuses any the validator would reject — before they reach the repo."""
-    out_dir.mkdir(parents=True, exist_ok=True)
+    directory = Path(directory or out_dir(language))
+    directory.mkdir(parents=True, exist_ok=True)
     written = []
     for category, pack in sorted(built.items()):
-        path = out_dir / f"{pack['packId']}.json"
+        path = directory / f"{pack['packId']}.json"
         path.write_text(json.dumps(pack, ensure_ascii=False, indent=1), encoding="utf-8")
         report = validate_pack.Report()
         parsed = validate_pack.read_pack(path, report)
@@ -456,14 +523,21 @@ def self_test():
     check("the deterministic mapper still answers, and narrows nothing",
           [e.clause for e in plain["geography"]] == [""])
 
-    def fake_model(topic, templates=None, model=None, key=None):
-        return {"templates": [{"key": "river-mouth",
-                               "narrow": "?s wdt:P17 ?c . ?c wdt:P30 wd:Q15 .",
-                               "why": "rivers in African countries",
-                               "entities": [{"id": "P17", "label": "country"},
-                                            {"id": "P30", "label": "continent"},
-                                            {"id": "Q15", "label": "Africa"}]}],
-                "note": ""}, "fake-1"
+    GOOD = {"key": "river-mouth", "narrow": "?s wdt:P17 ?c . ?c wdt:P30 wd:Q15 .",
+            "why": "rivers in African countries",
+            "entities": [{"id": "P17", "label": "country"},
+                         {"id": "P30", "label": "continent"},
+                         {"id": "Q15", "label": "Africa"}]}
+
+    # The clause that actually shipped and matched nothing: right about meaning, wrong about
+    # coverage, because almost no river carries P30 directly.
+    SPARSE = {"key": "river-mouth", "narrow": "?s wdt:P30 wd:Q15 .",
+              "why": "rivers on the continent of Africa",
+              "entities": [{"id": "P30", "label": "continent"},
+                           {"id": "Q15", "label": "Africa"}]}
+
+    def fake_model(topic, templates=None, model=None, key=None, prompt=None):
+        return {"templates": [GOOD], "note": ""}, "fake-1"
 
     def fake_labels(query):
         known = {"P17": "country", "P30": "continent", "Q15": "Africa"}
@@ -508,6 +582,67 @@ def self_test():
     with_endpoint(unnarrowed, harvest, "rivers", 50, "en", "1")
     check("the deterministic path harvests too, and asks for no narrowing",
           unnarrowed.queries and not any("wd:Q15" in q for q in unnarrowed.queries))
+
+    # --- the retry, which is the lesson the first real run taught -------------------------
+    #
+    # A clause can be right about meaning and wrong about coverage. `?s wdt:P30 wd:Q15 .` is
+    # exactly "on the continent of Africa", both ids verify against Wikidata, and it matched zero
+    # rivers because almost none carry P30. No gate that reads the clause can see that; only the
+    # endpoint can, so the endpoint is asked and the model is told what it said.
+
+    class CoverageEndpoint:
+        """Answers the sparse clause with nothing and the hop with plenty, as Wikidata did."""
+
+        def __init__(self):
+            self.queries = []
+
+        def __call__(self, query, timeout=65):
+            self.queries.append(query)
+            return fake_rows(0 if "wdt:P30 wd:Q15" in query and "P17" not in query else 20)
+
+    asked = []
+
+    def sparse_then_better(topic, templates=None, model=None, key=None, prompt=None):
+        asked.append(prompt)
+        # The first ask gets no prompt of its own; the retry is the one that carries the failure.
+        return ({"templates": [GOOD if prompt else SPARSE], "note": ""}, "fake-1")
+
+    topic_llm.PROVIDERS["coverage"] = sparse_then_better
+    with tempfile.TemporaryDirectory() as tmp2:
+        cache2 = Path(tmp2) / "cache.json"
+        endpoint = CoverageEndpoint()
+        rescued = with_endpoint(endpoint, harvest, "rivers of africa", 50, "en", "1",
+                                use_llm=True, provider="coverage", ask=fake_labels,
+                                cache_path=cache2)
+        check("a narrowing that matches nothing is retried, not dropped on the spot",
+              len(asked) == 2 and asked[1] is not None)
+        check("and the retry is told which clause failed",
+              "?s wdt:P30 wd:Q15 ." in (asked[1] or ""))
+        check("and carries whatever Wikidata could say about how they really connect",
+              "matched 0 subjects" in (asked[1] or ""))
+        check("the better clause is harvested and the pack is built after all",
+              "geography" in rescued)
+        check("the query that ran last is the retry's, not the one that matched nothing",
+              "wdt:P17" in endpoint.queries[-1])
+        check("and the un-narrowed query is never run, even after a failure",
+              all("wd:Q15" in q for q in endpoint.queries))
+        remembered = json.loads(cache2.read_text(encoding="utf-8"))
+        clauses = [t["narrow"] for t in remembered["rivers of africa"]["templates"]]
+        check("the cache records the clause that worked, not the one that did not",
+              clauses == ["?s wdt:P17 ?c . ?c wdt:P30 wd:Q15 ."])
+
+    def no_better(topic, templates=None, model=None, key=None, prompt=None):
+        return ({"templates": [] if prompt else [SPARSE], "note": "nothing else reaches it"},
+                "fake-1")
+
+    topic_llm.PROVIDERS["stuck"] = no_better
+    with tempfile.TemporaryDirectory() as tmp3:
+        stuck = with_endpoint(CoverageEndpoint(), harvest, "rivers of africa", 50, "en", "1",
+                              use_llm=True, provider="stuck", ask=fake_labels,
+                              cache_path=Path(tmp3) / "c.json")
+        check("a model with nothing better publishes nothing, rather than widening back",
+              stuck == {})
+    topic_llm.PROVIDERS.pop("coverage"), topic_llm.PROVIDERS.pop("stuck")
 
     topic_llm.PROVIDERS.pop("fake")
     tmpdir.cleanup()
@@ -566,7 +701,7 @@ def main(argv=None):
     if not built:
         print("Nothing worth publishing.")
         return 1
-    return 0 if write(built) else 1
+    return 0 if write(built, language=args.language) else 1
 
 
 if __name__ == "__main__":

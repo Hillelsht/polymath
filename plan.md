@@ -196,7 +196,7 @@ streak survives restart; the Chromium playtest drives the daily end-to-end in CI
 are worth showing a stranger. **Shipped.** What remains is not code: a domain, an assetlinks file
 and a counter account.
 
-### Wedge 2 (~weeks 3–6): Provably-fair generated rooms + language parity  ← SHIPPED
+### Wedge 2 (~weeks 3–6): Provably-fair generated rooms + language parity  ← SHIPPED (the app's daily is still English-only)
 
 1. ~~**Room generator gated by `Playtest.solve`**~~ — done. `RoomGen` lays a room out from a seed
    using a grammar of the ideas the seven authored rooms teach; `curate` walks a seed stream and
@@ -234,7 +234,12 @@ and a counter account.
    with a painter's or a moon's gender, which no label carries. Both tables keep the sentence's
    grammatical subject a noun written in the file, with the label beside it.
 
-3. ~~**The daily in three languages**~~ — done, which is the part that makes the parity visible.
+3. ~~**The daily in three languages**~~ — **on the web.** This is the part that makes the parity
+   visible, and it is worth being exact about where: `webplay/` plays the Russian and Hebrew grids,
+   the app does not yet. `SmartRepository` fetches `chains/<month>.json` with no language tag, so
+   the Android Chains screen serves the English grid whatever language the user has chosen. The
+   grids exist at `packs/play/chains/<tag>/` and `fetchGamePack` can already reach them — it is a
+   path change and a test, not a new mechanism, and it is the first item in Part 4 below.
    `build_chains.py` builds a grid per language from that language's own library, so a Russian
    player gets Russian tiles under Russian group labels rather than translated buttons over an
    English puzzle. 122 grids each in English, Russian and Hebrew. The portal has a switcher, one
@@ -253,7 +258,7 @@ and a counter account.
    never existed, so `fetchManifest` 404'd for both languages and the Library tab in them was empty
    while a published pack sat one URL away. `tools/build_manifest.py` writes every catalogue now.
 
-### Wedge 3 (~weeks 6–10): "About anything"  ← BUILT, ONE MERGE FROM RUNNING
+### Wedge 3 (~weeks 6–10): "About anything"  ← SHIPPED
 
 1. ~~**Community pack spec + validator**~~ — done. `docs/community-packs.md` is the contract, and
    `tools/validate_pack.py` checks it: everything `ContentParser` enforces, plus the failures that
@@ -289,11 +294,52 @@ and a counter account.
    and the API named `gemini-3.6-flash` as its replacement. A 404 naming a successor is now
    followed once and recorded.
 
-3. Three vertical landing packs as SEO/community seeds (citizenship test, driving theory, one
-   fandom) — **blocked on 2 reaching `main`**, since each one is a `topic.yml` dispatch and
-   dispatching needs the workflow on the default branch. Worth doing in that order anyway: the
-   first real runs are what say whether the model narrows a citizenship test usefully or routes it
-   nowhere, and that answer should be read before three packs are published on the strength of it.
+3. ~~**Three vertical landing packs**~~ — three published, and the two the plan originally named
+   turned out to be a *content* gap rather than a mapping one, which was worth more than the packs
+   would have been.
+
+   | pack | facts | distinct answers | narrowed by |
+   |---|---|---|---|
+   | `topic-rivers-of-africa-geography` | 86 | 35 | `?s wdt:P17 ?c . ?c wdt:P30 wd:Q15 .` |
+   | `topic-japanese-cinema-culture` | 77 | 52 | `?s wdt:P495 wd:Q17 .` |
+   | `topic-star-wars-arts` | 35 | 18 | `?s wdt:P8345 wd:Q462 .` |
+
+   And the rivers pack exists in **all three languages** — 81 Russian facts and 34 Hebrew,
+   harvested from the same cached plan at no further cost to the model, which is the two wedges
+   meeting: a typed topic, in your language.
+
+   **A citizenship test and a driving theory test cannot be served by this catalogue**, and the
+   model said so precisely rather than inventing something: *"the catalogue lacks templates for
+   civics, government structure, political offices, constitutional amendments, national symbols,
+   and US state capitals."* Road signs likewise. No narrowing of an existing template can invent a
+   question nobody wrote. Those two want a nineteenth and twentieth template in
+   `generate_facts.py` — a content decision, taken deliberately.
+
+   Six findings came out of these runs, every one from a real failure, every one now fixed:
+
+   - **A correct clause can match nothing.** `?s wdt:P30 wd:Q15 .` is exactly "on the continent of
+     Africa" and almost no river carries P30. Coverage is invisible to any gate that reads a
+     clause, so the endpoint is asked and an empty answer goes back to the model with its count.
+   - **A model cannot produce Wikidata identifiers, of either kind.** Asked about Star Wars it
+     offered `Q82347` ("America's Next Top Model, season 2"), then `Q809` (Polish), then `Q8234`
+     (a valley in Saxony); given the right entity it guessed the property, `P361`, worth one fact
+     where `P8345` was worth forty-seven. Entities are now searched and properties looked up, and
+     the model chooses from real candidates. **The label gate is what stood between the first of
+     those and a pack named Star Wars full of reality-television credits** — permanently, because
+     a published fact id is permanent.
+   - **One question, asked once.** Two subjects sharing a name ask the same question twice: with
+     different answers that is ambiguity and both go, with the same answer it is redundancy and
+     one survives. An 11,000-fact library was clean of it; narrowing to one franchise found it.
+   - **A folder and a declared language must agree.** The first multilingual run wrote its Russian
+     and Hebrew packs into the English folder. Every catalogue correctly declined them, nothing
+     failed, and the run reported success — two packs published, served and unreachable.
+     `build_manifest.py --check` now fails on any fact pack no catalogue claims.
+   - **Rate limits and quotas are not refusals.** Wikidata's 429 crashed a run with a traceback;
+     Gemini's two different 429s ("high demand" versus a spent daily allowance) needed opposite
+     responses. Both handled, and the label check fails *closed* — an id that could not be
+     verified is refused, because "the check was unavailable" is not a check.
+   - **A run should report itself.** The four lines that matter now go to the GitHub run summary
+     rather than being buried under post-job git plumbing.
 
 ### Wedge 4 (~weeks 10–13): Decide with data
 Only now revisit backend/accounts/monetization, gated on share-loop evidence from the counter.
@@ -320,12 +366,28 @@ ads in the ritual, no new games until the dailies are excellent.
    Wedge 2 is finished end to end: rooms generated and gated three ways, three libraries published
    (11,267 facts), and the daily playable in all three languages with a switcher.
 
-   **Wedge 3 is one merge from its headline.** The model-backed mapper, its five gates, the
-   workflow and the catalogue it publishes into all exist and are green; `topic.yml` cannot be
-   dispatched until it is on `main`, because GitHub only offers `workflow_dispatch` for workflows
-   present on the default branch. First runs to try, in this order: *"rivers of Africa"* (a
-   narrowing that should work), *"the Byzantine succession"* (should route nowhere and say so),
-   then the three vertical packs.
+   **Wedge 3 is shipped.** Three topic packs are published and catalogued, the rivers one in all
+   three languages. What is left of the wedge is a content decision rather than code: a citizenship
+   test and a driving theory test need templates that do not exist, and no mapper can invent a
+   question nobody wrote.
+
+   **The one loose end in code**: the app's Chains daily fetches `chains/<month>.json` with no
+   language tag, so a Russian or Hebrew user gets the English grid. The web portal does this
+   correctly and the translated grids are published; the app needs `fetchGamePack` given the
+   language and a `PlayContentTest`-style gate. Small, and app code, so CI is the only compiler.
+
+   **Wedge 4 after that, and it is gated on the counter** — which needs a domain and an account,
+   both yours. Until there is share-loop evidence there is nothing to decide with.
+
+   **Wedge 3's headline works and has published.** `topic.yml` has run end to end: a typed topic,
+   mapped by a model, narrowed, harvested from Wikidata, validated at the strict bar, catalogued
+   and committed — 86 African rivers, and the pipeline refusing three separate ways along the way.
+
+   Worth knowing before running more topics: **Gemini's free tier allows 20 requests a day.** A
+   topic costs one call, or two to three when proposals need correcting, so a batch of topics
+   exhausts it. Enabling billing on the Google AI Studio project makes that a non-issue for cents;
+   `ANTHROPIC_API_KEY` plus `--provider anthropic` is the other route. The cache means a topic is
+   only ever asked once, so the cost is per new topic rather than per run.
 
    Two content follow-ups worth doing when convenient: the `author` and `musician` pools need
    more facts before those categories can return to the daily, and a device that already

@@ -1,0 +1,90 @@
+{
+ "japanese cinema": {
+  "model": "gemini-3.6-flash",
+  "note": "",
+  "provider": "gemini",
+  "templates": [
+   {
+    "entities": [
+     {
+      "id": "P495",
+      "label": "country of origin"
+     },
+     {
+      "id": "Q17",
+      "label": "Japan"
+     }
+    ],
+    "key": "film-director",
+    "narrow": "?s wdt:P495 wd:Q17 .",
+    "why": "Restricts films to those with Japan as their country of origin."
+   }
+  ],
+  "topic": "Japanese cinema"
+ },
+ "rivers of africa": {
+  "model": "gemini-3.6-flash",
+  "note": "",
+  "provider": "gemini",
+  "templates": [
+   {
+    "entities": [
+     {
+      "id": "P17",
+      "label": "country"
+     },
+     {
+      "id": "P30",
+      "label": "continent"
+     },
+     {
+      "id": "Q15",
+      "label": "Africa"
+     }
+    ],
+    "key": "river-mouth",
+    "narrow": "?s wdt:P17 ?c . ?c wdt:P30 wd:Q15 .",
+    "why": "Narrows rivers to those situated in countries located on the African continent."
+   }
+  ],
+  "topic": "rivers of Africa"
+ },
+ "star wars": {
+  "model": "gemini-3.6-flash",
+  "note": "Selected templates for film directors and composers narrowed to the Star Wars franchise.",
+  "provider": "gemini",
+  "templates": [
+   {
+    "entities": [
+     {
+      "id": "P8345",
+      "label": "franchise"
+     },
+     {
+      "id": "Q462",
+      "label": "Star Wars"
+     }
+    ],
+    "key": "composer",
+    "narrow": "?s wdt:P8345 wd:Q462 .",
+    "why": "Narrows works to those that belong to the Star Wars franchise."
+   },
+   {
+    "entities": [
+     {
+      "id": "P8345",
+      "label": "media franchise"
+     },
+     {
+      "id": "Q462",
+      "label": "Star Wars"
+     }
+    ],
+    "key": "film-director",
+    "narrow": "?s wdt:P8345 wd:Q462 .",
+    "why": "Selects films that belong to the Star Wars media franchise."
+   }
+  ],
+  "topic": "Star Wars"
+ }
+}

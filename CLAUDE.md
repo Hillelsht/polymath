@@ -89,6 +89,8 @@ Full list with the story behind each: `docs/invariants.md`.
   `geo-001-he`). Reusing English ids overwrites English facts and destroys review history.
 - **A pack in `packs/` also needs a copy in `app/src/main/assets/packs/`** (under `<tag>/` if
   translated), or it ships nowhere.
+- **A translated pack lives under `packs/<tag>/`, matching its declared `language`** — folder and
+  field must agree, or every catalogue declines it and it ships nowhere.
 - **And it needs a row in `manifest.json` for its language**, or nothing can download it —
   `PackService` discovers content through the manifest and `library/index.json`, and nowhere else.
   Run `tools/build_manifest.py`. It also stamps a `version` into any pack lacking one, without

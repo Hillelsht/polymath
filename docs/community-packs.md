@@ -173,6 +173,36 @@ naming what is missing, and the fix is a nineteenth template in `generate_facts.
 mapper. Every Q- and P-number in that table was checked against its real Wikidata label before
 anything was harvested, which is the whole reason a model is allowed near published content.
 
+**A model will name the wrong entity, and the gate is what stands between that and a published
+pack.** Asked about *Star Wars*, it said `Q82347` was the franchise. Wikidata calls Q82347
+"America's Next Top Model, season 2". The pack would have been named Star Wars and filled with
+reality-television credits. The label check refused it — and then, because that check knows the
+*real* label, the refusal is handed back to the model so it can use the id it meant. A topic that
+is answerable is not routed nowhere over one wrong number; a model that repeats the same wrong id
+is refused for good.
+
+**The free tier is twenty requests a day.** A topic costs one call, or two when a proposal has to
+be corrected, so a handful of topics exhausts it — and the answer comes back as a 429 that looks
+exactly like the transient "experiencing high demand" one. They are told apart now, because waiting
+twelve seconds for a daily allowance to return is not a strategy. The cache is what makes this
+survivable: a topic asked once is never asked again.
+
+**And a model cannot produce identifiers of any kind.** Given the right entity, it guessed the
+*property*: `?s wdt:P361 wd:Q462 .` — "part of Star Wars" — which is defensible and yields one
+fact, where `P8345` (media franchise) links forty-seven. So properties are looked up too. When a
+narrowing matches nothing, Wikidata is asked which properties actually connect that template's
+subjects to that entity, commonest first, and the retry offers them as a list. The model chooses;
+it does not recall.
+
+**A correct clause can still match nothing.** The first real publish run narrowed rivers with
+`?s wdt:P30 wd:Q15 .` — "on the continent of Africa", both ids verified — and it selected zero
+rivers, because almost none carry P30. Wikidata's coverage is uneven and no gate that reads a
+clause can see it; only the endpoint knows. So the endpoint is asked, and an empty answer sends the
+clause back to the model with the count attached: `?s wdt:P17 ?c . ?c wdt:P30 wd:Q15 .` reaches the
+same meaning through a property rivers do carry. A model with nothing better costs its own
+template. The one thing that never happens is widening back to the un-narrowed query, because a
+pack called *Rivers of Africa* full of European rivers is exactly the bug this path exists to fix.
+
 Whatever it writes goes through the same validator at the same `--strict` bar, and a pack that
 fails is deleted rather than left in the tree. `tools/build_manifest.py` then lists it in the
 catalogue, which is the only thing that makes it reachable from a device at all.

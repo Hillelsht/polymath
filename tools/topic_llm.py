@@ -53,6 +53,46 @@ remembered, the way the other two probes record theirs:
       succession                         monarchs, rulers, political succession, predecessors or
                                          successors, or historical dynasties"
 
+"Star Wars" then produced the moment this whole design was built for. The model claimed `Q82347`
+was the franchise; the label gate looked it up and found **"america's next top model, season 2"**.
+Without that check the pipeline would have published a pack called *Star Wars* full of reality-
+television credits — plausibly named, entirely wrong, and permanent, because a published fact id
+is permanent. It refused instead.
+
+Refusing was right and stopping there was not: the gate is holding the correction in its hand. So a
+refusal goes back to the model — and telling it "Q82347 is actually a reality show" was not enough
+either. It guessed again and produced `Q809`, the Polish language. Two guesses, two unrelated
+entities, because **recalling five-digit identifiers is not something a language model does**, and
+asking more politely does not change that.
+
+So it is not asked to. A refusal now carries Wikidata's own search results for the name the model
+used — `Q462 Star Wars — American epic space opera media franchise` — and the model picks from real
+candidates instead of reciting.
+
+That fixed which `Q`, and the same problem promptly reappeared one level along: given the right
+entity, the model guessed the *property*. `?s wdt:P361 wd:Q462 .` is a defensible reading of "part
+of" and yields exactly one fact, and the next template's retry invented `Q8234`, a valley in
+Saxony. Four wrong identifiers across three attempts is not a prompting problem.
+
+So properties are looked up too. [linking_properties] asks Wikidata which properties actually
+connect a template's subjects to that entity, commonest first, and the retry shows them — so the
+second attempt is a choice from a list rather than another guess. Reading beats recall, twice, and
+this is the division of labour the whole design was reaching for: the model knows that "the music
+of Star Wars" means constraining a composer's works to a franchise, Wikidata knows that the
+franchise is `Q462` and the link is `P8345`, and neither is asked to do the other's job.
+
+And then the first real *publish* run found the one thing none of the gates can: **`?s wdt:P30
+wd:Q15 .` matched nothing.** It is exactly right — "on the continent of Africa", both ids verified
+against Wikidata — and almost no river carries P30, so it selected zero rivers. A clause can be
+correct about meaning and wrong about coverage, and nothing that reads the clause can tell the
+difference. Only the endpoint knows.
+
+So the endpoint is asked, and when the answer is empty the model is told precisely that — which
+clause, and how little it matched — and asked to route around it. `?s wdt:P17 ?c . ?c wdt:P30
+wd:Q15 .` reaches the same meaning through a property rivers actually carry. What never happens
+is widening back to the un-narrowed query; a model with nothing better to offer costs its template,
+not the topic's honesty.
+
 Worth reading closely, because two of those are better than the brief asked for. "Chemistry" was
 not one template but three, with two of them narrowed to `wd:Q11344` — so the pack asks who
 discovered an element and what an element is named after, rather than who discovered anything at
@@ -79,6 +119,7 @@ import json
 import os
 import re
 import sys
+import time
 import urllib.error
 import urllib.parse
 import urllib.request
@@ -192,6 +233,26 @@ def normalise(label):
     return " ".join(str(label or "").lower().replace("’", "'").split())
 
 
+def ask_wikidata(query, ask=None, sleep=time.sleep):
+    """One SPARQL query, waiting out a rate limit rather than dying on it.
+
+    Wikidata answers 429 when asked too often, and this file asks three times per proposal now:
+    the labels, the entity search, and the properties that link them. A run that crashed with an
+    uncaught `HTTPError: 429` is what added this — the traceback replaced the topic's own report,
+    so the log said nothing about what the model had decided.
+    """
+    for attempt in range(1, ATTEMPTS + 1):
+        try:
+            return (ask or gen.sparql)(query)
+        except urllib.error.HTTPError as error:
+            if error.code not in TRANSIENT or attempt == ATTEMPTS:
+                raise
+            wait = BACKOFF * attempt
+            print(f"  wikidata answered {error.code}; waiting {wait}s and asking again")
+            sleep(wait)
+    raise Refused("wikidata did not answer")
+
+
 def fetch_labels(ids, ask=None):
     """{id: {every label and alias it has in English}} — the ground truth the model is checked on.
 
@@ -208,12 +269,129 @@ def fetch_labels(ids, ask=None):
       {{ ?item skos:altLabel ?label . FILTER(lang(?label) = "en") }}
     }}
     """
-    rows = (ask or gen.sparql)(query)["results"]["bindings"]
+    try:
+        rows = ask_wikidata(query, ask)["results"]["bindings"]
+    except Exception as exc:
+        # Fail closed. An id this file could not check is an id it must not accept — the whole
+        # reason a model is allowed near published content is that every id it names is verified,
+        # and "the check was unavailable" is not verification.
+        raise Refused(f"could not verify these ids against Wikidata: {exc}") from exc
     found = {}
     for row in rows:
         qid = row["item"]["value"].rsplit("/", 1)[-1]
         found.setdefault(qid, set()).add(normalise(row["label"]["value"]))
     return found
+
+
+class WrongEntity(Refused):
+    """The id names something else. Carries what the model thought it was, so it can be looked up."""
+
+    def __init__(self, message, entity_id, claimed):
+        super().__init__(message)
+        self.entity_id = entity_id
+        self.claimed = claimed
+
+
+SEARCH = "https://www.wikidata.org/w/api.php"
+
+
+def search_entities(text, kind="item", limit=7, fetch=None):
+    """Real Wikidata entities whose name matches [text], with descriptions to tell them apart.
+
+    The model is good at "the constraint is: part of the series = Star Wars" and bad at "Star Wars
+    is Q462". Asked about Star Wars it produced Q82347 — "America's Next Top Model, season 2" —
+    and, told that was wrong, produced Q809, the Polish language. Two guesses, two unrelated
+    entities, because recalling arbitrary five-digit identifiers is not a thing a language model
+    does reliably and no amount of asking again fixes it.
+
+    So it is not asked to. Wikidata's own search returns the real candidates and the model picks
+    from them, which is the division of labour that plays to what each side is actually good at.
+    """
+    params = {"action": "wbsearchentities", "search": text, "language": "en", "uselang": "en",
+              "format": "json", "limit": str(limit), "type": kind}
+    url = f"{SEARCH}?{urllib.parse.urlencode(params)}"
+    request = urllib.request.Request(url, headers={"User-Agent": gen.UA})
+    try:
+        if fetch:
+            body = fetch(url)
+        else:
+            with urllib.request.urlopen(request, timeout=30) as response:
+                body = json.load(response)
+    except Exception:
+        # A search that cannot run is not a reason to fail the topic; it just means the retry goes
+        # out without candidates, exactly as it did before this existed.
+        return []
+    return [{"id": hit.get("id", ""), "label": hit.get("label", ""),
+             "description": hit.get("description", "")}
+            for hit in body.get("search", []) if hit.get("id")]
+
+
+def linking_properties(where, entity_id, ask=None, limit=6):
+    """How the subjects of a template are *actually* connected to an entity, most common first.
+
+    The third time the same lesson arrived. Entity search fixed which `Q` to use; the model then
+    guessed the property instead — `?s wdt:P361 wd:Q462 .` for Star Wars music, which is a
+    defensible reading of "part of" and yields one fact — and on the next template invented
+    `Q8234`, a valley in Saxony. It cannot reliably produce identifiers of either kind, and no
+    prompt fixes that.
+
+    So this asks Wikidata which properties really link these subjects to that entity, and the
+    model chooses from the answer. One query, bounded by the template's own WHERE, and a failure
+    costs the hint rather than the topic.
+    """
+    query = f"""
+    SELECT ?p (COUNT(DISTINCT ?s) AS ?n) WHERE {{
+      {where}
+      ?s ?p wd:{entity_id} .
+    }}
+    GROUP BY ?p ORDER BY DESC(?n) LIMIT {limit}
+    """
+    try:
+        rows = ask_wikidata(query, ask)["results"]["bindings"]
+    except Exception:
+        # Unlike the label check, this one is only a hint. Losing it costs the model a better
+        # second guess, not the guarantee that what it named is what it said it was.
+        return []
+    found = []
+    for row in rows:
+        # `?p` binds the direct-claim predicate URI; the P-number is its last segment. Read
+        # defensively: this is a hint, and a response that is not the shape expected should cost
+        # the hint rather than the run.
+        try:
+            pid = row["p"]["value"].rsplit("/", 1)[-1]
+            count = int(row["n"]["value"])
+        except (KeyError, TypeError, ValueError):
+            continue
+        if gen.WELL_FORMED.match(pid) and pid.startswith("P"):
+            found.append((pid, count))
+    return found
+
+
+def links_for(where, entity_id, ask=None):
+    """The line a retry prompt shows: which properties connect these subjects to that entity."""
+    found = linking_properties(where, entity_id, ask=ask)
+    if not found:
+        return ""
+    names = fetch_labels([pid for pid, _ in found], ask=ask)
+    rows = "\n".join(
+        f"      wdt:{pid}  {sorted(names.get(pid, {'?'}))[0]} — links {n} of them"
+        for pid, n in found)
+    return (f"\n    Wikidata says the subjects this template selects are connected to "
+            f"wd:{entity_id} by these properties. Use one of them rather than choosing a "
+            f"property from memory:\n{rows}\n")
+
+
+def candidates_for(claimed, entity_id, fetch=None):
+    """The line a retry prompt shows: what that id really is, and what the model probably meant."""
+    kind = "property" if str(entity_id).startswith("P") else "item"
+    found = search_entities(claimed, kind=kind, fetch=fetch)
+    if not found:
+        return ""
+    rows = "\n".join(f"      {hit['id']}  {hit['label']}"
+                      + (f" — {hit['description']}" if hit["description"] else "")
+                      for hit in found)
+    return (f"\n    Wikidata's own search for {json.dumps(claimed)} returns these real "
+            f"entities. Pick from them rather than recalling an id:\n{rows}\n")
 
 
 def check_entities(entities, ask=None):
@@ -238,7 +416,8 @@ def check_entities(entities, ask=None):
             raise Refused(f"{eid} does not exist on Wikidata (the model called it '{label}')")
         if normalise(label) not in real[eid]:
             example = sorted(real[eid])[:3]
-            raise Refused(f"{eid} is not '{label}' — Wikidata calls it {', '.join(example)}")
+            raise WrongEntity(
+                f"{eid} is not '{label}' — Wikidata calls it {', '.join(example)}", eid, label)
     return claimed
 
 
@@ -322,8 +501,42 @@ In `entities`, list every Q-number and P-number your clause uses — bare, witho
 `wdt:` prefix — with the English label you believe it has. Every one is checked against Wikidata before anything runs. Say what you
 actually believe — a guessed id whose label does not match is thrown out, and so is the clause.
 
+One more thing, and it is the failure that actually happens: **a clause can be perfectly correct
+and still match nothing**, because Wikidata's coverage is uneven. `?s wdt:P30 wd:Q15 .` reads as
+"on the continent of Africa" and is exactly right, and almost no river carries P30 — so narrowing
+rivers that way returns zero. Prefer a property the subjects of that template actually carry. When
+the obvious one is likely sparse, hop through a related entity that does carry it: a river has a
+country (P17), and a country has a continent (P30).
+
 Return JSON only.
 """
+
+
+def retry_prompt(topic, template_key, clause, problem, templates=None):
+    """The second ask, after a proposal failed for a reason the model can act on.
+
+    Two failures reach here and both are recoverable, which is why they share a prompt. A clause
+    can name the wrong entity — the gate knows the *real* label and hands it back — or it can name
+    the right one and still match nothing, because Wikidata's coverage is uneven. Either way the
+    model is told exactly what went wrong, because "try again" without the result is rolling the
+    same dice.
+    """
+    return (
+        f"{INSTRUCTIONS}\n"
+        f"Topic: {json.dumps(topic)}\n\n"
+        f"You already answered this topic, and one of your narrowings did not work:\n\n"
+        f"    template: {template_key}\n"
+        f"    narrow:   {clause or '(none)'}\n"
+        f"    problem:  {problem}\n\n"
+        f"Propose a *different* narrowing for this one template, and return only that template. "
+        f"If the problem was an entity id, use the one that really means what you intended — the "
+        f"message above tells you what the id you chose actually is. If the problem was that the "
+        f"clause matched nothing, reach the same meaning through a property those subjects "
+        f"actually carry, usually by hopping through a related entity. If the topic's meaning "
+        f"cannot be reached any other way, return no templates and say so in `note`; that is a "
+        f"better answer than a clause you do not believe in.\n\n"
+        f"Catalogue:\n{json.dumps(catalogue(templates), ensure_ascii=False, indent=1)}\n"
+    )
 
 
 def prompt_for(topic, templates=None):
@@ -374,20 +587,50 @@ class Retired(Refused):
 RETIRED = re.compile(r"use\s+models/([A-Za-z0-9.\-]+)")
 
 
-def post(url, payload, headers, timeout=90):
+# Overload and rate limits are weather, not answers. A free tier returns them routinely and the
+# first Star Wars run lost a whole template to one 503 — reported as though the model had refused,
+# which it had not. Bounded, because a provider that is down stays down and a topic run should say
+# so rather than sit in a loop.
+TRANSIENT = {429, 500, 502, 503, 504}
+ATTEMPTS = 3
+BACKOFF = 4
+
+# A 429 has two meanings and they need opposite responses. "This model is currently experiencing
+# high demand" clears in seconds and is worth waiting for. "You exceeded your current quota" is a
+# daily allowance that will not return before tomorrow, and backing off three times to discover
+# that wastes twelve seconds and says nothing useful — the free tier's cap is what it is, and the
+# run should name it and stop.
+EXHAUSTED = re.compile(r"(?i)exceeded your current quota|quota exceeded for metric")
+
+
+def post(url, payload, headers, timeout=90, sleep=time.sleep):
     request = urllib.request.Request(
         url, data=json.dumps(payload).encode("utf-8"),
         headers={"Content-Type": "application/json", **headers})
-    try:
-        with urllib.request.urlopen(request, timeout=timeout) as response:
-            return json.load(response)
-    except urllib.error.HTTPError as error:
-        detail = error.read().decode("utf-8", "replace")[:400]
-        if error.code == 404:
-            named = RETIRED.search(detail)
-            if named:
-                raise Retired(f"{DEFAULT_GEMINI_MODEL} is retired", named.group(1)) from error
-        raise Refused(f"the model API answered {error.code}: {detail}") from error
+    for attempt in range(1, ATTEMPTS + 1):
+        try:
+            with urllib.request.urlopen(request, timeout=timeout) as response:
+                return json.load(response)
+        except urllib.error.HTTPError as error:
+            detail = error.read().decode("utf-8", "replace")[:400]
+            if error.code == 404:
+                named = RETIRED.search(detail)
+                if named:
+                    raise Retired(f"{DEFAULT_GEMINI_MODEL} is retired", named.group(1)) from error
+            if error.code == 429 and EXHAUSTED.search(detail):
+                limit = re.search(r"limit:\s*(\d+)", detail)
+                raise Refused(
+                    "the API key's quota is spent"
+                    + (f" (limit: {limit.group(1)} requests)" if limit else "")
+                    + " — this is a daily allowance, not a hiccup, so waiting minutes will not "
+                      "help. Raise the quota, enable billing, or set ANTHROPIC_API_KEY and pass "
+                      "--provider anthropic.") from error
+            if error.code in TRANSIENT and attempt < ATTEMPTS:
+                wait = BACKOFF * attempt
+                print(f"  the model API answered {error.code}; waiting {wait}s and asking again")
+                sleep(wait)
+                continue
+            raise Refused(f"the model API answered {error.code}: {detail}") from error
 
 
 def loads(text):
@@ -402,7 +645,7 @@ def loads(text):
         raise Refused(f"the model did not return JSON: {exc}") from exc
 
 
-def ask_gemini(topic, templates=None, model=None, key=None):
+def ask_gemini(topic, templates=None, model=None, key=None, prompt=None):
     """One call, with one retry if the model named has been retired since this was written.
 
     The retry is not defensiveness for its own sake. The first real call this file ever made came
@@ -421,7 +664,7 @@ def ask_gemini(topic, templates=None, model=None, key=None):
     def call(name):
         return post(
             f"https://generativelanguage.googleapis.com/v1beta/models/{name}:generateContent",
-            {"contents": [{"parts": [{"text": prompt_for(topic, templates)}]}],
+            {"contents": [{"parts": [{"text": prompt or prompt_for(topic, templates)}]}],
              "generationConfig": {"temperature": 0, "responseMimeType": "application/json",
                                   "responseSchema": SCHEMA}},
             {"x-goog-api-key": key})
@@ -441,7 +684,7 @@ def ask_gemini(topic, templates=None, model=None, key=None):
     return loads(text), model
 
 
-def ask_anthropic(topic, templates=None, model=None, key=None):
+def ask_anthropic(topic, templates=None, model=None, key=None, prompt=None):
     """The same call against Claude, because the provider is a setting and not an architecture.
 
     Kept deliberately: the mapping step is small and the whole point of the gates above is that
@@ -455,7 +698,8 @@ def ask_anthropic(topic, templates=None, model=None, key=None):
         "https://api.anthropic.com/v1/messages",
         {"model": model, "max_tokens": 2000, "temperature": 0,
          "system": "Return a single JSON object and nothing else.",
-         "messages": [{"role": "user", "content": prompt_for(topic, templates)}]},
+         "messages": [{"role": "user",
+                       "content": prompt or prompt_for(topic, templates)}]},
         {"x-api-key": key, "anthropic-version": "2023-06-01"})
     try:
         text = body["content"][0]["text"]
@@ -485,7 +729,7 @@ def cache_key(topic):
 
 
 def plan_for(topic, provider="gemini", templates=None, ask=None, model=None, use_cache=True,
-             cache_path=CACHE):
+             cache_path=CACHE, fetch=None):
     """The verified plan for a topic: cached if it has been asked, asked and verified if not.
 
     Returns (plan, note, cached). [plan] is a list of verified proposals; a topic the model could
@@ -497,17 +741,40 @@ def plan_for(topic, provider="gemini", templates=None, ask=None, model=None, use
     if slot:
         return slot["templates"], slot.get("note", ""), True
 
-    raw, used_model = PROVIDERS[provider](topic, templates)
+    raw, used_model = PROVIDERS[provider](topic, templates, model=model)
     verified, refusals = [], []
     for proposal in raw.get("templates") or []:
+        key = str(proposal.get("key", "?"))
         try:
             verified.append(verify(proposal, templates, ask=ask))
-        except Refused as exc:
-            refusals.append(f"{proposal.get('key', '?')}: {exc}")
+            continue
+        except WrongEntity as error:
+            # Bound to names that outlive the block: Python deletes an `as` target when the except
+            # clause ends, and the retry below needs both the reason and the real candidates.
+            reason = str(error) + candidates_for(error.claimed, error.entity_id, fetch=fetch)
+        except Refused as error:
+            reason = str(error)
+        print(f"  refused — {key}: {reason.splitlines()[0]}")
+
+        # A refusal is not the end of the topic. The commonest one by far is a hallucinated
+        # entity id, and the gate that caught it knows what that id *really* is — so the model is
+        # told, and asked again. "Star Wars" was the case that argued for this: the model claimed
+        # Q82347 was the franchise, the label check found "america's next top model, season 2",
+        # and three templates were dropped over one wrong number. Handing back the true label is
+        # the difference between a topic that routes nowhere and one that works.
+        try:
+            better = retry(topic, key, str(proposal.get("narrow", "")).strip(), reason,
+                           provider=provider, templates=templates, ask=ask, model=model,
+                           cache_path=cache_path, use_cache=False)
+        except Refused as second:
+            better, reason = None, str(second)
+        if better:
+            print(f"  {key}: corrected after being told what it had really named")
+            verified.append(better)
+        else:
+            refusals.append(f"{key}: {reason}")
 
     note = str(raw.get("note", "")).strip()
-    for refusal in refusals:
-        print(f"  refused — {refusal}")
     if refusals:
         note = "; ".join([note] + refusals) if note else "; ".join(refusals)
 
@@ -518,10 +785,61 @@ def plan_for(topic, provider="gemini", templates=None, ask=None, model=None, use
     return verified, note, False
 
 
+def retry(topic, template_key, clause, problem, provider="gemini", templates=None, ask=None,
+          model=None, cache_path=CACHE, use_cache=True):
+    """A second proposal for one template, after the first failed for a reason worth reporting.
+
+    Returns a verified proposal, or None if the model had nothing better — which is a real answer,
+    and the caller drops the template rather than falling back to something broader.
+
+    Every gate that ran on the first proposal runs on this one. A retry is not a second chance to
+    get past them; it is a second chance to be right.
+    """
+    asker = PROVIDERS[provider]
+    raw, used_model = asker(topic, templates, model=model,
+                            prompt=retry_prompt(topic, template_key, clause, problem, templates))
+    for proposal in raw.get("templates") or []:
+        if str(proposal.get("key", "")).strip() != template_key:
+            continue
+        if clause and not str(proposal.get("narrow", "")).strip():
+            # Declining to narrow after a *narrowing* failed means "I cannot reach this meaning",
+            # not "publish it broad" — the un-narrowed query is the bug this path exists to
+            # prevent. When the first attempt was refused outright there was never a working
+            # narrowing to lose, so an honest un-narrowed answer is allowed to stand.
+            continue
+        try:
+            better = verify(proposal, templates, ask=ask)
+        except Refused as exc:
+            print(f"  retry refused — {template_key}: {exc}")
+            continue
+        if use_cache:
+            remember(topic, better, used_model, cache_path)
+        return better
+    print(f"  {template_key}: the model had no better narrowing to offer")
+    return None
+
+
+def remember(topic, proposal, model, cache_path=CACHE):
+    """Replace a template's entry in the cache with one that actually worked.
+
+    So a clause that failed is not tried again on the next run — and, more importantly, so the
+    committed cache records what the pack was really built from rather than the first guess.
+    """
+    cache = load_cache(cache_path)
+    slot = cache.setdefault(cache_key(topic),
+                            {"topic": topic, "model": model, "templates": [], "note": ""})
+    slot["templates"] = [p for p in slot["templates"] if p.get("key") != proposal["key"]]
+    slot["templates"].append(proposal)
+    slot["model"] = model
+    save_cache(cache, cache_path)
+
+
 # --- self-test ------------------------------------------------------------------------------
 
 def self_test():
+    import io
     failures = []
+    _seen = []
 
     def check(name, condition):
         print(f"  {'ok  ' if condition else 'FAIL'} {name}")
@@ -648,6 +966,116 @@ def self_test():
     check("and a 404 that names no replacement is just a refusal",
           RETIRED.search('{"error": {"code": 404, "message": "not found"}}') is None)
 
+    def fake_links(query):
+        """Wikidata answering "how are these connected?" — the question the model was guessing at."""
+        if "?p wd:Q462" not in query:
+            return {"results": {"bindings": []}}
+        return {"results": {"bindings": [
+            {"p": {"value": "http://www.wikidata.org/prop/direct/P8345"}, "n": {"value": "47"}},
+            {"p": {"value": "http://www.wikidata.org/prop/direct/P361"}, "n": {"value": "1"}},
+        ]}}
+
+    # Wikidata rate-limits, and a run once died on an uncaught 429 with a traceback where the
+    # topic's report should have been.
+    limited = {"n": 0}
+
+    def rate_limited(query):
+        limited["n"] += 1
+        if limited["n"] < 3:
+            raise urllib.error.HTTPError("u", 429, "slow down", {}, io.BytesIO(b""))
+        return {"results": {"bindings": []}}
+
+    paused = []
+    check("a rate-limited Wikidata is waited out, not crashed on",
+          ask_wikidata("SELECT 1", rate_limited, sleep=paused.append) == {"results": {"bindings": []}})
+    check("with a backoff between tries", paused == [4, 8])
+
+    def always_limited(query):
+        raise urllib.error.HTTPError("u", 429, "slow down", {}, io.BytesIO(b""))
+
+    check("an id that cannot be checked is refused, never assumed good",
+          "could not verify" in (refused(check_entities, [{"id": "Q15", "label": "Africa"}],
+                                         ask=always_limited) or ""))
+    check("but a hint that cannot be fetched costs only the hint",
+          linking_properties("?s wdt:P86 ?o .", "Q462", ask=always_limited) == [])
+
+    check("the properties that really link subjects to an entity are read off Wikidata",
+          linking_properties("?s wdt:P86 ?o .", "Q462", ask=fake_links)
+          == [("P8345", 47), ("P361", 1)])
+    check("and they come back commonest first, which is the one worth using",
+          linking_properties("?s wdt:P86 ?o .", "Q462", ask=fake_links)[0][0] == "P8345")
+    check("a query that cannot run costs the hint, not the topic",
+          linking_properties("?s wdt:P86 ?o .", "Q1", ask=fake_links) == [])
+
+    def links_and_labels(query):
+        if "VALUES" in query:
+            return {"results": {"bindings": [
+                {"item": {"value": "http://www.wikidata.org/entity/P8345"},
+                 "label": {"value": "media franchise"}},
+                {"item": {"value": "http://www.wikidata.org/entity/P361"},
+                 "label": {"value": "part of"}}]}}
+        return fake_links(query)
+
+    shown_links = links_for("?s wdt:P86 ?o .", "Q462", ask=links_and_labels)
+    check("the hint names each property and how many subjects it links",
+          "wdt:P8345" in shown_links and "media franchise" in shown_links
+          and "links 47 of them" in shown_links)
+    check("and tells the model to choose rather than recall",
+          "rather than choosing a property from memory" in shown_links)
+
+    check("a search result is read down to id, label and description",
+          search_entities("Star Wars", fetch=lambda url: {"search": [
+              {"id": "Q462", "label": "Star Wars", "description": "franchise"}]})
+          == [{"id": "Q462", "label": "Star Wars", "description": "franchise"}])
+    check("a search that cannot run costs candidates, not the topic",
+          search_entities("x", fetch=lambda url: (_ for _ in ()).throw(OSError("no route"))) == [])
+    def capturing(url):
+        _seen.append(url)
+        return {"search": [{"id": "P17", "label": "country", "description": "sovereign state"}]}
+
+    shown = candidates_for("country", "P17", fetch=capturing)
+    check("a P-number is looked up among properties, not items",
+          _seen and "type=property" in _seen[0])
+    check("an item id is looked up among items",
+          "type=item" in (candidates_for("Africa", "Q15", fetch=capturing) and _seen[1]))
+    check("and the candidates are shown with their descriptions, which is what tells them apart",
+          "P17" in shown and "sovereign state" in shown)
+
+    waits = []
+    calls = {"n": 0}
+
+    def flaky(url, data=None, timeout=None):
+        calls["n"] += 1
+        if calls["n"] < 3:
+            raise urllib.error.HTTPError(url, 503, "busy", {}, io.BytesIO(b"high demand"))
+        return io.BytesIO(json.dumps({"ok": True}).encode())
+
+    real_open = urllib.request.urlopen
+    urllib.request.urlopen = lambda req, timeout=None: flaky(req.full_url, timeout=timeout)
+    try:
+        answered = post("https://example.invalid", {}, {}, sleep=waits.append)
+    finally:
+        urllib.request.urlopen = real_open
+    check("a 503 is weather, not an answer — it waits and asks again", answered == {"ok": True})
+    check("and it backs off rather than hammering", waits == [4, 8])
+
+    # The other 429, which reads the same to a status code and means the opposite.
+    def spent(url, data=None, timeout=None):
+        raise urllib.error.HTTPError(url, 429, "quota", {}, io.BytesIO(
+            b'{"error":{"message":"You exceeded your current quota. Quota exceeded for metric: '
+            b'generate_content_free_tier_requests, limit: 20"}}'))
+
+    slept = []
+    urllib.request.urlopen = lambda req, timeout=None: spent(req.full_url, timeout=timeout)
+    try:
+        exhausted = refused(post, "https://example.invalid", {}, {}, sleep=slept.append)
+    finally:
+        urllib.request.urlopen = real_open
+    check("a spent quota is named as such rather than reported as overload",
+          "quota is spent" in (exhausted or ""))
+    check("and it does not wait for a daily allowance to come back in twelve seconds", slept == [])
+    check("the message says how to carry on", "ANTHROPIC_API_KEY" in (exhausted or ""))
+
     check("JSON in a code fence is still JSON", loads('```json\n{"a": 1}\n```') == {"a": 1})
     check("bare JSON is still JSON", loads('{"a": 1}') == {"a": 1})
     check("prose instead of JSON is refused", refused(loads, "I think the topic is about rivers"))
@@ -658,7 +1086,7 @@ def self_test():
         path = Path(tmp) / "cache.json"
         calls = []
 
-        def fake_model(topic, templates=None, model=None, key=None):
+        def fake_model(topic, templates=None, model=None, key=None, prompt=None):
             calls.append(topic)
             return {"templates": [good], "note": ""}, "fake-1"
 
@@ -672,7 +1100,62 @@ def self_test():
 
         calls.clear()
 
-        def lying_model(topic, templates=None, model=None, key=None):
+        # --- the Star Wars case, which is why a refusal is not the end of a topic ------------
+        #
+        # The model claimed Q82347 was Star Wars. It is "America's Next Top Model, season 2", and
+        # the label gate said so — precisely, with the real label attached. Dropping the template
+        # there would route a perfectly answerable topic nowhere over one wrong number, when the
+        # gate is holding the correction in its hand.
+        WORLD["Q462"] = {"star wars"}
+        WORLD["P179"] = {"part of the series"}
+        WORLD["Q82347"] = {"america's next top model, season 2"}
+        wrong = {"key": "film-director", "narrow": "?s wdt:P179 wd:Q82347 .",
+                 "why": "films in the Star Wars series",
+                 "entities": [{"id": "P179", "label": "part of the series"},
+                              {"id": "Q82347", "label": "Star Wars"}]}
+        right = {**wrong, "narrow": "?s wdt:P179 wd:Q462 .",
+                 "entities": [{"id": "P179", "label": "part of the series"},
+                              {"id": "Q462", "label": "Star Wars"}]}
+        told = []
+
+        def fake_search(url):
+            """Wikidata's own search, which knows what "Star Wars" is and the model does not."""
+            return {"search": [
+                {"id": "Q462", "label": "Star Wars",
+                 "description": "American epic space opera media franchise"},
+                {"id": "Q17738", "label": "Star Wars", "description": "1977 film by George Lucas"},
+            ]}
+
+        def hallucinating_model(topic, templates=None, model=None, key=None, prompt=None):
+            told.append(prompt)
+            return ({"templates": [right if prompt else wrong], "note": ""}, "fake-1")
+
+        PROVIDERS["hallucinating"] = hallucinating_model
+        plan, note, _ = plan_for("star wars", "hallucinating", ask=fake_ask,
+                                 cache_path=Path(tmp) / "sw.json", fetch=fake_search)
+        check("the retry carries real candidates, not just the news that it was wrong",
+              "Q462" in (told[1] or "") and "space opera" in (told[1] or ""))
+        check("and it says which id is which, so picking is reading rather than recalling",
+              "Q17738" in (told[1] or ""))
+        check("a hallucinated entity id is corrected rather than dropped",
+              [p["narrow"] for p in plan] == ["?s wdt:P179 wd:Q462 ."])
+        check("and the model is told what the id it chose actually was",
+              "america's next top model" in (told[1] or ""))
+        check("the corrected proposal passed every gate the first one did",
+              plan and plan[0]["entities"][1]["id"] == "Q462")
+        PROVIDERS.pop("hallucinating")
+
+        def stubborn_model(topic, templates=None, model=None, key=None, prompt=None):
+            return ({"templates": [wrong], "note": ""}, "fake-1")
+
+        PROVIDERS["stubborn"] = stubborn_model
+        plan, note, _ = plan_for("star wars again", "stubborn", ask=fake_ask,
+                                 cache_path=Path(tmp) / "sw2.json", fetch=fake_search)
+        check("a model that repeats the same wrong id is refused, not indulged", plan == [])
+        check("and the reason still reaches the note", "Q82347 is not" in note)
+        PROVIDERS.pop("stubborn")
+
+        def lying_model(topic, templates=None, model=None, key=None, prompt=None):
             return {"templates": [{**good, "entities": [{"id": "Q15", "label": "Asia"}]}],
                     "note": "narrowed to Asia"}, "fake-1"
 
