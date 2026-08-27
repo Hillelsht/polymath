@@ -72,6 +72,13 @@ per language from that language's own library, so a Russian player gets Russian 
 group labels. English publishes at `packs/play/chains/`, everything else at
 `packs/play/chains/<tag>/` — the unprefixed-English convention used everywhere else here.
 
+**Both front doors ask for it.** The web reads the language off `?lang=`, `localStorage` or the
+browser; the app reads it off `LocalePrefs`, which `SmartRepository.chainsPuzzle` consults on every
+call rather than once at startup, so the phone fetches `chains/<tag>/<month>.json` for a translated
+reader and the plain path for an English one. That call-time read is why the daily follows a switch
+while `SmartRepository.facts` still does not — the fact flow builds its query once per process, and
+making it follow a live switch means making the choice observable rather than a preferences read.
+
 Consequences worth knowing before touching it:
 
 - **The grids are different puzzles on the same day**, not one puzzle translated. Three corpora
@@ -81,6 +88,11 @@ Consequences worth knowing before touching it:
   through the rules to rebuild the board; replaying an English guess into a Russian grid selects
   tiles that are not on it. English keeps its unsuffixed `localStorage` key so no existing streak
   resets, and streaks are per-language, which is right — they are different puzzles.
+- **So is a finished game, on both.** The web namespaces its `localStorage` key; the app writes
+  `game_daily` under `chains:<tag>` instead of `chains`. Sharing one row across languages would
+  have reported today as already played the instant you switched, then dressed the new grid in the
+  old one's solved groups — the ids overlap, so it would have looked plausible. English keeps the
+  unsuffixed id on both, so nothing already recorded moved.
 - **`dir="rtl"` on the root element is the whole of Hebrew's layout support**, on the web exactly
   as in the app. The browser mirrors flex and grid; the emoji share block is pinned back to `ltr`
   because it is a picture rather than a sentence.

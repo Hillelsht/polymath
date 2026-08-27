@@ -196,7 +196,7 @@ streak survives restart; the Chromium playtest drives the daily end-to-end in CI
 are worth showing a stranger. **Shipped.** What remains is not code: a domain, an assetlinks file
 and a counter account.
 
-### Wedge 2 (~weeks 3–6): Provably-fair generated rooms + language parity  ← SHIPPED (the app's daily is still English-only)
+### Wedge 2 (~weeks 3–6): Provably-fair generated rooms + language parity  ← SHIPPED
 
 1. ~~**Room generator gated by `Playtest.solve`**~~ — done. `RoomGen` lays a room out from a seed
    using a grammar of the ideas the seven authored rooms teach; `curate` walks a seed stream and
@@ -234,12 +234,13 @@ and a counter account.
    with a painter's or a moon's gender, which no label carries. Both tables keep the sentence's
    grammatical subject a noun written in the file, with the label beside it.
 
-3. ~~**The daily in three languages**~~ — **on the web.** This is the part that makes the parity
-   visible, and it is worth being exact about where: `webplay/` plays the Russian and Hebrew grids,
-   the app does not yet. `SmartRepository` fetches `chains/<month>.json` with no language tag, so
-   the Android Chains screen serves the English grid whatever language the user has chosen. The
-   grids exist at `packs/play/chains/<tag>/` and `fetchGamePack` can already reach them — it is a
-   path change and a test, not a new mechanism, and it is the first item in Part 4 below.
+3. ~~**The daily in three languages**~~ — done, on the web **and** on the phone.
+   `SmartRepository.chainsPuzzle` now reads `LocalePrefs` on every call and fetches
+   `chains/<tag>/<month>.json`, so the Android Chains screen serves the reader's own grid; the
+   month cache and the `game_daily` row are namespaced the same way, English keeping the
+   unsuffixed key it already had so no recorded streak moved. `PlayContentTest` asserts every
+   language publishes a grid on every day English does, because a missing month is now a blank
+   Play tab for that language alone and nothing else would have said so.
    `build_chains.py` builds a grid per language from that language's own library, so a Russian
    player gets Russian tiles under Russian group labels rather than translated buttons over an
    English puzzle. 122 grids each in English, Russian and Hebrew. The portal has a switcher, one
@@ -371,10 +372,15 @@ ads in the ritual, no new games until the dailies are excellent.
    test and a driving theory test need templates that do not exist, and no mapper can invent a
    question nobody wrote.
 
-   **The one loose end in code**: the app's Chains daily fetches `chains/<month>.json` with no
-   language tag, so a Russian or Hebrew user gets the English grid. The web portal does this
-   correctly and the translated grids are published; the app needs `fetchGamePack` given the
-   language and a `PlayContentTest`-style gate. Small, and app code, so CI is the only compiler.
+   **That loose end is closed**: the app's Chains daily now reads the selected language on every
+   call and fetches `chains/<tag>/<month>.json`, with the month cache and the `game_daily` row
+   namespaced to match, and `PlayContentTest` gating day-for-day parity between the languages.
+
+   **The loose end that is left** is `SmartRepository.facts`, which builds its query once per
+   process, so switching language leaves the Read tab in the old one until the app is restarted.
+   That was harmless while nothing but English shipped and is not any more. Fixing it properly
+   means making the choice observable rather than a `SharedPreferences` read — Settings'
+   `Activity.recreate()` retains the `ViewModelStore`, so re-collecting is not enough on its own.
 
    **Wedge 4 after that, and it is gated on the counter** — which needs a domain and an account,
    both yours. Until there is share-loop evidence there is nothing to decide with.
@@ -396,7 +402,7 @@ ads in the ritual, no new games until the dailies are excellent.
 4. Branch discipline: work on a feature branch, verify Compose changes by dispatching `build.yml`
    on the branch (this environment cannot compile Android), merge to `main` via PR — merges to
    `main` auto-publish the APK release and the Pages site.
-5. Keep the existing gates green: `enginetests` (339 tests), `tools/playtest/play.js` margins,
+5. Keep the existing gates green: `enginetests` (340 tests), `tools/playtest/play.js` margins,
    `tools/playtest/daily.js`, `tools/playtest/ghost.js`, the docs-freshness pre-push hook (update
    `docs/` when code contradicts it — it will tell you).
 

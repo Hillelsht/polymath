@@ -59,7 +59,9 @@ followed for the daily rooms since they existed.
 **There is a grid per language.** Chains is the one game whose content *is* text, so each language
 gets its own daily built from its own library: `packs/play/chains/2026-08.json` in English, and
 `packs/play/chains/<tag>/2026-08.json` for the rest — the unprefixed-English convention the packs
-and the catalogue already use, and a path `fetchGamePack` can already reach without an app release.
+and the catalogue already use. `SmartRepository.chainsPuzzle` builds that path from the language
+selected in Settings, read fresh on every call, so the phone gets its reader's grid rather than
+everyone's English one.
 `LABELS` carries the group names in all three languages, keyed on the English `answerType` that
 `docs/invariants.md` requires stay English; a type this table cannot name is **dropped** from a
 translated build rather than falling back, because a group revealed as "Composer" in the middle of
@@ -70,6 +72,15 @@ shared grid would mean intersecting three corpora that do not hold the same fact
 language to what the thinnest can support. Sharing still works where sharing happens — between two
 people playing the same language — and the share text names the language so a comparison across
 two of them cannot silently look like cheating.
+
+Being different puzzles is also why the *result* is stored per language. `game_daily` is keyed on
+`(gameId, date)`, and the id Chains writes under is `chains` in English and `chains:<tag>` in every
+other language. One shared row would have declared today already played the moment you switched
+language, and then reopened the new grid wearing the old one's solved groups, score and mistakes —
+group ids like `sport` and `chemical-symbol` recur across languages, so the wrong half would have
+looked right. Keeping English on the unsuffixed id means no existing row, streak or history moved.
+Vaults is generated from a seed and reads identically in every language, so its daily is
+deliberately *not* scoped this way.
 
 One thing had to change for any of this to work, and it is worth knowing about because nothing
 would have reported it: the tile filter was `[A-Za-z][A-Za-z .'À-ɏ-]*`, a Latin-alphabet test in a

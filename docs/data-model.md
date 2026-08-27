@@ -104,7 +104,10 @@ sitelink count that drives both difficulty and delivery order). Its ids are
 - `play/climb.json` — the relic roster. Effects are code (`RelicEffect`); the roster is content,
   so a new relic ships as a commit rather than an app release. An entry naming an unknown effect
   is dropped by that install rather than fatal to it.
-- `play/chains/YYYY-MM.json` — one grid per calendar day, 16 tiles, 4 groups of 4.
+- `play/chains/YYYY-MM.json` — one grid per calendar day, 16 tiles, 4 groups of 4. English
+  only; a translated language publishes the same shape at `play/chains/<tag>/YYYY-MM.json`,
+  and the app asks for whichever the reader has chosen. Its result lands in `game_daily`
+  under `chains` or `chains:<tag>` to match, since the grids are different puzzles.
 
 ## Seeding
 

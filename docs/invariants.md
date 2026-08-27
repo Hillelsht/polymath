@@ -92,10 +92,29 @@ backfills existing rows during migration.
 → Falling back to the full list sounds forgiving and is not: it turns "your language has no
 channels" into a shelf of videos you cannot follow, and hides the fault instead of showing it.
 
-**Content language changes take effect on next launch, not immediately.** `SmartRepository` is
-built once per process and Settings only calls `Activity.recreate()`. UI strings switch at once;
-facts and videos do not. This is a known limitation, documented at the `currentLanguage`
-parameter — not a bug to re-fix.
+**A language change reaches whatever reads `currentLanguage()` at call time, and nothing else.**
+`SmartRepository` is built once per process and Settings only calls `Activity.recreate()`, which
+retains the `ViewModelStore`. UI strings switch at once, and so does the Chains daily, because
+`chainsPuzzle` consults the preference on every call. `facts` and `factsIn` build their query once
+and do not: they change on the next launch.
+→ That was a documented limitation while nothing but English shipped and is a live bug now that
+the Russian and Hebrew libraries do. Fixing it means making the choice observable, not moving the
+read — re-collecting a flow is not enough when the ViewModel holding the subscription survives.
+
+**Chains is published, cached and recorded per language; English is the unsuffixed path.** The
+grid is `chains/<month>.json` in English and `chains/<tag>/<month>.json` elsewhere; the cached
+month and the `game_daily` row are namespaced to match (`chains` vs `chains:<tag>`).
+→ They are different puzzles built from different libraries, not one puzzle translated. A shared
+result row would report today as already played the moment someone switched language, then reopen
+the new grid wearing the old one's solved groups — group ids like `sport` recur across languages,
+so half of it would have looked right. Keeping English unsuffixed everywhere is what stops any of
+this moving a streak that already exists.
+
+**Every language must publish a grid on every day English does.** `PlayContentTest` asserts it.
+→ The app asks its own language's folder and shows "no puzzle today" when the file is absent, so a
+month curated in English and skipped in Hebrew is a blank Play tab for Hebrew readers only —
+invisible to every other check, since each language passes everything else on the days it does
+publish.
 
 ---
 

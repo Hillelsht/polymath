@@ -187,6 +187,27 @@ class PlayContentTest {
      * everybody pictures, and it is not what this builds: the three corpora do not hold the same
      * facts, so a shared grid would reduce every language to what the thinnest supports.
      */
+    /**
+     * The app fetches `chains/<tag>/<month>.json` for a translated language and shows "no puzzle
+     * today" when that file is absent — so a month published in English and not in Hebrew is a
+     * blank Play tab for every Hebrew reader, on a day their English-reading neighbour has a
+     * grid. Nothing else notices: each language passes every other check on the days it does
+     * publish. Parity is the invariant, not the count.
+     */
+    @Test
+    fun `every language has a grid on every day English does`() {
+        val english = publishedPuzzles("en").map { it.date }.toSortedSet()
+        publishedLanguages().filter { it.first != "en" }.forEach { (language, _) ->
+            val theirs = publishedPuzzles(language).map { it.date }.toSet()
+            val missing = english - theirs
+            assertTrue(
+                missing.isEmpty(),
+                "$language has no grid on ${missing.size} day(s) English does: " +
+                    missing.take(3).joinToString(),
+            )
+        }
+    }
+
     @Test
     fun `each language's grid for a day is its own puzzle`() {
         val english = publishedPuzzles("en").associateBy { it.date }

@@ -100,11 +100,14 @@ class SmartRepository(
     private val today: () -> LocalDate = LocalDate::now,
     /**
      * The content language to teach in and fetch packs for. Read fresh wherever it matters
-     * rather than captured once, mirroring [today] — but unlike the clock, nothing upstream of
-     * [facts] already re-runs on a schedule, so a change here only takes effect on the next app
-     * launch (this object is built once per process by `AppContainer`, and Settings' own
-     * `Activity.recreate()` only rebuilds the UI, not this repository). Acceptable for now:
-     * there is no shipped non-English fact content yet for a live switch to reveal.
+     * rather than captured once, mirroring [today].
+     *
+     * Every `suspend` caller therefore sees the current choice, [chainsPuzzle] included. [facts]
+     * and [factsIn] are the exceptions: they build their query once, so a switch reaches them on
+     * the next app launch rather than immediately — this object is constructed once per process
+     * by `AppContainer`, and Settings' `Activity.recreate()` rebuilds the UI, not this. That is
+     * a live bug now that Russian and Hebrew libraries actually ship, and fixing it means making
+     * the choice observable rather than a plain `SharedPreferences` read.
      */
     private val currentLanguage: () -> Language = { Language.default },
 ) {
@@ -397,10 +400,11 @@ class SmartRepository(
      * whole point of a daily puzzle is that it is waiting for you whether or not you have signal.
      */
     suspend fun chainsPuzzle(date: LocalDate = today()): ChainsPuzzle? {
+        val language = currentLanguage()
         val month = date.toString().take(7)
-        val key = "$KEY_CHAINS_MONTH$month"
+        val key = "$KEY_CHAINS_MONTH${scoped(month, language)}"
         val raw = gameDao.progress(GameId.CHAINS.id, key)
-            ?: packService.fetchGamePack("$CHAINS_DIR/$month.json")?.also {
+            ?: packService.fetchGamePack(chainsPath(month, language))?.also {
                 gameDao.setProgress(GameProgressEntity(GameId.CHAINS.id, key, it))
             }
             ?: return null
@@ -427,11 +431,44 @@ class SmartRepository(
         return puzzle.takeIf { it.problems().isEmpty() }
     }
 
+    /**
+     * Where a month of grids is published. English is the unprefixed folder it has always been;
+     * every other language is a subfolder of it, the same shape the fact catalogue uses.
+     */
+    private fun chainsPath(month: String, language: Language): String =
+        "$CHAINS_DIR/${scoped("$month.json", language)}"
+
+    /** `x` for English, `<tag>/x` otherwise — so English keeps every path and key it had. */
+    private fun scoped(name: String, language: Language): String =
+        if (language == Language.default) name else "${language.tag}/$name"
+
+    /**
+     * The row a daily result is written under.
+     *
+     * Chains is published per language, so the Russian grid for a date and the English one are
+     * different puzzles built from different facts. Their results have to be separate rows: one
+     * shared row would report today as already played the moment you switched language, and
+     * would then reopen the new grid wearing the old one's solved groups, score and mistakes —
+     * the group ids overlap between languages, so it would look plausible and be wrong.
+     *
+     * The unsuffixed id stays English, so no existing row, streak or history moves. Vaults is
+     * generated from a seed rather than from facts and reads the same in every language, so it
+     * is deliberately not scoped.
+     */
+    private fun dailyId(game: GameId): String {
+        val language = currentLanguage()
+        return if (game == GameId.CHAINS && language != Language.default) {
+            "${game.id}:${language.tag}"
+        } else {
+            game.id
+        }
+    }
+
     suspend fun dailyResult(game: GameId, date: LocalDate = today()): GameDailyEntity? =
-        gameDao.daily(game.id, date)
+        gameDao.daily(dailyId(game), date)
 
     fun recentDailies(game: GameId, limit: Int = 30): Flow<List<GameDailyEntity>> =
-        gameDao.observeDaily(game.id, limit)
+        gameDao.observeDaily(dailyId(game), limit)
 
     suspend fun saveDailyResult(
         game: GameId,
@@ -443,7 +480,7 @@ class SmartRepository(
     ) {
         gameDao.setDaily(
             GameDailyEntity(
-                gameId = game.id,
+                gameId = dailyId(game),
                 date = date,
                 score = score,
                 mistakes = mistakes,
