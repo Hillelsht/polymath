@@ -316,8 +316,11 @@ and a counter account.
    question nobody wrote.
 
    **Civics now exists** — four templates, `head-of-state`, `legislature`, `form-of-government`
-   and `official-language`, all reading the full statement so a former president is not published
-   as the current one, all phrased in three languages, three of them added to the Chains pools.
+   and `official-language`. Every id in them was written where Wikidata is unreachable and has
+   since been resolved by `--preflight-only` on a runner: `P35` *head of state*, `P194`
+   *legislative body*, `P122` *basic form of government*, `P37` *official language*, all four as
+   declared, 22 of 22 templates surviving. They read the full statement so a former president is
+   not published as the current one, all phrased in three languages, three of them added to the Chains pools.
    Head of state is kept out of the daily on purpose: a grid is frozen up to four months ahead,
    and a group of four names under "Heads of state" stops being true the first time one of them
    leaves office.

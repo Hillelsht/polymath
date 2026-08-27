@@ -133,7 +133,9 @@ Three constraints found by probing rather than reasoning, all of which shape the
 
   `generate_facts.py --preflight-only` is that check on its own — one query, seconds, no harvest,
   exit 1 if anything was dropped. `probe.yml` runs it. It is the loop for writing a template you
-  cannot verify: write it, dispatch the probe, read the labels back.
+  cannot verify: write it, dispatch the probe, read the labels back. The civics four went through
+  it and came back as declared — `P35` *head of state*, `P194` *legislative body*, `P122` *basic
+  form of government*, `P37` *official language* — with 22 of 22 templates surviving.
 - **Wikidata labels come back in base form only.** No case, no declension. This is what shapes
   the translated phrasings — see `localization.md`.
 
