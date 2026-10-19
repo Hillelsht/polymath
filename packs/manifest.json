@@ -1,58 +1,58 @@
 {
- "generated": "2026-10-12T15:37:20Z",
+ "generated": "2026-10-19T13:28:09Z",
  "packs": [
   {
    "id": "arts",
    "name": "Arts & Literature",
    "category": "arts",
-   "version": "0b4dc86c29de",
+   "version": "8809aa9e8a22",
    "facts": 92,
-   "bytes": 206129,
+   "bytes": 205834,
    "file": "arts.json"
   },
   {
    "id": "culture",
    "name": "Pop Culture",
    "category": "culture",
-   "version": "e77cbe389d6a",
+   "version": "e730a64824ae",
    "facts": 75,
-   "bytes": 160985,
+   "bytes": 160894,
    "file": "culture.json"
   },
   {
    "id": "geography",
    "name": "Geography",
    "category": "geography",
-   "version": "30c425c12566",
+   "version": "196daa9108b8",
    "facts": 95,
-   "bytes": 199993,
+   "bytes": 199770,
    "file": "geography.json"
   },
   {
    "id": "history",
    "name": "History",
    "category": "history",
-   "version": "ecc01faf1307",
+   "version": "d009dfa9be14",
    "facts": 93,
-   "bytes": 219963,
+   "bytes": 220317,
    "file": "history.json"
   },
   {
    "id": "science",
    "name": "Science",
    "category": "science",
-   "version": "ec77846e27fe",
+   "version": "9f406a77d42b",
    "facts": 92,
-   "bytes": 194881,
+   "bytes": 194832,
    "file": "science.json"
   },
   {
    "id": "sports",
    "name": "Sports & Games",
    "category": "sports",
-   "version": "387775e4e798",
+   "version": "f8895de043e1",
    "facts": 70,
-   "bytes": 148969,
+   "bytes": 148964,
    "file": "sports.json"
   },
   {
