@@ -97,12 +97,6 @@
    "displayName": "Wendover Productions"
   },
   {
-   "id": "UCvPXiKxH-eH9xq-80vpgmKQ",
-   "handle": "EpicHistoryTV",
-   "category": "history",
-   "displayName": "Epic History"
-  },
-  {
    "id": "UCv_vLHiWVBh_FR9vbeuiY-A",
    "handle": "HistoriaCivilis",
    "category": "history",
@@ -385,5 +379,5 @@
    "language": "he"
   }
  ],
- "version": "b248995c64f1"
+ "version": "18e1da7d855b"
 }
